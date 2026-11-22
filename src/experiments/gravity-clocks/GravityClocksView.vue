@@ -330,8 +330,9 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
 
     <nav class="next card" aria-label="Next steps">
-      <p><strong>See also:</strong> Experiment B for the speed effect, and Experiment E for the 3 + 1 split.</p>
+      <p><strong>Next:</strong> Experiment D, where space itself evolves in time. See also Experiments B and E.</p>
       <span class="nav-links">
+        <RouterLink to="/cosmology/evolving-space">Experiment D →</RouterLink>
         <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>
         <RouterLink to="/relativity/two-perspectives">Experiment E</RouterLink>
         <RouterLink to="/">All modules</RouterLink>

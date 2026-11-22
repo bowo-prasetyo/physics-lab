@@ -14,7 +14,7 @@ The same phenomenon is offered at three mathematical levels (Beginner, Intermedi
 
 ## Status
 
-Four experiments are complete. The other modules are listed in the app as planned.
+Five experiments are complete, in Modules 1, 4, 5 and 6. Modules 2 (time) and 3 (classical mechanics), and further experiments, are listed in the app as planned.
 
 **Experiment A, Space versus time** (Module 1):
 - A track and a live position–time graph, with earlier runs overlaid for comparison.
@@ -38,6 +38,12 @@ Four experiments are complete. The other modules are listed in the app as planne
 - A chart of the gravity "well": how much a clock is slowed at each height. Readouts of each clock's slowdown and how far apart the clocks drift.
 - A GPS setup: +45.7 μs/day from weaker gravity, −7.2 μs/day from orbital speed, net +38.5 μs/day. Switch the relativity correction off to watch the position error grow by about 11.5 km per day.
 - At Advanced: light signals between the clocks (both observers agree the lower clock is slow, unlike Experiment B), the approach to the horizon, curved space (ruler distance exceeds Δr), and the ADM lapse as the clock rate.
+
+**Experiment D, Evolving space** (Module 6):
+- Four model universes: ours (ΛCDM with Planck 2018 values), matter only, radiation only, and dark energy only (de Sitter). The scale factor a(t) comes from integrating the Friedmann equation.
+- Run time forwards and backwards, or jump to milestones (Big Bang, first light, first galaxies, today). A field of galaxies spreads apart, with recession arrows from whichever galaxy you choose as "home". The pattern repeats, so there is no edge and no centre, and galaxies keep their own size.
+- A chart of a(t), plus readouts for redshift, background temperature, Hubble rate and distance, whether the expansion is slowing or speeding up, and a distant galaxy's recession speed (which can exceed c).
+- Shows where the model stops being valid as a → 0, rather than drawing a point explosion.
 
 All experiments include:
 - Predict–observe–explain cards. Each explanation unlocks only after the student has performed the experiment that tests it, with hints for near-misses. Every level adds questions of its own.
@@ -83,14 +89,16 @@ src/
 │   ├── relativity.ts       Lorentz factor (numerically stable γ − 1)
 │   ├── spacetime.ts        Lorentz boosts, interval, velocity addition, proper time, simultaneity (c = 1)
 │   ├── descriptions.ts     The same predictions computed three ways: Galilean, Lorentz, spacetime
-│   └── gravity.ts          Schwarzschild clock rates (precision-safe), light signals, ruler distance, GPS breakdown
+│   ├── gravity.ts          Schwarzschild clock rates (precision-safe), light signals, ruler distance, GPS breakdown
+│   └── cosmology.ts        Friedmann equation, tabulated a(t), Hubble rate, deceleration, redshift
 ├── experiments/
 │   ├── prediction.ts       Shared predict–observe–explain types
 │   ├── space-vs-time/      Experiment A: state composable, predictions, maths, page
 │   ├── moving-clocks/      Experiment B: state composable, predictions, maths, page
 │   ├── two-perspectives/   Experiment E: state composable, content and derivations, predictions, maths, page
-│   └── gravity-clocks/     Experiment C: state composable, formatting, predictions, maths, page
-├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, clock-rate chart, sliders, prediction card, KaTeX
+│   ├── gravity-clocks/     Experiment C: state composable, formatting, predictions, maths, page
+│   └── evolving-space/     Experiment D: state composable, predictions, maths, page
+├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, clock-rate chart, galaxy field, scale-factor chart, sliders, prediction card, KaTeX
 ├── composables/          Animation loop, shared level setting, URL sync
 ├── views/                Home page
 ├── levels.ts             Beginner / Intermediate / Advanced
@@ -102,7 +110,7 @@ src/
 - `tsconfig.physics.json` compiles `src/physics` without the DOM library, so any browser API is a type error.
 - `architecture.test.ts` fails if a physics file imports anything outside `src/physics`.
 
-**Physics is computed exactly where possible.** Uniform motion uses its closed-form solution, so results do not depend on the animation frame rate. Tests check this explicitly. When later modules need numerical integration (orbits, for example), they should use a symplectic method such as velocity Verlet, so that energy does not drift.
+**Physics is computed exactly where possible.** Uniform motion uses its closed-form solution, so results do not depend on the animation frame rate. Tests check this explicitly. Where numerical integration is needed (the Friedmann equation), the result is tested against the exact solutions that exist for special cases. Future orbit simulations should use a symplectic method such as velocity Verlet, so that energy does not drift.
 
 **Prediction gates are pure functions.** Each prediction's `observed(runs)` test decides when a student has done the relevant experiment. These functions are unit-tested.
 
