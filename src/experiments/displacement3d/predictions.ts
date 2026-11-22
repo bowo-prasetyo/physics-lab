@@ -61,7 +61,7 @@ export const PREDICTIONS: readonly Prediction<JourneySnapshot>[] = [
   {
     id: 'round-trip',
     minLevel: 'beginner',
-    question: 'A drone flies 3 m east, 4 m north and 2 m up, then straight back to where it took off. What is its displacement?',
+    question: 'A drone flies 3 m east, 4 m north and 2 m up, then straight back to where it took off. What is its displacement? (In the lab, east is +x, north is +y and up is +z.)',
     task: 'Make a journey of at least three moves that returns to its start (or load “Round trip”), and read the displacement.',
     options: [
       { id: 'zero', label: 'Zero' },

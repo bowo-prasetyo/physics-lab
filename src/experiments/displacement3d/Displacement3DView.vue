@@ -76,6 +76,8 @@ function goToTarget() {
 }
 
 const AXES: Axis[] = ['x', 'y', 'z']
+/** Compass convention (east, north, up), as used in surveying and navigation. */
+const DIRECTIONS = { x: ['west', 'east'], y: ['south', 'north'], z: ['down', 'up'] } as const satisfies Record<Axis, readonly [string, string]>
 const fmt = (x: number, digits = 2) => {
   const v = Number(x.toFixed(digits))
   return (v < 0 ? '−' : '') + Math.abs(v).toString()
@@ -121,9 +123,10 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             :show-components="intermediate"
             :view="view"
             :view-key="viewKey"
+            :directions="DIRECTIONS"
           />
           <p class="muted small">
-            Drag to turn the view, scroll or pinch to zoom. z points up. The orange arrow is the displacement Δr from the green start to the blue
+            Drag to turn the view, scroll or pinch to zoom. x points east, y north and z up. The orange arrow is the displacement Δr from the green start to the blue
             object.
             <template v-if="intermediate"> Dashed lines show its x, y and z components.</template>
           </p>
@@ -132,10 +135,11 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
         <div class="lab-side card">
           <div class="moves">
             <p class="group-title">Move the object (1 m steps)</p>
+            <p class="muted small convention">+x is east, +y is north, +z is up.</p>
             <div v-for="axis in AXES" :key="axis" class="move-row">
-              <button class="btn btn-small" type="button" :aria-label="`Move −1 m along ${axis}`" @click="step(axis, -1)">− {{ axis }}</button>
+              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`" @click="step(axis, -1)">− {{ axis }} · {{ DIRECTIONS[axis][0] }}</button>
               <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
-              <button class="btn btn-small" type="button" :aria-label="`Move +1 m along ${axis}`" @click="step(axis, 1)">+ {{ axis }}</button>
+              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`" @click="step(axis, 1)">+ {{ axis }} · {{ DIRECTIONS[axis][1] }}</button>
             </div>
           </div>
           <form class="goto" @submit.prevent="goToTarget">
@@ -288,6 +292,10 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
   background: var(--accent-soft);
   color: var(--accent);
   font-weight: 700;
+}
+
+.convention {
+  margin: -2px 0 8px;
 }
 
 .group-title {
