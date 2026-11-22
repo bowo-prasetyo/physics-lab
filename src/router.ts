@@ -31,6 +31,12 @@ export const router = createRouter({
       component: () => import('@/experiments/gravity-clocks/GravityClocksView.vue'),
       meta: { title: 'Gravity and clock rates · Space & Time Laboratory' },
     },
+    {
+      path: '/cosmology/evolving-space',
+      name: 'evolving-space',
+      component: () => import('@/experiments/evolving-space/EvolvingSpaceView.vue'),
+      meta: { title: 'Evolving space · Space & Time Laboratory' },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: (to, from) => (to.path === from.path ? false : { top: 0 }),

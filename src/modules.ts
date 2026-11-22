@@ -80,6 +80,12 @@ export const MODULES: readonly ModuleEntry[] = [
     title: 'Cosmology',
     audience: 'Advanced undergraduate',
     topics: ['Scale factor and expansion', 'The early universe', 'Where classical models break down', 'The problem of time (discussion)'],
-    experiments: [{ title: 'D · Evolving space', summary: 'Run a model universe forwards and backwards and watch comoving distances change.' }],
+    experiments: [
+      {
+        title: 'D · Evolving space',
+        summary: 'Run a model universe forwards and backwards: Hubble’s law, redshift, dark energy and where the model breaks down.',
+        path: '/cosmology/evolving-space',
+      },
+    ],
   },
 ]
