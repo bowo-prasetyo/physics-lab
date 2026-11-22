@@ -342,53 +342,6 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
 </template>
 
 <style scoped>
-.lesson {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  padding-top: 28px;
-  padding-bottom: 48px;
-}
-
-.eyebrow {
-  margin: 0 0 6px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.lead {
-  max-width: 68ch;
-  font-size: 1.1rem;
-  color: var(--text-muted);
-}
-
-h2 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.step-no {
-  display: inline-grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--on-accent);
-  font-size: 0.9rem;
-}
-
-.prediction-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-  align-items: start;
-}
-
 .tabs {
   display: flex;
   flex-wrap: wrap;
@@ -691,33 +644,6 @@ input[type='range'] {
 
 .error .clock-value {
   font-size: 1.6rem;
-}
-
-.prose :deep(p),
-.prose :deep(li) {
-  max-width: 75ch;
-}
-
-.meaning {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-}
-
-.meaning ul {
-  padding-left: 1.2em;
-}
-
-.next {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-
-.next p {
-  margin: 0;
 }
 
 .nav-links {
