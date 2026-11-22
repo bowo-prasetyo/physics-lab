@@ -35,7 +35,13 @@ export const MODULES: readonly ModuleEntry[] = [
     title: 'Understanding time',
     audience: 'High school',
     topics: ['Clocks and intervals', 'Periodic motion', 'Frequency and oscillation', 'Every clock is a physical process'],
-    experiments: [{ title: 'Pendulum clocks', summary: 'Measure a pendulum’s period and compare different clocks.' }],
+    experiments: [
+      {
+        title: 'Pendulum clocks',
+        summary: 'Measure a pendulum’s period, take a pendulum clock to the Moon, and ask what a clock really measures.',
+        path: '/time/pendulum',
+      },
+    ],
   },
   {
     number: 3,

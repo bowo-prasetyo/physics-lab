@@ -43,6 +43,12 @@ export const router = createRouter({
       component: () => import('@/experiments/projectile/ProjectileView.vue'),
       meta: { title: 'Projectile launcher · Space & Time Laboratory' },
     },
+    {
+      path: '/time/pendulum',
+      name: 'pendulum',
+      component: () => import('@/experiments/pendulum/PendulumClocksView.vue'),
+      meta: { title: 'Pendulum clocks · Space & Time Laboratory' },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: (to, from) => (to.path === from.path ? false : { top: 0 }),
