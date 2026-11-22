@@ -27,7 +27,11 @@ export const MODULES: readonly ModuleEntry[] = [
         summary: 'Move an object along a track, then stop it. Does time stop too?',
         path: '/space/space-vs-time',
       },
-      { title: 'Displacement in 3D', summary: 'Move an object through a 3D coordinate system and measure its displacement.' },
+      {
+        title: 'Displacement in 3D',
+        summary: 'Move an object through 3D space, measure its displacement, and find out what changing the coordinates does.',
+        path: '/space/displacement-3d',
+      },
     ],
   },
   {

@@ -49,6 +49,12 @@ export const router = createRouter({
       component: () => import('@/experiments/pendulum/PendulumClocksView.vue'),
       meta: { title: 'Pendulum clocks · Space & Time Laboratory' },
     },
+    {
+      path: '/space/displacement-3d',
+      name: 'displacement-3d',
+      component: () => import('@/experiments/displacement3d/Displacement3DView.vue'),
+      meta: { title: 'Displacement in 3D · Space & Time Laboratory' },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: (to, from) => (to.path === from.path ? false : { top: 0 }),
