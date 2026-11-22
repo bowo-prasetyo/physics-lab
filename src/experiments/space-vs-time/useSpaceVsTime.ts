@@ -7,6 +7,7 @@
 import { computed, ref, shallowRef, watch } from 'vue'
 import { MotionRun, type RunRecord } from '@/physics'
 import { useAnimationFrame } from '@/composables/useAnimationFrame'
+import type { ExperimentRun } from './runs'
 
 export const DURATION = 10 // s on the experiment clock
 export const BOUNDS = { min: -10, max: 10 } as const // m
@@ -38,10 +39,10 @@ export function snapToRange(value: unknown, range: { min: number; max: number; s
 export function useSpaceVsTime(initial: { x0: number; v: number }) {
   const x0 = ref(initial.x0)
   const v = ref(initial.v)
-  /** Velocity of the second (moving) observer, used at the advanced level. */
+  /** Velocity of the second (moving) observer, used at the advanced level. Fixed during a run. */
   const u = ref(0)
   const status = ref<RunStatus>('ready')
-  const history = ref<RunRecord[]>([])
+  const history = ref<ExperimentRun[]>([])
 
   let run = createRun()
   const snapshot = shallowRef<RunSnapshot>(takeSnapshot(run))
@@ -97,7 +98,7 @@ export function useSpaceVsTime(initial: { x0: number; v: number }) {
 
   /** Put the clock back to zero. The finished (or partial) run is kept for comparison. */
   function reset() {
-    if (run.t > 0) history.value = [...history.value, run.toRecord()].slice(-HISTORY_SIZE)
+    if (run.t > 0) history.value = [...history.value, { ...run.toRecord(), u: u.value }].slice(-HISTORY_SIZE)
     status.value = 'ready'
     run = createRun()
     refresh()
@@ -108,7 +109,7 @@ export function useSpaceVsTime(initial: { x0: number; v: number }) {
   }
 
   /** Every run performed so far, including the one in progress. */
-  const allRuns = computed<RunRecord[]>(() => [...history.value, snapshot.value.record])
+  const allRuns = computed<ExperimentRun[]>(() => [...history.value, { ...snapshot.value.record, u: u.value }])
 
   return { x0, v, u, status, history, snapshot, allRuns, start, pause, reset, clearHistory }
 }

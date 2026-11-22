@@ -10,6 +10,7 @@
 
 import { positionAtTime, type RunRecord } from '@/physics'
 import type { Level } from '@/levels'
+import type { ExperimentRun } from './runs'
 
 export interface PredictionOption {
   readonly id: string
@@ -27,13 +28,13 @@ export interface Prediction {
   readonly correct: string
   /** Shown after the observation, whatever the student predicted. */
   readonly explanation: string
-  readonly observed: (runs: readonly RunRecord[]) => boolean
+  readonly observed: (runs: readonly ExperimentRun[]) => boolean
   /**
    * Optional nudge for a near-miss: given the runs so far, explain what to do
    * differently when the student is trying but has not yet made the
    * observation. Returns null when there is nothing to say.
    */
-  readonly hint?: (runs: readonly RunRecord[]) => string | null
+  readonly hint?: (runs: readonly ExperimentRun[]) => string | null
 }
 
 /** Minimum clock time a run needs before it counts as an observation (s). */
@@ -91,6 +92,26 @@ export function reversalHint(runs: readonly RunRecord[]): string | null {
   )
 }
 
+/** The object stayed at rest (for long enough) while the second observer moved. */
+export function observedRestFromMovingFrame(runs: readonly ExperimentRun[]): boolean {
+  return runs.some((run) => openingVelocity(run) === 0 && run.u !== 0)
+}
+
+/** Near-misses for the moving-observer question: only one of the two settings was right. */
+export function movingFrameHint(runs: readonly ExperimentRun[]): string | null {
+  if (observedRestFromMovingFrame(runs)) return null
+  if (runs.some((run) => openingVelocity(run) === 0)) {
+    return (
+      'The object was at rest, but so was the observer (u = 0), so both saw the same flat line. ' +
+      'Press Reset, set the observer velocity to +2 m/s, then start the clock with v = 0.'
+    )
+  }
+  if (runs.some((run) => run.u !== 0 && run.tEnd >= MIN_OBSERVATION_TIME)) {
+    return 'The observer was moving, but so was the object. Press Reset, click "Set v = 0", keep u = +2 m/s and start the clock.'
+  }
+  return null
+}
+
 export const PREDICTIONS: readonly Prediction[] = [
   {
     id: 'rest',
@@ -145,5 +166,27 @@ export const PREDICTIONS: readonly Prediction[] = [
       'Distance is the length of the path, s = ∫|v| dt, and it never decreases. They agree only when the motion never reverses.',
     observed: observedReversal,
     hint: reversalHint,
+  },
+  {
+    id: 'moving-observer',
+    minLevel: 'advanced',
+    question:
+      'The object is at rest on the track (v = 0). A second observer moves along the track at u = +2 m/s. ' +
+      'In the observer’s own coordinates x′, what does the object’s position–time graph look like?',
+    task: 'Press Reset, set the starting position to x₀ = +6 m (so the line stays on the graph longer), v = 0 and the observer velocity u = +2 m/s. Let the clock run for at least 3 seconds and watch the orange dashed line.',
+    options: [
+      { id: 'flat', label: 'A horizontal line: the object is at rest, so it is at rest for everyone' },
+      { id: 'down', label: 'A line sloping downwards, with slope −2 m/s' },
+      { id: 'up', label: 'A line sloping upwards, with slope +2 m/s' },
+      { id: 'undefined', label: 'No line: a moving observer cannot assign the object a position' },
+    ],
+    correct: 'down',
+    explanation:
+      'The observer labels every event with x′ = x − u·t. With x = x₀ fixed, x′ = x₀ − u·t, a straight line with slope ' +
+      'v′ = v − u = −u (−2 m/s for u = +2 m/s): to the observer, the object slides backwards past them. Both descriptions are ' +
+      'correct, and Galilean physics picks neither as the true one, so "at rest" describes the object relative to a frame, not ' +
+      'the object alone. Notice what both observers still agree on: the time coordinate, t′ = t. In Module 4 even that fails.',
+    observed: observedRestFromMovingFrame,
+    hint: movingFrameHint,
   },
 ]

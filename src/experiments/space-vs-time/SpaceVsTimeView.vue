@@ -12,7 +12,7 @@ import SpaceVsTimeMath from './SpaceVsTimeMath.vue'
 import { PREDICTIONS } from './predictions'
 import { BOUNDS, DURATION, U_RANGE, V_RANGE, X0_RANGE, snapToRange, useSpaceVsTime } from './useSpaceVsTime'
 import { useLevel } from '@/composables/useLevel'
-import { atLeast } from '@/levels'
+import { atLeast, isLevel } from '@/levels'
 
 const route = useRoute()
 const router = useRouter()
@@ -25,6 +25,8 @@ const experiment = useSpaceVsTime({
 })
 const { x0, v, u, status, history, snapshot, allRuns, start, pause, reset, clearHistory } = experiment
 u.value = snapToRange(route.query.u, U_RANGE, 0)
+// The level is part of the link too, so a teacher can share e.g. the Advanced version.
+if (isLevel(route.query.level)) level.value = route.query.level
 
 const advanced = computed(() => atLeast(level.value, 'advanced'))
 const observerVelocity = computed(() => (advanced.value && u.value !== 0 ? u.value : null))
@@ -75,6 +77,7 @@ watch(
   () => route.query,
   (query) => {
     if (JSON.stringify(query) === ownQuery) return
+    if (isLevel(query.level)) level.value = query.level
     const next = {
       x0: snapToRange(query.x0, X0_RANGE, x0.value),
       v: snapToRange(query.v, V_RANGE, v.value),
@@ -90,10 +93,10 @@ watch(
 
 // Keep the URL in sync so a teacher can share an exact setup.
 let urlTimer: ReturnType<typeof setTimeout> | undefined
-watch([x0, v, u], () => {
+watch([x0, v, u, level], () => {
   clearTimeout(urlTimer)
   urlTimer = setTimeout(() => {
-    const query: Record<string, string> = { x0: String(x0.value), v: String(v.value) }
+    const query: Record<string, string> = { level: level.value, x0: String(x0.value), v: String(v.value) }
     if (u.value !== 0) query.u = String(u.value)
     ownQuery = JSON.stringify(query)
     router.replace({ query })
@@ -182,7 +185,12 @@ async function copyLink() {
             symbol="u"
             unit="m/s"
             v-bind="U_RANGE"
-            hint="A second observer moving along the track, starting from x = 0 at t = 0."
+            :disabled="status !== 'ready'"
+            :hint="
+              status === 'ready'
+                ? 'A second observer moving along the track, passing x = 0 at t = 0. Fixed for the whole run.'
+                : 'Reset the clock to change the observer’s velocity.'
+            "
           />
 
           <dl class="readouts">
