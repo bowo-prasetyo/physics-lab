@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import LevelSwitcher from '@/components/LevelSwitcher.vue'
+
+const logo = `${import.meta.env.BASE_URL}favicon.svg`
 </script>
 
 <template>
   <header class="app-header">
     <div class="container header-inner">
       <RouterLink to="/" class="brand">
-        <img src="/favicon.svg" alt="" width="28" height="28" />
+        <img :src="logo" alt="" width="28" height="28" />
         <span>Space &amp; Time Laboratory</span>
       </RouterLink>
       <LevelSwitcher />
