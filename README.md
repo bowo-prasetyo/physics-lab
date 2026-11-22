@@ -21,6 +21,12 @@ Seven experiments are complete, at least one in each of the six modules. Further
 - Velocity changes mid-run, and ends of the track where the object stops while the clock keeps running.
 - A second, moving observer at the Advanced level, showing that rest depends on the frame of reference.
 
+**Displacement in 3D** (Module 1):
+- Move an object through 3D space with 1 m steps, by typing a point, or with example journeys, in a Three.js scene you can turn and zoom, or look at from above, the front or the side.
+- Live readouts of position, displacement Δr, its size |Δr| and the distance travelled; the components of Δr are drawn as dashed lines.
+- At Intermediate: a second coordinate system that can be moved and turned (and tilted at Advanced). Every coordinate changes; the length of the displacement does not.
+- At Advanced: the rotation matrix, the invariant dot product, direction cosines, and the triangle inequality, which spacetime reverses (the twin paradox).
+
 **Experiment B, Different clocks, different elapsed times** (Module 4):
 - A spacetime diagram (time up, light at 45°) of an Earth clock and a ship clock passing at up to 0.99c. Dots mark each second on each clock.
 - A "Seen from" switch between the Earth's and the ship's frame, showing that time dilation is reciprocal.
@@ -104,7 +110,8 @@ src/
 │   ├── gravity.ts          Schwarzschild clock rates (precision-safe), light signals, ruler distance, GPS breakdown
 │   ├── cosmology.ts        Friedmann equation, tabulated a(t), Hubble rate, deceleration, redshift
 │   ├── projectile.ts       Exact projectile motion; quadratic drag integrated with RK4; best angle
-│   └── pendulum.ts         Pendulum periods (small-angle and exact via the AGM); Störmer–Verlet integration
+│   ├── pendulum.ts         Pendulum periods (small-angle and exact via the AGM); Störmer–Verlet integration
+│   └── space3d.ts          Path length, displacement, rotated and shifted coordinate systems, direction angles
 ├── experiments/
 │   ├── prediction.ts       Shared predict–observe–explain types
 │   ├── space-vs-time/      Experiment A: state composable, predictions, maths, page
@@ -113,8 +120,9 @@ src/
 │   ├── gravity-clocks/     Experiment C: state composable, formatting, predictions, maths, page
 │   ├── evolving-space/     Experiment D: state composable, predictions, maths, page
 │   ├── projectile/         Projectile launcher: state composable, predictions, maths, page
-│   └── pendulum/           Pendulum clocks: state composable, predictions, maths, page
-├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, clock-rate chart, galaxy field, scale-factor chart, trajectory view, pendulum, phase portrait, line chart, sliders, prediction card, KaTeX
+│   ├── pendulum/           Pendulum clocks: state composable, predictions, maths, page
+│   └── displacement3d/     Displacement in 3D: state composable, predictions, maths, page
+├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, clock-rate chart, galaxy field, scale-factor chart, trajectory view, pendulum, phase portrait, line chart, 3D scene (Three.js), sliders, prediction card, KaTeX
 ├── composables/          Animation loop, shared level setting, URL sync
 ├── styles/               Design tokens (main.css) and layout shared by lesson pages (lesson.css)
 ├── views/                Home page
@@ -143,7 +151,7 @@ src/
 
 ## Technology
 
-Vue 3, Vue Router, TypeScript, Vite, KaTeX and Vitest. Graphs are hand-written SVG, which keeps them small, sharp and themeable. Three.js is planned for the 3D experiments.
+Vue 3, Vue Router, TypeScript, Vite, KaTeX and Vitest. Graphs are hand-written SVG, which keeps them small, sharp and themeable. Three.js draws the 3D scene; it is loaded only on the page that uses it, so the rest of the site stays light.
 
 ## License
 

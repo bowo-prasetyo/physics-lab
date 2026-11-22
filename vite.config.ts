@@ -8,6 +8,11 @@ export default defineConfig({
   // from any folder on a school server.
   base: './',
   plugins: [vue()],
+  build: {
+    // The 3D scene's chunk is mostly Three.js (about 140 kB gzipped). It is
+    // loaded only by the page that draws in 3D, so a larger limit is fine.
+    chunkSizeWarningLimit: 600,
+  },
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },

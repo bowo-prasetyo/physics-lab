@@ -1,0 +1,427 @@
+<script setup lang="ts">
+import { computed, defineAsyncComponent, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import ParameterSlider from '@/components/ParameterSlider.vue'
+import PredictionCard from '@/components/PredictionCard.vue'
+import InfoCallout from '@/components/InfoCallout.vue'
+import Displacement3DMath from './Displacement3DMath.vue'
+import { PREDICTIONS } from './predictions'
+import { BOUND, PITCH_RANGE, PRESETS, SHIFT_RANGE, YAW_RANGE, useDisplacement3D, type Axis } from './useDisplacement3D'
+import type { View } from '@/components/Scene3D.vue'
+import { vec3, type Vec3 } from '@/physics'
+import { useLevel } from '@/composables/useLevel'
+import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
+import type { LocationQuery } from 'vue-router'
+import { atLeast, isLevel } from '@/levels'
+
+// Three.js is large; it is only downloaded for this page.
+const Scene3D = defineAsyncComponent(() => import('@/components/Scene3D.vue'))
+
+const route = useRoute()
+const level = useLevel()
+
+const { points, shift, yaw, pitch, frame, frameIsStandard, current, start, displacement, distance, size, inFrame, snapshots, moveTo, step, undo, restart, loadPreset, resetFrame } =
+  useDisplacement3D()
+
+// The level and the second coordinate system can be shared as a link,
+// e.g. #/space/displacement-3d?level=intermediate&ox=2&oy=0&oz=0&yaw=40&pitch=0
+function readQuery(query: LocationQuery) {
+  if (isLevel(query.level)) level.value = query.level
+  shift.value.x = snapToRange(query.ox, SHIFT_RANGE, 0)
+  shift.value.y = snapToRange(query.oy, SHIFT_RANGE, 0)
+  shift.value.z = snapToRange(query.oz, SHIFT_RANGE, 0)
+  yaw.value = snapToRange(query.yaw, YAW_RANGE, 0)
+  pitch.value = snapToRange(query.pitch, PITCH_RANGE, 0)
+}
+readQuery(route.query)
+useQuerySync({
+  sources: [level, frame],
+  write: () => ({
+    level: level.value,
+    ox: String(shift.value.x),
+    oy: String(shift.value.y),
+    oz: String(shift.value.z),
+    yaw: String(yaw.value),
+    pitch: String(pitch.value),
+  }),
+  read: readQuery,
+})
+
+// The tilt slider exists only at Advanced, so a tilt must not linger out of sight.
+watch(
+  level,
+  (l) => {
+    if (!atLeast(l, 'advanced')) pitch.value = 0
+  },
+  { immediate: true },
+)
+
+const predictions = computed(() => PREDICTIONS.filter((p) => atLeast(level.value, p.minLevel)))
+const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(snapshots.value)])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(snapshots.value) ?? null])))
+
+const intermediate = computed(() => atLeast(level.value, 'intermediate'))
+const advanced = computed(() => atLeast(level.value, 'advanced'))
+
+const view = ref<View>('3d')
+const viewKey = ref(0)
+function setView(v: View) {
+  view.value = v
+  viewKey.value++
+}
+
+const target = ref({ x: 0, y: 0, z: 0 })
+function goToTarget() {
+  moveTo(vec3(Number(target.value.x) || 0, Number(target.value.y) || 0, Number(target.value.z) || 0))
+}
+
+const AXES: Axis[] = ['x', 'y', 'z']
+const fmt = (x: number, digits = 2) => {
+  const v = Number(x.toFixed(digits))
+  return (v < 0 ? '−' : '') + Math.abs(v).toString()
+}
+const vec = (v: Vec3) => `(${fmt(v.x)}, ${fmt(v.y)}, ${fmt(v.z)})`
+const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
+</script>
+
+<template>
+  <article class="lesson container">
+    <header class="lesson-head">
+      <p class="eyebrow">Module 1 · Understanding space · Displacement in 3D</p>
+      <h1>Displacement in 3D</h1>
+      <p class="lead">
+        Move an object through three-dimensional space and measure where it ends up. Then change the coordinate system and find out which
+        numbers change, and which belong to space itself.
+      </p>
+    </header>
+
+    <section aria-labelledby="predict-title">
+      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
+      <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
+      <div class="prediction-grid">
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
+      </div>
+    </section>
+
+    <section aria-labelledby="experiment-title">
+      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <div class="lab">
+        <div class="lab-main card">
+          <div class="views" role="group" aria-label="Camera">
+            <span class="muted small">View</span>
+            <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">
+              {{ v === '3d' ? '3D' : v === 'top' ? 'From above' : v === 'front' ? 'From the front' : 'From the side' }}
+            </button>
+          </div>
+          <Scene3D
+            :points="points"
+            :bound="BOUND"
+            :frame="frame"
+            :show-frame="showFrame"
+            :show-components="intermediate"
+            :view="view"
+            :view-key="viewKey"
+          />
+          <p class="muted small">
+            Drag to turn the view, scroll or pinch to zoom. z points up. The orange arrow is the displacement Δr from the green start to the blue
+            object.
+            <template v-if="intermediate"> Dashed lines show its x, y and z components.</template>
+          </p>
+        </div>
+
+        <div class="lab-side card">
+          <div class="moves">
+            <p class="group-title">Move the object (1 m steps)</p>
+            <div v-for="axis in AXES" :key="axis" class="move-row">
+              <button class="btn btn-small" type="button" :aria-label="`Move −1 m along ${axis}`" @click="step(axis, -1)">− {{ axis }}</button>
+              <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
+              <button class="btn btn-small" type="button" :aria-label="`Move +1 m along ${axis}`" @click="step(axis, 1)">+ {{ axis }}</button>
+            </div>
+          </div>
+          <form class="goto" @submit.prevent="goToTarget">
+            <p class="group-title">Or go straight to a point</p>
+            <div class="goto-row">
+              <label v-for="axis in AXES" :key="axis">
+                <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
+                <input v-model.number="target[axis]" type="number" :min="-BOUND" :max="BOUND" step="0.5" />
+              </label>
+              <button class="btn btn-small" type="submit">Go</button>
+            </div>
+          </form>
+          <div class="journey-buttons">
+            <button class="btn btn-small" type="button" :disabled="points.length < 2" @click="undo">Undo move</button>
+            <button class="btn btn-small" type="button" @click="restart(false)">New journey from here</button>
+            <button class="btn btn-small" type="button" @click="restart(true)">Back to the origin</button>
+          </div>
+          <div class="presets">
+            <span class="muted small">Example journeys</span>
+            <button v-for="p in PRESETS" :key="p.id" type="button" class="chip" @click="loadPreset(p.id)">{{ p.label }}</button>
+          </div>
+
+          <dl class="readouts">
+            <div><dt>Position r</dt><dd class="num">{{ vec(current) }}</dd></div>
+            <div><dt>Moves</dt><dd class="num">{{ points.length - 1 }}</dd></div>
+            <div class="highlight"><dt>Displacement Δr</dt><dd class="num">{{ vec(displacement) }}</dd></div>
+            <div class="highlight"><dt>Size |Δr|</dt><dd class="num">{{ fmt(size, 3) }} m</dd></div>
+            <div><dt>Distance travelled</dt><dd class="num">{{ fmt(distance, 3) }} m</dd></div>
+          </dl>
+
+          <div v-if="intermediate" class="frame">
+            <p class="group-title">A second coordinate system (x′, y′, z′)</p>
+            <ParameterSlider v-model="shift.x" label="Origin moved, x" symbol="O_x" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
+            <ParameterSlider v-model="shift.y" label="Origin moved, y" symbol="O_y" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
+            <ParameterSlider v-model="shift.z" label="Origin moved, z" symbol="O_z" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
+            <ParameterSlider v-model="yaw" label="Axes turned about z" symbol="\varphi" unit="°" v-bind="YAW_RANGE" :digits="0" />
+            <ParameterSlider v-if="advanced" v-model="pitch" label="Axes tilted" symbol="\psi" unit="°" v-bind="PITCH_RANGE" :digits="0" />
+            <button class="btn btn-small" type="button" :disabled="frameIsStandard" @click="resetFrame">Reset to the original axes</button>
+            <dl v-if="!frameIsStandard" class="readouts primed">
+              <div><dt>Position r′</dt><dd class="num">{{ vec(inFrame.current) }}</dd></div>
+              <div><dt>Displacement Δr′</dt><dd class="num">{{ vec(inFrame.displacement) }}</dd></div>
+              <div><dt>Size |Δr′|</dt><dd class="num">{{ fmt(Math.hypot(inFrame.displacement.x, inFrame.displacement.y, inFrame.displacement.z), 3) }} m</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="maths-title" class="card prose">
+      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <Displacement3DMath
+        :level="level"
+        :start="start"
+        :end="current"
+        :displacement="displacement"
+        :primed="inFrame.displacement"
+        :distance="distance"
+        :yaw-deg="yaw"
+        :frame-is-standard="frameIsStandard"
+      />
+    </section>
+
+    <section aria-labelledby="meaning-title" class="card prose">
+      <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
+      <div class="meaning">
+        <InfoCallout kind="physics" title="Established physics">
+          <ul>
+            <li>Over everyday distances, space is described extremely well by Euclidean geometry: Pythagoras holds, and triangles have angles adding up to 180°.</li>
+            <li>Coordinates are a human choice; distances, lengths and angles are not. Physical laws are written so that they do not depend on the choice.</li>
+            <li>Near massive bodies space is very slightly curved, and Euclidean geometry is only an approximation (Experiment C).</li>
+          </ul>
+        </InfoCallout>
+        <InfoCallout kind="interpretation" title="Interpretation: open to debate">
+          <ul>
+            <li>
+              <strong>Is space a thing, or only relations between things?</strong> Newton treated space as a container that exists even when empty;
+              Leibniz argued that only the distances and directions between objects are real. Their followers debated it in letters in 1715–16,
+              and the question is still discussed.
+            </li>
+            <li>
+              <strong>Why three dimensions?</strong> Every observation so far fits three. Some theories propose extra dimensions too small to
+              notice, but there is no evidence for them yet.
+            </li>
+          </ul>
+        </InfoCallout>
+      </div>
+    </section>
+
+    <nav class="next card" aria-label="Next steps">
+      <p><strong>Next:</strong> Experiment A adds time to position, and Experiment E compares space and time with spacetime.</p>
+      <span class="nav-links">
+        <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">Experiment E</RouterLink>
+        <RouterLink to="/">All modules</RouterLink>
+      </span>
+    </nav>
+  </article>
+</template>
+
+<style scoped>
+.lab {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: start;
+}
+
+.lab-main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.lab-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 76px;
+  max-height: calc(100vh - 92px);
+  overflow-y: auto;
+}
+
+.small {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.views,
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip {
+  padding: 2px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.chip.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.group-title {
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.move-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.axis-name {
+  font-weight: 800;
+  text-align: center;
+  min-width: 1.5em;
+}
+
+.axis-x {
+  color: #e5484d;
+}
+
+.axis-y {
+  color: #30a46c;
+}
+
+.axis-z {
+  color: #3e63dd;
+}
+
+.goto-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.goto-row label {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+}
+
+.goto-row input {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.journey-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.btn-small {
+  min-height: 34px;
+  padding: 0 10px;
+  font-size: 0.85rem;
+}
+
+.readouts {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.readouts div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.readouts dt {
+  color: var(--text-muted);
+}
+
+.readouts dd {
+  margin: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.highlight dt,
+.highlight dd {
+  color: var(--observer);
+}
+
+.frame {
+  display: grid;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.primed dt,
+.primed dd {
+  color: var(--text);
+}
+
+.nav-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .lab {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-side {
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 14px;
+  }
+
+  .prediction-grid,
+  .meaning {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
