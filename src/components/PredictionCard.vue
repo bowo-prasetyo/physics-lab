@@ -2,7 +2,7 @@
 import { computed, ref, useId } from 'vue'
 import type { Prediction } from '@/experiments/space-vs-time/predictions'
 
-const props = defineProps<{ prediction: Prediction; observed: boolean; index: number }>()
+const props = defineProps<{ prediction: Prediction; observed: boolean; index: number; hint?: string | null }>()
 
 const id = useId()
 const selected = ref<string | null>(null)
@@ -49,6 +49,7 @@ function retry() {
     <div v-else-if="stage === 'observe'" class="observe">
       <p><strong>Your prediction:</strong> {{ chosen?.label }}</p>
       <p class="task"><span class="pill">Now test it</span> {{ prediction.task }}</p>
+      <p v-if="hint" class="hint" role="status">{{ hint }}</p>
     </div>
 
     <div v-else class="explain" aria-live="polite">
@@ -141,6 +142,14 @@ fieldset {
   color: var(--warn);
   font-size: 0.78rem;
   font-weight: 700;
+}
+
+.hint {
+  border-left: 3px solid var(--warn);
+  background: var(--warn-soft);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 0.92rem;
 }
 
 .verdict {
