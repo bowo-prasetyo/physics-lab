@@ -22,6 +22,11 @@ const props = defineProps<{
   view: View
   /** Changes to this number re-apply `view` even if it is unchanged. */
   viewKey: number
+  /**
+   * Compass words for the axes, e.g. { x: ['west', 'east'] }: shown at the
+   * negative and positive end of each axis. Omit for plain x, y, z.
+   */
+  directions?: Partial<Record<'x' | 'y' | 'z', readonly [string, string]>>
 }>()
 
 const container = ref<HTMLDivElement | null>(null)
@@ -95,8 +100,15 @@ function buildStatic(): THREE.Group {
     cone.position.copy(dir.clone().multiplyScalar(n + 0.4))
     cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir)
     g.add(cone)
-    g.add(label(axis, `axis axis-${axis}`, dir.clone().multiplyScalar(n + 1.4)))
-    for (const t of [-8, -4, 4, 8]) if (Math.abs(t) < n) g.add(label(String(t), 'tick', dir.clone().multiplyScalar(t)))
+    const words = props.directions?.[axis]
+    const axisLabels = [label(words ? `${axis} · ${words[1]}` : axis, `axis axis-${axis}`, dir.clone().multiplyScalar(n + (words && axis !== 'z' ? 2.8 : 1.4)))]
+    // (A longer label is centred further out so it clears the arrowhead.)
+    if (words) axisLabels.push(label(words[0], 'direction', dir.clone().multiplyScalar(-n - 1)))
+    for (const t of [-8, -4, 4, 8]) if (Math.abs(t) < n) axisLabels.push(label(String(t), 'tick', dir.clone().multiplyScalar(t)))
+    for (const l of axisLabels) {
+      l.userData.axis = dir
+      g.add(l)
+    }
   }
   return g
 }
@@ -171,8 +183,21 @@ function buildDynamic() {
   }
 }
 
+const viewDirection = new THREE.Vector3()
+
+/** Hide an axis's labels while it points (almost) at the viewer: they would all pile up in the middle. */
+function hideEndOnLabels() {
+  if (!staticGroup) return
+  camera.getWorldDirection(viewDirection)
+  for (const child of staticGroup.children) {
+    const axis = child.userData.axis as THREE.Vector3 | undefined
+    if (axis) child.visible = Math.abs(axis.dot(viewDirection)) < 0.95
+  }
+}
+
 function render() {
   if (!renderer || !labels) return
+  hideEndOnLabels()
   renderer.render(scene, camera)
   labels.render(scene, camera)
 }
@@ -299,6 +324,8 @@ onBeforeUnmount(() => {
 
 .scene {
   position: relative;
+  /* The label renderer gives each label its own z-index; keep them below the sticky site header. */
+  isolation: isolate;
   width: 100%;
   border-radius: var(--radius-sm);
   background: var(--surface-2);
@@ -337,6 +364,12 @@ onBeforeUnmount(() => {
 
 .scene :deep(.axis-z) {
   color: #3e63dd;
+}
+
+.scene :deep(.direction) {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
 .scene :deep(.tick) {
