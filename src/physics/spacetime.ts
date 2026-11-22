@@ -102,3 +102,19 @@ export function properTimeTicks(w: number, maxT: number, step = 1): (Event1D & {
 export function simultaneousTimeAt(w: number, event: Event1D, x: number): number {
   return event.t + w * (x - event.x)
 }
+
+/**
+ * The same Lorentz boost written in spacetime form: a hyperbolic rotation of
+ * the 4-vector (ct, x) by the rapidity φ = artanh β,
+ *
+ *   ct' = ct cosh φ − x sinh φ,   x' = x cosh φ − ct sinh φ.
+ *
+ * Numerically identical to `lorentzBoost`, but computed from the geometry
+ * rather than from γ and β, so the two descriptions can be checked against
+ * each other.
+ */
+export function boostByRapidity(event: Event1D, phi: number): Event1D {
+  const ch = Math.cosh(phi)
+  const sh = Math.sinh(phi)
+  return { t: event.t * ch - event.x * sh, x: event.x * ch - event.t * sh }
+}

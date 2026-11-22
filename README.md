@@ -14,7 +14,7 @@ The same phenomenon is offered at three mathematical levels (Beginner, Intermedi
 
 ## Status
 
-Two experiments are complete. The other modules are listed in the app as planned.
+Three experiments are complete. The other modules are listed in the app as planned.
 
 **Experiment A, Space versus time** (Module 1):
 - A track and a live position–time graph, with earlier runs overlaid for comparison.
@@ -27,7 +27,13 @@ Two experiments are complete. The other modules are listed in the app as planned
 - From Intermediate on, the moving observer's tilted line of "now" (relativity of simultaneity). At Advanced, the invariant interval s² = τ².
 - A section separating established physics (muons, Hafele–Keating, GPS) from interpretation (is there a universal "now"?), and a note on seeing versus measuring.
 
-Both experiments include:
+**Experiment E, Space and time versus spacetime** ("Two perspectives", Module 4):
+- Three situations (a ship's headlight, two lightning flashes, a moving clock) and a ship speed up to 0.99c.
+- Three descriptions side by side: Galilean (space + absolute time), space + time related by Lorentz transformations, and spacetime (4-vectors, the interval, boosts as rapidity rotations). Each shows its working with the student's numbers and its prediction.
+- A "Make the measurement" step reveals what experiments find, with the evidence, and marks each prediction as matching or not. A chart shows all three predictions at every speed.
+- The lesson: Galilean physics is the low-speed limit, except for light. The two relativistic descriptions agree on every measurement, so the question of whether spacetime is fundamental is one of interpretation.
+
+All experiments include:
 - Predict–observe–explain cards. Each explanation unlocks only after the student has performed the experiment that tests it, with hints for near-misses. Every level adds questions of its own.
 - Mathematics at three levels, with worked examples using the student's own numbers.
 - Shareable links that encode the level and the exact setup, e.g. `#/relativity/moving-clocks?level=advanced&beta=0.8&frame=ship`.
@@ -69,12 +75,14 @@ src/
 │   ├── frames.ts           Events and Galilean transformations
 │   ├── motionRun.ts        Piecewise-uniform experiment run (exact, frame-rate independent)
 │   ├── relativity.ts       Lorentz factor (numerically stable γ − 1)
-│   └── spacetime.ts        Lorentz boosts, interval, velocity addition, proper time, simultaneity (c = 1)
+│   ├── spacetime.ts        Lorentz boosts, interval, velocity addition, proper time, simultaneity (c = 1)
+│   └── descriptions.ts     The same predictions computed three ways: Galilean, Lorentz, spacetime
 ├── experiments/
 │   ├── prediction.ts       Shared predict–observe–explain types
 │   ├── space-vs-time/      Experiment A: state composable, predictions, maths, page
-│   └── moving-clocks/      Experiment B: state composable, predictions, maths, page
-├── components/           Reusable UI: graphs, track, spacetime diagram, sliders, prediction card, KaTeX
+│   ├── moving-clocks/      Experiment B: state composable, predictions, maths, page
+│   └── two-perspectives/   Experiment E: state composable, content and derivations, predictions, maths, page
+├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, sliders, prediction card, KaTeX
 ├── composables/          Animation loop, shared level setting, URL sync
 ├── views/                Home page
 ├── levels.ts             Beginner / Intermediate / Advanced
