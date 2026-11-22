@@ -14,7 +14,7 @@ The same phenomenon is offered at three mathematical levels (Beginner, Intermedi
 
 ## Status
 
-Six experiments are complete, in Modules 1, 3, 4, 5 and 6. Module 2 (time) and further experiments are listed in the app as planned.
+Seven experiments are complete, at least one in each of the six modules. Further experiments are listed in the app as planned.
 
 **Experiment A, Space versus time** (Module 1):
 - A track and a live position–time graph, with earlier runs overlaid for comparison.
@@ -50,6 +50,12 @@ Six experiments are complete, in Modules 1, 3, 4, 5 and 6. Module 2 (time) and f
 - A to-scale view with earlier throws kept for comparison, and live graphs of height and velocity against time.
 - Watch from the ground or from a moving train (Galilean frames): matched to the ball's horizontal speed, the train sees it go straight up and down.
 - At Advanced: energy lost to the air and the best launch angle for the current settings.
+
+**Pendulum clocks** (Module 2):
+- A pendulum drawn to scale, with adjustable length, release angle, bob mass and world. It is integrated live with the symplectic Störmer–Verlet method, and its period is measured from successive swings.
+- A pendulum clock adjusted on the Earth runs beside an atomic clock, showing how far it drifts on other worlds or with wide swings.
+- A graph of the angle against time; at Advanced, a phase portrait and the exact (elliptic-integral) period.
+- Leads to the question behind the whole lab: if every clock is a physical process, what is time?
 
 All experiments include:
 - Predict–observe–explain cards. Each explanation unlocks only after the student has performed the experiment that tests it, with hints for near-misses. Every level adds questions of its own.
@@ -97,7 +103,8 @@ src/
 │   ├── descriptions.ts     The same predictions computed three ways: Galilean, Lorentz, spacetime
 │   ├── gravity.ts          Schwarzschild clock rates (precision-safe), light signals, ruler distance, GPS breakdown
 │   ├── cosmology.ts        Friedmann equation, tabulated a(t), Hubble rate, deceleration, redshift
-│   └── projectile.ts       Exact projectile motion; quadratic drag integrated with RK4; best angle
+│   ├── projectile.ts       Exact projectile motion; quadratic drag integrated with RK4; best angle
+│   └── pendulum.ts         Pendulum periods (small-angle and exact via the AGM); Störmer–Verlet integration
 ├── experiments/
 │   ├── prediction.ts       Shared predict–observe–explain types
 │   ├── space-vs-time/      Experiment A: state composable, predictions, maths, page
@@ -105,8 +112,9 @@ src/
 │   ├── two-perspectives/   Experiment E: state composable, content and derivations, predictions, maths, page
 │   ├── gravity-clocks/     Experiment C: state composable, formatting, predictions, maths, page
 │   ├── evolving-space/     Experiment D: state composable, predictions, maths, page
-│   └── projectile/         Projectile launcher: state composable, predictions, maths, page
-├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, clock-rate chart, galaxy field, scale-factor chart, trajectory view, line chart, sliders, prediction card, KaTeX
+│   ├── projectile/         Projectile launcher: state composable, predictions, maths, page
+│   └── pendulum/           Pendulum clocks: state composable, predictions, maths, page
+├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, clock-rate chart, galaxy field, scale-factor chart, trajectory view, pendulum, phase portrait, line chart, sliders, prediction card, KaTeX
 ├── composables/          Animation loop, shared level setting, URL sync
 ├── styles/               Design tokens (main.css) and layout shared by lesson pages (lesson.css)
 ├── views/                Home page
@@ -119,7 +127,7 @@ src/
 - `tsconfig.physics.json` compiles `src/physics` without the DOM library, so any browser API is a type error.
 - `architecture.test.ts` fails if a physics file imports anything outside `src/physics`.
 
-**Physics is computed exactly where possible.** Uniform motion uses its closed-form solution, so results do not depend on the animation frame rate. Tests check this explicitly. Where numerical integration is needed (the Friedmann equation, projectiles with air resistance), the result is tested against the exact solutions that exist for special cases, and RK4 is checked to be fourth order. Future orbit simulations should use a symplectic method such as velocity Verlet, so that energy does not drift.
+**Physics is computed exactly where possible.** Uniform motion uses its closed-form solution, so results do not depend on the animation frame rate. Tests check this explicitly. Where numerical integration is needed (the Friedmann equation, projectiles with air resistance, the pendulum), the result is tested against the exact solutions that exist for special cases. RK4 is checked to be fourth order, and the pendulum's symplectic Störmer–Verlet integrator is checked to keep its energy error bounded while RK4's grows. Use a symplectic method for anything that oscillates or orbits for a long time.
 
 **Prediction gates are pure functions.** Each prediction's `observed(runs)` test decides when a student has done the relevant experiment. These functions are unit-tested.
 
