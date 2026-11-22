@@ -50,7 +50,11 @@ Other scripts:
 | `npm run build` | Type-check, then build static files into `dist/` |
 | `npm run preview` | Serve the production build locally |
 
-The build is fully static and uses hash-based routes, so `dist/` can be hosted anywhere (GitHub Pages, a school web server, a network share) without server configuration.
+The build is fully static and uses hash-based routes with relative asset paths, so `dist/` can be hosted anywhere (GitHub Pages, a school web server, a network share) without server configuration.
+
+## Deployment
+
+Every push to `main` is tested, built and published to GitHub Pages by `.github/workflows/deploy.yml`. This requires a one-time setting: **Settings → Pages → Build and deployment → Source: GitHub Actions**. With the "Deploy from a branch" source, Pages serves the unbuilt source files and the site is blank.
 
 ## Architecture
 
