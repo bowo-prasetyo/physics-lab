@@ -1,0 +1,24 @@
+{
+  // The physics engine is pure TypeScript: no DOM, no Vue, no rendering.
+  // Omitting the DOM lib makes any accidental browser dependency a type error.
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.physics.tsbuildinfo",
+    "outDir": "./node_modules/.tmp/physics",
+    "emitDeclarationOnly": true,
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "types": [],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/physics/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"]
+}

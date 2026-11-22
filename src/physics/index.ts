@@ -1,0 +1,14 @@
+/**
+ * Physics engine public API.
+ *
+ * Everything under src/physics is framework-independent TypeScript: it has no
+ * access to the DOM, Vue or any rendering library (enforced by
+ * tsconfig.physics.json). Visualisations consume these models; the models
+ * never know how they are drawn.
+ */
+
+export * from './vector'
+export * from './kinematics'
+export * from './frames'
+export * from './motionRun'
+export * from './relativity'
