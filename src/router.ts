@@ -37,6 +37,12 @@ export const router = createRouter({
       component: () => import('@/experiments/evolving-space/EvolvingSpaceView.vue'),
       meta: { title: 'Evolving space · Space & Time Laboratory' },
     },
+    {
+      path: '/mechanics/projectile',
+      name: 'projectile',
+      component: () => import('@/experiments/projectile/ProjectileView.vue'),
+      meta: { title: 'Projectile launcher · Space & Time Laboratory' },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: (to, from) => (to.path === from.path ? false : { top: 0 }),
