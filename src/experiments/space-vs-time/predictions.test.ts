@@ -1,6 +1,16 @@
 import { describe, expect, it } from 'vitest'
 import { MotionRun, type RunRecord } from '@/physics'
-import { PREDICTIONS, observedDoubling, observedRest, observedReversal, reversalHint } from './predictions'
+import { LEVELS } from '@/levels'
+import type { ExperimentRun } from './runs'
+import {
+  PREDICTIONS,
+  movingFrameHint,
+  observedDoubling,
+  observedRest,
+  observedRestFromMovingFrame,
+  observedReversal,
+  reversalHint,
+} from './predictions'
 
 const bounds = { min: -10, max: 10 }
 
@@ -62,6 +72,30 @@ describe('prediction observation tests', () => {
     run.setVelocity(-2)
     run.advance(3)
     expect(reversalHint([uniformRun(-2, 3), run.toRecord()])).toBeNull()
+  })
+
+  it('moving-observer question needs the object at rest while the observer moves', () => {
+    const withObserver = (run: RunRecord, u: number): ExperimentRun => ({ ...run, u })
+    expect(observedRestFromMovingFrame([withObserver(uniformRun(0, 4), 2)])).toBe(true)
+    expect(observedRestFromMovingFrame([withObserver(uniformRun(0, 4), 0)])).toBe(false) // observer not moving
+    expect(observedRestFromMovingFrame([withObserver(uniformRun(1.5, 4), 2)])).toBe(false) // object not at rest
+    expect(observedRestFromMovingFrame([withObserver(uniformRun(0, 1), 2)])).toBe(false) // too short
+  })
+
+  it('moving-observer hints name the setting that was wrong', () => {
+    const withObserver = (run: RunRecord, u: number): ExperimentRun => ({ ...run, u })
+    expect(movingFrameHint([])).toBeNull()
+    expect(movingFrameHint([withObserver(uniformRun(0, 4), 0)])).toMatch(/observer velocity/)
+    expect(movingFrameHint([withObserver(uniformRun(1.5, 4), 2)])).toMatch(/Set v = 0/)
+    expect(movingFrameHint([withObserver(uniformRun(0, 4), 2)])).toBeNull()
+  })
+
+  it('every level adds at least one prediction of its own', () => {
+    for (const level of LEVELS) expect(PREDICTIONS.some((p) => p.minLevel === level.id)).toBe(true)
+  })
+
+  it('prediction ids are unique', () => {
+    expect(new Set(PREDICTIONS.map((p) => p.id)).size).toBe(PREDICTIONS.length)
   })
 
   it('every prediction lists its correct answer among the options', () => {
