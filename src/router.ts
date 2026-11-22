@@ -19,6 +19,12 @@ export const router = createRouter({
       component: () => import('@/experiments/moving-clocks/MovingClocksView.vue'),
       meta: { title: 'Different clocks, different elapsed times · Space & Time Laboratory' },
     },
+    {
+      path: '/relativity/two-perspectives',
+      name: 'two-perspectives',
+      component: () => import('@/experiments/two-perspectives/TwoPerspectivesView.vue'),
+      meta: { title: 'Space and time versus spacetime · Space & Time Laboratory' },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: (to, from) => (to.path === from.path ? false : { top: 0 }),

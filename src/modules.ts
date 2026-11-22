@@ -55,7 +55,11 @@ export const MODULES: readonly ModuleEntry[] = [
         summary: 'A spaceship passes the Earth. Compare their clocks on a spacetime diagram, from either point of view.',
         path: '/relativity/moving-clocks',
       },
-      { title: 'E · Space and time versus spacetime', summary: 'Describe one situation three ways: Galilean, 3 + 1 with Lorentz, and 4-vectors.' },
+      {
+        title: 'E · Space and time versus spacetime',
+        summary: 'Two perspectives: compare Galilean, space + time (Lorentz) and spacetime predictions with what experiments find.',
+        path: '/relativity/two-perspectives',
+      },
     ],
   },
   {
