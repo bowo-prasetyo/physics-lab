@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { MotionRun, type RunRecord } from '@/physics'
-import { PREDICTIONS, observedDoubling, observedRest, observedReversal } from './predictions'
+import { PREDICTIONS, observedDoubling, observedRest, observedReversal, reversalHint } from './predictions'
 
 const bounds = { min: -10, max: 10 }
 
@@ -46,6 +46,22 @@ describe('prediction observation tests', () => {
     expect(observedReversal([run.toRecord()])).toBe(false) // has not moved back yet
     run.advance(3)
     expect(observedReversal([run.toRecord()])).toBe(true)
+  })
+
+  it('separate forward and backward runs do not count as a reversal, and trigger a hint', () => {
+    const forward = uniformRun(2, 3)
+    const backward = uniformRun(-2, 3)
+    expect(observedReversal([forward, backward])).toBe(false)
+    expect(reversalHint([forward, backward])).toMatch(/separate runs/)
+  })
+
+  it('no reversal hint before both directions are tried, or once the reversal is observed', () => {
+    expect(reversalHint([uniformRun(2, 3)])).toBeNull()
+    const run = new MotionRun({ x0: 0, v: 2, duration: 10, bounds })
+    run.advance(3)
+    run.setVelocity(-2)
+    run.advance(3)
+    expect(reversalHint([uniformRun(-2, 3), run.toRecord()])).toBeNull()
   })
 
   it('every prediction lists its correct answer among the options', () => {

@@ -31,6 +31,7 @@ const observerVelocity = computed(() => (advanced.value && u.value !== 0 ? u.val
 
 const predictions = computed(() => PREDICTIONS.filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(allRuns.value)])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(allRuns.value) ?? null])))
 
 const showTable = ref(level.value === 'beginner')
 
@@ -127,7 +128,7 @@ async function copyLink() {
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
       <div class="prediction-grid">
-        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :index="i + 1" />
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
