@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, useId } from 'vue'
-import type { Prediction } from '@/experiments/space-vs-time/predictions'
+import type { PredictionText } from '@/experiments/prediction'
 
-const props = defineProps<{ prediction: Prediction; observed: boolean; index: number; hint?: string | null }>()
+const props = defineProps<{ prediction: PredictionText; observed: boolean; index: number; hint?: string | null }>()
 
 const id = useId()
 const selected = ref<string | null>(null)

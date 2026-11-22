@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import MathFormula from '@/components/MathFormula.vue'
 import ParameterSlider from '@/components/ParameterSlider.vue'
 import PredictionCard from '@/components/PredictionCard.vue'
@@ -10,12 +10,12 @@ import ValueTable from '@/components/ValueTable.vue'
 import InfoCallout from '@/components/InfoCallout.vue'
 import SpaceVsTimeMath from './SpaceVsTimeMath.vue'
 import { PREDICTIONS } from './predictions'
-import { BOUNDS, DURATION, U_RANGE, V_RANGE, X0_RANGE, snapToRange, useSpaceVsTime } from './useSpaceVsTime'
+import { BOUNDS, DURATION, U_RANGE, V_RANGE, X0_RANGE, useSpaceVsTime } from './useSpaceVsTime'
+import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 
 const route = useRoute()
-const router = useRouter()
 const level = useLevel()
 
 // A setup can be shared as a link, e.g. #/space/space-vs-time?x0=-4&v=1.5
@@ -69,14 +69,15 @@ const velocityNote = computed(() => {
   return ''
 })
 
-// A shared link opened in a tab that already shows this lesson changes only
-// the query, and Vue reuses the page, so apply incoming values here too.
-// The page's own URL updates (below) are recognised and ignored.
-let ownQuery = ''
-watch(
-  () => route.query,
-  (query) => {
-    if (JSON.stringify(query) === ownQuery) return
+// Keep the setup (and level) in the URL so a teacher can share it exactly.
+useQuerySync({
+  sources: [x0, v, u, level],
+  write: () => {
+    const query: Record<string, string> = { level: level.value, x0: String(x0.value), v: String(v.value) }
+    if (u.value !== 0) query.u = String(u.value)
+    return query
+  },
+  read: (query) => {
     if (isLevel(query.level)) level.value = query.level
     const next = {
       x0: snapToRange(query.x0, X0_RANGE, x0.value),
@@ -89,20 +90,7 @@ watch(
     v.value = next.v
     u.value = next.u
   },
-)
-
-// Keep the URL in sync so a teacher can share an exact setup.
-let urlTimer: ReturnType<typeof setTimeout> | undefined
-watch([x0, v, u, level], () => {
-  clearTimeout(urlTimer)
-  urlTimer = setTimeout(() => {
-    const query: Record<string, string> = { level: level.value, x0: String(x0.value), v: String(v.value) }
-    if (u.value !== 0) query.u = String(u.value)
-    ownQuery = JSON.stringify(query)
-    router.replace({ query })
-  }, 300)
 })
-onBeforeUnmount(() => clearTimeout(urlTimer))
 
 const copied = ref(false)
 async function copyLink() {
@@ -254,8 +242,11 @@ async function copyLink() {
     </section>
 
     <nav class="next card" aria-label="Next steps">
-      <p><strong>Coming next:</strong> Experiment B, which compares two clocks moving relative to each other near the speed of light.</p>
-      <RouterLink to="/">Back to all modules</RouterLink>
+      <p><strong>Next:</strong> Experiment B compares two clocks moving relative to each other near the speed of light.</p>
+      <span class="nav-links">
+        <RouterLink to="/relativity/moving-clocks">Experiment B →</RouterLink>
+        <RouterLink to="/">All modules</RouterLink>
+      </span>
     </nav>
   </article>
 </template>
@@ -443,6 +434,11 @@ h2 {
 
 .next p {
   margin: 0;
+}
+
+.nav-links {
+  display: inline-flex;
+  gap: 16px;
 }
 
 @media (max-width: 900px) {

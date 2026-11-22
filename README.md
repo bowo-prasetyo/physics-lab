@@ -14,20 +14,23 @@ The same phenomenon is offered at three mathematical levels (Beginner, Intermedi
 
 ## Status
 
-The first vertical slice is complete: **Experiment A, Space versus time** (Module 1). It covers:
+Two experiments are complete. The other modules are listed in the app as planned.
 
+**Experiment A, Space versus time** (Module 1):
 - A track and a live position–time graph, with earlier runs overlaid for comparison.
-- Predict–observe–explain cards. Each explanation unlocks only after the student has performed the experiment that tests it.
-- Velocity changes mid-run, so distance and displacement can be compared.
-- Ends of the track where the object stops while the clock keeps running.
-- Levelled mathematics with worked examples using the student's own run:
-  - Beginner: algebra and tables.
-  - Intermediate: calculus and vectors.
-  - Advanced: worldlines, Galilean frames, and how small the relativistic correction is.
+- Velocity changes mid-run, and ends of the track where the object stops while the clock keeps running.
 - A second, moving observer at the Advanced level, showing that rest depends on the frame of reference.
-- Shareable links that encode an exact setup, e.g. `#/space/space-vs-time?x0=-4&v=1.5`.
 
-The other modules are listed in the app as planned.
+**Experiment B, Different clocks, different elapsed times** (Module 4):
+- A spacetime diagram (time up, light at 45°) of an Earth clock and a ship clock passing at up to 0.99c. Dots mark each second on each clock.
+- A "Seen from" switch between the Earth's and the ship's frame, showing that time dilation is reciprocal.
+- From Intermediate on, the moving observer's tilted line of "now" (relativity of simultaneity). At Advanced, the invariant interval s² = τ².
+- A section separating established physics (muons, Hafele–Keating, GPS) from interpretation (is there a universal "now"?), and a note on seeing versus measuring.
+
+Both experiments include:
+- Predict–observe–explain cards. Each explanation unlocks only after the student has performed the experiment that tests it, with hints for near-misses. Every level adds questions of its own.
+- Mathematics at three levels, with worked examples using the student's own numbers.
+- Shareable links that encode the level and the exact setup, e.g. `#/relativity/moving-clocks?level=advanced&beta=0.8&frame=ship`.
 
 ## Getting started
 
@@ -60,19 +63,22 @@ Every push to `main` is tested, built and published to GitHub Pages by `.github/
 
 ```
 src/
-├── physics/            Physics engine: pure TypeScript, no DOM, no Vue
-│   ├── vector.ts         3-vector algebra
-│   ├── kinematics.ts     Closed-form motion (uniform, constant acceleration)
-│   ├── frames.ts         Events and Galilean transformations
-│   ├── motionRun.ts      Piecewise-uniform experiment run (exact, frame-rate independent)
-│   └── relativity.ts     Lorentz factor (numerically stable γ − 1)
+├── physics/              Physics engine: pure TypeScript, no DOM, no Vue
+│   ├── vector.ts           3-vector algebra
+│   ├── kinematics.ts       Closed-form motion (uniform, constant acceleration)
+│   ├── frames.ts           Events and Galilean transformations
+│   ├── motionRun.ts        Piecewise-uniform experiment run (exact, frame-rate independent)
+│   ├── relativity.ts       Lorentz factor (numerically stable γ − 1)
+│   └── spacetime.ts        Lorentz boosts, interval, velocity addition, proper time, simultaneity (c = 1)
 ├── experiments/
-│   └── space-vs-time/    Experiment A: state composable, predictions, maths, page
-├── components/         Reusable UI: graph, track, sliders, prediction card, KaTeX
-├── composables/        Animation loop, shared level setting
-├── views/              Home page
-├── levels.ts           Beginner / Intermediate / Advanced
-└── modules.ts          Module and experiment catalogue
+│   ├── prediction.ts       Shared predict–observe–explain types
+│   ├── space-vs-time/      Experiment A: state composable, predictions, maths, page
+│   └── moving-clocks/      Experiment B: state composable, predictions, maths, page
+├── components/           Reusable UI: graphs, track, spacetime diagram, sliders, prediction card, KaTeX
+├── composables/          Animation loop, shared level setting, URL sync
+├── views/                Home page
+├── levels.ts             Beginner / Intermediate / Advanced
+└── modules.ts            Module and experiment catalogue
 ```
 
 **The physics engine stays independent of the visualization.** This is enforced in two ways:
@@ -89,9 +95,9 @@ src/
 1. Put any new physics in `src/physics/` with tests. It must have no UI dependencies.
 2. Create `src/experiments/<name>/` containing:
    - a state composable that owns the model and the animation;
-   - `predictions.ts`;
+   - `predictions.ts`, typed with `Prediction<YourRun>` from `experiments/prediction.ts`;
    - a levelled maths component;
-   - a page view.
+   - a page view, using `useQuerySync` to keep the setup in the URL.
 3. Register the route in `src/router.ts` and add a `path` to the experiment's entry in `src/modules.ts`.
 
 ## Technology
