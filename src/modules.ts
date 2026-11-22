@@ -67,7 +67,13 @@ export const MODULES: readonly ModuleEntry[] = [
     title: 'General relativity',
     audience: 'Advanced undergraduate',
     topics: ['Gravitational time dilation', 'Spatial curvature', 'Geodesics', 'Schwarzschild geometry'],
-    experiments: [{ title: 'C · Gravity and clock rates', summary: 'Change a mass and see how clock rates depend on distance from it, including GPS.' }],
+    experiments: [
+      {
+        title: 'C · Gravity and clock rates',
+        summary: 'Two clocks at different heights, from the Earth to a black hole, and why GPS needs relativity.',
+        path: '/gravity/clock-rates',
+      },
+    ],
   },
   {
     number: 6,

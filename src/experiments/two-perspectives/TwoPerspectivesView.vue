@@ -192,9 +192,10 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </section>
 
     <nav class="next card" aria-label="Next steps">
-      <p><strong>Coming later:</strong> Experiment C, in which gravity, not motion, changes how fast clocks tick.</p>
+      <p><strong>Next:</strong> Experiment C, in which gravity, not motion, changes how fast clocks tick.</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">← Experiment B</RouterLink>
+        <RouterLink to="/gravity/clock-rates">Experiment C →</RouterLink>
         <RouterLink to="/">All modules</RouterLink>
       </span>
     </nav>

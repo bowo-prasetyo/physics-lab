@@ -14,7 +14,7 @@ The same phenomenon is offered at three mathematical levels (Beginner, Intermedi
 
 ## Status
 
-Three experiments are complete. The other modules are listed in the app as planned.
+Four experiments are complete. The other modules are listed in the app as planned.
 
 **Experiment A, Space versus time** (Module 1):
 - A track and a live position–time graph, with earlier runs overlaid for comparison.
@@ -32,6 +32,12 @@ Three experiments are complete. The other modules are listed in the app as plann
 - Three descriptions side by side: Galilean (space + absolute time), space + time related by Lorentz transformations, and spacetime (4-vectors, the interval, boosts as rapidity rotations). Each shows its working with the student's numbers and its prediction.
 - A "Make the measurement" step reveals what experiments find, with the evidence, and marks each prediction as matching or not. A chart shows all three predictions at every speed.
 - The lesson: Galilean physics is the low-speed limit, except for light. The two relativistic descriptions agree on every measurement, so the question of whether spacetime is fundamental is one of interpretation.
+
+**Experiment C, Gravity and clock rates** (Module 5):
+- Two clocks held at rest at adjustable heights (logarithmic sliders with presets: 33 cm, the Pound–Rebka tower, Everest, GPS height) above the Earth, the Sun, a white dwarf, a neutron star or a black hole, running in time-lapse.
+- A chart of the gravity "well": how much a clock is slowed at each height. Readouts of each clock's slowdown and how far apart the clocks drift.
+- A GPS setup: +45.7 μs/day from weaker gravity, −7.2 μs/day from orbital speed, net +38.5 μs/day. Switch the relativity correction off to watch the position error grow by about 11.5 km per day.
+- At Advanced: light signals between the clocks (both observers agree the lower clock is slow, unlike Experiment B), the approach to the horizon, curved space (ruler distance exceeds Δr), and the ADM lapse as the clock rate.
 
 All experiments include:
 - Predict–observe–explain cards. Each explanation unlocks only after the student has performed the experiment that tests it, with hints for near-misses. Every level adds questions of its own.
@@ -76,13 +82,15 @@ src/
 │   ├── motionRun.ts        Piecewise-uniform experiment run (exact, frame-rate independent)
 │   ├── relativity.ts       Lorentz factor (numerically stable γ − 1)
 │   ├── spacetime.ts        Lorentz boosts, interval, velocity addition, proper time, simultaneity (c = 1)
-│   └── descriptions.ts     The same predictions computed three ways: Galilean, Lorentz, spacetime
+│   ├── descriptions.ts     The same predictions computed three ways: Galilean, Lorentz, spacetime
+│   └── gravity.ts          Schwarzschild clock rates (precision-safe), light signals, ruler distance, GPS breakdown
 ├── experiments/
 │   ├── prediction.ts       Shared predict–observe–explain types
 │   ├── space-vs-time/      Experiment A: state composable, predictions, maths, page
 │   ├── moving-clocks/      Experiment B: state composable, predictions, maths, page
-│   └── two-perspectives/   Experiment E: state composable, content and derivations, predictions, maths, page
-├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, sliders, prediction card, KaTeX
+│   ├── two-perspectives/   Experiment E: state composable, content and derivations, predictions, maths, page
+│   └── gravity-clocks/     Experiment C: state composable, formatting, predictions, maths, page
+├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, clock-rate chart, sliders, prediction card, KaTeX
 ├── composables/          Animation loop, shared level setting, URL sync
 ├── views/                Home page
 ├── levels.ts             Beginner / Intermediate / Advanced
