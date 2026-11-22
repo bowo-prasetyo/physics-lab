@@ -42,7 +42,13 @@ export const MODULES: readonly ModuleEntry[] = [
     title: 'Classical mechanics',
     audience: 'High school / Undergraduate',
     topics: ['Newton’s laws', 'Projectile and circular motion', 'Momentum and energy', 'Gravitation'],
-    experiments: [{ title: 'Projectile launcher', summary: 'Launch projectiles with adjustable initial velocity and gravity.' }],
+    experiments: [
+      {
+        title: 'Projectile launcher',
+        summary: 'Launch a ball on the Earth, Moon, Mars or Jupiter, with or without air, and watch it from the ground or a moving train.',
+        path: '/mechanics/projectile',
+      },
+    ],
   },
   {
     number: 4,
