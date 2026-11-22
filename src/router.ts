@@ -13,6 +13,12 @@ export const router = createRouter({
       component: () => import('@/experiments/space-vs-time/SpaceVsTimeView.vue'),
       meta: { title: 'Space versus time · Space & Time Laboratory' },
     },
+    {
+      path: '/relativity/moving-clocks',
+      name: 'moving-clocks',
+      component: () => import('@/experiments/moving-clocks/MovingClocksView.vue'),
+      meta: { title: 'Different clocks, different elapsed times · Space & Time Laboratory' },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: (to, from) => (to.path === from.path ? false : { top: 0 }),

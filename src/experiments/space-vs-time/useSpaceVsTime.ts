@@ -29,13 +29,6 @@ export interface RunSnapshot {
   readonly record: RunRecord
 }
 
-export function snapToRange(value: unknown, range: { min: number; max: number; step: number }, fallback: number): number {
-  const n = typeof value === 'string' && value.trim() !== '' ? Number(value) : NaN
-  if (!Number.isFinite(n)) return fallback
-  const stepped = Math.round(n / range.step) * range.step
-  return Math.min(range.max, Math.max(range.min, stepped))
-}
-
 export function useSpaceVsTime(initial: { x0: number; v: number }) {
   const x0 = ref(initial.x0)
   const v = ref(initial.v)

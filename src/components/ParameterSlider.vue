@@ -2,7 +2,7 @@
 import { useId } from 'vue'
 import MathFormula from './MathFormula.vue'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     label: string
     symbol: string
@@ -12,14 +12,19 @@ withDefaults(
     step: number
     disabled?: boolean
     hint?: string
+    /** Decimal places shown. */
+    digits?: number
+    /** Show an explicit + sign for positive values. */
+    signed?: boolean
   }>(),
-  { disabled: false, hint: '' },
+  { disabled: false, hint: '', digits: 1, signed: true },
 )
 
 const model = defineModel<number>({ required: true })
 const id = useId()
 
-const format = (value: number) => (value > 0 ? '+' : value < 0 ? '−' : '') + Math.abs(value).toFixed(1)
+const format = (value: number) =>
+  (value > 0 && props.signed ? '+' : value < 0 ? '−' : '') + Math.abs(value).toFixed(props.digits)
 </script>
 
 <template>

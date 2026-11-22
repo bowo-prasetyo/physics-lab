@@ -50,7 +50,11 @@ export const MODULES: readonly ModuleEntry[] = [
     audience: 'Undergraduate',
     topics: ['Galilean and Lorentz transformations', 'Time dilation', 'Length contraction', 'Relativity of simultaneity'],
     experiments: [
-      { title: 'B · Different clocks, different elapsed times', summary: 'Compare two observers measuring the same moving clock on a spacetime diagram.' },
+      {
+        title: 'B · Different clocks, different elapsed times',
+        summary: 'A spaceship passes the Earth. Compare their clocks on a spacetime diagram, from either point of view.',
+        path: '/relativity/moving-clocks',
+      },
       { title: 'E · Space and time versus spacetime', summary: 'Describe one situation three ways: Galilean, 3 + 1 with Lorentz, and 4-vectors.' },
     ],
   },

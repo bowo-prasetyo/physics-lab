@@ -1,41 +1,11 @@
-/**
- * Predict–observe–explain prompts for Experiment A.
- *
- * Each prediction has an `observed` test: a pure function over the runs the
- * student has performed that decides whether they have actually carried out
- * the experiment that answers the question. The explanation is revealed only
- * then, so students compare their prediction with what they saw rather than
- * with what they were told.
- */
+/** Predict–observe–explain prompts for Experiment A (see experiments/prediction.ts). */
 
 import { positionAtTime, type RunRecord } from '@/physics'
-import type { Level } from '@/levels'
+import type { Prediction as GenericPrediction } from '@/experiments/prediction'
 import type { ExperimentRun } from './runs'
 
-export interface PredictionOption {
-  readonly id: string
-  readonly label: string
-}
-
-export interface Prediction {
-  readonly id: string
-  /** Lowest level at which the prompt is shown. */
-  readonly minLevel: Level
-  readonly question: string
-  /** What the student must do in the experiment to test the prediction. */
-  readonly task: string
-  readonly options: readonly PredictionOption[]
-  readonly correct: string
-  /** Shown after the observation, whatever the student predicted. */
-  readonly explanation: string
-  readonly observed: (runs: readonly ExperimentRun[]) => boolean
-  /**
-   * Optional nudge for a near-miss: given the runs so far, explain what to do
-   * differently when the student is trying but has not yet made the
-   * observation. Returns null when there is nothing to say.
-   */
-  readonly hint?: (runs: readonly ExperimentRun[]) => string | null
-}
+export type { PredictionOption } from '@/experiments/prediction'
+export type Prediction = GenericPrediction<ExperimentRun>
 
 /** Minimum clock time a run needs before it counts as an observation (s). */
 export const MIN_OBSERVATION_TIME = 3
