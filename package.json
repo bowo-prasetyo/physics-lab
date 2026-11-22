@@ -1,0 +1,32 @@
+{
+  "name": "space-time-laboratory",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Interactive physics experiments about space, time and motion for high-school and undergraduate students.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --build",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "katex": "0.18.11",
+    "vue": "3.5.46",
+    "vue-router": "4.5.1"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "22.0.7",
+    "@types/node": "22.20.5",
+    "@vitejs/plugin-vue": "6.0.11",
+    "@vue/tsconfig": "0.9.1",
+    "jsdom": "26.1.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.8",
+    "vitest": "5.1.1",
+    "vue-tsc": "3.3.14"
+  }
+}
