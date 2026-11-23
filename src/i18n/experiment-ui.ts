@@ -112,7 +112,6 @@ const text: Record<string, readonly [string, string]> = {
   'Acceleration begins': ['Awal percepatan ekspansi', '加速膨張の開始'],
   'This model': ['Model ini', 'このモデル'],
   'Our universe, for comparison': ['Alam semesta kita, sebagai pembanding', '比較用の私たちの宇宙'],
-  'today': ['hari ini', '現在'],
   'Spacetime diagram (scrolls sideways on small screens)': ['Diagram ruang-waktu (dapat digulir ke samping pada layar kecil)', '時空図（小さな画面では横スクロールできます）'],
   'Read the current spacetime measurements as a table': ['Baca pengukuran ruang-waktu saat ini sebagai tabel', '現在の時空測定値を表で読む'],
   'Read the position–time values as a table': ['Baca nilai posisi–waktu sebagai tabel', '位置–時間の値を表で読む'],
@@ -349,7 +348,6 @@ const text: Record<string, readonly [string, string]> = {
   'Experiment D, where space itself evolves in time. See also Experiments B and E.': ['Eksperimen D membahas ruang yang berevolusi seiring waktu. Lihat juga Eksperimen B dan E.', '空間そのものが時間とともに変化する実験 D も参照してください。実験 B と E も関連します。'],
   'Experiment E, in which gravity, not motion, changes how fast clocks tick.': ['Eksperimen E menunjukkan bahwa gravitasi, bukan gerak, mengubah laju detak jam.', '実験 E では、運動ではなく重力が時計の進み方を変えることを扱います。'],
   'Experiment A adds time to position, and Experiment E compares space and time with spacetime.': ['Eksperimen A menambahkan waktu pada posisi, sedangkan Eksperimen E membandingkan ruang dan waktu dengan ruang-waktu.', '実験 A では位置に時間を加え、実験 E では空間と時間を時空と比較します。'],
-  'Experiment B compares two clocks moving relative to each other near the speed of light.': ['Eksperimen B membandingkan dua jam yang bergerak relatif satu sama lain dengan kecepatan mendekati cahaya.', '実験 B では、光速に近い速度で互いに相対運動する 2 つの時計を比較します。'],
   'Experiment C, in which gravity, not motion, changes how fast clocks tick.': ['Eksperimen C menunjukkan bahwa gravitasi, bukan gerak, mengubah laju detak jam.', '実験 C では、運動ではなく重力が時計の進み方を変えることを扱います。'],
 
   "In classical general relativity the model has an edge at": ["Dalam relativitas umum klasik, model memiliki batas pada", "一般相対性理論の古典的な模型では、モデルは次の点に境界を持ちます。"],
