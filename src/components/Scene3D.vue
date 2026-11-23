@@ -338,7 +338,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="scene-wrap">
-    <div ref="container" class="scene" role="img" :aria-label="localizeExperimentText(description(), locale)" />
+    <div ref="container" class="scene" role="img" :aria-label="description()" />
     <details class="scene-data">
       <summary>{{ localizeExperimentText('Read the 3D coordinates as text', locale) }}</summary>
       <dl>
