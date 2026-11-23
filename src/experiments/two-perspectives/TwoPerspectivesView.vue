@@ -153,7 +153,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
           :series="chartSeries"
           :x-max="1"
           :x-label="tx('ship speed v (fraction of c)')"
-          :y-label="info.axis"
+          :y-label="tx(info.axis)"
           :marker="beta"
           :measured="measured ? measurement : null"
         />
@@ -205,7 +205,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
       <p>{{ localizeExperimentText('Next: Experiment C, in which gravity, not motion, changes how fast clocks tick.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">{{ tx("← Experiment B") }}</RouterLink>
-        <RouterLink to="/gravity/clock-rates">Experiment C →</RouterLink>
+        <RouterLink to="/gravity/clock-rates">{{ tx('Experiment C →') }}</RouterLink>
         <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>
