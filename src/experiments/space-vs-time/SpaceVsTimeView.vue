@@ -244,10 +244,10 @@ useQuerySync({
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>Next:</strong> Experiment B compares two clocks moving relative to each other near the speed of light.</p>
+      <p><strong>{{ tx("Next:") }}</strong> Experiment B compares two clocks moving relative to each other near the speed of light.</p>
       <span class="nav-links">
-        <RouterLink to="/relativity/moving-clocks">Experiment B →</RouterLink>
-        <RouterLink to="/">All modules</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx("Experiment B →") }}</RouterLink>
+        <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>
   </article>
