@@ -14,13 +14,20 @@ Most introductory material starts with equations. Here every experiment follows 
 
 The same phenomenon is offered at three mathematical levels (Beginner, Intermediate and Advanced). The experiment never changes with the level; only the depth of the mathematics does.
 
+**For educators:** the in-app [Teacher guide](#/teachers) provides lesson outlines, learning intentions, classroom sequences, discussion prompts and checks for understanding. Experiment settings can be shared through their URL where supported.
+
 ## Curriculum coverage
 
 The home page distinguishes topics explored by implemented experiments from planned curriculum topics. See the [curriculum coverage and roadmap](docs/product/CURRICULUM_ROADMAP.md) and [learning effectiveness metrics](docs/product/LEARNING_EFFECTIVENESS.md) for scope, priorities, and evaluation.
 
 ## Status
 
-Eight experiments are currently implemented across the six modules. Further experiments are listed in the app as planned.
+Nine experiments are currently implemented across the six modules. Further experiments are listed in the app as planned.
+
+**Force, mass and acceleration** (Module 3):
+- Investigate Newton’s second law by varying net force and cart mass independently.
+- Record trials and compare acceleration, then connect the result to velocity and displacement from rest.
+- Makes the constant-net-force, constant-mass, one-dimensional and friction-free assumptions explicit.
 
 **Experiment A, Space versus time** (Module 1):
 - A track and a live position–time graph, with earlier runs overlaid for comparison.
@@ -46,33 +53,26 @@ Eight experiments are currently implemented across the six modules. Further expe
 - The lesson: Galilean physics is the low-speed limit, except for light. The two relativistic descriptions agree on every measurement, so the question of whether spacetime is fundamental is one of interpretation.
 
 **Experiment C, Gravity and clock rates** (Module 5):
-- Two clocks held at rest at adjustable heights (logarithmic sliders with presets: 33 cm, the Pound–Rebka tower, Everest, GPS height) above the Earth, the Sun, a white dwarf, a neutron star or a black hole, running in time-lapse.
-- A chart of the gravity "well": how much a clock is slowed at each height. Readouts of each clock's slowdown and how far apart the clocks drift.
-- A GPS setup: +45.7 μs/day from weaker gravity, −7.2 μs/day from orbital speed, net +38.5 μs/day. Switch the relativity correction off to watch the position error grow by about 11.5 km per day.
-- At Advanced: light signals between the clocks (both observers agree the lower clock is slow, unlike Experiment B), the approach to the horizon, curved space (ruler distance exceeds Δr), and the ADM lapse as the clock rate.
+- Two clocks held at rest at adjustable heights above the Earth and compact objects, with clock-rate comparisons.
+- GPS gravitational and kinematic clock corrections.
+- At Advanced: light signals, the approach to the horizon, curved space and the ADM lapse as the clock rate.
 
 **Experiment D, Evolving space** (Module 6):
-- Four model universes: ours (ΛCDM with Planck 2018 values), matter only, radiation only, and dark energy only (de Sitter). The scale factor a(t) comes from integrating the Friedmann equation.
-- Run time forwards and backwards, or jump to milestones (Big Bang, first light, first galaxies, today). A field of galaxies spreads apart, with recession arrows from whichever galaxy you choose as "home". The pattern repeats, so there is no edge and no centre, and galaxies keep their own size.
-- A chart of a(t), plus readouts for redshift, background temperature, Hubble rate and distance, whether the expansion is slowing or speeding up, and a distant galaxy's recession speed (which can exceed c).
-- Shows where the model stops being valid as a → 0, rather than drawing a point explosion.
+- Four model universes: ΛCDM, matter only, radiation only, and dark energy only.
+- Evolve the scale factor, redshift and Hubble quantities; compare expansion histories and model limits.
 
 **Projectile launcher** (Module 3):
-- Launch speed, angle and height; the Earth, the Moon, Mars or Jupiter; optional air resistance (a baseball, integrated with RK4); an optional ball dropped at the same moment.
-- A to-scale view with earlier throws kept for comparison, and live graphs of height and velocity against time.
-- Watch from the ground or from a moving train (Galilean frames): matched to the ball's horizontal speed, the train sees it go straight up and down.
-- At Advanced: energy lost to the air and the best launch angle for the current settings.
+- Launch speed, angle and height; the Earth, Moon, Mars or Jupiter; optional air resistance; an optional ball dropped at the same moment.
+- Compare trajectories and velocity/height graphs, and watch from the ground or a moving train (Galilean frames).
 
 **Pendulum clocks** (Module 2):
-- A pendulum drawn to scale, with adjustable length, release angle, bob mass and world. It is integrated live with the symplectic Störmer–Verlet method, and its period is measured from successive swings.
-- A pendulum clock adjusted on the Earth runs beside an atomic clock, showing how far it drifts on other worlds or with wide swings.
-- A graph of the angle against time; at Advanced, a phase portrait and the exact (elliptic-integral) period.
-- Leads to the question behind the whole lab: if every clock is a physical process, what is time?
+- A pendulum with adjustable length, release angle, bob mass and world; compare measured period with small-angle and exact predictions.
+- Compare a pendulum clock with an atomic clock and explore calibration across environments.
 
 All experiments include:
-- Predict–observe–explain cards. Each explanation unlocks only after the student has performed the experiment that tests it, with hints for near-misses. Every level adds questions of its own.
-- Mathematics at three levels, with worked examples using the student's own numbers.
-- Shareable links that encode the level and the exact setup, e.g. `#/relativity/moving-clocks?level=advanced&beta=0.8&frame=ship`.
+- Predict–observe–explain cards. Each explanation unlocks only after the student has performed the experiment that tests it, with hints for near-misses.
+- Mathematics at three levels, with worked examples where available.
+- Shareable links that encode the level and experiment setup where supported.
 
 ## Getting started
 
@@ -80,9 +80,6 @@ Requires Node.js 22 or later.
 
 ```bash
 npm install
-```
-
-```bash
 npm run dev
 ```
 
@@ -103,57 +100,7 @@ Every push to `main` is tested, built and published to GitHub Pages by `.github/
 
 ## Architecture
 
-```
-src/
-├── physics/              Physics engine: pure TypeScript, no DOM, no Vue
-│   ├── vector.ts           3-vector algebra
-│   ├── kinematics.ts       Closed-form motion (uniform, constant acceleration)
-│   ├── frames.ts           Events and Galilean transformations
-│   ├── motionRun.ts        Piecewise-uniform experiment run (exact, frame-rate independent)
-│   ├── relativity.ts       Lorentz factor (numerically stable γ − 1)
-│   ├── spacetime.ts        Lorentz boosts, interval, velocity addition, proper time, simultaneity (c = 1)
-│   ├── descriptions.ts     The same predictions computed three ways: Galilean, Lorentz, spacetime
-│   ├── gravity.ts          Schwarzschild clock rates (precision-safe), light signals, ruler distance, GPS breakdown
-│   ├── cosmology.ts        Friedmann equation, tabulated a(t), Hubble rate, deceleration, redshift
-│   ├── projectile.ts       Exact projectile motion; quadratic drag integrated with RK4; best angle
-│   ├── pendulum.ts         Pendulum periods (small-angle and exact via the AGM); Störmer–Verlet integration
-│   └── space3d.ts          Path length, displacement, rotated and shifted coordinate systems, direction angles
-├── experiments/
-│   ├── prediction.ts       Shared predict–observe–explain types
-│   ├── space-vs-time/      Experiment A: state composable, predictions, maths, page
-│   ├── moving-clocks/      Experiment B: state composable, predictions, maths, page
-│   ├── two-perspectives/   Experiment E: state composable, content and derivations, predictions, maths, page
-│   ├── gravity-clocks/     Experiment C: state composable, formatting, predictions, maths, page
-│   ├── evolving-space/     Experiment D: state composable, predictions, maths, page
-│   ├── projectile/         Projectile launcher: state composable, predictions, maths, page
-│   ├── pendulum/           Pendulum clocks: state composable, predictions, maths, page
-│   └── displacement3d/     Displacement in 3D: state composable, predictions, maths, page
-├── components/           Reusable UI: graphs, track, spacetime diagram, prediction chart, clock-rate chart, galaxy field, scale-factor chart, trajectory view, pendulum, phase portrait, line chart, 3D scene (Three.js), sliders, prediction card, KaTeX
-├── composables/          Animation loop, shared level setting, URL sync
-├── styles/               Design tokens (main.css) and layout shared by lesson pages (lesson.css)
-├── views/                Home page
-├── levels.ts             Beginner / Intermediate / Advanced
-└── modules.ts            Module and experiment catalogue
-```
-
-**The physics engine stays independent of the visualization.** This is enforced in two ways:
-
-- `tsconfig.physics.json` compiles `src/physics` without the DOM library, so any browser API is a type error.
-- `architecture.test.ts` fails if a physics file imports anything outside `src/physics`.
-
-**Physics is computed exactly where possible.** Uniform motion uses its closed-form solution, so results do not depend on the animation frame rate. Tests check this explicitly. Where numerical integration is needed (the Friedmann equation, projectiles with air resistance, the pendulum), the result is tested against the exact solutions that exist for special cases. RK4 is checked to be fourth order, and the pendulum's symplectic Störmer–Verlet integrator is checked to keep its energy error bounded while RK4's grows. Use a symplectic method for anything that oscillates or orbits for a long time.
-
-**Prediction gates are pure functions.** Each prediction's `observed(runs)` test decides when a student has done the relevant experiment. These functions are unit-tested.
-
-### Adding an experiment
-
-1. Put any new physics in `src/physics/` with tests. It must have no UI dependencies.
-2. Create `src/experiments/<name>/` containing:
-   - a state composable that owns the model and the animation;
-   - `predictions.ts`, typed with `Prediction<YourRun>` from `experiments/prediction.ts`;
-   - a levelled maths component;
-   - a page view, using `useQuerySync` to keep the setup in the URL.
-3. Register the route in `src/router.ts` and add a `path` to the experiment's entry in `src/modules.ts`.
+The physics engine under `src/physics/` is framework-independent TypeScript. It is tested separately from the Vue interface. The Newtonian force model is intentionally small and explicit about its domain; the teacher guide provides classroom context without introducing student tracking or class-management infrastructure.
 
 ## Technology
 
@@ -161,4 +108,4 @@ Vue 3, Vue Router, TypeScript, Vite, KaTeX and Vitest. Graphs are hand-written S
 
 ## License
 
-MIT
+MIT License

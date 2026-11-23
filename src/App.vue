@@ -11,7 +11,10 @@ const logo = `${import.meta.env.BASE_URL}favicon.svg`
         <img :src="logo" alt="" width="28" height="28" />
         <span>Space &amp; Time Laboratory</span>
       </RouterLink>
-      <LevelSwitcher />
+      <nav class="header-tools" aria-label="Main navigation">
+        <RouterLink class="teacher-link" to="/teachers">For teachers</RouterLink>
+        <LevelSwitcher />
+      </nav>
     </div>
   </header>
   <main>
@@ -53,9 +56,26 @@ const logo = `${import.meta.env.BASE_URL}favicon.svg`
   letter-spacing: -0.01em;
 }
 
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.teacher-link {
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
 .app-footer {
   border-top: 1px solid var(--border);
   padding: 20px 0;
   font-size: 0.85rem;
+}
+
+@media (max-width: 420px) {
+  .header-tools { gap: 8px; }
+  .teacher-link { font-size: 0.82rem; }
 }
 </style>

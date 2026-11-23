@@ -26,16 +26,8 @@ export const MODULES: readonly ModuleEntry[] = [
     coverage: ['Position and reference points', 'Distance and displacement', '3D vectors and coordinate systems', 'Euclidean spatial measurements'],
     plannedTopics: ['2D coordinate geometry and transformations in greater depth', 'Spatial measurement and geometry beyond the current vector examples'],
     experiments: [
-      {
-        title: 'A · Space versus time',
-        summary: 'Move an object along a track, then stop it. Does time stop too?',
-        path: '/space/space-vs-time',
-      },
-      {
-        title: 'Displacement in 3D',
-        summary: 'Move an object through 3D space, measure its displacement, and find out what changing the coordinates does.',
-        path: '/space/displacement-3d',
-      },
+      { title: 'A · Space versus time', summary: 'Move an object along a track, then stop it. Does time stop too?', path: '/space/space-vs-time' },
+      { title: 'Displacement in 3D', summary: 'Move an object through 3D space, measure its displacement, and find out what changing the coordinates does.', path: '/space/displacement-3d' },
     ],
   },
   {
@@ -45,25 +37,18 @@ export const MODULES: readonly ModuleEntry[] = [
     coverage: ['Clocks as physical processes', 'Periodic motion, period and frequency', 'Pendulum dynamics and clock calibration', 'Small-angle approximation and exact pendulum period'],
     plannedTopics: ['Other physical clock mechanisms and their comparison', 'A broader treatment of time measurement and uncertainty'],
     experiments: [
-      {
-        title: 'Pendulum clocks',
-        summary: 'Measure a pendulum’s period, take a pendulum clock to the Moon, and ask what a clock really measures.',
-        path: '/time/pendulum',
-      },
+      { title: 'Pendulum clocks', summary: 'Measure a pendulum’s period, take a pendulum clock to the Moon, and ask what a clock really measures.', path: '/time/pendulum' },
     ],
   },
   {
     number: 3,
     title: 'Classical mechanics',
     audience: 'High school / Undergraduate',
-    coverage: ['Ideal projectile motion', 'Effects of launch conditions and gravitational acceleration', 'Galilean reference frames', 'Quadratic air resistance and energy loss'],
-    plannedTopics: ['Newton’s laws and force diagrams', 'Circular motion', 'Momentum and collisions', 'Work, energy and conservation beyond projectile examples', 'Gravitation as a force and orbital motion'],
+    coverage: ['Newton’s second law: net force, mass and acceleration', 'Ideal projectile motion', 'Effects of launch conditions and gravitational acceleration', 'Galilean reference frames', 'Quadratic air resistance and energy loss'],
+    plannedTopics: ['Free-body diagrams with multiple forces', 'Circular motion', 'Momentum and collisions', 'Work, energy and conservation beyond projectile examples', 'Gravitation as a force and orbital motion'],
     experiments: [
-      {
-        title: 'Projectile launcher',
-        summary: 'Launch a ball on the Earth, Moon, Mars or Jupiter, with or without air, and watch it from the ground or a moving train.',
-        path: '/mechanics/projectile',
-      },
+      { title: 'Force, mass and acceleration', summary: 'Vary net force and cart mass to investigate Newton’s second law.', path: '/mechanics/newtonian' },
+      { title: 'Projectile launcher', summary: 'Launch a ball on the Earth, Moon, Mars or Jupiter, with or without air, and watch it from the ground or a moving train.', path: '/mechanics/projectile' },
     ],
   },
   {
@@ -73,16 +58,8 @@ export const MODULES: readonly ModuleEntry[] = [
     coverage: ['Galilean and Lorentz transformations', 'Time dilation and proper time', 'Relativity of simultaneity', 'Spacetime diagrams and invariant interval', 'Comparison of equivalent relativistic descriptions'],
     plannedTopics: ['Length contraction as a dedicated predict–experiment–explain lesson', 'Velocity addition and relativistic momentum', 'More explicit links between inertial-frame measurements and experimental evidence'],
     experiments: [
-      {
-        title: 'B · Different clocks, different elapsed times',
-        summary: 'A spaceship passes the Earth. Compare their clocks on a spacetime diagram, from either point of view.',
-        path: '/relativity/moving-clocks',
-      },
-      {
-        title: 'E · Space and time versus spacetime',
-        summary: 'Two perspectives: compare Galilean, space + time (Lorentz) and spacetime predictions with what experiments find.',
-        path: '/relativity/two-perspectives',
-      },
+      { title: 'B · Different clocks, different elapsed times', summary: 'A spaceship passes the Earth. Compare their clocks on a spacetime diagram, from either point of view.', path: '/relativity/moving-clocks' },
+      { title: 'E · Space and time versus spacetime', summary: 'Two perspectives: compare Galilean, space + time (Lorentz) and spacetime predictions with what experiments find.', path: '/relativity/two-perspectives' },
     ],
   },
   {
@@ -92,11 +69,7 @@ export const MODULES: readonly ModuleEntry[] = [
     coverage: ['Gravitational time dilation in the Schwarzschild exterior', 'GPS gravitational and kinematic clock corrections', 'Static spherical geometry and proper radial distance', 'Light signals and clock rates near a Schwarzschild horizon'],
     plannedTopics: ['Geodesic motion and free fall', 'Einstein field equations and the role of stress-energy', 'A careful bridge from the equivalence principle to curved spacetime', 'Beyond the static, spherical Schwarzschild setting'],
     experiments: [
-      {
-        title: 'C · Gravity and clock rates',
-        summary: 'Two clocks at different heights, from the Earth to a black hole, and why GPS needs relativity.',
-        path: '/gravity/clock-rates',
-      },
+      { title: 'C · Gravity and clock rates', summary: 'Two clocks at different heights, from the Earth to a black hole, and why GPS needs relativity.', path: '/gravity/clock-rates' },
     ],
   },
   {
@@ -106,11 +79,7 @@ export const MODULES: readonly ModuleEntry[] = [
     coverage: ['Scale factor in homogeneous and isotropic FLRW models', 'Redshift and Hubble expansion', 'Matter-, radiation- and dark-energy-dominated model histories', 'Accelerating and decelerating expansion', 'Limits of classical evolution as the scale factor approaches zero'],
     plannedTopics: ['Observational evidence and parameter inference in modern cosmology', 'Cosmic distance measures and horizons', 'A deeper treatment of the early universe and inflation', 'The status and limits of extrapolating classical cosmology toward the initial singularity'],
     experiments: [
-      {
-        title: 'D · Evolving space',
-        summary: 'Run a model universe forwards and backwards: Hubble’s law, redshift, dark energy and where the model breaks down.',
-        path: '/cosmology/evolving-space',
-      },
+      { title: 'D · Evolving space', summary: 'Run a model universe forwards and backwards: Hubble’s law, redshift, dark energy and where the model breaks down.', path: '/cosmology/evolving-space' },
     ],
   },
 ]

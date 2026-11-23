@@ -97,7 +97,7 @@ Intermediate and Advanced levels serve this audience, with Advanced intended par
 
 Teachers, tutors, and other educators may use experiments as demonstrations, guided investigations, or discussion prompts. They need clear learning goals, reliable and reproducible setups, and material that can be shared with learners.
 
-Educators are an important use context, but the current product is primarily a self-guided learner experience. Dedicated classroom management, teacher dashboards, assignments, and assessment workflows are not implied by this vision and should be considered separately.
+The product now includes a teacher guide with lesson outlines, suggested timings, classroom sequences, discussion prompts, and checks for understanding. Teachers remain a supporting audience: the product does not yet provide class rosters, student accounts, assignment distribution, grading, or learner-progress dashboards. Those capabilities require separate evidence of need and an explicit privacy and safeguarding model.
 
 ### Audience and level are related, not interchangeable
 
@@ -110,7 +110,6 @@ The outcomes below describe what a learner should be able to do after completing
 ### Module 1 — Understanding space
 
 After completing this module, learners should be able to:
-
 1. Describe an object's position relative to a stated origin and coordinate system.
 2. Distinguish distance travelled (path length) from displacement (change in position).
 3. Represent position and displacement using components in one, two, or three dimensions.
@@ -122,7 +121,6 @@ After completing this module, learners should be able to:
 ### Module 2 — Understanding time
 
 After completing this module, learners should be able to:
-
 1. Explain how a clock measures time through a repeatable physical process.
 2. Define and measure the period and frequency of periodic motion, and relate them mathematically.
 3. Describe how a pendulum's period depends on its length and release amplitude within the model's stated assumptions.
@@ -134,19 +132,19 @@ After completing this module, learners should be able to:
 ### Module 3 — Classical mechanics
 
 After completing this module, learners should be able to:
+1. State Newton's second law and calculate acceleration from a specified net force and mass.
+2. Explain how acceleration changes when net force or mass changes while the other quantity is held fixed.
+3. Draw and interpret free-body diagrams for objects subject to multiple forces.
+4. Resolve projectile motion into horizontal and vertical components and explain the independence of those components in the ideal no-drag model.
+5. Explain how launch speed, launch angle, launch height, and gravitational acceleration affect a projectile's trajectory.
+6. Compare descriptions of the same motion from different Galilean reference frames.
+7. Distinguish ideal projectile motion from motion with air resistance, and interpret the associated changes in energy and trajectory.
 
-1. Predict and describe the motion of an object under specified initial conditions and forces.
-2. Resolve projectile motion into horizontal and vertical components and explain the independence of those components in the ideal no-drag model.
-3. Explain how launch speed, launch angle, launch height, and gravitational acceleration affect a projectile's trajectory.
-4. Compare descriptions of the same motion from different Galilean reference frames.
-5. Distinguish ideal projectile motion from motion with air resistance, and interpret the associated changes in energy and trajectory.
-
-**Current foundation:** projectile motion on different worlds, a dropped-object comparison, Galilean observers, and optional quadratic air resistance. Broader Newtonian dynamics, circular motion, momentum, and gravitation require additional experiments before they can be considered covered outcomes.
+**Current foundation:** a constant-net-force, constant-mass, one-dimensional investigation of Newton's second law; projectile motion on different worlds; a dropped-object comparison; Galilean observers; and optional quadratic air resistance. Free-body diagrams with multiple forces, circular motion, momentum, work/energy and orbital gravitation still need dedicated lessons.
 
 ### Module 4 — Special relativity
 
 After completing this module, learners should be able to:
-
 1. Explain why Galilean transformations do not preserve the measured speed of light and why a relativistic description is required.
 2. Apply the Lorentz factor and Lorentz transformations to simple comparisons between inertial observers.
 3. Explain time dilation and relativity of simultaneity, including why reciprocal time-dilation descriptions do not by themselves create a contradiction.
@@ -159,7 +157,6 @@ After completing this module, learners should be able to:
 ### Module 5 — General relativity
 
 After completing this module, learners should be able to:
-
 1. Explain, within the stated static and spherically symmetric setting, how gravitational potential affects the rate of clocks at different heights.
 2. Compare gravitational and kinematic contributions to clock-rate differences in a practical system such as GPS.
 3. Interpret the Schwarzschild exterior solution and identify the assumptions under which it applies.
@@ -172,7 +169,6 @@ After completing this module, learners should be able to:
 ### Module 6 — Cosmology
 
 After completing this module, learners should be able to:
-
 1. Explain the cosmological scale factor as a description of how distances between comoving locations evolve in a homogeneous expanding-universe model.
 2. Relate the scale factor to redshift and describe the observational meaning of cosmological redshift.
 3. Interpret the Hubble rate and distinguish expansion of space from ordinary motion through static space.

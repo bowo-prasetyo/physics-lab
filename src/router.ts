@@ -1,12 +1,22 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 
-// Hash history lets the built app run from any static host (or a school
-// network share) without server-side rewrite rules.
 export const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: '/', name: 'home', component: HomeView, meta: { title: 'Space & Time Laboratory' } },
+    {
+      path: '/teachers',
+      name: 'teachers',
+      component: () => import('@/views/TeacherGuideView.vue'),
+      meta: { title: 'Teacher guide · Space & Time Laboratory' },
+    },
+    {
+      path: '/mechanics/newtonian',
+      name: 'newtonian',
+      component: () => import('@/experiments/newtonian/NewtonianView.vue'),
+      meta: { title: 'Force, mass and acceleration · Space & Time Laboratory' },
+    },
     {
       path: '/space/space-vs-time',
       name: 'space-vs-time',
