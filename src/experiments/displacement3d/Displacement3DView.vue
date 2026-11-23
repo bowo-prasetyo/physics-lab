@@ -96,12 +96,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">Module 1 · Understanding space · Displacement in 3D</p>
-      <h1>Displacement in 3D</h1>
-      <p class="lead">
-        Move an object through three-dimensional space and measure where it ends up. Then change the coordinate system and find out which
-        numbers change, and which belong to space itself.
-      </p>
+      <p class="eyebrow">{{ localizeExperimentText('Module 1 · Understanding space · Displacement in 3D', locale) ?? 'Module 1 · Understanding space · Displacement in 3D' }}</p>
+      <h1>{{ localizeExperimentText('Displacement in 3D', locale) ?? 'Displacement in 3D' }}</h1>
+      <p class="lead">{{ localizeExperimentText('Move an object through three-dimensional space and measure where it ends up. Then change the coordinate system and find out which numbers change, and which belong to space itself.', locale) ?? 'Move an object through three-dimensional space and measure where it ends up. Then change the coordinate system and find out which numbers change, and which belong to space itself.' }}</p>
     </header>
 
     <ShareExperiment />
