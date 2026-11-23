@@ -7,6 +7,21 @@
     <meta name="theme-color" content="#142b4a" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Physica</title>
+    <script>
+      (() => {
+        let preference = 'system'
+        try {
+          const stored = localStorage.getItem('physica-theme')
+          if (stored === 'light' || stored === 'dark' || stored === 'system') preference = stored
+        } catch {
+          // Use the system preference when local storage is unavailable.
+        }
+        const systemDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
+        document.documentElement.dataset.theme = preference === 'system'
+          ? (systemDark ? 'dark' : 'light')
+          : preference
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>

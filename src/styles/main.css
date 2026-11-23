@@ -51,8 +51,7 @@
   --content-width: 1120px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+:root[data-theme="dark"] {
     color-scheme: dark;
 
     --bg: #0e131d;
@@ -89,7 +88,6 @@
     --grid: #222b3c;
     --axis: #8490a6;
     --shadow: 0 1px 2px rgb(0 0 0 / 40%);
-  }
 }
 
 *,

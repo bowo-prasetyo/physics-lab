@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LevelSwitcher from '@/components/LevelSwitcher.vue'
+import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
 import ExperimentNavigation from '@/components/ExperimentNavigation.vue'
 
 const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
@@ -14,6 +15,7 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
       <nav class="header-tools" aria-label="Main navigation">
         <RouterLink class="teacher-link" to="/teachers">For teachers</RouterLink>
         <LevelSwitcher />
+        <ThemeSwitcher />
       </nav>
     </div>
   </header>
