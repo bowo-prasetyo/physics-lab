@@ -24,6 +24,7 @@ import { localizePredictions } from '@/i18n/experiment-content'
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
+const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 
 // A setup can be shared as a link, e.g. #/relativity/two-perspectives?level=advanced&scenario=flashes&beta=0.6
 if (isLevel(route.query.level)) level.value = route.query.level
@@ -87,8 +88,8 @@ const chartSeries = computed<ChartSeries[]>(() =>
     <ExperimentSupport experiment-id="two-perspectives" :module-number="4" focus="Compare predictions from Galilean, Lorentzian space-and-time, and spacetime descriptions without confusing mathematical language with experimental differences." prompt="Can two mathematical descriptions disagree about their interpretation yet make the same measurable predictions?" action="Choose each scenario, compare all three descriptions at several speeds, then reveal the measurement evidence." reflect="Which predictions agree with observation, and which disagreements are about interpretation rather than measured outcomes?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
-      <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard
           v-for="(p, i) in predictionList"
@@ -102,7 +103,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
 
       <div class="card setup">
         <fieldset class="tabs">
@@ -115,7 +116,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
         <p class="setup-text">{{ info.setup }}</p>
         <div class="setup-row">
           <ParameterSlider v-model="beta" :label="localizeExperimentText('Ship speed', locale) ?? 'Ship speed'" symbol="v/c" unit="c" v-bind="BETA_RANGE" :digits="2" :signed="false" />
-          <p class="question"><span class="muted">Predicting:</span> <strong>{{ info.quantity }}</strong></p>
+          <p class="question"><span class="muted">{{ tx('Predicting:') }}</span> <strong>{{ info.quantity }}</strong></p>
         </div>
       </div>
 
@@ -134,9 +135,9 @@ const chartSeries = computed<ChartSeries[]>(() =>
         </article>
 
         <article class="card description measurement" aria-live="polite">
-          <h3>What experiments find</h3>
+          <h3>{{ tx('What experiments find') }}</h3>
           <template v-if="!measured">
-            <p class="assumption">Nature decides. Compare the three predictions, then check them against real measurements.</p>
+            <p class="assumption">{{ tx('Nature decides. Compare the three predictions, then check them against real measurements.') }}</p>
             <button class="btn btn-primary" type="button" @click="measure">{{ localizeExperimentText('Make the measurement', locale) ?? 'Make the measurement' }}</button>
           </template>
           <template v-else>
