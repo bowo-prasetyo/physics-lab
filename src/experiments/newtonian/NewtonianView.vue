@@ -19,6 +19,7 @@ import { PREDICTIONS, type ForceRun } from './predictions'
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
+const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 if (isLevel(route.query.level)) level.value = route.query.level
 
 const FORCE = { min: 5, max: 50, step: 5 }
@@ -68,15 +69,15 @@ function runExperiment() {
     <ExperimentSupport experiment-id="newtonian" :module-number="3" focus="Acceleration depends on net force and mass, not simply on whether an object is moving." prompt="At fixed mass, what happens to acceleration if the net force doubles? What if mass doubles instead?" action="Change one variable at a time, record the acceleration, then compare trials with equal force-to-mass ratios." reflect="Why must you use the net force rather than the applied push alone? Which idealisations does this model make?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
-      <p class="muted">Choose an answer before running the model. Each explanation unlocks only after you have compared the relevant cases.</p>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <p class="muted">{{ tx('Choose an answer before running the model. Each explanation unlocks only after you have compared the relevant cases.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <div class="cart-scene" role="img" :aria-label="`A cart of mass ${mass} kilograms pushed to the right by a net force of ${force} newtons`">
@@ -85,15 +86,15 @@ function runExperiment() {
             <p class="muted small">{{ localizeExperimentText('Idealised horizontal track · the cart starts from rest', locale) }}</p>
           </div>
           <div class="readout-grid">
-            <div><span class="muted">Acceleration</span><strong class="num">{{ fmt(acceleration) }} m/s²</strong></div>
+            <div><span class="muted">{{ tx('Acceleration') }}</span><strong class="num">{{ fmt(acceleration) }} m/s²</strong></div>
             <div><span class="muted">Speed after {{ time }} s</span><strong class="num">{{ fmt(velocity) }} m/s</strong></div>
             <div><span class="muted">Displacement after {{ time }} s</span><strong class="num">{{ fmt(displacement) }} m</strong></div>
           </div>
-          <h3>Recorded trials</h3>
+          <h3>{{ tx('Recorded trials') }}</h3>
           <p v-if="runs.length === 0" class="muted">{{ localizeExperimentText('Run at least two carefully chosen cases to reveal a relationship.', locale) }}</p>
           <div v-else class="table-scroll">
             <table>
-              <thead><tr><th>Trial</th><th>Net force</th><th>Mass</th><th>Acceleration</th></tr></thead>
+              <thead><tr><th>{{ tx('Trial') }}</th><th>{{ tx('Net force') }}</th><th>{{ tx('Mass') }}</th><th>{{ tx('Acceleration') }}</th></tr></thead>
               <tbody>
                 <tr v-for="(run, i) in runs" :key="i"><td>{{ i + 1 }}</td><td>{{ run.force }} N</td><td>{{ run.mass }} kg</td><td>{{ fmt(run.acceleration) }} m/s²</td></tr>
               </tbody>
@@ -114,7 +115,7 @@ function runExperiment() {
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section class="card prose" aria-labelledby="maths-title">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <p>{{ localizeExperimentText('Newton’s second law relates the net force on an object to its acceleration:', locale) }}</p>
       <MathFormula tex="\sum F = ma" :display="true" />
       <p>{{ localizeExperimentText('For this one-dimensional model, with constant mass and constant net force:', locale) }}</p>
@@ -141,7 +142,7 @@ function runExperiment() {
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p>{{ localizeExperimentText('Continue: apply force and acceleration reasoning to a projectile, where gravity changes the vertical velocity.', locale) }}</p>
-      <span class="nav-links"><RouterLink to="/mechanics/projectile">Projectile launcher</RouterLink><RouterLink to="/teachers">Teacher guide</RouterLink><RouterLink to="/">All modules</RouterLink></span>
+      <span class="nav-links"><RouterLink to="/mechanics/projectile">{{ tx('Projectile launcher') }}</RouterLink><RouterLink to="/teachers">{{ tx('Teacher guide') }}</RouterLink><RouterLink to="/">{{ tx('All modules') }}</RouterLink></span>
     </nav>
   </article>
 </template>
