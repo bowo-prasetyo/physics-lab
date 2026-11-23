@@ -165,8 +165,12 @@ const expansionWord = computed(() => {
             <span class="clock-sub num">a = {{ sig(readings.a, 4) }}</span>
           </div>
           <div class="buttons">
-            <button class="btn" type="button" :disabled="t <= expansion.tMin" @click="running && direction === -1 ? stop() : run(-1)">{{ localizeExperimentText('{{ running && direction === -1 ? \'Pause\' : \'◀ Backwards\' }}', locale) ?? '{{ running && direction === -1 ? \'Pause\' : \'◀ Backwards\' }}' }}</button>
-            <button class="btn btn-primary" type="button" :disabled="t >{{ localizeExperimentText('= expansion.tMax" @click="running && direction === 1 ? stop() : run(1)">\n              {{ running && direction === 1 ? \'Pause\' : \'Forwards ▶\' }}', locale) ?? '= expansion.tMax" @click="running && direction === 1 ? stop() : run(1)">\n              {{ running && direction === 1 ? \'Pause\' : \'Forwards ▶\' }}' }}</button>
+            <button class="btn" type="button" :disabled="t <= expansion.tMin" @click="running && direction === -1 ? stop() : run(-1)">
+              {{ running && direction === -1 ? 'Pause' : '◀ Backwards' }}
+            </button>
+            <button class="btn btn-primary" type="button" :disabled="t >= expansion.tMax" @click="running && direction === 1 ? stop() : run(1)">
+              {{ running && direction === 1 ? 'Pause' : 'Forwards ▶' }}
+            </button>
           </div>
           <div class="time-slider">
             <label for="cosmic-time">Jump to a time</label>
