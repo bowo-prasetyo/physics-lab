@@ -80,15 +80,15 @@ function runExperiment() {
       <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
       <div class="lab">
         <div class="lab-main card">
-          <div class="cart-scene" role="img" :aria-label="`A cart of mass ${mass} kilograms pushed to the right by a net force of ${force} newtons`">
-            <div class="force-arrow"><span>{{ force }} N net force</span><span class="arrow">⟶</span></div>
+          <div class="cart-scene" role="img" :aria-label="locale === 'id' ? `Kereta bermassa ${mass} kilogram didorong ke kanan oleh gaya resultan ${force} newton` : locale === 'ja' ? `質量 ${mass} kg の台車が右向きに ${force} N の合力を受けています` : `A cart of mass ${mass} kilograms pushed to the right by a net force of ${force} newtons`">
+            <div class="force-arrow"><span>{{ force }} N {{ tx('net force') }}</span><span class="arrow">⟶</span></div>
             <div class="cart"><span>{{ mass }} kg</span><i></i><i></i></div>
             <p class="muted small">{{ localizeExperimentText('Idealised horizontal track · the cart starts from rest', locale) }}</p>
           </div>
           <div class="readout-grid">
             <div><span class="muted">{{ tx('Acceleration') }}</span><strong class="num">{{ fmt(acceleration) }} m/s²</strong></div>
-            <div><span class="muted">Speed after {{ time }} s</span><strong class="num">{{ fmt(velocity) }} m/s</strong></div>
-            <div><span class="muted">Displacement after {{ time }} s</span><strong class="num">{{ fmt(displacement) }} m</strong></div>
+            <div><span class="muted">{{ tx('Speed after') }} {{ time }} s</span><strong class="num">{{ fmt(velocity) }} m/s</strong></div>
+            <div><span class="muted">{{ tx('Displacement after') }} {{ time }} s</span><strong class="num">{{ fmt(displacement) }} m</strong></div>
           </div>
           <h3>{{ tx('Recorded trials') }}</h3>
           <p v-if="runs.length === 0" class="muted">{{ localizeExperimentText('Run at least two carefully chosen cases to reveal a relationship.', locale) }}</p>
