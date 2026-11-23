@@ -15,7 +15,7 @@ const translations: Record<string, readonly [string, string]> = {
   'At': ['Pada kecepatan', '速度'],
   'With': ['Jika', 'ここで'],
   'worldline': ['garis dunia', '世界線'],
-  'the correction is': ['のとき、補正量は', 'では、補正量は'],
+  'the correction is': [', koreksinya adalah', 'では、補正量は'],
   'Check it with your own run': ['Periksa dengan percobaan Anda sendiri', '自分の実験で確かめる'],
   'Reading the graph': ['Membaca grafik', 'グラフの読み方'],
   'Where the line starts on the vertical axis is the starting position': ['Titik awal garis pada sumbu vertikal menunjukkan posisi awal', '縦軸上で線が始まる位置は初期位置を表します'],
