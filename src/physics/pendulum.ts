@@ -13,10 +13,14 @@
  * complete elliptic integral 4√(L/g) K(sin(θ₀/2)).
  *
  * The motion is integrated with the Störmer–Verlet method. It is symplectic:
- * its energy error oscillates at a fixed size however long the pendulum
- * swings. RK4 is more accurate at first, but its energy error keeps growing in
- * proportion to the running time. A clock must keep going for a long time, so
- * bounded beats drifting.
+ * in exact arithmetic it preserves the phase-space structure, not the
+ * pendulum's original energy exactly. With a sufficiently small fixed step,
+ * its energy error typically remains bounded and oscillatory over long runs
+ * (a consequence of near-conservation of a modified, or "shadow", energy).
+ * This is not unconditional: an unsuitable step size, round-off, or very long
+ * integrations can still cause problems. In the tested setup RK4 accumulates
+ * noticeably more energy error, but that behaviour is not a universal rule
+ * for every system, step size, or integration interval.
  */
 
 export interface PendulumState {

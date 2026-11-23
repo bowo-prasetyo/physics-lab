@@ -86,9 +86,12 @@ const seriesExample = computed(() => {
         tex="\begin{aligned} \omega_{n+\frac12} &= \omega_n - \tfrac{h}{2}\tfrac{g}{L}\sin\theta_n \\ \theta_{n+1} &= \theta_n + h\,\omega_{n+\frac12} \\ \omega_{n+1} &= \omega_{n+\frac12} - \tfrac{h}{2}\tfrac{g}{L}\sin\theta_{n+1} \end{aligned}"
       />
       <p>
-        It is <strong>symplectic</strong>: it exactly preserves areas in the phase portrait, so its energy error stays bounded for ever. RK4 is
-        more accurate at first, but its error grows steadily with time. For something that must keep going, as a clock must, bounded is
-        better.
+        It is <strong>symplectic</strong>: in exact arithmetic it preserves phase-space area, but it does not exactly conserve the
+        pendulum’s original energy. With a sufficiently small fixed time step, its energy error typically stays bounded and oscillates
+        over long runs because the method nearly conserves a slightly modified energy. This is not guaranteed for every step size or
+        arbitrarily long computation; finite-precision round-off can also accumulate. In the tested setup, RK4 starts more accurate
+        but accumulates substantially more energy error. That comparison is specific to this pendulum and step size, not a universal
+        rule for every simulation.
       </p>
       <p>
         Huygens showed in 1673 that a bob guided along a <strong>cycloid</strong> instead of a circle has a period that does not depend on the
