@@ -17,6 +17,7 @@ import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import type { LocationQuery } from 'vue-router'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 // Three.js is large; it is only downloaded for this page.
@@ -64,7 +65,7 @@ watch(
 
 const predictions = computed(() => localizePredictions('displacement3d', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(snapshots.value)])))
-const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(snapshots.value) ?? null])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, localizeExperimentText(p.hint?.(snapshots.value) ?? null, locale.value)])))
 
 const intermediate = computed(() => atLeast(level.value, 'intermediate'))
 const advanced = computed(() => atLeast(level.value, 'advanced'))
