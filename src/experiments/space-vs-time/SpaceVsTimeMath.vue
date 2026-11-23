@@ -114,7 +114,7 @@ const correctionSpeed = computed(() => Math.abs(props.u === 0 ? 3 : props.u).toF
       <MathFormula display :tex="boostExample" />
       <p>
         {{ tx('Use the observer velocity slider.') }} {{ tx('With') }} <MathFormula tex="u = v" /> {{ tx('the object is at rest for the observer; with') }}
-        <MathFormula tex="v = 0" /> and <MathFormula tex="u \\neq 0" /> {{ tx('a "stationary" object moves. Being at rest is a relation between an object and a frame of reference, not a property of the object alone.') }}
+        <MathFormula tex="v = 0" /> {{ tx('and') }} <MathFormula tex="u \\neq 0" /> {{ tx('a "stationary" object moves. Being at rest is a relation between an object and a frame of reference, not a property of the object alone.') }}
       </p>
 
       <h3>{{ tx('What all Galilean observers agree on') }}</h3>
