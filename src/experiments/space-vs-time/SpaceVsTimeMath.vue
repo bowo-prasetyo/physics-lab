@@ -87,7 +87,7 @@ const correctionSpeed = computed(() => Math.abs(props.u === 0 ? 3 : props.u).toF
     <template v-else-if="level === 'intermediate'">
       <p>{{ tx('Velocity is the rate of change of position, so position is the accumulated velocity:') }}</p>
       <MathFormula display tex="v(t) = \frac{dx}{dt} \quad\Longleftrightarrow\quad x(t) = x_0 + \int_0^t v(t')\,dt'" />
-      <p>For constant <MathFormula tex="v" /> the integral gives <MathFormula tex="x(t) = x_0 + v\,t" />, the straight lines on your graph.</p>
+      <p>{{ tx('For constant') }} <MathFormula tex="v" /> {{ tx('the integral gives') }} <MathFormula tex="x(t) = x_0 + v\,t" />{{ tx(', the straight lines on your graph.') }}</p>
 
       <h3>{{ tx('Displacement and distance') }}</h3>
       <MathFormula display tex="\Delta x = \int_0^t v\,dt', \qquad s = \int_0^t |v|\,dt' \;\geq\; |\Delta x|" />
