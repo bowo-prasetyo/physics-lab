@@ -38,7 +38,7 @@ const seriesExample = computed(() => {
     <template v-if="level === 'beginner'">
       <p>{{ tx('For small swings, the time for one complete swing (the') }} <strong>{{ tx('period') }}</strong>{{ tx(') depends only on the length and on gravity:') }}</p>
       <MathFormula display :tex="periodExample" />
-      <p>{{ tx('The') }} <strong>{{ tx('frequency') }}</strong> {{ tx('is how many swings happen each second:') }}</p>
+      <p>{{ tx('The frequency is how many swings happen each second:') }}</p>
       <MathFormula display :tex="frequencyExample" />
       <h3>{{ tx('What makes something a clock?') }}</h3>
       <p>{{ tx('Every clock counts something that repeats at a steady rate:') }}</p>
