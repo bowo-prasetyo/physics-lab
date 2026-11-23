@@ -84,7 +84,7 @@ const description = computed(
     </details>
     <figcaption class="legend">
       <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind, { dashed: line.dashed }]" /> {{ localizeExperimentText(line.label, locale) }}</span>
-      <span v-if="measured !== null"><i class="swatch measured-swatch" /> Measured</span>
+      <span v-if="measured !== null"><i class="swatch measured-swatch" /> {{ localizeExperimentText('Measured', locale) }}</span>
     </figcaption>
   </figure>
 </template>
