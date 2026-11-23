@@ -26,7 +26,7 @@ const translations: Record<string, readonly [string, string]> = {
   ],
   'From Galilean to Lorentz': ['Dari Galilea ke Lorentz', 'ガリレイ変換からローレンツ変換へ'],
   'Galilean:': ['Galilea:', 'ガリレイ変換：'],
-  'Lorentz:': ['Lorentz:', 'ローレンツ変換：'],
+  'Lorentz:': ['Transformasi Lorentz:', 'ローレンツ変換：'],
   'For': ['Untuk', 'v が c より十分小さいとき、'],
   ', so the clock correction is tiny (second order in': [', sehingga koreksi jam sangat kecil (berorde kedua dalam', 'となるため、時計の補正はごくわずかです（'],
   '). The term': ['). Suku', '）。一方、項'],
