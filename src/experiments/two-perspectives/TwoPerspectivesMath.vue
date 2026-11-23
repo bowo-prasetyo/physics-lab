@@ -14,10 +14,11 @@ const tx = (value: string) => localizeTwoPerspectivesMathText(value, locale.valu
 const f = (value: number, digits = 3) => value.toFixed(digits)
 const phi = computed(() => rapidity(props.beta))
 
+const gammaDisplay = computed(() => '\\gamma = ' + f(gamma(props.beta)))
 const velocityAddition = computed(
   () => `w = \\frac{c + v}{1 + c\\,v/c^2} = \\frac{1 + ${f(props.beta, 2)}}{1 + ${f(props.beta, 2)}}\\,c = c`,
 )
-const rapidityDisplay = computed(() => '\\varphi = \\operatorname{artanh(' + f(props.beta, 2) + ')} = ' + f(phi.value, 4))
+const rapidityDisplay = computed(() => '\\varphi = \\operatorname{artanh}(' + f(props.beta, 2) + ') = ' + f(phi.value, 4))
 const metricCheck = computed(
   () =>
     `\\begin{aligned} &\\cosh^2\\varphi - \\sinh^2\\varphi \\\\ &= ${f(Math.cosh(phi.value) ** 2, 4)} - ${f(Math.sinh(phi.value) ** 2, 4)} = 1 \\end{aligned}`,
@@ -88,7 +89,7 @@ const metricCheck = computed(
       <MathFormula display tex="\Delta t' = -\gamma\,\frac{v\,\Delta x}{c^2}" />
       <p>
         {{ tx("Events simultaneous for the Earth (") }}<MathFormula tex="\Delta t = 0" />{{ tx(") are not simultaneous for the ship. At your speed,") }}
-        <MathFormula :tex="\`\\gamma = \${f(gamma(beta))}\`" />.
+        <MathFormula :tex="gammaDisplay" />.
       </p>
     </template>
 
