@@ -29,7 +29,7 @@ const translations: Record<string, readonly [string, string]> = {
   'Lorentz:': ['Lorentz:', 'ローレンツ変換：'],
   'For': ['Untuk', 'の場合、'],
   ', so the clock correction is tiny (second order in': [', sehingga koreksi jam sangat kecil (berorde kedua dalam', 'となるため、時計の補正はごくわずかです（'],
-  '). The term': '). Suku', '）。一方、項'],
+  '). The term': ['). Suku', '）。一方、項'],
   'is different: for distant events it can be large even at modest speeds. It is the relativity of simultaneity, and Galilean physics leaves it out entirely.': [
     'berbeda: untuk peristiwa yang berjauhan, nilainya dapat besar bahkan pada kecepatan sedang. Inilah relativitas keserentakan, yang sepenuhnya diabaikan dalam fisika Galilea.',
     'は性質が異なります。遠く離れた事象では、速度がそれほど大きくなくてもこの項は大きくなり得ます。これは同時性の相対性を表し、ガリレイ物理学では完全に無視されています。',
@@ -44,7 +44,7 @@ const translations: Record<string, readonly [string, string]> = {
   ') are not simultaneous for the ship. At your speed,': [') tidak serentak menurut kapal. Pada kecepatan Anda,', '）は、宇宙船から見ると同時ではありません。現在の速度では、'],
   'Why the two relativistic descriptions must agree': ['Mengapa kedua deskripsi relativistik harus selaras', '2つの相対論的記述が一致しなければならない理由'],
   'In matrix form, a boost is a hyperbolic rotation of': ['Dalam bentuk matriks, boost merupakan rotasi hiperbolik dari', '行列で表すと、ローレンツ・ブーストは次のベクトルに対する双曲回転です：'],
-  'by the rapidity': 'by the rapidity',
+  'by the rapidity': ['dengan rapiditas', 'ラピディティによる'],
   'It preserves the metric': ['Transformasi ini mempertahankan metrik', 'この変換は計量'],
   'With': ['Dengan', 'ここで'],
   'Writing': ['Dengan menuliskan', 'さらに、'],
@@ -59,11 +59,11 @@ const translations: Record<string, readonly [string, string]> = {
   'component in a stated frame': ['komponen dalam kerangka acuan tertentu', '指定された慣性系での成分'],
   '(the time between the flashes for the ship). Both formalisms compute both kinds, and they compute them with the same group of transformations. So their predictions cannot differ.': [
     '(waktu antara kilatan cahaya menurut kapal). Kedua formalisme menghitung kedua jenis besaran tersebut dengan kelompok transformasi yang sama. Karena itu, prediksinya tidak mungkin berbeda.',
-    '（宇宙船から見た dua kilatanの間の時間）です。どちらの形式体系も、同じ変換群を使って両方を計算します。したがって、予測が異なることはありません。',
+    '（宇宙船から見た2回の閃光の間の時間）です。どちらの形式体系も、同じ変換群を使って両方を計算します。したがって、予測が異なることはありません。',
   ],
   '“Space + time” is spacetime with an observer chosen': ['“Ruang + waktu” adalah ruang-waktu dengan pengamat yang dipilih', '「空間＋時間」とは、観測者を選んだ時空のこと'],
   'Choose an observer with 4-velocity': ['Pilih seorang pengamat dengan 4-kecepatan', '4元速度'],
-  '. Their time is the component along': '. Waktu menurut pengamat tersebut adalah komponen sepanjang', 'を持つ観測者を選びます。その観測者の時間は'],
+  '. Their time is the component along': ['. Waktu menurut pengamat tersebut adalah komponen sepanjang', 'を持つ観測者を選びます。その観測者の時間は'],
   ', and their space is everything orthogonal to it:': [', sedangkan ruangnya adalah semua komponen yang tegak lurus terhadapnya:', '方向の成分であり、空間はそれに直交するすべての成分です：'],
   'Different observers make different splits. The space + time description is one such split, made explicitly.': [
     'Pengamat yang berbeda membagi ruang-waktu dengan cara yang berbeda. Deskripsi ruang + waktu merupakan salah satu pembagian tersebut, yang dinyatakan secara eksplisit.',
