@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "audit:localization": "node scripts/audit-localization.mjs",
-    "audit:localization:runtime": "vitest run src/i18n/runtime-localization-audit.test.ts src/i18n/interactive-localization-audit.test.ts",
+    "audit:localization:runtime": "vitest run src/i18n/runtime-localization-audit.test.ts src/i18n/interactive-localization-audit.test.ts src/i18n/webgl-localization-audit.test.ts",
+    "audit:localization:webgl": "vitest run src/i18n/webgl-localization-audit.test.ts",
     "audit:localization:interactive": "vitest run src/i18n/interactive-localization-audit.test.ts"
   },
   "dependencies": {

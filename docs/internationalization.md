@@ -63,19 +63,21 @@ Run `npm test`, `npm run audit:localization`, `npm run audit:localization:runtim
 
 - Message-key parity across all supported locales, non-empty values, and matching interpolation placeholders.
 - Static text and selected accessibility attributes in every Vue template under `src/`; the audit writes JSON and Markdown reports to `artifacts/localization-audit.*`.
+- Interactive state sweeps across routes and locales, including accessible names and document language after state changes.
+- A focused Three.js WebGL scene audit that mounts the production scene, checks localized CSS2D axis/direction labels, the start marker, scientific symbols, accessible scene description, and numerical text alternative in all three locales. Reports are written to `artifacts/localization-webgl-audit.*`.
 - Locale selector metadata and browser-language fallback behavior.
 - Stable experiment routes and catalogue structure across languages.
 - Complete teacher-guide lesson structure and experiment-support copy.
 - Prediction question, task, option, and explanation coverage, including preservation of stable prediction and option IDs.
 - Locale-aware number and date formatting.
 
-The source audit is a review aid, not an automatic missing-translation verdict: it flags literal Latin-language text in Vue templates, including SVG text and static accessibility attributes. Some candidates may be intentional English fallback or shared technical labels. It does not inspect TypeScript-generated labels, Canvas/WebGL drawing text, remote content, or runtime-only props. CI uploads the generated JSON and Markdown reports as the `localization-audit` artifact.
+The WebGL audit stubs the GPU renderer in jsdom but uses the production scene and CSS2D label construction. It verifies DOM-backed labels and accessibility, not actual raster pixels or real-browser glyph layout. The galaxy-field visualization is SVG, not Canvas/WebGL, and is covered by the runtime DOM audit. Browser screenshot review is still required for label collisions, clipping, contrast, font fallback, and responsive layout.\n\nThe source audit is a review aid, not an automatic missing-translation verdict: it flags literal Latin-language text in Vue templates, including SVG text and static accessibility attributes. Some candidates may be intentional English fallback or shared technical labels. It does not inspect TypeScript-generated labels, Canvas/WebGL drawing text, remote content, or runtime-only props. CI uploads the generated JSON and Markdown reports as the `localization-audit` artifact.
 
 Automated checks cannot judge translation naturalness, register, terminology consistency, or scientific nuance. Before release, review each locale in the running application and complete the following checklist:
 
 - [ ] Review English, Indonesian, and Japanese on desktop and narrow mobile layouts.
 - [ ] Check that headings, buttons, hints, support panels, teacher resources, chart labels, SVG annotations, and accessible names use the selected language where translations are available.
-- [ ] Check that long Japanese and Indonesian text wraps without clipping, overlap, or horizontal overflow.
+- [ ] Check that long Japanese and Indonesian text wraps without clipping, overlap, or horizontal overflow.\n- [ ] Inspect the 3D WebGL scene in a real browser at desktop and narrow mobile widths; check axis labels, direction labels, point markers, and text alternatives for clipping, collisions, contrast, and font fallback.
 - [ ] Check number/date separators and ensure units, symbols, equations, and significant digits remain meaningful.
 - [ ] Check interpolation in context (counts, progress, module numbers) and confirm no raw placeholder tokens are visible.
 - [ ] Check language switching, reload persistence, browser-language detection, and English fallback.
