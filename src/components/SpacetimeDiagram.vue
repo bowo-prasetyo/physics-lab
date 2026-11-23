@@ -69,6 +69,7 @@ const lines = computed(() =>
       end: { t: props.duration, x: w.velocity * props.duration },
       ticks: properTimeTicks(w.velocity, props.duration),
       now,
+      tauNow: props.t * Math.sqrt(1 - w.velocity ** 2),
       dx: w.side === 'left' ? -10 : 10,
       anchor: w.side === 'left' ? 'end' : 'start',
     }
@@ -174,6 +175,15 @@ const description = computed(() => {
     </svg>
     </div>
 
+    <details class="diagram-data">
+      <summary>Read the current spacetime measurements as a table</summary>
+      <div class="table-scroll">
+        <table><thead><tr><th scope="col">Observer</th><th scope="col">Velocity</th><th scope="col">Current event (t, x)</th><th scope="col">Proper time elapsed</th></tr></thead>
+          <tbody><tr v-for="line in lines" :key="line.id"><th scope="row">{{ line.label }}</th><td>{{ line.velocity.toFixed(2) }}c</td><td>({{ line.now.t.toFixed(2) }} s, {{ line.now.x.toFixed(2) }} light-seconds)</td><td>{{ line.tauNow.toFixed(2) }} s</td></tr></tbody>
+        </table>
+      </div>
+      <p class="muted small">The diagram’s horizontal and vertical axes are position and coordinate time in the selected frame. Proper time is what each moving clock accumulates along its own worldline.</p>
+    </details>
     <figcaption class="legend">
       <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind]" /> {{ line.label }} (dots: each second on its own clock)</span>
       <span><i class="swatch light" /> Light (45°)</span>
@@ -183,9 +193,14 @@ const description = computed(() => {
 </template>
 
 <style scoped>
-.diagram {
-  margin: 0;
-}
+.diagram { margin: 0; }
+.diagram-data { margin-top: 8px; font-size: .84rem; }
+.diagram-data summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.diagram-data .small { margin: 8px 0 0; }
+.diagram-data table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.diagram-data th, .diagram-data td { padding: 7px 9px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+.diagram-data th { color: var(--text-muted); }
+.table-scroll { max-width: 100%; overflow-x: auto; }
 
 svg {
   display: block;

@@ -74,6 +74,14 @@ const paths = computed(() =>
       <line v-if="marker !== null" :x1="sx(marker)" :x2="sx(marker)" :y1="M.top" :y2="M.top + plotH" class="marker" />
       <path v-for="p in paths" :key="p.id" :d="p.d" class="line" :style="{ stroke: p.colour }" />
     </svg>
+    <details class="chart-data">
+      <summary>View the plotted values as a table</summary>
+      <div class="chart-scroll">
+        <table><thead><tr><th scope="col">Series</th><th scope="col">Time / x</th><th scope="col">Value / y</th></tr></thead>
+          <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ item.label }}</th><td>{{ point.x }}</td><td>{{ point.y }}</td></tr></template></tbody>
+        </table>
+      </div>
+    </details>
     <figcaption class="legend">
       <span v-for="s in series" :key="s.id"><i class="swatch" :style="{ background: s.colour }" /> {{ s.label }}</span>
     </figcaption>
@@ -81,9 +89,13 @@ const paths = computed(() =>
 </template>
 
 <style scoped>
-.chart {
-  margin: 0;
-}
+.chart { margin: 0; }
+.chart-data { margin-top: 8px; font-size: .84rem; }
+.chart-data summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.chart-scroll { max-width: 100%; overflow-x: auto; }
+.chart-data table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.chart-data th, .chart-data td { padding: 6px 9px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+.chart-data th { color: var(--text-muted); }
 
 svg {
   display: block;

@@ -102,6 +102,15 @@ const description = computed(() => {
       </g>
     </svg>
 
+    <details class="graph-data">
+      <summary>Read the position–time values as a table</summary>
+      <div class="table-scroll"><table><thead><tr><th scope="col">Run / observer</th><th scope="col">Time</th><th scope="col">Position</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Current run</th><td>{{ currentEnd.t.toFixed(2) }} s</td><td>{{ currentEnd.x.toFixed(2) }} m</td></tr>
+          <tr v-if="observerEnd"><th scope="row">Moving observer</th><td>{{ observerEnd.t.toFixed(2) }} s</td><td>{{ observerEnd.x.toFixed(2) }} m</td></tr>
+          <tr v-for="(record, index) in history" :key="index"><th scope="row">Earlier run {{ index + 1 }} ({{ describeRun(record) }})</th><td>{{ graphVertices(record).at(-1)?.t.toFixed(2) }} s</td><td>{{ graphVertices(record).at(-1)?.x.toFixed(2) }} m</td></tr>
+        </tbody></table></div>
+    </details>
     <figcaption class="legend">
       <span><i class="swatch current" /> Current run</span>
       <span v-if="observerVertices"><i class="swatch observer" /> Same run, measured by the moving observer</span>
@@ -111,9 +120,13 @@ const description = computed(() => {
 </template>
 
 <style scoped>
-.graph {
-  margin: 0;
-}
+.graph { margin: 0; }
+.graph-data { margin-top: 8px; font-size: .84rem; }
+.graph-data summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.graph-data table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.graph-data th, .graph-data td { padding: 6px 9px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+.graph-data th { color: var(--text-muted); }
+.graph-data .table-scroll { max-width: 100%; overflow-x: auto; }
 
 svg {
   display: block;

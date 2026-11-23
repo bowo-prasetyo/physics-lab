@@ -1,5 +1,4 @@
-/* Layout shared by every lesson page (moved here from identical copies in each page). */
-
+/* Layout shared by every lesson page. */
 .lesson {
   display: flex;
   flex-direction: column;
@@ -7,7 +6,6 @@
   padding-top: 28px;
   padding-bottom: 48px;
 }
-
 .eyebrow {
   margin: 0 0 6px;
   font-size: 0.8rem;
@@ -16,60 +14,59 @@
   text-transform: uppercase;
   color: var(--accent);
 }
-
-.lead {
-  max-width: 68ch;
-  font-size: 1.1rem;
-  color: var(--text-muted);
-}
-
-.lesson h2 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
+.lead { max-width: 68ch; font-size: 1.1rem; color: var(--text-muted); }
+.lesson h2 { display: flex; align-items: center; gap: 10px; }
 .step-no {
-  display: inline-grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--on-accent);
-  font-size: 0.9rem;
+  display: inline-grid; place-items: center; width: 28px; height: 28px;
+  border-radius: 50%; background: var(--accent); color: var(--on-accent); font-size: 0.9rem;
 }
-
 .prediction-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-  align-items: start;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 16px; align-items: start;
 }
-
-.prose p,
-.prose li {
-  max-width: 75ch;
-}
-
-.meaning {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-}
-
-.meaning ul {
-  padding-left: 1.2em;
-}
-
+.prose p, .prose li { max-width: 75ch; }
+.meaning { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+.meaning ul { padding-left: 1.2em; }
 .next {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;
 }
+.next p { margin: 0; }
 
-.next p {
-  margin: 0;
+/* Secondary explanations stay available without competing with the live lab. */
+.lesson-disclosure {
+  border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: clip;
+}
+.lesson-disclosure > summary {
+  display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 12px 16px;
+  color: var(--accent); font-weight: 700; cursor: pointer; list-style-position: inside;
+}
+.lesson-disclosure[open] > summary { border-bottom: 1px solid var(--border); background: var(--surface-2); }
+.lesson-disclosure > section { padding: 18px; }
+.lesson-disclosure > section > h2 { margin-top: 0; }
+.lesson-disclosure > summary:focus-visible { outline-offset: -3px; }
+
+/* Consistent control sizing and a usable lab layout on touch screens. */
+.lesson .lab { min-width: 0; }
+.lesson .lab-main, .lesson .lab-side { min-width: 0; }
+.lesson .lab-side { overflow-x: clip; }
+.lesson input[type='range'] { min-height: 36px; touch-action: pan-y; cursor: pointer; }
+.lesson .btn-small, .lesson .chip, .lesson .frame-switch label { min-height: 40px; }
+.lesson .table-scroll, .lesson .chart-scroll { max-width: 100%; overflow-x: auto; }
+.lesson table { border-collapse: collapse; }
+.lesson th, .lesson td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+@media (max-width: 900px) {
+  .lesson .lab { grid-template-columns: minmax(0, 1fr); }
+  .lesson .lab-side { position: static; max-height: none; overflow: visible; }
+}
+@media (max-width: 640px) {
+  .lesson { gap: 22px; padding-top: 20px; }
+  .lesson .card { padding: 14px; }
+  .prediction-grid, .meaning { grid-template-columns: minmax(0, 1fr); }
+  .lesson .nav-links { flex-wrap: wrap; gap: 10px 16px; }
+  .lesson .move-row { gap: 5px; }
+  .lesson .move-row .btn-small { padding-inline: 7px; font-size: 0.78rem; }
+  .lesson input[type='range'] { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lesson * { scroll-behavior: auto !important; }
 }

@@ -156,13 +156,28 @@ const description = computed(() => {
       </text>
       <text :x="12" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 12 ${M.top + plotH / 2})`">height (m)</text>
     </svg>
+    <details class="trajectory-data">
+      <summary>Read the current projectile measurements as a table</summary>
+      <table><thead><tr><th scope="col">Object</th><th scope="col">Horizontal position</th><th scope="col">Height</th><th scope="col">Horizontal velocity</th><th scope="col">Vertical velocity</th></tr></thead>
+        <tbody>
+          <tr v-if="ball"><th scope="row">Launched ball</th><td>{{ view(ball).x.toFixed(2) }} m</td><td>{{ ball.y.toFixed(2) }} m</td><td>{{ (ball.vx - u).toFixed(2) }} m/s</td><td>{{ ball.vy.toFixed(2) }} m/s</td></tr>
+          <tr v-if="droppedBall"><th scope="row">Dropped ball</th><td>{{ view(droppedBall).x.toFixed(2) }} m</td><td>{{ droppedBall.y.toFixed(2) }} m</td><td>{{ (droppedBall.vx - u).toFixed(2) }} m/s</td><td>{{ droppedBall.vy.toFixed(2) }} m/s</td></tr>
+          <tr v-if="!ball && !droppedBall"><th scope="row">Before launch</th><td>0.00 m</td><td>{{ height.toFixed(2) }} m</td><td>Not moving</td><td>Not moving</td></tr>
+        </tbody>
+      </table>
+      <p class="muted small">Positions and velocities are measured in {{ frameVelocity === 0 ? 'the ground frame' : 'the moving observer’s frame' }} at t = {{ t.toFixed(2) }} s.</p>
+    </details>
   </figure>
 </template>
 
 <style scoped>
-.trajectory {
-  margin: 0;
-}
+.trajectory { margin: 0; }
+.trajectory-data { margin-top: 8px; font-size: .84rem; }
+.trajectory-data summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.trajectory-data table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.trajectory-data th, .trajectory-data td { padding: 7px 9px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+.trajectory-data th { color: var(--text-muted); }
+.trajectory-data .small { margin: 8px 0 0; }
 
 svg {
   display: block;

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ShareExperiment from '@/components/ShareExperiment.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PredictionCard from '@/components/PredictionCard.vue'
@@ -133,6 +134,8 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
         your phone?
       </p>
     </header>
+
+    <ShareExperiment />
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
@@ -280,7 +283,9 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
       </div>
     </section>
 
-    <section aria-labelledby="maths-title" class="card prose">
+    <details class="lesson-disclosure">
+      <summary>3 · Explore the mathematics</summary>
+      <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <GravityClocksMath
         :level="level"
@@ -294,8 +299,11 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
         :radial-distance="radialDistance"
       />
     </section>
+    </details>
 
-    <section aria-labelledby="meaning-title" class="card prose">
+    <details class="lesson-disclosure">
+      <summary>4 · Explore the meaning and interpretation</summary>
+      <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
         <InfoCallout kind="physics" title="Established physics">
@@ -328,6 +336,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
         </InfoCallout>
       </div>
     </section>
+    </details>
 
     <nav class="next card" aria-label="Next steps">
       <p><strong>Next:</strong> Experiment D, where space itself evolves in time. See also Experiments B and E.</p>

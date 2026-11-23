@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ShareExperiment from '@/components/ShareExperiment.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import ParameterSlider from '@/components/ParameterSlider.vue'
@@ -92,6 +93,8 @@ function formatClock(seconds: number): string {
       </p>
     </header>
 
+    <ShareExperiment />
+
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
@@ -159,12 +162,17 @@ function formatClock(seconds: number): string {
       </div>
     </section>
 
-    <section aria-labelledby="maths-title" class="card prose">
+    <details class="lesson-disclosure">
+      <summary>3 · Explore the mathematics</summary>
+      <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <PendulumMath :level="level" :length="length" :g="planet.g" :amplitude-deg="amplitude" :small-angle="smallAngle" :exact="exact" />
     </section>
+    </details>
 
-    <section aria-labelledby="meaning-title" class="card prose">
+    <details class="lesson-disclosure">
+      <summary>4 · Explore the meaning and interpretation</summary>
+      <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
         <InfoCallout kind="physics" title="Established physics">
@@ -197,6 +205,7 @@ function formatClock(seconds: number): string {
         </InfoCallout>
       </div>
     </section>
+    </details>
 
     <nav class="next card" aria-label="Next steps">
       <p><strong>Next:</strong> Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.</p>

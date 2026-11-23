@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ShareExperiment from '@/components/ShareExperiment.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import MathFormula from '@/components/MathFormula.vue'
@@ -110,6 +111,8 @@ const expansionWord = computed(() => {
       </p>
     </header>
 
+    <ShareExperiment />
+
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
@@ -205,12 +208,17 @@ const expansionWord = computed(() => {
       </div>
     </section>
 
-    <section aria-labelledby="maths-title" class="card prose">
+    <details class="lesson-disclosure">
+      <summary>3 · Explore the mathematics</summary>
+      <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <EvolvingSpaceMath :level="level" :cosmology="cosmology" :expansion="expansion" :a="readings.a" :hubble="hubblePerGyr" :target="target" />
     </section>
+    </details>
 
-    <section aria-labelledby="meaning-title" class="card prose">
+    <details class="lesson-disclosure">
+      <summary>4 · Explore the meaning and interpretation</summary>
+      <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
         <InfoCallout kind="physics" title="Established physics">
@@ -245,6 +253,7 @@ const expansionWord = computed(() => {
         </InfoCallout>
       </div>
     </section>
+    </details>
 
     <nav class="next card" aria-label="Next steps">
       <p><strong>See also:</strong> Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.</p>

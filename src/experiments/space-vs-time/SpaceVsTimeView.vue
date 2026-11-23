@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ShareExperiment from '@/components/ShareExperiment.vue'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import MathFormula from '@/components/MathFormula.vue'
@@ -92,16 +93,6 @@ useQuerySync({
   },
 })
 
-const copied = ref(false)
-async function copyLink() {
-  try {
-    await navigator.clipboard.writeText(window.location.href)
-    copied.value = true
-    setTimeout(() => (copied.value = false), 2000)
-  } catch {
-    window.prompt('Copy this link:', window.location.href)
-  }
-}
 </script>
 
 <template>
@@ -114,6 +105,8 @@ async function copyLink() {
         position, and what happens to time, when you stop it?
       </p>
     </header>
+
+    <ShareExperiment />
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
@@ -194,18 +187,22 @@ async function copyLink() {
 
           <div class="side-footer">
             <button class="btn btn-small" type="button" :disabled="history.length === 0" @click="clearHistory">Clear earlier runs</button>
-            <button class="btn btn-small" type="button" @click="copyLink">{{ copied ? 'Link copied' : 'Copy link to this setup' }}</button>
           </div>
         </div>
       </div>
     </section>
 
-    <section aria-labelledby="maths-title" class="card prose">
+    <details class="lesson-disclosure">
+      <summary>3 · Explore the mathematics</summary>
+      <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <SpaceVsTimeMath :level="level" :snapshot="snapshot" :u="u" />
     </section>
+    </details>
 
-    <section aria-labelledby="meaning-title" class="card prose">
+    <details class="lesson-disclosure">
+      <summary>4 · Explore the meaning and interpretation</summary>
+      <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
         <InfoCallout kind="physics" title="Established physics">
@@ -240,6 +237,7 @@ async function copyLink() {
         </InfoCallout>
       </div>
     </section>
+    </details>
 
     <nav class="next card" aria-label="Next steps">
       <p><strong>Next:</strong> Experiment B compares two clocks moving relative to each other near the speed of light.</p>
