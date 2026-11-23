@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ShareExperiment from '@/components/ShareExperiment.vue'
+import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import MathFormula from '@/components/MathFormula.vue'
@@ -137,6 +138,8 @@ const dropDifference = computed(() => {
     </header>
 
     <ShareExperiment />
+
+    <ExperimentSupport experiment-id="projectile" :module-number="3" focus="In the ideal no-drag model, horizontal and vertical motion have different roles: gravity changes vertical velocity." prompt="If a ball is launched horizontally, does it begin falling immediately or only after its forward motion slows?" action="Compare launch angles and gravitational environments; then switch air resistance on and compare the trajectory." reflect="Which results rely on the no-drag approximation, and why can horizontal velocity coexist with downward acceleration?" />
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>

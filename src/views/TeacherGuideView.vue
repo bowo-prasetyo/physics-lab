@@ -83,14 +83,14 @@ const lessons = [
         <li>Set up a reproducible example, then share its URL with learners. Experiment settings and level are encoded in the link where supported.</li>
         <li>Ask learners to predict before revealing explanations. Treat an incorrect prediction as useful evidence about their current model.</li>
       </ul>
-      <p class="muted small">These are teaching aids, not a learning-management system. The app does not create classes, collect student identities, grade submissions or track learner progress.</p>
+      <p class="muted small">These are teaching aids, not a learning-management system. The optional learner checklist is stored only in the learner’s own browser; it is not sent to teachers or used for grading.</p>
     </section>
 
     <section id="lesson-plans" aria-labelledby="plans-title">
       <h2 id="plans-title">Lesson outlines</h2>
       <p class="muted">Suggested timings are starting points. Adjust them for prior knowledge, class size and discussion time.</p>
       <div class="lesson-grid">
-        <article v-for="lesson in lessons" :key="lesson.module" class="card lesson-card">
+        <article v-for="(lesson, index) in lessons" :key="lesson.module" :id="`module-${index + 1}`" class="card lesson-card">
           <p class="eyebrow">{{ lesson.module }}</p>
           <h3>{{ lesson.title }}</h3>
           <p class="time">{{ lesson.time }}</p>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ShareExperiment from '@/components/ShareExperiment.vue'
+import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import MathFormula from '@/components/MathFormula.vue'
@@ -78,6 +79,8 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </header>
 
     <ShareExperiment />
+
+    <ExperimentSupport experiment-id="two-perspectives" :module-number="4" focus="Compare predictions from Galilean, Lorentzian space-and-time, and spacetime descriptions without confusing mathematical language with experimental differences." prompt="Can two mathematical descriptions disagree about their interpretation yet make the same measurable predictions?" action="Choose each scenario, compare all three descriptions at several speeds, then reveal the measurement evidence." reflect="Which predictions agree with observation, and which disagreements are about interpretation rather than measured outcomes?" />
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
