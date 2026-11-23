@@ -36,16 +36,16 @@ type CopyRecord = {
 type Candidate = CopyRecord & { route: string; locale: Exclude<Locale, 'en'>; state: string }
 
 function normalize(value: string): string {
-  return value.replace(/\\s+/g, ' ').trim()
+  return value.replace(/\s+/g, ' ').trim()
 }
 
 function isEnglishLike(value: string): boolean {
   if (INTENTIONALLY_SHARED_COPY.has(value)) return false
-  if (/^[A-Z0-9_-]+(?:\\.[A-Z0-9_-]+)+$/.test(value)) return false
-  if (/^\\d+(?:[.,]\\d+)?\\s+(?:Gly|Gyr)$/.test(value)) return false
+  if (/^[A-Z0-9_-]+(?:\.[A-Z0-9_-]+)+$/.test(value)) return false
+  if (/^\d+(?:[.,]\d+)?\s+(?:Gly|Gyr)$/.test(value)) return false
   const words = value.match(/[A-Za-z]{3,}/g) ?? []
-  return words.length > 0 && value.length >= 5 && !/^https?:\\/\\//i.test(value)
-    && !/^[A-Z\\d\\s._:+\\/()–—-]+$/.test(value)
+  return words.length > 0 && value.length >= 5 && !/^https?:\/\//i.test(value)
+    && !/^[A-Z\d\s._:+\/()–—-]+$/.test(value)
 }
 
 function collectCopy(root: HTMLElement): CopyRecord[] {
@@ -75,7 +75,7 @@ function recordKey(record: CopyRecord): string {
 function accessibleName(element: Element, root: HTMLElement): string {
   const explicit = normalize(element.getAttribute('aria-label') ?? '')
   if (explicit) return explicit
-  const ids = (element.getAttribute('aria-labelledby') ?? '').split(/\\s+/).filter(Boolean)
+  const ids = (element.getAttribute('aria-labelledby') ?? '').split(/\s+/).filter(Boolean)
   const labelledBy = ids.map((id) => Array.from(root.querySelectorAll<HTMLElement>('[id]'))
     .find((candidate) => candidate.id === id)?.textContent ?? '').map(normalize).filter(Boolean).join(' ')
   if (labelledBy) return labelledBy
