@@ -24,6 +24,6 @@ describe('experiment UI localization', () => {
   it('preserves scientific notation and unknown text', () => {
     expect(localizeExperimentText('Δr = 12 m; v = 0.80c', 'ja')).toBe('Δr = 12 m; v = 0.80c')
     expect(localizeExperimentText('A new experimental label', 'id')).toBe('A new experimental label')
-    expect(localizeExperimentText(null, 'id')).toBeNull()
+    expect(localizeExperimentText(null, 'id')).toBeUndefined()
   })
 })
