@@ -98,7 +98,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
           :key="p.id"
           :prediction="p"
           :observed="observed[p.id] ?? false"
-          :hint="hints[p.id]"
+          ::hint="localizeExperimentText("hints[p.id]", locale) ?? "hints[p.id]""
           :index="i + 1"
         />
       </div>
@@ -109,7 +109,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
 
       <div class="card setup">
         <fieldset class="tabs">
-          <legend>Situation</legend>
+          <legend>{{ localizeExperimentText("Situation", locale) ?? "Situation" }}</legend>
           <label v-for="s in SCENARIOS" :key="s" :class="{ active: scenario === s }">
             <input v-model="scenario" type="radio" :value="s" class="sr-only" />
             {{ SCENARIO_INFO[s].tab }}
@@ -117,7 +117,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
         </fieldset>
         <p class="setup-text">{{ info.setup }}</p>
         <div class="setup-row">
-          <ParameterSlider v-model="beta" label="Ship speed" symbol="v/c" unit="c" v-bind="BETA_RANGE" :digits="2" :signed="false" />
+          <ParameterSlider v-model="beta" :label="localizeExperimentText("Ship speed", locale) ?? "Ship speed"" symbol="v/c" unit="c" v-bind="BETA_RANGE" :digits="2" :signed="false" />
           <p class="question"><span class="muted">Predicting:</span> <strong>{{ info.quantity }}</strong></p>
         </div>
       </div>
@@ -127,7 +127,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
           <h3>{{ DESCRIPTION_INFO[d].title }}</h3>
           <p class="assumption">{{ DESCRIPTION_INFO[d].assumption }}</p>
           <details class="working" :open="showWorkingOpen">
-            <summary>Show the working</summary>
+            <summary>{{ localizeExperimentText("Show the working", locale) ?? "Show the working" }}</summary>
             <MathFormula display :tex="derivation(scenario, d, beta)" />
           </details>
           <p class="value num">{{ format(predictions[d]) }}</p>
@@ -140,7 +140,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
           <h3>What experiments find</h3>
           <template v-if="!measured">
             <p class="assumption">Nature decides. Compare the three predictions, then check them against real measurements.</p>
-            <button class="btn btn-primary" type="button" @click="measure">Make the measurement</button>
+            <button class="btn btn-primary" type="button" @click="measure">{{ localizeExperimentText("Make the measurement", locale) ?? "Make the measurement" }}</button>
           </template>
           <template v-else>
             <p class="value num">{{ format(measurement) }}</p>
@@ -154,8 +154,8 @@ const chartSeries = computed<ChartSeries[]>(() =>
         <PredictionChart
           :series="chartSeries"
           :x-max="1"
-          x-label="ship speed v (fraction of c)"
-          :y-label="info.axis"
+          x-:label="localizeExperimentText("ship speed v (fraction of c)", locale) ?? "ship speed v (fraction of c)""
+          :y-:label="localizeExperimentText("info.axis", locale) ?? "info.axis""
           :marker="beta"
           :measured="measured ? measurement : null"
         />
@@ -163,7 +163,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText("3 · Explore the mathematics", locale) ?? "3 · Explore the mathematics" }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <TwoPerspectivesMath :level="level" :beta="beta" />
@@ -171,7 +171,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText("4 · Explore the meaning and interpretation", locale) ?? "4 · Explore the meaning and interpretation" }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
@@ -210,7 +210,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-:label="localizeExperimentText("localizeExperimentText('Next steps', locale)", locale) ?? "localizeExperimentText('Next steps', locale)"">
       <p><strong>Next:</strong> Experiment C, in which gravity, not motion, changes how fast clocks tick.</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">← Experiment B</RouterLink>
