@@ -6,8 +6,10 @@
  * directly a fraction of the speed of light. The Hubble constant is given in
  * the astronomers' unit km/s/Mpc and converted.
  *
- * The scale factor a(t) has a = 1 today. Every distance between galaxies that
- * are not bound together scales as d(t) = a(t) d₀.
+ * The scale factor a(t) has a = 1 today. In the FLRW description, the proper
+ * distance between comoving, unbound galaxies is d(t) = a(t) d₀. This is a
+ * statement about spacetime geometry, not a material medium stretching or
+ * carrying galaxies through space.
  */
 
 /** 1 km/s/Mpc expressed in 1/Gyr. */

@@ -96,9 +96,9 @@ export const PREDICTIONS: readonly Prediction<SpaceRecord>[] = [
     ],
     correct: 'none',
     explanation:
-      'From any galaxy, all the others recede, faster the farther away they are. Distances between all galaxies grow by the same factor ' +
-      'a(t), so no galaxy is special. The Big Bang was not an explosion from a point into empty space: it happened everywhere, and space ' +
-      'itself has been expanding ever since.',
+      'From any comoving galaxy, the large-scale pattern is the same: other unbound comoving galaxies have increasing proper distances, ' +
+      'with recession rate proportional to distance. The scale factor a(t) describes this change in the spacetime geometry; it is not a ' +
+      'material space-stuff carrying galaxies apart. The Big Bang was not an explosion from a point into pre-existing empty space.',
     observed: (r) => observedNoCentre(merged(r)),
     hint: (r) => noCentreHint(merged(r)),
   },
@@ -115,9 +115,10 @@ export const PREDICTIONS: readonly Prediction<SpaceRecord>[] = [
     ],
     correct: 'bound',
     explanation:
-      'Only the distances between objects that are not bound together grow. A galaxy is held together by its own gravity, an atom by ' +
-      'electric forces, and these are vastly stronger than the gentle effect of the expansion. The Milky Way, the Solar System and you keep ' +
-      'their size. Even our neighbour, the Andromeda galaxy, is falling towards us.',
+      'The FLRW scale factor describes the changing proper distances between comoving objects on cosmological scales; it does not make ' +
+      'bound objects expand. A galaxy is held together by gravity, an atom by electromagnetic interactions, and these systems are not ' +
+      'simply carried along by the Hubble flow. The Milky Way, Solar System and you do not grow with the cosmic scale factor. Even our ' +
+      'neighbour, the Andromeda galaxy, is approaching us.',
     observed: (r) => observedBound(merged(r)),
   },
   {
@@ -133,9 +134,10 @@ export const PREDICTIONS: readonly Prediction<SpaceRecord>[] = [
     ],
     correct: 'yes',
     explanation:
-      'Hubble’s law v = H d has no upper limit: beyond the Hubble distance c/H (about 14.5 billion light-years today) galaxies recede ' +
-      'faster than light. Relativity is not broken, because the galaxy is not overtaking a light beam next to it: the space between us ' +
-      'grows. We still see many such galaxies, using light they emitted long ago.',
+      'The FLRW recession rate v = H d can exceed c beyond the Hubble distance c/H (about 14.5 billion light-years today). This is the ' +
+      'rate of change of proper distance between widely separated comoving observers, not a local velocity measured as one galaxy passes ' +
+      'the other. Locally, each observer still measures nearby light at c. We can nevertheless see some galaxies whose present recession ' +
+      'rate exceeds c, using light they emitted long ago.',
     observed: (r) => observedFasterThanLight(merged(r)),
     hint: (r) => fasterThanLightHint(merged(r)),
   },
