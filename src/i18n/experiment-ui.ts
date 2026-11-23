@@ -536,6 +536,19 @@ const text: Record<string, readonly [string, string]> = {
   "net force": ["gaya resultan","合力"],
   "Speed after": ["Kecepatan setelah","経過後の速さ"],
   "Displacement after": ["Perpindahan setelah","経過後の変位"],
+  "Run complete": ["Percobaan selesai","試行完了"],
+  "Running": ["Berjalan","実行中"],
+  "Paused": ["Dijeda","一時停止"],
+  "Earth clock": ["Jam Bumi","地球の時計"],
+  "ship clock": ["jam kapal","宇宙船の時計"],
+  "ship": ["kapal","宇宙船"],
+  "the Earth clock": ["jam Bumi","地球の時計"],
+  "the ship clock": ["jam kapal","宇宙船の時計"],
+  "Experiment B compares two clocks moving relative to each other near the speed of light.": ["Eksperimen B membandingkan dua jam yang bergerak relatif satu sama lain dengan kecepatan mendekati kecepatan cahaya.","実験 B では、光速に近い速度で互いに相対運動する 2 つの時計を比較します。"],
+  "the Earth’s frame": ["kerangka Bumi","地球の基準系"],
+  "the ship’s frame": ["kerangka kapal","宇宙船の基準系"],
+  "the Earth’s point of view": ["sudut pandang Bumi","地球からの視点"],
+  "the ship’s point of view": ["sudut pandang kapal","宇宙船からの視点"],
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
