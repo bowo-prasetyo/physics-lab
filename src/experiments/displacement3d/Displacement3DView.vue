@@ -114,7 +114,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
       <div class="prediction-grid">
-        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" ::hint="localizeExperimentText("hints[p.id]", locale) ?? "hints[p.id]"" :index="i + 1" />
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
@@ -122,9 +122,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
       <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
       <div class="lab">
         <div class="lab-main card">
-          <div class="views" role="group" :aria-:label="localizeExperimentText("localizeExperimentText('Camera', locale)", locale) ?? "localizeExperimentText('Camera', locale)"">
+          <div class="views" role="group" :aria-label="localizeExperimentText('Camera', locale)">
             <span class="muted small">View</span>
-            <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">{{ localizeExperimentText("{{ v === '3d' ? '3D' : v === 'top' ? 'From above' : v === 'front' ? 'From the front' : 'From the side' }}", locale) ?? "{{ v === '3d' ? '3D' : v === 'top' ? 'From above' : v === 'front' ? 'From the front' : 'From the side' }}" }}</button>
+            <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">{{ localizeExperimentText('{{ v === \'3d\' ? \'3D\' : v === \'top\' ? \'From above\' : v === \'front\' ? \'From the front\' : \'From the side\' }}', locale) ?? '{{ v === \'3d\' ? \'3D\' : v === \'top\' ? \'From above\' : v === \'front\' ? \'From the front\' : \'From the side\' }}' }}</button>
           </div>
           <Scene3D
             :points="points"
@@ -148,9 +148,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             <p class="group-title">Move the object (1 m steps)</p>
             <p class="muted small convention">+x is east, +y is north, +z is up.</p>
             <div v-for="axis in AXES" :key="axis" class="move-row">
-              <button class="btn btn-small" type="button" :aria-:label="localizeExperimentText("`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`", locale) ?? "`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`"" @click="step(axis, -1)">{{ localizeExperimentText("− {{ axis }} · {{ DIRECTIONS[axis][0] }}", locale) ?? "− {{ axis }} · {{ DIRECTIONS[axis][0] }}" }}</button>
+              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`" @click="step(axis, -1)">{{ localizeExperimentText('− {{ axis }} · {{ DIRECTIONS[axis][0] }}', locale) ?? '− {{ axis }} · {{ DIRECTIONS[axis][0] }}' }}</button>
               <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
-              <button class="btn btn-small" type="button" :aria-:label="localizeExperimentText("`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`", locale) ?? "`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`"" @click="step(axis, 1)">{{ localizeExperimentText("+ {{ axis }} · {{ DIRECTIONS[axis][1] }}", locale) ?? "+ {{ axis }} · {{ DIRECTIONS[axis][1] }}" }}</button>
+              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`" @click="step(axis, 1)">{{ localizeExperimentText('+ {{ axis }} · {{ DIRECTIONS[axis][1] }}', locale) ?? '+ {{ axis }} · {{ DIRECTIONS[axis][1] }}' }}</button>
             </div>
           </div>
           <form class="goto" @submit.prevent="goToTarget">
@@ -160,13 +160,13 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
                 <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
                 <input v-model.number="target[axis]" type="number" :min="-BOUND" :max="BOUND" step="0.5" />
               </label>
-              <button class="btn btn-small" type="submit">{{ localizeExperimentText("Go", locale) ?? "Go" }}</button>
+              <button class="btn btn-small" type="submit">{{ localizeExperimentText('Go', locale) ?? 'Go' }}</button>
             </div>
           </form>
           <div class="journey-buttons">
-            <button class="btn btn-small" type="button" :disabled="points.length < 2" @click="undo">{{ localizeExperimentText("Undo move", locale) ?? "Undo move" }}</button>
-            <button class="btn btn-small" type="button" @click="restart(false)">{{ localizeExperimentText("New journey from here", locale) ?? "New journey from here" }}</button>
-            <button class="btn btn-small" type="button" @click="restart(true)">{{ localizeExperimentText("Back to the origin", locale) ?? "Back to the origin" }}</button>
+            <button class="btn btn-small" type="button" :disabled="points.length < 2" @click="undo">{{ localizeExperimentText('Undo move', locale) ?? 'Undo move' }}</button>
+            <button class="btn btn-small" type="button" @click="restart(false)">{{ localizeExperimentText('New journey from here', locale) ?? 'New journey from here' }}</button>
+            <button class="btn btn-small" type="button" @click="restart(true)">{{ localizeExperimentText('Back to the origin', locale) ?? 'Back to the origin' }}</button>
           </div>
           <div class="presets">
             <span class="muted small">Example journeys</span>
@@ -183,12 +183,12 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
 
           <div v-if="intermediate" class="frame">
             <p class="group-title">A second coordinate system (x′, y′, z′)</p>
-            <ParameterSlider v-model="shift.x" :label="localizeExperimentText("Origin moved, x", locale) ?? "Origin moved, x"" symbol="O_x" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
-            <ParameterSlider v-model="shift.y" :label="localizeExperimentText("Origin moved, y", locale) ?? "Origin moved, y"" symbol="O_y" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
-            <ParameterSlider v-model="shift.z" :label="localizeExperimentText("Origin moved, z", locale) ?? "Origin moved, z"" symbol="O_z" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
-            <ParameterSlider v-model="yaw" :label="localizeExperimentText("Axes turned about z", locale) ?? "Axes turned about z"" symbol="\varphi" unit="°" v-bind="YAW_RANGE" :digits="0" />
-            <ParameterSlider v-if="advanced" v-model="pitch" :label="localizeExperimentText("Axes tilted", locale) ?? "Axes tilted"" symbol="\psi" unit="°" v-bind="PITCH_RANGE" :digits="0" />
-            <button class="btn btn-small" type="button" :disabled="frameIsStandard" @click="resetFrame">{{ localizeExperimentText("Reset to the original axes", locale) ?? "Reset to the original axes" }}</button>
+            <ParameterSlider v-model="shift.x" :label="localizeExperimentText('Origin moved, x', locale) ?? 'Origin moved, x'" symbol="O_x" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
+            <ParameterSlider v-model="shift.y" :label="localizeExperimentText('Origin moved, y', locale) ?? 'Origin moved, y'" symbol="O_y" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
+            <ParameterSlider v-model="shift.z" :label="localizeExperimentText('Origin moved, z', locale) ?? 'Origin moved, z'" symbol="O_z" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
+            <ParameterSlider v-model="yaw" :label="localizeExperimentText('Axes turned about z', locale) ?? 'Axes turned about z'" symbol="\varphi" unit="°" v-bind="YAW_RANGE" :digits="0" />
+            <ParameterSlider v-if="advanced" v-model="pitch" :label="localizeExperimentText('Axes tilted', locale) ?? 'Axes tilted'" symbol="\psi" unit="°" v-bind="PITCH_RANGE" :digits="0" />
+            <button class="btn btn-small" type="button" :disabled="frameIsStandard" @click="resetFrame">{{ localizeExperimentText('Reset to the original axes', locale) ?? 'Reset to the original axes' }}</button>
             <dl v-if="!frameIsStandard" class="readouts primed">
               <div><dt>Position r′</dt><dd class="num">{{ vec(inFrame.current) }}</dd></div>
               <div><dt>Displacement Δr′</dt><dd class="num">{{ vec(inFrame.displacement) }}</dd></div>
@@ -200,7 +200,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("3 · Explore the mathematics", locale) ?? "3 · Explore the mathematics" }}</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <Displacement3DMath
@@ -217,7 +217,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("4 · Explore the meaning and interpretation", locale) ?? "4 · Explore the meaning and interpretation" }}</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
@@ -245,7 +245,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
     </details>
 
-    <nav class="next card" :aria-:label="localizeExperimentText("localizeExperimentText('Next steps', locale)", locale) ?? "localizeExperimentText('Next steps', locale)"">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>Next:</strong> Experiment A adds time to position, and Experiment E compares space and time with spacetime.</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>
