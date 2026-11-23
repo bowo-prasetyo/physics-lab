@@ -204,9 +204,9 @@ const chartSeries = computed<ChartSeries[]>(() =>
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p>{{ localizeExperimentText('Next: Experiment C, in which gravity, not motion, changes how fast clocks tick.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/relativity/moving-clocks">← Experiment B</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx("← Experiment B") }}</RouterLink>
         <RouterLink to="/gravity/clock-rates">Experiment C →</RouterLink>
-        <RouterLink to="/">All modules</RouterLink>
+        <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>
   </article>
