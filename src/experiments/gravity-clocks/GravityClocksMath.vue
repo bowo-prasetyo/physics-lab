@@ -64,7 +64,7 @@ const weakExample = computed(() => {
   )
 })
 const weakApplies = computed(() => props.body.hasSurface && Math.abs(heightDiff.value) < 0.01 * props.body.radius)
-const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
+const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)\nconst gpsEffectsFormula = computed(\n  () =>\n    `\\\\frac{\\\\Delta\\\\tau}{\\\\tau} \\\\approx \\\\underbrace{\\\\frac{GM}{c^2}\\\\left(\\\\frac{1}{R} - \\frac{1}{r}\\\\right)}_{\\\\text{\${tx('gravity: faster up high')}}} \\\\; \\\\underbrace{- \\frac{v^2}{2c^2}}_{\\\\text{\${tx('speed: slower')}}}`,\n)
 </script>
 
 <template>
