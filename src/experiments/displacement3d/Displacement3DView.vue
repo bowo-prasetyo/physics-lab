@@ -26,6 +26,7 @@ const Scene3D = defineAsyncComponent(() => import('@/components/Scene3D.vue'))
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
+const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 
 const { points, shift, yaw, pitch, frame, frameIsStandard, current, start, displacement, distance, size, inFrame, snapshots, moveTo, step, undo, restart, loadPreset, resetFrame } =
   useDisplacement3D()
@@ -108,19 +109,19 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     <ExperimentSupport experiment-id="displacement-3d" :module-number="1" focus="Position, path length and displacement are different descriptions of a journey." prompt="If an object takes two different routes to the same destination, what should stay the same?" action="Move the object through a few points, note the distance travelled and displacement, then rotate or move the coordinate frame." reflect="Which coordinates changed when you changed the frame, and which geometric quantity stayed invariant?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
-      <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <div class="views" role="group" :aria-label="localizeExperimentText('Camera', locale)">
-            <span class="muted small">View</span>
+            <span class="muted small">{{ tx('View') }}</span>
             <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">
               {{ v === '3d' ? '3D' : v === 'top' ? 'From above' : v === 'front' ? 'From the front' : 'From the side' }}
             </button>
@@ -136,9 +137,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             :directions="DIRECTIONS"
           />
           <p class="muted small">
-            Drag to turn the view, scroll or pinch to zoom. x points east, y north and z up. The orange arrow is the displacement Δr from the green start to the blue
-            object.
-            <template v-if="intermediate"> Dashed lines show its x, y and z components.</template>
+            {{ tx(`Drag to turn the view, scroll or pinch to zoom. x points east, y north and z up. The orange arrow is the displacement Δr from the green start to the blue
+            object.`) }}
+            <template v-if="intermediate"> {{ tx('Dashed lines show its x, y and z components.') }}</template>
           </p>
         </div>
 

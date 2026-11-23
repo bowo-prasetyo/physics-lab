@@ -24,6 +24,7 @@ import { localizePredictions } from '@/i18n/experiment-content'
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
+const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 
 // A setup can be shared as a link, e.g. #/space/space-vs-time?x0=-4&v=1.5
 const experiment = useSpaceVsTime({
@@ -116,15 +117,15 @@ useQuerySync({
     <ExperimentSupport experiment-id="space-vs-time" :module-number="1" focus="Position is described relative to a reference frame; elapsed time continues even when the object is stationary." prompt="When the object stops moving, what happens to its position and to the clock?" action="Run the object at different speeds, stop it part-way through, and compare the motion with the position–time graph." reflect="What does the slope of a position–time graph represent, and how does the graph show the difference between rest and the passage of time?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
-      <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <TrackView :x="snapshot.x" :x0="x0" :v="snapshot.v" :t="snapshot.t" :bounds="BOUNDS" :observer-velocity="observerVelocity" />
@@ -143,7 +144,7 @@ useQuerySync({
 
         <div class="lab-side card">
           <div class="clock" role="timer" :aria-label="localizeExperimentText('Experiment clock', locale)">
-            <span class="clock-label">Clock</span>
+            <span class="clock-label">{{ tx('Clock') }}</span>
             <span class="clock-value num">{{ snapshot.t.toFixed(2) }}<small> s</small></span>
             <span class="clock-status muted">{{ status === 'finished' ? 'Run complete' : status === 'running' ? 'Running' : status === 'paused' ? 'Paused' : 'Ready' }}</span>
           </div>
@@ -182,13 +183,13 @@ useQuerySync({
           />
 
           <dl class="readouts">
-            <div><dt>Position <MathFormula tex="x" /></dt><dd class="num">{{ signed(snapshot.x) }} m</dd></div>
-            <div><dt>Velocity <MathFormula tex="v" /></dt><dd class="num">{{ signed(snapshot.v, 1) }} m/s</dd></div>
-            <div><dt>Displacement <MathFormula tex="\Delta x" /></dt><dd class="num">{{ signed(snapshot.displacement) }} m</dd></div>
-            <div><dt>Distance travelled <MathFormula tex="s" /></dt><dd class="num">{{ snapshot.distance.toFixed(2) }} m</dd></div>
+            <div><dt>{{ tx('Position') }} <MathFormula tex="x" /></dt><dd class="num">{{ signed(snapshot.x) }} m</dd></div>
+            <div><dt>{{ tx('Velocity') }} <MathFormula tex="v" /></dt><dd class="num">{{ signed(snapshot.v, 1) }} m/s</dd></div>
+            <div><dt>{{ tx('Displacement') }} <MathFormula tex="\Delta x" /></dt><dd class="num">{{ signed(snapshot.displacement) }} m</dd></div>
+            <div><dt>{{ tx('Distance travelled') }} <MathFormula tex="s" /></dt><dd class="num">{{ snapshot.distance.toFixed(2) }} m</dd></div>
             <template v-if="observerVelocity !== null">
-              <div class="observer-readout"><dt>Observer measures <MathFormula tex="x'" /></dt><dd class="num">{{ signed(snapshot.x - u * snapshot.t) }} m</dd></div>
-              <div class="observer-readout"><dt>Observer measures <MathFormula tex="v'" /></dt><dd class="num">{{ signed(snapshot.v - u, 1) }} m/s</dd></div>
+              <div class="observer-readout"><dt>{{ tx('Observer measures') }} <MathFormula tex="x'" /></dt><dd class="num">{{ signed(snapshot.x - u * snapshot.t) }} m</dd></div>
+              <div class="observer-readout"><dt>{{ tx('Observer measures') }} <MathFormula tex="v'" /></dt><dd class="num">{{ signed(snapshot.v - u, 1) }} m/s</dd></div>
             </template>
           </dl>
 
