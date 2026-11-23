@@ -56,26 +56,32 @@ const hubbleTime = computed(() => 1 / hubbleRateToday(props.cosmology))
   <div class="maths">
     <!-- Beginner -->
     <template v-if="level === 'beginner'">
-      <p>Every distance between galaxies that are not bound together grows by the same factor, the <strong>scale factor</strong> <MathFormula tex="a(t)" />:</p>
+      <p>
+        In the standard cosmological model, the <strong>scale factor</strong> <MathFormula tex="a(t)" /> describes how the proper distance
+        between galaxies that follow the general cosmic expansion (and are not gravitationally or otherwise bound) changes with time:
+      </p>
       <MathFormula display tex="d(t) = a(t)\,d_0" />
       <p>Here <MathFormula tex="d_0" /> is the distance today, when <MathFormula tex="a = 1" />. For your distant galaxy, right now:</p>
       <MathFormula display :tex="distanceExample" />
       <h3>Hubble’s law falls out</h3>
       <p>
-        If every distance is stretched by the same factor, a galaxy twice as far away moves away twice as fast. That is
-        <strong>Hubble’s law</strong>:
+        For galaxies following the general cosmic expansion, the rate at which their proper distance changes is proportional to that
+        distance: a galaxy twice as far away has twice the recession rate. This is <strong>Hubble’s law</strong>:
       </p>
       <MathFormula display tex="v = H\,d" />
       <h3>Light is stretched too</h3>
       <p>
-        Light travelling through expanding space is stretched along with it, so it arrives redder. Light sent out when the universe was
-        <MathFormula tex="a" /> times its present size arrives with wavelengths longer by a factor <MathFormula tex="1/a" />:
+        As the universe evolves, the wavelength of light measured by observers following the cosmic expansion increases in proportion
+        to the scale factor. This cosmological redshift is a consequence of the changing spacetime geometry—not light being dragged
+        through a stretching material. Light emitted when the scale factor was <MathFormula tex="a" /> therefore has a wavelength today
+        larger by a factor <MathFormula tex="1/a" />:
       </p>
       <MathFormula display tex="1 + z = \frac{1}{a}" />
       <InfoCallout kind="physics" title="Key idea">
         <p>
-          Galaxies are not flying apart through space from a central point. The space between them grows, everywhere at once, and from every
-          galaxy the view is the same.
+          There is no central explosion or preferred centre. In the idealized FLRW model, proper distances between comoving, unbound
+          galaxies increase as the scale factor changes. This describes the geometry of spacetime; it does not mean space is a material
+          substance flowing or stretching galaxies. Each such galaxy sees the same large-scale pattern.
         </p>
       </InfoCallout>
     </template>
@@ -88,8 +94,10 @@ const hubbleTime = computed(() => 1 / hubbleRateToday(props.cosmology))
       <p v-if="hubbleExample">For your distant galaxy now (with <MathFormula tex="c = 1\ \text{Gly/Gyr}" />):</p>
       <MathFormula v-if="hubbleExample" display :tex="hubbleExample" />
       <p>
-        Beyond the <strong>Hubble distance</strong> <MathFormula tex="c/H" />, <MathFormula tex="v > c" />. This does not break relativity,
-        which limits how fast things move <em>through</em> space past each other, not how fast distances between far-apart galaxies grow.
+        Here <MathFormula tex="v = H d" /> is the rate of change of proper distance on constant-cosmic-time slices (the recession rate),
+        not a local measurement of a galaxy moving past a nearby observer. Beyond the <strong>Hubble distance</strong>
+        <MathFormula tex="c/H" />, this rate can exceed <MathFormula tex="c" />. That does not violate relativity: no nearby observer
+        measures a passing galaxy or light signal moving through their local space faster than light.
       </p>
 
       <h3>The Friedmann equation</h3>
