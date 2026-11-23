@@ -204,7 +204,7 @@ const signed = (value: number, digits = 2) => {
               <div><dt>{{ tx('Ship clock squared') }} <MathFormula tex="\tau^2" /></dt><dd class="num">{{ (view.ship.tau ** 2).toFixed(2) }} s²</dd></div>
             </template>
           </dl>
-          <p class="units muted">Units: c = 1, so distances are in light-seconds (ls).</p>
+          <p class="units muted">{{ tx("Units: c = 1, so distances are in light-seconds (ls).") }}</p>
         </div>
       </div>
     </section>
