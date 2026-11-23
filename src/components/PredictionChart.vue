@@ -79,7 +79,7 @@ const description = computed(
       <summary>{{ localizeExperimentText('View the plotted values as a table', locale) }}</summary>
       <div class="chart-scroll"><table><thead><tr><th scope="col">Model</th><th scope="col">{{ localizeExperimentText(xLabel, locale) }}</th><th scope="col">{{ yLabel }}</th></tr></thead>
         <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ item.label }}</th><td>{{ point.x.toFixed(3) }}</td><td>{{ point.y.toFixed(3) }}</td></tr></template>
-          <tr v-if="measured !== null"><th scope="row">Measured</th><td>{{ marker.toFixed(3) }}</td><td>{{ measured.toFixed(3) }}</td></tr></tbody></table></div>
+          <tr v-if="measured !== null"><th scope="row">{{ localizeExperimentText('Measured', locale) }}</th><td>{{ marker.toFixed(3) }}</td><td>{{ measured.toFixed(3) }}</td></tr></tbody></table></div>
     </details>
     <figcaption class="legend">
       <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind, { dashed: line.dashed }]" /> {{ line.label }}</span>
