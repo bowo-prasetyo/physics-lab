@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed, ref } from 'vue'
@@ -61,6 +62,8 @@ function runExperiment() {
 
     <ShareExperiment />
 
+    <LocalizedExperimentGuide experiment-id="newtonian" />
+
     <ExperimentSupport experiment-id="newtonian" :module-number="3" focus="Acceleration depends on net force and mass, not simply on whether an object is moving." prompt="At fixed mass, what happens to acceleration if the net force doubles? What if mass doubles instead?" action="Change one variable at a time, record the acceleration, then compare trials with equal force-to-mass ratios." reflect="Why must you use the net force rather than the applied push alone? Which idealisations does this model make?" />
 
     <section aria-labelledby="predict-title">
@@ -120,7 +123,7 @@ function runExperiment() {
     </section>
     </details>
 
-    <details class="lesson-disclosure">
+    <details v-if="locale === 'en'" class="lesson-disclosure">
       <summary>4 · Explore the meaning and interpretation</summary>
       <section class="card prose">
       <h2><span class="step-no">4</span> What does it tell us?</h2>
