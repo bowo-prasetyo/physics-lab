@@ -106,11 +106,17 @@ const hubbleTime = computed(() => 1 / hubbleRateToday(props.cosmology))
     <!-- Advanced -->
     <template v-else>
       <h3>The FLRW metric: space evolving in time</h3>
-      <MathFormula display tex="ds^2 = -c^2 dt^2 + a(t)^2\,\delta_{ij}\,dx^i dx^j" />
+      <MathFormula display tex="ds^2 = -c^2 dt^2 + a(t)^2\,\gamma_{ij}^{(k)}\,dx^i dx^j" />
       <p>
-        (for a spatially flat universe). In the ADM 3 + 1 language of Experiments E and C: the lapse is <MathFormula tex="N = 1" />, the
-        shift is zero, and the spatial metric is <MathFormula tex="\gamma_{ij} = a(t)^2\,\delta_{ij}" />. Clocks of all comoving
-        galaxies tick at the same rate; all the change is in the geometry of space.
+        Here <MathFormula tex="\gamma_{ij}^{(k)}" /> is a time-independent, maximally symmetric 3-dimensional spatial metric with
+        constant curvature. Its scalar curvature on a constant-time slice is <MathFormula tex="{}^{(3)}R = 6k/a(t)^2" />. The flat
+        special case <MathFormula tex="k = 0" /> has <MathFormula tex="\gamma_{ij}^{(0)} = \delta_{ij}" />, giving the simpler metric
+        <MathFormula tex="ds^2 = -c^2 dt^2 + a(t)^2\,\delta_{ij}\,dx^i dx^j" />.
+      </p>
+      <p>
+        In the ADM 3 + 1 language of Experiments E and C: the lapse is <MathFormula tex="N = 1" />, the shift is zero, and the spatial
+        metric is <MathFormula tex="g_{ij} = a(t)^2\,\gamma_{ij}^{(k)}" />. Clocks of all comoving galaxies tick at the same rate;
+        the spatial geometry may be flat, positively curved, or negatively curved.
       </p>
 
       <h3>The age of the universe</h3>
