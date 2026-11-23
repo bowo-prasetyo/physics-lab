@@ -18,7 +18,7 @@ const translations: Record<string, readonly [string, string]> = {
   'Key idea': ['Gagasan utama', '重要な考え方'],
   'Lower clocks run slower. Every process slows by the same factor (atoms, chemistry, heartbeats), so a person next to the lower clock notices nothing. The difference only shows when clocks are compared.': ['Jam yang berada lebih rendah berjalan lebih lambat. Semua proses melambat dengan faktor yang sama (atom, reaksi kimia, detak jantung), sehingga orang di dekat jam tersebut tidak merasakan apa pun. Perbedaannya hanya terlihat saat kedua jam dibandingkan.', '低い位置にある時計ほど遅く進みます。原子、化学反応、心拍など、あらゆる過程が同じ割合で遅くなるため、その時計のそばにいる人は何も気づきません。違いが現れるのは時計を比較したときだけです。'],
   'Near a surface: the weak-field rule': ['Dekat permukaan: aturan medan lemah', '表面付近：弱重力場の近似則'],
-  'When': ['Ketika', ''],
+  'When': ['Ketika', 'とき、'],
   'the square root can be expanded. For a small height difference': ['akar kuadrat dapat diekspansi. Untuk perbedaan ketinggian yang kecil', 'なら、平方根を展開できます。高さの差'],
   'near a surface where gravity is': ['di dekat permukaan dengan gravitasi sebesar', 'が小さく、重力加速度'],
   'Put both clocks close to the surface of a body (a height difference under 1% of its radius) to compare this approximation with the exact result.': ['Tempatkan kedua jam dekat permukaan suatu benda (perbedaan ketinggian kurang dari 1% jari-jarinya) untuk membandingkan pendekatan ini dengan hasil eksak.', 'この近似と厳密解を比較するには、両方の時計を天体の表面近く（高さの差が半径の1%未満）に配置してください。'],
@@ -44,6 +44,9 @@ const translations: Record<string, readonly [string, string]> = {
   'Why the observers agree': ['Mengapa para pengamat sepakat', 'なぜ観測者の見解が一致するのか'],
   'Light sent from a static emitter to a static receiver arrives with frequency ratio': ['Cahaya yang dikirim dari pemancar diam ke penerima diam tiba dengan rasio frekuensi', '静止した放射源から静止した受信機へ送られた光の周波数比は'],
   'which is a property of the two clocks’ positions in a static spacetime, not of anyone’s frame. The upward and downward ratios are exact inverses, so both observers agree that the lower clock is slow. This is unlike Experiment B, where the clocks were in symmetric relative motion.': ['yang merupakan sifat posisi kedua jam dalam ruang-waktu statis, bukan kerangka acuan siapa pun. Rasio untuk arah ke atas dan ke bawah saling merupakan kebalikan eksak, sehingga kedua pengamat sepakat bahwa jam yang lebih rendah berjalan lambat. Ini berbeda dari Eksperimen B, ketika kedua jam bergerak relatif secara simetris.', 'これは誰かの座標系によるものではなく、静的時空における2つの時計の位置に由来する性質です。上向きと下向きの周波数比は互いに正確な逆数なので、どちらの観測者も低い位置の時計が遅いことに同意します。時計が対称的な相対運動をしていた実験Bとは異なります。'],
+  'exact:': ['eksak:', '厳密解：'],
+  'gravity: faster up high': ['gravitasi: lebih cepat di tempat tinggi', '重力：高い場所ほど速い'],
+  'speed: slower': ['kecepatan: lebih lambat', '速度：遅くなる'],
   'faster': ['lebih cepat', '速く'],
   'slower': ['lebih lambat', '遅く'],
 }
