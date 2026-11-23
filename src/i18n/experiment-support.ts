@@ -146,6 +146,6 @@ export function localizeExperimentSupport(
   return supportCopy[experimentId]?.[locale]?.[field] ?? fallback
 }
 
-export function getExperimentSupportCopy(experimentId: string, locale: 'id' | 'ja'): LocalizedSupportCopy | undefined {
+export function getExperimentSupportCopy(experimentId: string, locale: 'id' | 'ja'): ExperimentSupportCopy | undefined {
   return supportCopy[experimentId]?.[locale]
 }
