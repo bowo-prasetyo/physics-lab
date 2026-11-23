@@ -11,6 +11,7 @@ import { useLevel } from '@/composables/useLevel'
 import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
 import { accelerationFromNetForce, displacementFromRest, velocityFromRest } from '@/physics/newtonian'
 import { PREDICTIONS, type ForceRun } from './predictions'
@@ -44,7 +45,7 @@ const velocity = computed(() => velocityFromRest(force.value, mass.value, time.v
 const displacement = computed(() => displacementFromRest(force.value, mass.value, time.value))
 const predictions = computed(() => localizePredictions('newtonian', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(runs.value)])))
-const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(runs.value) ?? null])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, localizeExperimentText(p.hint?.(runs.value) ?? null, locale.value)])))
 const fmt = (n: number) => Number(n.toFixed(3)).toString()
 
 function runExperiment() {
