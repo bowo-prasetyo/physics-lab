@@ -143,6 +143,20 @@ const text: Record<string, readonly [string, string]> = {
   'height above the ': ['ketinggian di atas ', 'からの高さ '],
   'clock slowed by': ['perlambatan jam sebesar', '時計の遅れ'],
 
+  "A distant galaxy, today at": ["Jarak galaksi jauh saat ini","遠方銀河の現在の距離"],
+  "Distance today, in billions of light-years.": ["Jarak saat ini, dalam miliar tahun cahaya.","現在の距離（10 億光年単位）。"],
+  "How GPS deals with it": ["Cara GPS mengatasinya","GPS による補正方法"],
+  "Setup": ["Pengaturan","設定"],
+  "Clear recorded trials": ["Hapus percobaan yang tercatat","記録した試行を消去"],
+  "Recorded trials": ["Percobaan yang tercatat","記録された試行"],
+  "Run at least two carefully chosen cases to reveal a relationship.": ["Jalankan sedikitnya dua kasus yang dipilih dengan cermat untuk melihat hubungannya.","関係を明らかにするため、条件を慎重に選んで少なくとも 2 回実行してください。"],
+  "Pause to change the speed (this starts a new run).": ["Jeda untuk mengubah kecepatan (ini memulai percobaan baru).","速度を変更するには一時停止してください（新しい試行が始まります）。"],
+  "Relative to the Earth. 0.80c is 80% of light speed.": ["Relatif terhadap Bumi. 0,80c adalah 80% kecepatan cahaya.","地球に対する速度です。0.80c は光速の 80% です。"],
+  "A second observer moving along the track, passing x = 0 at t = 0. Fixed for the whole run.": ["Pengamat kedua bergerak sepanjang lintasan dan melewati x = 0 saat t = 0. Kecepatannya tetap selama percobaan.","線路に沿って動き、t = 0 に x = 0 を通過する第 2 の観測者です。速度は試行中一定です。"],
+  "Reset the clock to change the observer’s velocity.": ["Atur ulang jam untuk mengubah kecepatan pengamat.","観測者の速度を変更するには時計をリセットしてください。"],
+  "1 · Predict": ["1 · Prediksi","1 · 予測"],
+  "2 · Experiment": ["2 · Eksperimen","2 · 実験"],
+
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
