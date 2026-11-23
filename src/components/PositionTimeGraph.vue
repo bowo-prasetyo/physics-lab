@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useLocale } from '@/composables/useLocale'
-import { localizeExperimentText } from '@/i18n/experiment-ui'
-const { locale } = useLocale()
 import { computed, useId } from 'vue'
 import { galileanBoost, graphVertices, type RunRecord } from '@/physics'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 const props = defineProps<{
   current: RunRecord
