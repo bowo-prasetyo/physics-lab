@@ -657,7 +657,7 @@ export function localizeExperimentText(value: string | null | undefined, locale:
     ["Current time ", "Waktu saat ini ", "現在時刻 "],
     [" worldline with velocity ", " worldline dengan kecepatan ", " の世界線（速度 "],
     [". Current time ", "。Waktu saat ini ", "。現在時刻 "],
-    ["Chart of ", "Grafik ", ""],
+    ["Chart of ", "Grafik ", "グラフ："],
     [" against ", " terhadap ", " と "],
     [", one line per description. ", ", satu garis untuk setiap model. ", "（各モデルを 1 本の線で表示）。"],
     [" seen from the ground", " dilihat dari kerangka tanah", "地上から見た"],
@@ -679,6 +679,15 @@ export function localizeExperimentText(value: string | null | undefined, locale:
     ["Graph of position x against time t. The current run is at ", "Grafik posisi x terhadap waktu t. Percobaan saat ini berada pada ", "時間 t に対する位置 x のグラフです。現在の試行は "],
     [" velocity changed during run", " kecepatan berubah selama percobaan", "走行中に速度が変化"],
     [" earlier run(s) are shown for comparison.", " percobaan sebelumnya ditampilkan sebagai pembanding.", "以前の試行を比較用に表示しています。"],
+
+
+    ["The classical model breaks down here.", "Model klasik tidak lagi berlaku di sini.", "ここで古典モデルは破綻します。"],
+    ["It predicts infinite density: new physics (quantum gravity) is needed.", "Model ini memprediksi kerapatan tak terhingga: diperlukan fisika baru (gravitasi kuantum).", "無限大の密度を予測するため、新しい物理学（量子重力）が必要です。"],
+    ["Light cannot travel freely yet.", "Cahaya belum dapat merambat dengan bebas.", "光はまだ自由に進むことができません。"],
+    ["First light: the universe becomes transparent.", "Cahaya pertama: alam semesta menjadi transparan.", "最初の光：宇宙が透明になります。"],
+    ["This light reaches us today as the 2.7 K microwave background.", "Cahaya ini kini mencapai kita sebagai radiasi latar belakang gelombang mikro bersuhu 2,7 K.", "この光は現在、2.7 K の宇宙マイクロ波背景放射として観測されます。"],
+    ["Before the first galaxies.", "Sebelum galaksi pertama terbentuk.", "最初の銀河が生まれる前。"],
+    ["Cooling gas, slowly clumping under gravity.", "Gas mendingin dan perlahan menggumpal akibat gravitasi.", "ガスが冷え、重力によってゆっくり集まっていきます。"],
   ]
   for (const [en, id, ja] of phrases) translated = translated.replaceAll(en, locale === 'id' ? id : ja)
   return translated

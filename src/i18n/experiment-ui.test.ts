@@ -210,4 +210,41 @@ describe('experiment UI localization', () => {
     }
   })
 
+
+  it('localizes dynamic visualization descriptions while preserving measured values', () => {
+    const prediction = 'Chart of measured distance against ship speed, one line per description. Lorentz: 12.50 at the top speed.'
+    const scaleFactor = 'Scale factor a against time. time since the Big Bang (billion years). Today a = 1.'
+    for (const locale of ['id', 'ja'] as const) {
+      const predictionText = localizeExperimentText(prediction, locale)
+      const scaleText = localizeExperimentText(scaleFactor, locale)
+      expect(predictionText).not.toContain('Chart of')
+      expect(predictionText).not.toContain('one line per description')
+      expect(predictionText).not.toContain('at the top speed')
+      expect(predictionText).toContain('12.50')
+      expect(scaleText).not.toContain('Scale factor a against time')
+      expect(scaleText).not.toContain('time since the Big Bang')
+      expect(scaleText).not.toContain('Today')
+      expect(scaleText).toContain('1')
+    }
+  })
+
+  it('localizes dynamic SVG visualization captions and accessibility descriptions', () => {
+    const descriptions = [
+      'Model universe with 24 galaxies on a grid, seen from the home galaxy. Distances are 1.250 times today\'s. Before the first galaxies. Cooling gas, slowly clumping under gravity. Arrows show recession speeds, longer for more distant galaxies.',
+      'Interactive 3D view of a path in Cartesian coordinates. x points east, y north and z up. Start (0.00, 0.00, 0.00); current position (3.00, 4.00, 12.00); displacement (3.00, 4.00, 12.00) metres. Use the view presets for standard camera angles. A numerical alternative follows.',
+      'Track from -10 to 10 metres. The object is at x = 2.00 m, started at x₀ = 0.0 m, moving at 1.0 m/s.',
+      'Pendulum 1.00 m long with a 2.0 kg bob, at 30 degrees from the vertical.',
+    ]
+    for (const source of descriptions) {
+      for (const locale of ['id', 'ja'] as const) {
+        const translated = localizeExperimentText(source, locale)
+        expect(translated).not.toBe(source)
+        expect(translated).not.toContain('Interactive 3D view')
+        expect(translated).not.toContain('Track from')
+        expect(translated).not.toContain('Pendulum ')
+        expect(translated).not.toContain('Cooling gas')
+        for (const number of source.matchAll(/\d+(?:\.\d+)?/g)) expect(translated).toContain(number[0])
+      }
+    }
+  })
 })
