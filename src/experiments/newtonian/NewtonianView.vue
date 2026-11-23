@@ -56,9 +56,9 @@ function runExperiment() {
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">Module 3 · Classical mechanics · Newtonian foundations</p>
-      <h1>Force, mass and acceleration</h1>
-      <p class="lead">Push a cart with a constant net force. Change the force or the cart’s mass, predict what will happen, and test Newton’s second law.</p>
+      <p class="eyebrow">{{ localizeExperimentText('Module 3 · Classical mechanics · Newtonian foundations', locale) ?? 'Module 3 · Classical mechanics · Newtonian foundations' }}</p>
+      <h1>{{ localizeExperimentText('Force, mass and acceleration', locale) ?? 'Force, mass and acceleration' }}</h1>
+      <p class="lead">{{ localizeExperimentText('Push a cart with a constant net force. Change the force or the cart’s mass, predict what will happen, and test Newton’s second law.', locale) ?? 'Push a cart with a constant net force. Change the force or the cart’s mass, predict what will happen, and test Newton’s second law.' }}</p>
     </header>
 
     <ShareExperiment />
