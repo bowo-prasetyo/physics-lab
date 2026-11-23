@@ -72,7 +72,7 @@ const correctionSpeed = computed(() => Math.abs(props.u === 0 ? 3 : props.u).toF
       </p>
       <h3>{{ tx('Reading the graph') }}</h3>
       <ul>
-        <li>The <strong>steepness</strong> (slope) of the line is the velocity: <MathFormula tex="v = \dfrac{\Delta x}{\Delta t}" />.</li>
+        <li>{{ tx('The slope of the line is the velocity:') }} <MathFormula tex="v = \dfrac{\Delta x}{\Delta t}" /></li>
         <li>{{ tx('Where the line starts on the vertical axis is the starting position') }} <MathFormula tex="x_0" />.</li>
         <li>{{ tx('A flat line means the object stays put.') }} <MathFormula tex="v = 0" /></li>
       </ul>
@@ -113,9 +113,8 @@ const correctionSpeed = computed(() => Math.abs(props.u === 0 ? 3 : props.u).toF
       <MathFormula display tex="t' = t, \qquad x' = x - u\,t, \qquad v' = v - u." />
       <MathFormula display :tex="boostExample" />
       <p>
-        Use the <strong>observer velocity</strong> slider. With <MathFormula tex="u = v" /> the object is at rest for the observer; with
-        <MathFormula tex="v = 0" /> and <MathFormula tex="u \neq 0" /> a "stationary" object moves. Being at rest is a relation between an
-        object and a frame of reference, not a property of the object alone.
+        {{ tx('Use the observer velocity slider.') }} {{ tx('With') }} <MathFormula tex="u = v" /> {{ tx('the object is at rest for the observer; with') }}
+        <MathFormula tex="v = 0" /> and <MathFormula tex="u \\neq 0" /> {{ tx('a "stationary" object moves. Being at rest is a relation between an object and a frame of reference, not a property of the object alone.') }}
       </p>
 
       <h3>{{ tx('What all Galilean observers agree on') }}</h3>
