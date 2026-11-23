@@ -40,14 +40,14 @@ type CopyRecord = {
 }
 
 function normalize(value: string): string {
-  return value.replace(/\\s+/g, ' ').trim()
+  return value.replace(/\s+/g, ' ').trim()
 }
 
 function isEnglishLike(value: string): boolean {
   const words = value.match(/[A-Za-z]{3,}/g) ?? []
   if (words.length === 0 || value.length < 5) return false
-  if (/^https?:\\/\\//i.test(value)) return false
-  if (/^[A-Z\\d\\s._:+/()–—-]+$/.test(value)) return false
+  if (/^https?:\/\//i.test(value)) return false
+  if (/^[A-Z\d\s._:+/()–—-]+$/.test(value)) return false
   return true
 }
 
@@ -173,7 +173,7 @@ describe('runtime localization audit', () => {
 
     const outputDir = resolve(process.cwd(), 'artifacts')
     await mkdir(outputDir, { recursive: true })
-    await writeFile(resolve(outputDir, 'localization-runtime-audit.json'), `${JSON.stringify(report, null, 2)}\\n`, 'utf8')
+    await writeFile(resolve(outputDir, 'localization-runtime-audit.json'), `${JSON.stringify(report, null, 2)}\n`, 'utf8')
 
     const lines = [
       '# Runtime localization audit',
@@ -200,7 +200,7 @@ describe('runtime localization audit', () => {
       lines.push(`- **${candidate.route} / ${candidate.locale}** — ${candidate.kind}${detail}: ${candidate.text}`)
     }
     lines.push('', '## Limitations', '', ...report.limitations.map((item) => `- ${item}`))
-    await writeFile(resolve(outputDir, 'localization-runtime-audit.md'), `${lines.join('\\n')}\\n`, 'utf8')
+    await writeFile(resolve(outputDir, 'localization-runtime-audit.md'), `${lines.join('\n')}\n`, 'utf8')
 
     expect(renderedPages).toBe(ROUTES.length * SUPPORTED_LOCALES.length)
   }, 120_000)
