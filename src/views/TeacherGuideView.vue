@@ -68,7 +68,7 @@ const lessons = [
     <header class="teacher-head">
       <p class="eyebrow">For educators · Classroom planning</p>
       <h1>Teacher guide</h1>
-      <p class="lead">A practical starting point for using Physics Lab in demonstrations, guided investigations and classroom discussion. Each outline connects a lesson intention to a prediction, an experiment and a check for understanding.</p>
+      <p class="lead">A practical starting point for using Physica in demonstrations, guided investigations and classroom discussion. Each outline connects a lesson intention to a prediction, an experiment and a check for understanding.</p>
       <div class="teacher-actions">
         <a class="btn btn-primary" href="#lesson-plans">Browse lesson outlines</a>
         <RouterLink class="btn" to="/">Explore learner experiments</RouterLink>

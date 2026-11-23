@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Physics Lab exists to improve learners' understanding of physics, not simply to maximise time spent interacting with simulations. This document defines a practical measurement framework for testing whether the product's phenomenon → predict → experiment → mathematics → meaning cycle supports learning.
+Physica exists to improve learners' understanding of physics, not simply to maximise time spent interacting with simulations. This document defines a practical measurement framework for testing whether the product's phenomenon → predict → experiment → mathematics → meaning cycle supports learning.
 
 These are **proposed measures**, not a statement that analytics or assessment instrumentation already exists. Begin with small, low-risk pilots. Establish baselines before setting numerical targets.
 

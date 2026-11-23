@@ -1,4 +1,4 @@
-# Space & Time Laboratory
+# Physica
 
 Interactive physics experiments about space, time and motion for high-school and undergraduate students.
 
