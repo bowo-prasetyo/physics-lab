@@ -1,6 +1,7 @@
 /** Number formatting for Experiment C, where values span from 10⁻¹⁷ to millions. */
 
 import { schwarzschildRadius, type Body } from '@/physics'
+import type { Locale } from '@/i18n/locales'
 
 const SUPERSCRIPT: Record<string, string> = {
   '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
@@ -50,8 +51,11 @@ export function formatLength(metres: number): string {
 }
 
 /** A clock's height, with its size relative to r_s for a black hole. */
-export function formatAltitude(h: number, body: Body): string {
-  if (body.hasSurface) return h === 0 ? 'on the surface' : formatLength(h)
+export function formatAltitude(h: number, body: Body, locale: Locale = 'en'): string {
+  if (body.hasSurface) {
+    if (h !== 0) return formatLength(h)
+    return locale === 'id' ? 'di permukaan' : locale === 'ja' ? '表面上' : 'on the surface'
+  }
   return `${formatLength(h)} (${formatNumber(h / schwarzschildRadius(body.mass))} r_s) above the horizon`
 }
 
