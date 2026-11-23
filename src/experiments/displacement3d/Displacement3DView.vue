@@ -145,16 +145,16 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
 
         <div class="lab-side card">
           <div class="moves">
-            <p class="group-title">Move the object (1 m steps)</p>
-            <p class="muted small convention">+x is east, +y is north, +z is up.</p>
+            <p class="group-title">{{ tx("Move the object (1 m steps)") }}</p>
+            <p class="muted small convention">{{ tx("+x is east, +y is north, +z is up.") }}</p>
             <div v-for="axis in AXES" :key="axis" class="move-row">
-              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`" @click="step(axis, -1)">− {{ axis }} · {{ DIRECTIONS[axis][0] }}</button>
+              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`" @click="step(axis, -1)">− {{ axis }} · {{ tx(DIRECTIONS[axis][0]) }}</button>
               <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
-              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`" @click="step(axis, 1)">+ {{ axis }} · {{ DIRECTIONS[axis][1] }}</button>
+              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`" @click="step(axis, 1)">+ {{ axis }} · {{ tx(DIRECTIONS[axis][1]) }}</button>
             </div>
           </div>
           <form class="goto" @submit.prevent="goToTarget">
-            <p class="group-title">Or go straight to a point</p>
+            <p class="group-title">{{ tx("Or go straight to a point") }}</p>
             <div class="goto-row">
               <label v-for="axis in AXES" :key="axis">
                 <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
@@ -169,20 +169,20 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             <button class="btn btn-small" type="button" @click="restart(true)">{{ localizeExperimentText('Back to the origin', locale) ?? 'Back to the origin' }}</button>
           </div>
           <div class="presets">
-            <span class="muted small">Example journeys</span>
-            <button v-for="p in PRESETS" :key="p.id" type="button" class="chip" @click="loadPreset(p.id)">{{ p.label }}</button>
+            <span class="muted small">{{ tx("Example journeys") }}</span>
+            <button v-for="p in PRESETS" :key="p.id" type="button" class="chip" @click="loadPreset(p.id)">{{ tx(p.label) }}</button>
           </div>
 
           <dl class="readouts">
-            <div><dt>Position r</dt><dd class="num">{{ vec(current) }}</dd></div>
-            <div><dt>Moves</dt><dd class="num">{{ points.length - 1 }}</dd></div>
-            <div class="highlight"><dt>Displacement Δr</dt><dd class="num">{{ vec(displacement) }}</dd></div>
-            <div class="highlight"><dt>Size |Δr|</dt><dd class="num">{{ fmt(size, 3) }} m</dd></div>
-            <div><dt>Distance travelled</dt><dd class="num">{{ fmt(distance, 3) }} m</dd></div>
+            <div><dt>{{ tx("Position r") }}</dt><dd class="num">{{ vec(current) }}</dd></div>
+            <div><dt>{{ tx("Moves") }}</dt><dd class="num">{{ points.length - 1 }}</dd></div>
+            <div class="highlight"><dt>{{ tx("Displacement Δr") }}</dt><dd class="num">{{ vec(displacement) }}</dd></div>
+            <div class="highlight"><dt>{{ tx("Size |Δr|") }}</dt><dd class="num">{{ fmt(size, 3) }} m</dd></div>
+            <div><dt>{{ tx("Distance travelled") }}</dt><dd class="num">{{ fmt(distance, 3) }} m</dd></div>
           </dl>
 
           <div v-if="intermediate" class="frame">
-            <p class="group-title">A second coordinate system (x′, y′, z′)</p>
+            <p class="group-title">{{ tx("A second coordinate system (x′, y′, z′)") }}</p>
             <ParameterSlider v-model="shift.x" :label="localizeExperimentText('Origin moved, x', locale) ?? 'Origin moved, x'" symbol="O_x" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
             <ParameterSlider v-model="shift.y" :label="localizeExperimentText('Origin moved, y', locale) ?? 'Origin moved, y'" symbol="O_y" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
             <ParameterSlider v-model="shift.z" :label="localizeExperimentText('Origin moved, z', locale) ?? 'Origin moved, z'" symbol="O_z" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
