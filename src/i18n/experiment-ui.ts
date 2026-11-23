@@ -158,7 +158,6 @@ const text: Record<string, readonly [string, string]> = {
   "2 · Experiment": ["2 · Eksperimen","2 · 実験"],
 
   "Starting position": ["Posisi awal","開始位置"],
-  "Velocity": ["Kecepatan","速度"],
   "Observer velocity": ["Kecepatan pengamat","観測者の速度"],
   "Origin moved, x": ["Asal dipindahkan, x","原点の移動量 x"],
   "Origin moved, y": ["Asal dipindahkan, y","原点の移動量 y"],
