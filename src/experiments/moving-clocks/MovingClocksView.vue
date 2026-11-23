@@ -190,7 +190,7 @@ const signed = (value: number, digits = 2) => {
             :digits="2"
             :signed="false"
             :disabled="status === 'running'"
-            :hint="status === 'running' ? 'Pause to change the speed (this starts a new run).' : 'Relative to the Earth. 0.80c is 80% of light speed.'"
+            :hint="localizeExperimentText(status === 'running' ? 'Pause to change the speed (this starts a new run).' : 'Relative to the Earth. 0.80c is 80% of light speed.', locale)"
           />
 
           <dl class="readouts">
@@ -262,7 +262,7 @@ const signed = (value: number, digits = 2) => {
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p>
         <strong>Next:</strong> Experiment E describes the same situations with separate space and time, and with a single spacetime.
       </p>
