@@ -130,7 +130,7 @@ const description = computed(() => {
         <!-- Light rays through the passing event -->
         <line :x1="sx(0)" :y1="sy(0)" :x2="sx(duration)" :y2="sy(duration)" class="light" />
         <line :x1="sx(0)" :y1="sy(0)" :x2="sx(-duration)" :y2="sy(duration)" class="light" />
-        <text :x="sx(duration) - 6" :y="sy(duration) + 16" class="light-label" text-anchor="end">light</text>
+        <text :x="sx(duration) - 6" :y="sy(duration) + 16" class="light-label" text-anchor="end">{{ localizeExperimentText('light', locale) }}</text>
         <text :x="sx(-duration) + 6" :y="sy(duration) + 16" class="light-label">light</text>
 
         <!-- The moving observer's "now" -->
@@ -155,7 +155,7 @@ const description = computed(() => {
 
         <!-- This frame's "now" -->
         <line :x1="M.left" :x2="M.left + plotW" :y1="sy(t)" :y2="sy(t)" class="now" />
-        <text :x="M.left + 6" :y="sy(t) - 6 < M.top + 14 ? sy(t) + 16 : sy(t) - 6" class="now-label">now in {{ frameName }}: t = {{ t.toFixed(2) }} s</text>
+        <text :x="M.left + 6" :y="sy(t) - 6 < M.top + 14 ? sy(t) + 16 : sy(t) - 6" class="now-label">{{ localizeExperimentText('Now in', locale) }} {{ localizeExperimentText(frameName, locale) }}: t = {{ t.toFixed(2) }} s</text>
 
         <!-- Worldlines with a tick at every second of proper time -->
         <g v-for="line in lines" :key="line.id" :class="['worldline', line.kind]">
