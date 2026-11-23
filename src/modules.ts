@@ -11,7 +11,10 @@ export interface ModuleEntry {
   readonly number: number
   readonly title: string
   readonly audience: string
-  readonly topics: readonly string[]
+  /** Topics substantially explored by experiments that are currently implemented. */
+  readonly coverage: readonly string[]
+  /** Important curriculum topics that still need dedicated learning experiences. */
+  readonly plannedTopics: readonly string[]
   readonly experiments: readonly ExperimentEntry[]
 }
 
@@ -20,7 +23,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 1,
     title: 'Understanding space',
     audience: 'High school',
-    topics: ['Coordinates', 'Distance and displacement', 'Position and direction', 'Euclidean geometry'],
+    coverage: ['Position and reference points', 'Distance and displacement', '3D vectors and coordinate systems', 'Euclidean spatial measurements'],
+    plannedTopics: ['2D coordinate geometry and transformations in greater depth', 'Spatial measurement and geometry beyond the current vector examples'],
     experiments: [
       {
         title: 'A · Space versus time',
@@ -38,7 +42,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 2,
     title: 'Understanding time',
     audience: 'High school',
-    topics: ['Clocks and intervals', 'Periodic motion', 'Frequency and oscillation', 'Every clock is a physical process'],
+    coverage: ['Clocks as physical processes', 'Periodic motion, period and frequency', 'Pendulum dynamics and clock calibration', 'Small-angle approximation and exact pendulum period'],
+    plannedTopics: ['Other physical clock mechanisms and their comparison', 'A broader treatment of time measurement and uncertainty'],
     experiments: [
       {
         title: 'Pendulum clocks',
@@ -51,7 +56,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 3,
     title: 'Classical mechanics',
     audience: 'High school / Undergraduate',
-    topics: ['Newton’s laws', 'Projectile and circular motion', 'Momentum and energy', 'Gravitation'],
+    coverage: ['Ideal projectile motion', 'Effects of launch conditions and gravitational acceleration', 'Galilean reference frames', 'Quadratic air resistance and energy loss'],
+    plannedTopics: ['Newton’s laws and force diagrams', 'Circular motion', 'Momentum and collisions', 'Work, energy and conservation beyond projectile examples', 'Gravitation as a force and orbital motion'],
     experiments: [
       {
         title: 'Projectile launcher',
@@ -64,7 +70,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 4,
     title: 'Special relativity',
     audience: 'Undergraduate',
-    topics: ['Galilean and Lorentz transformations', 'Time dilation', 'Length contraction', 'Relativity of simultaneity'],
+    coverage: ['Galilean and Lorentz transformations', 'Time dilation and proper time', 'Relativity of simultaneity', 'Spacetime diagrams and invariant interval', 'Comparison of equivalent relativistic descriptions'],
+    plannedTopics: ['Length contraction as a dedicated predict–experiment–explain lesson', 'Velocity addition and relativistic momentum', 'More explicit links between inertial-frame measurements and experimental evidence'],
     experiments: [
       {
         title: 'B · Different clocks, different elapsed times',
@@ -82,7 +89,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 5,
     title: 'General relativity',
     audience: 'Advanced undergraduate',
-    topics: ['Gravitational time dilation', 'Spatial curvature', 'Geodesics', 'Schwarzschild geometry'],
+    coverage: ['Gravitational time dilation in the Schwarzschild exterior', 'GPS gravitational and kinematic clock corrections', 'Static spherical geometry and proper radial distance', 'Light signals and clock rates near a Schwarzschild horizon'],
+    plannedTopics: ['Geodesic motion and free fall', 'Einstein field equations and the role of stress-energy', 'A careful bridge from the equivalence principle to curved spacetime', 'Beyond the static, spherical Schwarzschild setting'],
     experiments: [
       {
         title: 'C · Gravity and clock rates',
@@ -95,7 +103,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 6,
     title: 'Cosmology',
     audience: 'Advanced undergraduate',
-    topics: ['Scale factor and expansion', 'The early universe', 'Where classical models break down', 'The problem of time (discussion)'],
+    coverage: ['Scale factor in homogeneous and isotropic FLRW models', 'Redshift and Hubble expansion', 'Matter-, radiation- and dark-energy-dominated model histories', 'Accelerating and decelerating expansion', 'Limits of classical evolution as the scale factor approaches zero'],
+    plannedTopics: ['Observational evidence and parameter inference in modern cosmology', 'Cosmic distance measures and horizons', 'A deeper treatment of the early universe and inflation', 'The status and limits of extrapolating classical cosmology toward the initial singularity'],
     experiments: [
       {
         title: 'D · Evolving space',
