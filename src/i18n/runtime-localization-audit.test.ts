@@ -22,6 +22,8 @@ const ROUTES = [
   { path: '/space/displacement-3d', name: 'displacement-3d' },
 ] as const
 
+const INTENTIONALLY_SHARED_COPY = new Set(['English', 'Bahasa Indonesia', 'Physica', 'MIT License'])
+
 const REVIEWED_ATTRIBUTES = [
   'aria-label',
   'aria-description',
@@ -44,6 +46,7 @@ function normalize(value: string): string {
 }
 
 function isEnglishLike(value: string): boolean {
+  if (INTENTIONALLY_SHARED_COPY.has(value)) return false
   const words = value.match(/[A-Za-z]{3,}/g) ?? []
   if (words.length === 0 || value.length < 5) return false
   if (/^https?:\/\//i.test(value)) return false
@@ -212,6 +215,7 @@ describe('runtime localization audit', () => {
     lines.push('', '## Limitations', '', ...report.limitations.map((item) => `- ${item}`))
     await writeFile(resolve(outputDir, 'localization-runtime-audit.md'), `${lines.join('\n')}\n`, 'utf8')
 
+    console.info(\`Runtime localization audit: \${renderedPages} route/locale renders; \${candidates.length} unchanged-English candidates across \${report.summary.routesWithCandidates} routes.\`)
     expect(renderedPages).toBe(ROUTES.length * SUPPORTED_LOCALES.length)
   }, 120_000)
 })
