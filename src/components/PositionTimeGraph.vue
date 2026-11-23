@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+const { locale } = useLocale()
 import { computed, useId } from 'vue'
 import { galileanBoost, graphVertices, type RunRecord } from '@/physics'
 
@@ -67,7 +70,7 @@ const description = computed(() => {
 
 <template>
   <figure class="graph">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
       <defs>
         <clipPath :id="`${id}-plot`">
           <rect :x="M.left" :y="M.top" :width="plotW" :height="plotH" />
