@@ -221,7 +221,7 @@ const signed = (value: number, digits = 2) => {
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
             <li>{{ localizeExperimentText('Measured from any inertial frame, a clock moving at speed', locale) }} <MathFormula tex="v" /> {{ localizeExperimentText('runs slow by the factor γ.', locale) }}</li>
             <li>{{ localizeExperimentText('The effect is symmetric: each of two inertial observers finds the other’s clock running slow.', locale) }}</li>
@@ -231,7 +231,7 @@ const signed = (value: number, digits = 2) => {
             <li>{{ localizeExperimentText('The proper time along a worldline, what a clock actually shows, is the same in every frame.', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale)">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('Does time “really” slow down for the astronaut?', locale) }}</strong> {{ localizeExperimentText('For two clocks that just fly past each other, “which one is really slower” has no frame-independent answer: it depends on which events you call simultaneous. A frame-independent difference only appears when the clocks meet again (the twin paradox).', locale) }}
