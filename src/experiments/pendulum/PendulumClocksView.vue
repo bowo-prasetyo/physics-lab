@@ -182,7 +182,7 @@ function formatClock(seconds: number): string {
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
             <li>
               {{ localizeExperimentText('Galileo noticed that a pendulum keeps a nearly steady beat, and Christiaan Huygens built the first pendulum clock in 1656. Pendulum clocks were the most accurate timekeepers until quartz clocks in the 1930s.', locale) }}
@@ -193,7 +193,7 @@ function formatClock(seconds: number): string {
             <li>{{ localizeExperimentText('Since 1967 the second has been defined by caesium atoms: 9 192 631 770 oscillations. Today’s best clocks would lose less than a second over the age of the universe.', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale)">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('If every clock is a physical process, what is time?', locale) }}</strong> {{ localizeExperimentText('Aristotle called time “the number of motion”: nothing more than change, counted. Newton held that time flows on its own, whether or not anything changes. Physics uses clocks either way; the question is what they are measuring.', locale) }}
