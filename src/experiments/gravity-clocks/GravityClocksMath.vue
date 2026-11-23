@@ -93,7 +93,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
           </thead>
           <tbody>
             <tr v-for="row in rows" :key="row.name" :class="{ current: row.current }">
-              <td>{{ row.name }}</td>
+              <td>{{ tx(row.name) }}</td>
               <td class="num">{{ row.radius }}</td>
               <td class="num">{{ row.rs }}</td>
             </tr>
@@ -112,7 +112,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
       <h3>{{ tx('Near a surface: the weak-field rule') }}</h3>
       <p>
         {{ tx('When') }} <MathFormula tex="r_s \ll r" />{{ tx(', the square root can be expanded. For a small height difference') }} <MathFormula tex="h" /> near a
-        surface where gravity is <MathFormula tex="g" />:
+        {{ tx('surface where gravity is') }} <MathFormula tex="g" />:
       </p>
       <MathFormula display tex="\frac{\Delta\tau}{\tau} \approx \frac{\Delta\Phi}{c^2} = \frac{g\,h}{c^2}" />
       <MathFormula v-if="weakApplies" display :tex="weakExample" />
