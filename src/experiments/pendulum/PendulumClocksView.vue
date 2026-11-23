@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -99,6 +100,8 @@ function formatClock(seconds: number): string {
 
     <ShareExperiment />
 
+    <LocalizedExperimentGuide experiment-id="pendulum" />
+
     <ExperimentSupport experiment-id="pendulum" :module-number="2" focus="A pendulum is a physical clock: its period depends on its length, local gravitational acceleration and (beyond the small-angle limit) amplitude." prompt="Would adding mass to the bob make an ideal pendulum swing faster?" action="Vary length, mass and release angle separately; compare the measured period with the small-angle prediction." reflect="When does the small-angle approximation become less accurate, and why might a clock need recalibration in a new environment?" />
 
     <section aria-labelledby="predict-title">
@@ -176,7 +179,7 @@ function formatClock(seconds: number): string {
     </section>
     </details>
 
-    <details class="lesson-disclosure">
+    <details v-if="locale === 'en'" class="lesson-disclosure">
       <summary>4 · Explore the meaning and interpretation</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
