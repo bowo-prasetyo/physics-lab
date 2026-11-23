@@ -35,6 +35,7 @@ import { localizePredictions } from '@/i18n/experiment-content'
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
+const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 const num = (value: unknown) => (typeof value === 'string' && value.trim() !== '' && Number.isFinite(Number(value)) ? Number(value) : undefined)
 
 // A setup can be shared as a link, e.g. #/cosmology/evolving-space?level=advanced&model=our&t=13.8
@@ -121,19 +122,19 @@ const expansionWord = computed(() => {
     <ExperimentSupport experiment-id="evolving-space" :module-number="6" focus="Distinguish the expansion of distances between comoving locations from motion through static space." prompt="If the scale factor doubles, what happens to the separation of two comoving galaxies?" action="Run at least two cosmological models and compare their scale-factor and Hubble histories at the same epoch." reflect="Which conclusions follow from the chosen model, and what observational evidence would be needed to test it?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
-      <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <label class="model-select">
-            <span>Universe</span>
+            <span>{{ tx('Universe') }}</span>
             <select v-model="model">
               <option v-for="c in COSMOLOGIES" :key="c.id" :value="c.id">{{ c.name }}</option>
             </select>
@@ -157,7 +158,7 @@ const expansionWord = computed(() => {
 
         <div class="lab-side card">
           <div class="clock">
-            <span class="clock-label">Cosmic time</span>
+            <span class="clock-label">{{ tx('Cosmic time') }}</span>
             <span class="clock-value">{{ timeLabel }}</span>
             <span class="clock-sub num">a = {{ sig(readings.a, 4) }}</span>
           </div>
@@ -170,7 +171,7 @@ const expansionWord = computed(() => {
             </button>
           </div>
           <div class="time-slider">
-            <label for="cosmic-time">Jump to a time</label>
+            <label for="cosmic-time">{{ tx('Jump to a time') }}</label>
             <input id="cosmic-time" v-model.number="timeModel" type="range" :min="expansion.tMin" :max="expansion.tMax" step="0.01" />
             <div class="presets">
               <button v-for="m in milestones" :key="m.label" type="button" class="chip" @click="setTime(m.t)">{{ m.label }}</button>
@@ -179,15 +180,15 @@ const expansionWord = computed(() => {
 
           <dl class="readouts">
             <div>
-              <dt>Distances compared with today</dt>
+              <dt>{{ tx('Distances compared with today') }}</dt>
               <dd class="num">{{ readings.a < A_BREAKDOWN ? 'model fails' : readings.a >= 0.01 ? `${sig(readings.a * 100)}%` : `1/${sig(1 / readings.a)}` }}</dd>
             </div>
-            <div><dt>Expansion is</dt><dd>{{ expansionWord }}</dd></div>
-            <div v-if="readings.redshift !== null"><dt>Light from now, seen today: redshift z</dt><dd class="num">{{ sig(readings.redshift) }}</dd></div>
-            <div v-if="readings.temperature !== null"><dt>Background radiation</dt><dd class="num">{{ sig(readings.temperature) }} K</dd></div>
+            <div><dt>{{ tx('Expansion is') }}</dt><dd>{{ expansionWord }}</dd></div>
+            <div v-if="readings.redshift !== null"><dt>{{ tx('Light from now, seen today: redshift z') }}</dt><dd class="num">{{ sig(readings.redshift) }}</dd></div>
+            <div v-if="readings.temperature !== null"><dt>{{ tx('Background radiation') }}</dt><dd class="num">{{ sig(readings.temperature) }} K</dd></div>
             <template v-if="intermediate">
-              <div><dt>Hubble rate H</dt><dd class="num">{{ readings.hubbleKmSMpc === null ? '—' : `${sig(readings.hubbleKmSMpc)} km/s/Mpc` }}</dd></div>
-              <div><dt>Hubble distance c/H</dt><dd class="num">{{ readings.hubbleDistance === null ? '—' : `${sig(readings.hubbleDistance)} Gly` }}</dd></div>
+              <div><dt>{{ tx('Hubble rate H') }}</dt><dd class="num">{{ readings.hubbleKmSMpc === null ? '—' : `${sig(readings.hubbleKmSMpc)} km/s/Mpc` }}</dd></div>
+              <div><dt>{{ tx('Hubble distance c/H') }}</dt><dd class="num">{{ readings.hubbleDistance === null ? '—' : `${sig(readings.hubbleDistance)} Gly` }}</dd></div>
             </template>
             <div v-if="advanced"><dt>Deceleration q</dt><dd class="num">{{ readings.q === null ? '—' : sig(readings.q) }}</dd></div>
           </dl>
