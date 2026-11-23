@@ -127,7 +127,7 @@ const expansionWord = computed(() => {
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
       <div class="prediction-grid">
-        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" ::hint="localizeExperimentText("hints[p.id]", locale) ?? "hints[p.id]"" :index="i + 1" />
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
@@ -165,8 +165,8 @@ const expansionWord = computed(() => {
             <span class="clock-sub num">a = {{ sig(readings.a, 4) }}</span>
           </div>
           <div class="buttons">
-            <button class="btn" type="button" :disabled="t <= expansion.tMin" @click="running && direction === -1 ? stop() : run(-1)">{{ localizeExperimentText("{{ running && direction === -1 ? 'Pause' : '◀ Backwards' }}", locale) ?? "{{ running && direction === -1 ? 'Pause' : '◀ Backwards' }}" }}</button>
-            <button class="btn btn-primary" type="button" :disabled="t >{{ localizeExperimentText("= expansion.tMax\" @click=\"running && direction === 1 ? stop() : run(1)\">\n              {{ running && direction === 1 ? 'Pause' : 'Forwards ▶' }}", locale) ?? "= expansion.tMax\" @click=\"running && direction === 1 ? stop() : run(1)\">\n              {{ running && direction === 1 ? 'Pause' : 'Forwards ▶' }}" }}</button>
+            <button class="btn" type="button" :disabled="t <= expansion.tMin" @click="running && direction === -1 ? stop() : run(-1)">{{ localizeExperimentText('{{ running && direction === -1 ? \'Pause\' : \'◀ Backwards\' }}', locale) ?? '{{ running && direction === -1 ? \'Pause\' : \'◀ Backwards\' }}' }}</button>
+            <button class="btn btn-primary" type="button" :disabled="t >{{ localizeExperimentText('= expansion.tMax" @click="running && direction === 1 ? stop() : run(1)">\n              {{ running && direction === 1 ? \'Pause\' : \'Forwards ▶\' }}', locale) ?? '= expansion.tMax" @click="running && direction === 1 ? stop() : run(1)">\n              {{ running && direction === 1 ? \'Pause\' : \'Forwards ▶\' }}' }}</button>
           </div>
           <div class="time-slider">
             <label for="cosmic-time">Jump to a time</label>
@@ -194,12 +194,12 @@ const expansionWord = computed(() => {
           <div class="target">
             <ParameterSlider
               v-model="target"
-              :label="localizeExperimentText("A distant galaxy, today at", locale) ?? "A distant galaxy, today at""
+              :label="localizeExperimentText('A distant galaxy, today at', locale) ?? 'A distant galaxy, today at'"
               symbol="d_0"
               unit="Gly"
               v-bind="TARGET_RANGE"
               :signed="false"
-              :hint="localizeExperimentText("Distance today, in billions of light-years.", locale) ?? "Distance today, in billions of light-years.""
+              :hint="localizeExperimentText('Distance today, in billions of light-years.', locale) ?? 'Distance today, in billions of light-years.'"
             />
             <dl class="readouts">
               <div><dt>Its distance at this time</dt><dd class="num">{{ sig(readings.targetDistance) }} Gly</dd></div>
@@ -215,7 +215,7 @@ const expansionWord = computed(() => {
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("3 · Explore the mathematics", locale) ?? "3 · Explore the mathematics" }}</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <EvolvingSpaceMath :level="level" :cosmology="cosmology" :expansion="expansion" :a="readings.a" :hubble="hubblePerGyr" :target="target" />
@@ -223,7 +223,7 @@ const expansionWord = computed(() => {
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("4 · Explore the meaning and interpretation", locale) ?? "4 · Explore the meaning and interpretation" }}</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
@@ -261,7 +261,7 @@ const expansionWord = computed(() => {
     </section>
     </details>
 
-    <nav class="next card" :aria-:label="localizeExperimentText("localizeExperimentText('Next steps', locale)", locale) ?? "localizeExperimentText('Next steps', locale)"">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>See also:</strong> Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.</p>
       <span class="nav-links">
         <RouterLink to="/gravity/clock-rates">Experiment C</RouterLink>
