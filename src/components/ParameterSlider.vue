@@ -23,6 +23,7 @@ const props = withDefaults(
 
 const model = defineModel<number>({ required: true })
 const id = useId()
+const hintId = `${id}-hint`
 
 const format = (value: number) => {
   const sign = value > 0 && props.signed ? '+' : value < 0 ? '−' : ''
@@ -41,8 +42,18 @@ const format = (value: number) => {
       </label>
       <output :for="id" class="num">{{ format(model) }} {{ unit }}</output>
     </div>
-    <input :id="id" v-model.number="model" type="range" :min="min" :max="max" :step="step" :disabled="disabled" />
-    <p v-if="hint" class="hint muted">{{ hint }}</p>
+    <input
+      :id="id"
+      v-model.number="model"
+      type="range"
+      :min="min"
+      :max="max"
+      :step="step"
+      :disabled="disabled"
+      :aria-valuetext="`${format(model)} ${unit}`"
+      :aria-describedby="hint ? hintId : undefined"
+    />
+    <p v-if="hint" :id="hintId" class="hint muted">{{ hint }}</p>
   </div>
 </template>
 
