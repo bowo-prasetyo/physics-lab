@@ -73,6 +73,7 @@ const translations: Record<string, readonly [string, string]> = {
   "One radius up": ["Satu jari-jari di atas permukaan","表面から半径 1 個分上"],
   "Ten radii up": ["Sepuluh jari-jari di atas permukaan","表面から半径 10 個分上"],
   "per day.": ["per hari.", "1 日あたりです。"],
+  "than clock A, and both observers agree.": ["daripada jam A, dan kedua pengamat sepakat.", "時計 A よりも遅く進むことに、両方の観測者が同意します。"],
 }
 
 export function localizeGravityClocksMathText(value: string, locale: Locale): string {
