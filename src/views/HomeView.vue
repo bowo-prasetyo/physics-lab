@@ -11,6 +11,7 @@ const availableCount = computed(() => modules.value.reduce(
 ))
 const levelKeys = { beginner: 'app.level.beginner', intermediate: 'app.level.intermediate', advanced: 'app.level.advanced' } as const
 const audienceKeys = { beginner: 'app.level.beginnerDetails', intermediate: 'app.level.intermediateDetails', advanced: 'app.level.advancedDetails' } as const
+const levelAudienceKeys = { beginner: 'home.audience.beginner', intermediate: 'home.audience.intermediate', advanced: 'home.audience.advanced' } as const
 </script>
 
 <template>
@@ -80,7 +81,7 @@ const audienceKeys = { beginner: 'app.level.beginnerDetails', intermediate: 'app
       <div class="levels">
         <article v-for="info in LEVELS" :key="info.id" class="level-card card">
           <h3>{{ t(levelKeys[info.id]) }}</h3>
-          <p class="level-audience">{{ info.audience }}</p>
+          <p class="level-audience">{{ t(levelAudienceKeys[info.id]) }}</p>
           <p>{{ t(audienceKeys[info.id]) }}</p>
         </article>
       </div>
