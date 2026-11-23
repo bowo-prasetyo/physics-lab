@@ -85,7 +85,11 @@ export async function runAudit({ root = ROOT, outputDir = OUTPUT_DIR } = {}) {
       throw new Error(`Could not parse ${file}: ${errors.map(error => error.message).join('; ')}`)
     }
     if (!descriptor.template) continue
-    candidates.push(...extractTemplateCandidates(\n      descriptor.template.content,\n      file,\n      descriptor.template.loc.start.line - 1,\n    ))
+    candidates.push(...extractTemplateCandidates(
+      descriptor.template.content,
+      file,
+      descriptor.template.loc.start.line - 1,
+    ))
   }
 
   const unique = [...new Map(candidates.map(item => [
