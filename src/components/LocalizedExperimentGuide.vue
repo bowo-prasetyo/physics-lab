@@ -22,7 +22,7 @@ type GuideCopy = {
   interpretationTitle: string
   interpretation: string[]
   visualTitle: string
-  visual: string
+  visual: string[]
 }
 
 const copy: Record<ExperimentId, Record<'id' | 'ja', GuideCopy>> = {
