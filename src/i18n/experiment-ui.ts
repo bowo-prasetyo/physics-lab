@@ -201,6 +201,8 @@ const text: Record<string, readonly [string, string]> = {
   "Or go straight to a point": ["Atau langsung menuju suatu titik","または指定した点へ直接移動"],
   "Example journeys": ["Contoh perjalanan","経路の例"],
 
+  "Held at the end of the track: the object cannot move further, but the clock keeps running.": ["Berhenti di ujung lintasan: objek tidak dapat bergerak lebih jauh, tetapi jam tetap berjalan.","トラックの端で停止しています。物体はそれ以上進めませんが、時計は進み続けます。"],
+  "You can also change this while the clock runs.": ["Anda juga dapat mengubahnya saat jam berjalan.","時計の進行中にも変更できます。"],
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
