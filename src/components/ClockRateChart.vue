@@ -68,11 +68,17 @@ const markers = computed(() =>
   ].map((m) => ({ ...m, x: sx(m.h), y: sy(deficitAt(m.h)) })),
 )
 
-const description = computed(
-  () =>
-    `How much a clock at rest is slowed, against its height above ${props.body.hasSurface ? 'the surface' : 'the horizon'} of the ${props.body.name}, on a logarithmic height scale. ` +
-    `Clock A is at ${formatLength(props.altitudeA)} and clock B at ${formatLength(props.altitudeB)}; the lower clock is slowed more.`,
-)
+const description = computed(() => {
+  const bodyName = localizeExperimentText(props.body.name, locale.value) ?? props.body.name
+  const reference = props.body.hasSurface ? (locale.value === 'id' ? 'permukaan' : '地表') : (locale.value === 'id' ? 'horizon' : '地平面')
+  if (locale.value === 'id') {
+    return `Grafik menunjukkan seberapa besar jam yang diam melambat pada ketinggian di atas ${reference} ${bodyName}, dengan skala ketinggian logaritmik. Jam A berada pada ${formatLength(props.altitudeA)} dan jam B pada ${formatLength(props.altitudeB)}; jam yang lebih rendah berjalan lebih lambat.`
+  }
+  if (locale.value === 'ja') {
+    return `${bodyName}の${reference}からの高さに応じて、静止した時計がどれほど遅く進むかを対数スケールで示します。時計 A は ${formatLength(props.altitudeA)}、時計 B は ${formatLength(props.altitudeB)} にあり、低い位置の時計ほど遅く進みます。`
+  }
+  return `How much a clock at rest is slowed, against its height above ${props.body.hasSurface ? 'the surface' : 'the horizon'} of the ${props.body.name}, on a logarithmic height scale. Clock A is at ${formatLength(props.altitudeA)} and clock B at ${formatLength(props.altitudeB)}; the lower clock is slowed more.`
+})
 </script>
 
 <template>
