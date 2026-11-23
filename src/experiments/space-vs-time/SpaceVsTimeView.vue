@@ -207,38 +207,34 @@ useQuerySync({
     </section>
     </details>
 
-    <details v-if="locale === 'en'" class="lesson-disclosure">
+    <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" title="Established physics">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
           <ul>
-            <li>With <MathFormula tex="v = 0" />, the position stays constant while the clock reading keeps increasing.</li>
+            <li>{{ localizeExperimentText('With', locale) }} <MathFormula tex="v = 0" /> {{ localizeExperimentText('the position stays constant while the clock reading keeps increasing.', locale) }}</li>
             <li>
-              Clocks keep ticking whether or not they move. At the speeds on this track, a moving clock and a stationary one also tick at the same
-              rate to better than one part in <MathFormula tex="10^{16}" />. At speeds close to light, they do not (Module 4).
+              {{ localizeExperimentText('Clocks keep ticking whether or not they move. At the speeds on this track, a moving clock and a stationary one also tick at the same rate to better than one part in', locale) }} <MathFormula tex="10^{16}" />{{ localizeExperimentText('. At speeds close to light, they do not (Module 4).', locale) }}
             </li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" title="Interpretation: open to debate">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale)">
           <p>
-            "We can stop moving through space, but never through time, so space and time must be fundamentally different things."
-            This is a philosophical claim. The experiment is consistent with it, but does not prove it. Points to weigh:
+            {{ localizeExperimentText('We can stop moving through space, but never through time, so space and time must be fundamentally different things.', locale) }} {{ localizeExperimentText('This is a philosophical claim. The experiment is consistent with it, but does not prove it. Points to weigh:', locale) }}
           </p>
           <ul>
             <li>
-              <strong>Rest is relative.</strong> An object at rest for one observer moves for another.
-              <template v-if="advanced">Try it with the observer slider above.</template>
-              <template v-else>Switch to the Advanced level to try this with a second observer.</template>
+              <strong>{{ localizeExperimentText('Rest is relative.', locale) }}</strong> {{ localizeExperimentText('An object at rest for one observer moves for another.', locale) }}
+              <template v-if="advanced">{{ localizeExperimentText('Try it with the observer slider above.', locale) }}</template>
+              <template v-else>{{ localizeExperimentText('Switch to the Advanced level to try this with a second observer.', locale) }}</template>
             </li>
             <li v-if="atLeast(level, 'intermediate')">
-              <strong>Relativity reframes it.</strong> In spacetime language every object moves along its worldline with a 4-velocity of the same
-              size, <MathFormula tex="c" />. Being "at rest" means all of that motion is in the time direction.
+              <strong>{{ localizeExperimentText('Relativity reframes it.', locale) }}</strong> {{ localizeExperimentText('In spacetime language every object moves along its worldline with a 4-velocity of the same size,', locale) }} <MathFormula tex="c" />. {{ localizeExperimentText('Being "at rest" means all of that motion is in the time direction.', locale) }}
             </li>
             <li>
-              <strong>Time does differ from space in some ways.</strong> You can walk back and forth along <MathFormula tex="x" />, but clocks
-              only ever advance. Whether that arrow of time is fundamental is still an open question.
+              <strong>{{ localizeExperimentText('Time does differ from space in some ways.', locale) }}</strong> {{ localizeExperimentText('You can walk back and forth along', locale) }} <MathFormula tex="x" />, {{ localizeExperimentText('but clocks only ever advance. Whether that arrow of time is fundamental is still an open question.', locale) }}
             </li>
           </ul>
         </InfoCallout>
