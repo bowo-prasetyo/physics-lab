@@ -64,6 +64,17 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
 
 <template>
   <div class="maths">
+    <InfoCallout kind="note" title="What this model assumes">
+      <p>
+        This is the <strong>Schwarzschild model</strong>: the mass is spherical and non-rotating, and the region outside it is treated as vacuum.
+        Earth’s rotation, its slight flattening and other small corrections are omitted. The two clocks in the main comparison are held
+        stationary relative to this idealized body, outside its surface (and, for a black hole, outside the horizon).
+      </p>
+      <p>
+        A circular-orbit clock is a different case: it is freely falling, not held stationary. Its rate includes both gravity and orbital
+        motion; the circular-orbit formula applies outside the photon sphere.
+      </p>
+    </InfoCallout>
     <!-- Beginner -->
     <template v-if="level === 'beginner'">
       <p>A clock held at rest at distance <MathFormula tex="r" /> from the centre of a mass <MathFormula tex="M" /> runs slower than a clock far away:</p>
