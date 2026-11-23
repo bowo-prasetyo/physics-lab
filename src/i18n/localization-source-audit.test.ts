@@ -15,7 +15,7 @@ describe('localization source audit', () => {
       <section aria-label="Experiment controls">
         <p>Change the initial velocity.</p>
         <svg><text>Horizontal displacement</text></svg>
-        <button :title="dynamicTitle" title="Reset experiment">Reset</button>
+        <button title="Reset experiment">Reset</button>
         <code>const x = 1</code>
       </section>
     `
