@@ -109,7 +109,7 @@ function formatClock(seconds: number): string {
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
       <div class="prediction-grid">
-        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" ::hint="localizeExperimentText("hints[p.id]", locale) ?? "hints[p.id]"" :index="i + 1" />
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
@@ -118,7 +118,7 @@ function formatClock(seconds: number): string {
       <div class="lab">
         <div class="lab-main card">
           <PendulumView :theta="state.theta" :amplitude-deg="amplitude" :length="length" :mass="mass" />
-          <LineChart :series="angleSeries" :x-max="graphTime" x-:label="localizeExperimentText("time (s)", locale) ?? "time (s)"" y-:label="localizeExperimentText("angle (degrees)", locale) ?? "angle (degrees)"" :marker="null" />
+          <LineChart :series="angleSeries" :x-max="graphTime" x-label="time (s)" y-label="angle (degrees)" :marker="null" />
           <PhasePortrait v-if="advanced" :points="phasePoints" :omega-max="omegaMax" />
         </div>
 
@@ -138,19 +138,19 @@ function formatClock(seconds: number): string {
 
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="running = !running">{{ running ? 'Pause' : state.t > 0 ? 'Resume' : 'Release' }}</button>
-            <button class="btn" type="button" :disabled="state.t === 0" @click="reset">{{ localizeExperimentText("Reset", locale) ?? "Reset" }}</button>
+            <button class="btn" type="button" :disabled="state.t === 0" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
           </div>
-          <div class="time-scale" role="group" :aria-:label="localizeExperimentText("localizeExperimentText('Playback speed', locale)", locale) ?? "localizeExperimentText('Playback speed', locale)"">
+          <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">Playback</span>
-            <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">{{ localizeExperimentText("{{ s === 1 ? 'real time' : `×${s}` }}", locale) ?? "{{ s === 1 ? 'real time' : `×${s}` }}" }}</button>
+            <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">{{ localizeExperimentText('{{ s === 1 ? \'real time\' : `×${s}` }}', locale) ?? '{{ s === 1 ? \'real time\' : `×${s}` }}' }}</button>
           </div>
 
           <div>
-            <ParameterSlider v-model="length" :label="localizeExperimentText("Length", locale) ?? "Length"" symbol="L" unit="m" v-bind="LENGTH_RANGE" :digits="2" :signed="false" />
-            <button class="btn btn-small" type="button" @click="useSecondsPendulum">{{ localizeExperimentText("Seconds pendulum on {{ planet.name.split(\" \")[0] }} ({{ fmt(secondsLength, 3) }} m)", locale) ?? "Seconds pendulum on {{ planet.name.split(\" \")[0] }} ({{ fmt(secondsLength, 3) }} m)" }}</button>
+            <ParameterSlider v-model="length" :label="localizeExperimentText('Length', locale) ?? 'Length'" symbol="L" unit="m" v-bind="LENGTH_RANGE" :digits="2" :signed="false" />
+            <button class="btn btn-small" type="button" @click="useSecondsPendulum">{{ localizeExperimentText('Seconds pendulum on {{ planet.name.split(" ")[0] }} ({{ fmt(secondsLength, 3) }} m)', locale) ?? 'Seconds pendulum on {{ planet.name.split(" ")[0] }} ({{ fmt(secondsLength, 3) }} m)' }}</button>
           </div>
-          <ParameterSlider v-model="amplitude" :label="localizeExperimentText("Release angle", locale) ?? "Release angle"" symbol="\theta_0" unit="°" v-bind="AMPLITUDE_RANGE" :digits="0" :signed="false" />
-          <ParameterSlider v-model="mass" :label="localizeExperimentText("Bob mass", locale) ?? "Bob mass"" symbol="m" unit="kg" v-bind="MASS_RANGE" :digits="1" :signed="false" />
+          <ParameterSlider v-model="amplitude" :label="localizeExperimentText('Release angle', locale) ?? 'Release angle'" symbol="\theta_0" unit="°" v-bind="AMPLITUDE_RANGE" :digits="0" :signed="false" />
+          <ParameterSlider v-model="mass" :label="localizeExperimentText('Bob mass', locale) ?? 'Bob mass'" symbol="m" unit="kg" v-bind="MASS_RANGE" :digits="1" :signed="false" />
           <label class="field">
             <span>World</span>
             <select v-model="planetId">
@@ -171,7 +171,7 @@ function formatClock(seconds: number): string {
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("3 · Explore the mathematics", locale) ?? "3 · Explore the mathematics" }}</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <PendulumMath :level="level" :length="length" :g="planet.g" :amplitude-deg="amplitude" :small-angle="smallAngle" :exact="exact" />
@@ -179,7 +179,7 @@ function formatClock(seconds: number): string {
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("4 · Explore the meaning and interpretation", locale) ?? "4 · Explore the meaning and interpretation" }}</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
@@ -215,7 +215,7 @@ function formatClock(seconds: number): string {
     </section>
     </details>
 
-    <nav class="next card" :aria-:label="localizeExperimentText("localizeExperimentText('Next steps', locale)", locale) ?? "localizeExperimentText('Next steps', locale)"">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>Next:</strong> Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>
