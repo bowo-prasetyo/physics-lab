@@ -131,7 +131,7 @@ const description = computed(() => {
         <line :x1="sx(0)" :y1="sy(0)" :x2="sx(duration)" :y2="sy(duration)" class="light" />
         <line :x1="sx(0)" :y1="sy(0)" :x2="sx(-duration)" :y2="sy(duration)" class="light" />
         <text :x="sx(duration) - 6" :y="sy(duration) + 16" class="light-label" text-anchor="end">{{ localizeExperimentText('light', locale) }}</text>
-        <text :x="sx(-duration) + 6" :y="sy(duration) + 16" class="light-label">light</text>
+        <text :x="sx(-duration) + 6" :y="sy(duration) + 16" class="light-label">{{ localizeExperimentText('light', locale) }}</text>
 
         <!-- The moving observer's "now" -->
         <template v-if="simultaneityLine">
@@ -149,7 +149,7 @@ const description = computed(() => {
             class="meets-label"
             :text-anchor="simultaneityLine.labelAnchor"
           >
-            {{ simultaneityLine.meets.label }}
+            {{ localizeExperimentText(simultaneityLine.meets.label, locale) }}
           </text>
         </template>
 
@@ -182,16 +182,16 @@ const description = computed(() => {
     <details class="diagram-data">
       <summary>{{ localizeExperimentText('Read the current spacetime measurements as a table', locale) }}</summary>
       <div class="table-scroll">
-        <table><thead><tr><th scope="col">Observer</th><th scope="col">Velocity</th><th scope="col">Current event (t, x)</th><th scope="col">Proper time elapsed</th></tr></thead>
-          <tbody><tr v-for="line in lines" :key="line.id"><th scope="row">{{ line.label }}</th><td>{{ line.velocity.toFixed(2) }}c</td><td>({{ line.now.t.toFixed(2) }} s, {{ line.now.x.toFixed(2) }} light-seconds)</td><td>{{ line.tauNow.toFixed(2) }} s</td></tr></tbody>
+        <table><thead><tr><th scope="col">{{ localizeExperimentText('Observer', locale) }}</th><th scope="col">{{ localizeExperimentText('Velocity', locale) }}</th><th scope="col">{{ localizeExperimentText('Current event (t, x)', locale) }}</th><th scope="col">{{ localizeExperimentText('Proper time elapsed', locale) }}</th></tr></thead>
+          <tbody><tr v-for="line in lines" :key="line.id"><th scope="row">{{ localizeExperimentText(line.label, locale) }}</th><td>{{ line.velocity.toFixed(2) }}c</td><td>({{ line.now.t.toFixed(2) }} s, {{ line.now.x.toFixed(2) }} light-seconds)</td><td>{{ line.tauNow.toFixed(2) }} s</td></tr></tbody>
         </table>
       </div>
-      <p class="muted small">The diagram’s horizontal and vertical axes are position and coordinate time in the selected frame. Proper time is what each moving clock accumulates along its own worldline.</p>
+      <p class="muted small">{{ localizeExperimentText('The diagram’s horizontal and vertical axes are position and coordinate time in the selected frame. Proper time is what each moving clock accumulates along its own worldline.', locale) }}</p>
     </details>
     <figcaption class="legend">
-      <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind]" /> {{ line.label }} (dots: each second on its own clock)</span>
-      <span><i class="swatch light" /> Light (45°)</span>
-      <span v-if="simultaneityLine"><i class="swatch simultaneity" /> {{ simultaneityLine.label }}</span>
+      <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind]" /> {{ localizeExperimentText(line.label, locale) }} ({{ localizeExperimentText('dots: each second on its own clock', locale) }})</span>
+      <span><i class="swatch light" /> {{ localizeExperimentText('Light (45°)', locale) }}</span>
+      <span v-if="simultaneityLine"><i class="swatch simultaneity" /> {{ localizeExperimentText(simultaneityLine.label, locale) }}</span>
     </figcaption>
   </figure>
 </template>
