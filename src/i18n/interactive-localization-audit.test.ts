@@ -33,7 +33,7 @@ type CopyRecord = {
   attribute?: string
   text: string
 }
-type Candidate = CopyRecord & { route: string; locale: Exclude<Locale, 'en'>; state: string }
+type Candidate = CopyRecord & { route: string; locale: Exclude<Locale, 'en'>; states: string[] }
 
 function normalize(value: string): string {
   return value.replace(/\s+/g, ' ').trim()
@@ -194,7 +194,7 @@ async function exercisePage(root: HTMLElement, route: string, locale: Locale, sn
     const button = buttons[index]
     if (!button) continue
     const label = normalize(button.innerText || button.getAttribute('aria-label') || button.title)
-    if (!button.isConnected || button.disabled || excludedAction.test(label)) continue
+    if (!button.isConnected || button.disabled || button.closest('.share-experiment') || excludedAction.test(label)) continue
     button.click()
     await settle()
     save('button#' + index + ':activated')
@@ -251,7 +251,7 @@ describe('interactive runtime localization audit', () => {
       else delete (globalThis as { ResizeObserver?: typeof ResizeObserver }).ResizeObserver
     }
 
-    const candidates: Candidate[] = []
+    const candidateMap = new Map<string, Candidate>()
     for (const route of ROUTES) {
       const englishStates = [...snapshots.entries()]
         .filter(([key]) => key.startsWith(route.name + '::en::'))
@@ -260,16 +260,20 @@ describe('interactive runtime localization audit', () => {
           const state = englishKey.split('::').slice(2).join('::')
           const localized = snapshots.get([route.name, locale, state].join('::')) ?? []
           const englishKeys = new Set(englishRecords.map(recordKey))
-          const seen = new Set<string>()
           for (const record of localized) {
-            const key = recordKey(record)
-            if (!englishKeys.has(key) || seen.has(key)) continue
-            seen.add(key)
-            candidates.push({ route: route.name, locale, state, ...record })
+            if (!englishKeys.has(recordKey(record))) continue
+            const key = [route.name, locale, recordKey(record)].join('::')
+            const existing = candidateMap.get(key)
+            if (existing) {
+              if (!existing.states.includes(state)) existing.states.push(state)
+            } else {
+              candidateMap.set(key, { route: route.name, locale, states: [state], ...record })
+            }
           }
         }
       }
     }
+    const candidates = [...candidateMap.values()]
 
     const report = {
       schemaVersion: 1,
@@ -317,7 +321,7 @@ describe('interactive runtime localization audit', () => {
       '', '## Unchanged-English candidates', '',
     ]
     if (!candidates.length) lines.push('No unchanged-English candidates were found in the exercised states.')
-    for (const item of candidates) lines.push('- **' + item.route + ' / ' + item.locale + ' / ' + item.state + '** — ' + item.kind + (item.attribute ? ' (' + item.attribute + ')' : '') + ': ' + item.text)
+    for (const item of candidates) lines.push('- **' + item.route + ' / ' + item.locale + '** — ' + item.kind + (item.attribute ? ' (' + item.attribute + ')' : '') + ': ' + item.text + ' (states: ' + item.states.join(', ') + ')')
     lines.push('', '## Limitations', '', ...report.limitations.map((item) => '- ' + item))
     await writeFile(resolve(outputDir, 'localization-interactive-audit.md'), lines.join('\n') + '\n', 'utf8')
 
