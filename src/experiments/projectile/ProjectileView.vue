@@ -186,7 +186,9 @@ const dropDifference = computed(() => {
           <button class="btn btn-primary launch" type="button" :disabled="flying" @click="launch">{{ flying ? 'In flight…' : 'Launch' }}</button>
           <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">Playback</span>
-            <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">{{ localizeExperimentText('{{ s === 1 ? \'real time\' : `×${s}` }}', locale) ?? '{{ s === 1 ? \'real time\' : `×${s}` }}' }}</button>
+            <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
+              {{ s === 1 ? 'real time' : `×${s}` }}
+            </button>
           </div>
 
           <ParameterSlider v-model="speed" :label="localizeExperimentText('Launch speed', locale) ?? 'Launch speed'" symbol="v_0" unit="m/s" v-bind="SPEED_RANGE" :digits="0" :signed="false" :disabled="flying" />
@@ -216,7 +218,7 @@ const dropDifference = computed(() => {
           </fieldset>
           <template v-if="frame === 'train'">
             <ParameterSlider v-model="trainSpeed" :label="localizeExperimentText('Train speed', locale) ?? 'Train speed'" symbol="u" unit="m/s" v-bind="TRAIN_RANGE" :disabled="flying" />
-            <button class="btn btn-small" type="button" :disabled="flying" @click="matchBall">{{ localizeExperimentText('Match the ball ({{ fmt(horizontalSpeed) }} m/s)', locale) ?? 'Match the ball ({{ fmt(horizontalSpeed) }} m/s)' }}</button>
+            <button class="btn btn-small" type="button" :disabled="flying" @click="matchBall">Match the ball ({{ fmt(horizontalSpeed) }} m/s)</button>
           </template>
 
           <dl class="readouts">
