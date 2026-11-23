@@ -30,10 +30,12 @@ import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
+import { localizeGravityClocksViewText } from '@/i18n/gravity-clocks-view'
 
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
+const tx = (value: string) => localizeGravityClocksViewText(value, locale.value)
 
 const isMode = (value: unknown): value is Mode => value === 'clocks' || value === 'gps'
 const num = (value: unknown) => (typeof value === 'string' && value.trim() !== '' ? Number(value) : undefined)
@@ -93,19 +95,19 @@ const bodyPresets = computed(() => presets(body.value))
 const range = computed(() => altitudeRange(body.value))
 
 const days = computed(() => t.value)
-const daysText = computed(() => `${days.value.toFixed(1)} days`)
+const daysText = computed(() => `${days.value.toFixed(1)} ${locale.value === 'id' ? 'hari' : locale.value === 'ja' ? '日' : 'days'}`)
 const bFaster = computed(() => rateBvsA.value >= 0)
 
 const primaryLabel = computed(() => {
   switch (status.value) {
     case 'running':
-      return 'Pause'
+      return tx('Pause')
     case 'paused':
-      return 'Resume'
+      return tx('Resume')
     case 'finished':
-      return 'Run again'
+      return tx('Run again')
     default:
-      return 'Run the clocks'
+      return tx('Run the clocks')
   }
 })
 
@@ -119,9 +121,9 @@ function primaryAction() {
 
 const gpsBars = computed(() => {
   const items = [
-    { id: 'gravity', label: 'Higher up, weaker gravity', value: gps.gravity },
-    { id: 'velocity', label: 'Orbital speed (Experiment B)', value: gps.velocity },
-    { id: 'net', label: 'Net effect', value: gps.net },
+    { id: 'gravity', label: tx('Higher up, weaker gravity'), value: gps.gravity },
+    { id: 'velocity', label: tx('Orbital speed (Experiment B)'), value: gps.velocity },
+    { id: 'net', label: tx('Net effect'), value: gps.net },
   ]
   const max = Math.max(...items.map((i) => Math.abs(i.value)))
   return items.map((i) => ({ ...i, width: (100 * Math.abs(i.value)) / max, perDay: i.value * SECONDS_PER_DAY }))
@@ -133,11 +135,10 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">Module 5 · General relativity · Experiment C</p>
-      <h1>Gravity and clock rates</h1>
+      <p class="eyebrow">{{ tx('Module 5 · General relativity · Experiment C') }}</p>
+      <h1>{{ tx('Gravity and clock rates') }}</h1>
       <p class="lead">
-        Two identical clocks at different heights above a mass. Does gravity change how fast they tick, and what does that mean for the GPS in
-        your phone?
+        {{ tx('Two identical clocks at different heights above a mass. Does gravity change how fast they tick, and what does that mean for the GPS in your phone?') }}
       </p>
     </header>
 
@@ -145,51 +146,50 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
 
     <LocalizedExperimentGuide experiment-id="gravity-clocks" />
 
-    <ExperimentSupport experiment-id="gravity-clock-rates" :module-number="5" focus="Compare clock rates in the stated static Schwarzschild setting; keep the model assumptions visible." prompt="Which clock should accumulate more time when two stationary clocks are held at different heights?" action="Change the two clock heights, compare the predicted rates, then inspect the separate gravitational and kinematic GPS corrections." reflect="What is held fixed in this comparison, and why is the GPS correction not purely gravitational?" />
+    <ExperimentSupport experiment-id="gravity-clock-rates" :module-number="5"  :focus="tx('Compare clock rates in the stated static Schwarzschild setting; keep the model assumptions visible.')" :prompt="tx('Which clock should accumulate more time when two stationary clocks are held at different heights?')" :action="tx('Change the two clock heights, compare the predicted rates, then inspect the separate gravitational and kinematic GPS corrections.')" :reflect="tx('What is held fixed in this comparison, and why is the GPS correction not purely gravitational?')" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
-      <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
       <fieldset class="tabs" :disabled="locked">
         <legend>{{ localizeExperimentText('Setup', locale) ?? 'Setup' }}</legend>
-        <label :class="{ active: mode === 'clocks' }"><input v-model="mode" type="radio" value="clocks" class="sr-only" /> Two clocks</label>
-        <label :class="{ active: mode === 'gps' }"><input v-model="mode" type="radio" value="gps" class="sr-only" /> GPS satellite</label>
+        <label :class="{ active: mode === 'clocks' }"><input v-model="mode" type="radio" value="clocks" class="sr-only" /> {{ tx('Two clocks') }}</label>
+        <label :class="{ active: mode === 'gps' }"><input v-model="mode" type="radio" value="gps" class="sr-only" /> {{ tx('GPS satellite') }}</label>
       </fieldset>
 
       <!-- Two static clocks -->
       <div v-if="mode === 'clocks'" class="lab">
         <div class="lab-main card">
           <label class="body-select">
-            <span>Central mass</span>
+            <span>{{ tx('Central mass') }}</span>
             <select v-model="bodyId" :disabled="locked">
               <option v-for="b in BODIES" :key="b.id" :value="b.id">{{ b.name }}</option>
             </select>
           </label>
-          <h3 class="chart-title">How much each clock is slowed, compared with a clock far away</h3>
+          <h3 class="chart-title">{{ tx('How much each clock is slowed, compared with a clock far away') }}</h3>
           <ClockRateChart :body="body" :range="range" :altitude-a="altitudeA" :altitude-b="altitudeB" />
           <p class="muted small">
-            The curve has the shape of the gravity “well”: deeper means slower. Clocks are held at rest at these heights (a real satellite
-            would be moving; see the GPS setup).
+            {{ tx('The curve has the shape of the gravity “well”: deeper means slower. Clocks are held at rest at these heights (a real satellite would be moving; see the GPS setup).') }}
           </p>
         </div>
 
         <div class="lab-side card">
           <div class="clocks">
-            <div class="clock-card far"><span class="clock-name">Far away</span><span class="clock-value num">{{ daysText }}</span></div>
-            <div class="clock-card a"><span class="clock-name">Clock A</span><span class="clock-value num">{{ (elapsed.a / SECONDS_PER_DAY).toFixed(1) }} days</span></div>
-            <div class="clock-card b"><span class="clock-name">Clock B</span><span class="clock-value num">{{ (elapsed.b / SECONDS_PER_DAY).toFixed(1) }} days</span></div>
+            <div class="clock-card far"><span class="clock-name">{{ tx('Far away') }}</span><span class="clock-value num">{{ daysText }}</span></div>
+            <div class="clock-card a"><span class="clock-name">{{ tx('Clock A') }}</span><span class="clock-value num">{{ (elapsed.a / SECONDS_PER_DAY).toFixed(1) }} {{ tx('days') }}</span></div>
+            <div class="clock-card b"><span class="clock-name">{{ tx('Clock B') }}</span><span class="clock-value num">{{ (elapsed.b / SECONDS_PER_DAY).toFixed(1) }} {{ tx('days') }}</span></div>
           </div>
           <p class="ahead" :class="bFaster ? 'b-ahead' : 'a-ahead'">
-            Clock {{ bFaster ? 'B' : 'A' }} is ahead by <strong class="num">{{ formatDuration(Math.abs(elapsed.bAhead)) }}</strong>
+            {{ tx('Clock {clock} is ahead by').replace('{clock}', bFaster ? 'B' : 'A') }} <strong class="num">{{ formatDuration(Math.abs(elapsed.bAhead)) }}</strong>
           </p>
-          <p class="status muted">Time-lapse: 1 day per second, up to {{ RUN_DAYS }} days</p>
+          <p class="status muted">{{ tx('Time-lapse: 1 day per second, up to') }} {{ RUN_DAYS }} {{ tx('days') }}</p>
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
             <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
@@ -197,7 +197,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
 
           <div v-for="clock in (['A', 'B'] as const)" :key="clock" class="height" :class="clock === 'A' ? 'a' : 'b'">
             <div class="height-head">
-              <label :for="`height-${clock}`">Clock {{ clock }} height</label>
+              <label :for="`height-${clock}`">{{ tx('Clock {clock} height').replace('{clock}', clock) }}</label>
               <output class="num">{{ formatAltitude(clock === 'A' ? altitudeA : altitudeB, body) }}</output>
             </div>
             <input
@@ -226,21 +226,20 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           </div>
 
           <dl class="readouts">
-            <div><dt>Clock A slowed by</dt><dd class="num">{{ formatSlowdown(deficitA) }}</dd></div>
-            <div><dt>Clock B slowed by</dt><dd class="num">{{ formatSlowdown(deficitB) }}</dd></div>
+            <div><dt>{{ tx('Clock A slowed by') }}</dt><dd class="num">{{ formatSlowdown(deficitA) }}</dd></div>
+            <div><dt>{{ tx('Clock B slowed by') }}</dt><dd class="num">{{ formatSlowdown(deficitB) }}</dd></div>
             <div>
-              <dt>B gains on A, per day on clock A</dt>
+              <dt>{{ tx('B gains on A, per day on clock A') }}</dt>
               <dd class="num">{{ signed(rateBvsA * SECONDS_PER_DAY) }}</dd>
             </div>
             <template v-if="advanced">
-              <div class="signal"><dt>Ticks from A, received at B</dt><dd class="num">{{ signals.upward >= 0 ? '+' : '' }}{{ formatNumber(signals.upward) }}</dd></div>
-              <div class="signal"><dt>Ticks from B, received at A</dt><dd class="num">{{ signals.downward >= 0 ? '+' : '' }}{{ formatNumber(signals.downward) }}</dd></div>
-              <div><dt>Ruler distance A to B</dt><dd class="num">{{ formatLength(radialDistance.proper) }}</dd></div>
+              <div class="signal"><dt>{{ tx('Ticks from A, received at B') }}</dt><dd class="num">{{ signals.upward >= 0 ? '+' : '' }}{{ formatNumber(signals.upward) }}</dd></div>
+              <div class="signal"><dt>{{ tx('Ticks from B, received at A') }}</dt><dd class="num">{{ signals.downward >= 0 ? '+' : '' }}{{ formatNumber(signals.downward) }}</dd></div>
+              <div><dt>{{ tx('Ruler distance A to B') }}</dt><dd class="num">{{ formatLength(radialDistance.proper) }}</dd></div>
             </template>
           </dl>
           <p v-if="advanced" class="small muted">
-            “Received” rates are relative to the receiver’s own clock: negative means the ticks arrive slowed (redshift), positive sped up
-            (blueshift).
+            {{ tx('“Received” rates are relative to the receiver’s own clock: negative means the ticks arrive slowed (redshift), positive sped up (blueshift).') }}
           </p>
         </div>
       </div>
@@ -248,9 +247,9 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
       <!-- GPS -->
       <div v-else class="lab">
         <div class="lab-main card">
-          <h3 class="chart-title">A GPS satellite clock compared with a ground clock</h3>
+          <h3 class="chart-title">{{ tx('A GPS satellite clock compared with a ground clock') }}</h3>
           <p class="muted small">
-            Orbit about 20 200 km above the surface, at {{ (gpsSpeed / 1000).toFixed(2) }} km/s.
+            {{ tx('Orbit about 20 200 km above the surface, at') }} {{ (gpsSpeed / 1000).toFixed(2) }} km/s.
           </p>
           <div class="bars" role="list">
             <div v-for="bar in gpsBars" :key="bar.id" class="bar-row" role="listitem">
@@ -258,22 +257,21 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
               <span class="bar-track">
                 <span class="bar" :class="[bar.id, bar.value >= 0 ? 'pos' : 'neg']" :style="{ width: `${bar.width}%` }" />
               </span>
-              <span class="bar-value num">{{ signed(bar.perDay) }} per day</span>
+              <span class="bar-value num">{{ signed(bar.perDay) }} {{ tx('per day') }}</span>
             </div>
           </div>
-          <InfoCallout v-if="intermediate" kind="note" title="How GPS deals with it">
+          <InfoCallout v-if="intermediate" kind="note" :title="tx('How GPS deals with it')">
             <p>
-              Before launch, each satellite clock is set to tick at 10.22999999543 MHz instead of 10.23 MHz, so that in orbit it runs at the
-              right rate as seen from the ground. Switch the correction off to see what would happen without it.
+              {{ tx('Before launch, each satellite clock is set to tick at 10.22999999543 MHz instead of 10.23 MHz, so that in orbit it runs at the right rate as seen from the ground. Switch the correction off to see what would happen without it.') }}
             </p>
           </InfoCallout>
         </div>
 
         <div class="lab-side card">
           <div class="clocks two">
-            <div class="clock-card far"><span class="clock-name">Ground clock</span><span class="clock-value num">{{ daysText }}</span></div>
+            <div class="clock-card far"><span class="clock-name">{{ tx('Ground clock') }}</span><span class="clock-value num">{{ daysText }}</span></div>
             <div class="clock-card b">
-              <span class="clock-name">Satellite gained</span><span class="clock-value num">{{ formatDuration(gpsState.offset) }}</span>
+              <span class="clock-name">{{ tx('Satellite gained') }}</span><span class="clock-value num">{{ formatDuration(gpsState.offset) }}</span>
             </div>
           </div>
           <div class="buttons">
@@ -282,12 +280,12 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           </div>
           <label class="toggle">
             <input v-model="correction" type="checkbox" :disabled="locked" />
-            Relativity correction {{ correction ? 'on' : 'off' }}
+            {{ tx('Relativity correction') }} {{ tx(correction ? 'on' : 'off') }}
           </label>
           <div class="error" :class="{ bad: !correction }">
-            <span class="clock-name">Position error</span>
+            <span class="clock-name">{{ tx('Position error') }}</span>
             <span class="clock-value num">{{ correction ? '0 m' : formatLength(gpsState.positionError) }}</span>
-            <span class="small">{{ correction ? 'The correction keeps the satellite clock in step.' : 'Growing by about 11.5 km every day.' }}</span>
+            <span class="small">{{ correction ? tx('The correction keeps the satellite clock in step.') : tx('Growing by about 11.5 km every day.') }}</span>
           </div>
         </div>
       </div>
@@ -296,7 +294,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <GravityClocksMath
         :level="level"
         :body="body"
@@ -311,36 +309,29 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
     </details>
 
-    <details v-if="locale === 'en'" class="lesson-disclosure">
+    <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ tx('What does it tell us?') }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" title="Established physics">
+        <InfoCallout kind="physics" :title="tx('Established physics')">
           <ul>
-            <li>Clocks lower in a gravitational field run slower, and observers at both heights agree which clock is slow.</li>
+            <li>{{ tx('Clocks lower in a gravitational field run slower, and observers at both heights agree which clock is slow.') }}</li>
             <li>
-              Measured again and again: gamma rays up a 22.5 m tower (Pound and Rebka, 1959), a hydrogen-maser clock launched on a rocket
-              (Gravity Probe A, 1976, agreeing to about 7 parts in 100 000), and optical clocks that detect a height change of about 33 cm
-              (2010). GPS corrects for it every day.
+              {{ tx('Measured again and again: gamma rays up a 22.5 m tower (Pound and Rebka, 1959), a hydrogen-maser clock launched on a rocket (Gravity Probe A, 1976, agreeing to about 7 parts in 100 000), and optical clocks that detect a height change of about 33 cm (2010). GPS corrects for it every day.') }}
             </li>
             <li>
-              A clock falling into a black hole ticks normally by its own measure and crosses the horizon after a finite time on its own dial.
+              {{ tx('A clock falling into a black hole ticks normally by its own measure and crosses the horizon after a finite time on its own dial.') }}
             </li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" title="Interpretation: open to debate">
+        <InfoCallout kind="interpretation" :title="tx('Interpretation: open to debate')">
           <ul>
             <li>
-              <strong>Does gravity slow time itself, or only clocks?</strong> Every clock and every process slows by the same factor, so no
-              measurement can separate the two. Whether that means “time itself” runs slower depends on what you think time is: something
-              that exists on its own, or a measure of how physical processes relate.
+              <strong>{{ tx('Does gravity slow time itself, or only clocks?') }}</strong> {{ tx('Every clock and every process slows by the same factor, so no measurement can separate the two. Whether that means “time itself” runs slower depends on what you think time is: something that exists on its own, or a measure of how physical processes relate.') }}
             </li>
             <li>
-              <strong>Is gravity a force or geometry?</strong> General relativity describes it as the curvature of spacetime, and the lapse
-              in the 3 + 1 split is exactly the clock rate you measured. Other formulations, such as the teleparallel equivalent of general
-              relativity, describe gravity differently but make the same predictions. As in Experiment E, equal predictions leave the
-              interpretation open.
+              <strong>{{ tx('Is gravity a force or geometry?') }}</strong> {{ tx('General relativity describes it as the curvature of spacetime, and the lapse in the 3 + 1 split is exactly the clock rate you measured. Other formulations, such as the teleparallel equivalent of general relativity, describe gravity differently but make the same predictions. As in Experiment E, equal predictions leave the interpretation open.') }}
             </li>
           </ul>
         </InfoCallout>
@@ -349,12 +340,12 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>Next:</strong> Experiment D, where space itself evolves in time. See also Experiments B and E.</p>
+      <p><strong>{{ tx('Next:') }}</strong> {{ tx('Experiment D, where space itself evolves in time. See also Experiments B and E.') }}</p>
       <span class="nav-links">
-        <RouterLink to="/cosmology/evolving-space">Experiment D →</RouterLink>
-        <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">Experiment E</RouterLink>
-        <RouterLink to="/">All modules</RouterLink>
+        <RouterLink to="/cosmology/evolving-space">{{ tx('Experiment D →') }}</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx('Experiment B') }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx('Experiment E') }}</RouterLink>
+        <RouterLink to="/">{{ tx('All modules') }}</RouterLink>
       </span>
     </nav>
   </article>
