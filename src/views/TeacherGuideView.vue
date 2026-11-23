@@ -62,7 +62,7 @@ const lessonLinks = [
     <section class="card teacher-note">
       <h2>{{ guide.assessment }}</h2>
       <ul><li v-for="item in guide.assessmentItems" :key="item">{{ item }}</li></ul>
-      <p>{{ guide.footer }} <RouterLink to="/">Physica</RouterLink> · <a href="https://github.com/bowo-prasetyo/physics-lab/blob/main/docs/product/LEARNING_EFFECTIVENESS.md" >{{ t('teacherGuide.learningEffectivenessLink') }}</a>.</p>
+      <p>{{ guide.footer }} <RouterLink to="/">Physica</RouterLink> · <a href="https://github.com/bowo-prasetyo/physics-lab/blob/main/docs/product/LEARNING_EFFECTIVENESS.md">{{ t('teacherGuide.learningEffectivenessLink') }}</a>.</p>
     </section>
   </article>
 </template>
