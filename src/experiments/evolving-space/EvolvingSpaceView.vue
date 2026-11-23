@@ -265,7 +265,7 @@ const expansionWord = computed(() => {
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>See also:</strong> Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.</p>
       <span class="nav-links">
         <RouterLink to="/gravity/clock-rates">Experiment C</RouterLink>
