@@ -152,7 +152,7 @@ const dropDifference = computed(() => {
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
       <div class="prediction-grid">
-        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" ::hint="localizeExperimentText("hints[p.id]", locale) ?? "hints[p.id]"" :index="i + 1" />
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
@@ -177,21 +177,21 @@ const dropDifference = computed(() => {
           </p>
           <p v-if="dropDifference" class="drop-result">{{ dropDifference }}</p>
           <div class="charts">
-            <LineChart :series="heightSeries" :x-max="graphTime" x-:label="localizeExperimentText("time (s)", locale) ?? "time (s)"" y-:label="localizeExperimentText("height (m)", locale) ?? "height (m)"" :marker="states ? t : null" />
-            <LineChart :series="velocitySeries" :x-max="graphTime" x-:label="localizeExperimentText("time (s)", locale) ?? "time (s)"" y-:label="localizeExperimentText("velocity (m/s)", locale) ?? "velocity (m/s)"" :marker="states ? t : null" />
+            <LineChart :series="heightSeries" :x-max="graphTime" x-label="time (s)" y-label="height (m)" :marker="states ? t : null" />
+            <LineChart :series="velocitySeries" :x-max="graphTime" x-label="time (s)" y-label="velocity (m/s)" :marker="states ? t : null" />
           </div>
         </div>
 
         <div class="lab-side card">
           <button class="btn btn-primary launch" type="button" :disabled="flying" @click="launch">{{ flying ? 'In flight…' : 'Launch' }}</button>
-          <div class="time-scale" role="group" :aria-:label="localizeExperimentText("localizeExperimentText('Playback speed', locale)", locale) ?? "localizeExperimentText('Playback speed', locale)"">
+          <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">Playback</span>
-            <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">{{ localizeExperimentText("{{ s === 1 ? 'real time' : `×${s}` }}", locale) ?? "{{ s === 1 ? 'real time' : `×${s}` }}" }}</button>
+            <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">{{ localizeExperimentText('{{ s === 1 ? \'real time\' : `×${s}` }}', locale) ?? '{{ s === 1 ? \'real time\' : `×${s}` }}' }}</button>
           </div>
 
-          <ParameterSlider v-model="speed" :label="localizeExperimentText("Launch speed", locale) ?? "Launch speed"" symbol="v_0" unit="m/s" v-bind="SPEED_RANGE" :digits="0" :signed="false" :disabled="flying" />
-          <ParameterSlider v-model="angle" :label="localizeExperimentText("Launch angle", locale) ?? "Launch angle"" symbol="\theta" unit="°" v-bind="ANGLE_RANGE" :digits="0" :signed="false" :disabled="flying" />
-          <ParameterSlider v-model="height" :label="localizeExperimentText("Launch height", locale) ?? "Launch height"" symbol="h" unit="m" v-bind="HEIGHT_RANGE" :digits="0" :signed="false" :disabled="flying" />
+          <ParameterSlider v-model="speed" :label="localizeExperimentText('Launch speed', locale) ?? 'Launch speed'" symbol="v_0" unit="m/s" v-bind="SPEED_RANGE" :digits="0" :signed="false" :disabled="flying" />
+          <ParameterSlider v-model="angle" :label="localizeExperimentText('Launch angle', locale) ?? 'Launch angle'" symbol="\theta" unit="°" v-bind="ANGLE_RANGE" :digits="0" :signed="false" :disabled="flying" />
+          <ParameterSlider v-model="height" :label="localizeExperimentText('Launch height', locale) ?? 'Launch height'" symbol="h" unit="m" v-bind="HEIGHT_RANGE" :digits="0" :signed="false" :disabled="flying" />
 
           <label class="field">
             <span>World</span>
@@ -210,13 +210,13 @@ const dropDifference = computed(() => {
           </label>
 
           <fieldset class="frame" :disabled="flying">
-            <legend>{{ localizeExperimentText("Seen from", locale) ?? "Seen from" }}</legend>
+            <legend>{{ localizeExperimentText('Seen from', locale) ?? 'Seen from' }}</legend>
             <label><input v-model="frame" type="radio" value="ground" /> the ground</label>
             <label><input v-model="frame" type="radio" value="train" /> a moving train</label>
           </fieldset>
           <template v-if="frame === 'train'">
-            <ParameterSlider v-model="trainSpeed" :label="localizeExperimentText("Train speed", locale) ?? "Train speed"" symbol="u" unit="m/s" v-bind="TRAIN_RANGE" :disabled="flying" />
-            <button class="btn btn-small" type="button" :disabled="flying" @click="matchBall">{{ localizeExperimentText("Match the ball ({{ fmt(horizontalSpeed) }} m/s)", locale) ?? "Match the ball ({{ fmt(horizontalSpeed) }} m/s)" }}</button>
+            <ParameterSlider v-model="trainSpeed" :label="localizeExperimentText('Train speed', locale) ?? 'Train speed'" symbol="u" unit="m/s" v-bind="TRAIN_RANGE" :disabled="flying" />
+            <button class="btn btn-small" type="button" :disabled="flying" @click="matchBall">{{ localizeExperimentText('Match the ball ({{ fmt(horizontalSpeed) }} m/s)', locale) ?? 'Match the ball ({{ fmt(horizontalSpeed) }} m/s)' }}</button>
           </template>
 
           <dl class="readouts">
@@ -236,13 +236,13 @@ const dropDifference = computed(() => {
             </template>
             <div v-if="bestAngle !== null"><dt>Best angle for these settings</dt><dd class="num">{{ fmt(bestAngle) }}°</dd></div>
           </dl>
-          <button class="btn btn-small" type="button" :disabled="history.length === 0 || flying" @click="clearHistory">{{ localizeExperimentText("Clear earlier throws", locale) ?? "Clear earlier throws" }}</button>
+          <button class="btn btn-small" type="button" :disabled="history.length === 0 || flying" @click="clearHistory">{{ localizeExperimentText('Clear earlier throws', locale) ?? 'Clear earlier throws' }}</button>
         </div>
       </div>
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("3 · Explore the mathematics", locale) ?? "3 · Explore the mathematics" }}</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <ProjectileMath :level="level" :params="params" :planet="planet" :drag-applies="dragApplies" :best-angle="bestAngle" />
@@ -250,7 +250,7 @@ const dropDifference = computed(() => {
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("4 · Explore the meaning and interpretation", locale) ?? "4 · Explore the meaning and interpretation" }}</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
@@ -283,7 +283,7 @@ const dropDifference = computed(() => {
     </section>
     </details>
 
-    <nav class="next card" :aria-:label="localizeExperimentText("localizeExperimentText('Next steps', locale)", locale) ?? "localizeExperimentText('Next steps', locale)"">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>See also:</strong> Experiment A for motion in one dimension, and Experiment B for what happens near the speed of light.</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>
