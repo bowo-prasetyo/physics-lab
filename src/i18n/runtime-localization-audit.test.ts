@@ -244,7 +244,7 @@ describe('runtime localization audit', () => {
         documentLanguageMismatches: documentLanguageIssues.length,
       },
       accessibility: {
-        checkedInteractiveAndGraphicElements: renderedPages,
+        checkedRouteLocaleRendersForAccessibleNames: renderedPages,
         documentLanguage: 'The html lang attribute is checked against the selected locale on every route/state render.',
         accessibleNameRule: 'Buttons, form controls, links, summaries, and named graphics must expose a non-empty accessible name through ARIA, an associated label, title, or their text content.',
         unnamedElements: accessibilityIssues,
@@ -282,7 +282,7 @@ describe('runtime localization audit', () => {
       '',
       '## Accessibility localization checks',
       '',
-      `- Interactive controls and named graphics checked: ${report.accessibility.checkedInteractiveAndGraphicElements} route/locale renders`,
+      `- Route/locale renders checked for accessible names: ${report.accessibility.checkedRouteLocaleRendersForAccessibleNames}`,
       `- Unnamed elements: ${report.accessibility.unnamedElements.length}`,
       `- Document language mismatches: ${report.accessibility.documentLanguageMismatches.length}`,
       '',
