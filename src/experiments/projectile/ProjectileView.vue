@@ -253,7 +253,7 @@ const dropDifference = computed(() => {
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
             <li>
               {{ localizeExperimentText('Without air, a projectile’s path is a parabola, and its horizontal and vertical motions are independent (Galileo, Two New Sciences, 1638).', locale) }}
@@ -263,7 +263,7 @@ const dropDifference = computed(() => {
             <li>{{ localizeExperimentText('Observers moving at constant velocity see different paths but find the same laws of motion (Galilean relativity).', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale)">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('Is there an absolute space?', locale) }}</strong> {{ localizeExperimentText('Newton believed space is a fixed stage and that there is a true state of rest, even though no experiment with moving trains or ships can detect it. Leibniz, and later Mach, argued that only motion relative to other things is real.', locale) }}
