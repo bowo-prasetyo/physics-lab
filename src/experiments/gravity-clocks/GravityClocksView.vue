@@ -348,7 +348,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>Next:</strong> Experiment D, where space itself evolves in time. See also Experiments B and E.</p>
       <span class="nav-links">
         <RouterLink to="/cosmology/evolving-space">Experiment D →</RouterLink>
