@@ -198,7 +198,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           <div v-for="clock in (['A', 'B'] as const)" :key="clock" class="height" :class="clock === 'A' ? 'a' : 'b'">
             <div class="height-head">
               <label :for="`height-${clock}`">{{ tx('Clock {clock} height').replace('{clock}', clock) }}</label>
-              <output class="num">{{ formatAltitude(clock === 'A' ? altitudeA : altitudeB, body) }}</output>
+              <output class="num">{{ formatAltitude(clock === 'A' ? altitudeA : altitudeB, body, locale.value) }}</output>
             </div>
             <input
               v-if="clock === 'A'"
