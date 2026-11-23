@@ -47,7 +47,7 @@ function isEnglishLike(value: string): boolean {
   const words = value.match(/[A-Za-z]{3,}/g) ?? []
   if (words.length === 0 || value.length < 5) return false
   if (/^https?:\/\//i.test(value)) return false
-  if (/^[A-Z\d\s._:+\\/()–—-]+$/.test(value)) return false
+  if (/^[A-Z\d\s._:+\/()–—-]+$/.test(value)) return false
   return true
 }
 
