@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+const { locale } = useLocale()
 import { computed, useId } from 'vue'
 import { staticClockDeficit, type Body } from '@/physics'
 import { niceCeil } from './chartScale'
@@ -73,7 +76,7 @@ const description = computed(
 
 <template>
   <figure class="chart">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
       <defs>
         <clipPath :id="`${id}-plot`">
           <rect :x="M.left - 10" :y="M.top - 10" :width="plotW + 20" :height="plotH + 12" />
@@ -101,7 +104,7 @@ const description = computed(
       </g>
     </svg>
     <details class="chart-data">
-      <summary>Read the clock comparisons as a table</summary>
+      <summary>{{ localizeExperimentText('Read the clock comparisons as a table', locale) }}</summary>
       <table><thead><tr><th scope="col">Clock</th><th scope="col">Altitude</th><th scope="col">Clock-rate deficit</th></tr></thead>
         <tbody><tr><th scope="row">A</th><td>{{ formatLength(altitudeA) }}</td><td>{{ (deficitAt(altitudeA) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr>
           <tr><th scope="row">B</th><td>{{ formatLength(altitudeB) }}</td><td>{{ (deficitAt(altitudeB) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr></tbody>
