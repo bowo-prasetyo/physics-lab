@@ -1,0 +1,73 @@
+import type { Locale } from './locales'
+
+/** Visible prose and control labels for the Gravity Clocks experiment. */
+const translations: Record<string, readonly [string, string]> = {
+  "Module 5 · General relativity · Experiment C": ["Modul 5 · Relativitas umum · Eksperimen C","モジュール5 · 一般相対性理論 · 実験C"],
+  "Gravity and clock rates": ["Gravitasi dan laju jam","重力と時計の進み方"],
+  "Two identical clocks at different heights above a mass. Does gravity change how fast they tick, and what does that mean for the GPS in your phone?": ["Dua jam identik berada pada ketinggian berbeda di atas suatu massa. Apakah gravitasi mengubah laju detiknya, dan apa artinya bagi GPS di ponsel Anda?","質量の上方で異なる高さに置かれた2つの同一の時計。重力は時計の進み方を変えるのでしょうか。また、それはスマートフォンのGPSにとって何を意味するのでしょうか。"],
+  "Compare clock rates in the stated static Schwarzschild setting; keep the model assumptions visible.": ["Bandingkan laju jam dalam kondisi Schwarzschild statis yang dinyatakan; perhatikan asumsi modelnya.","指定された静的シュワルツシルト条件で時計の進み方を比較し、モデルの前提を確認してください。"],
+  "Which clock should accumulate more time when two stationary clocks are held at different heights?": ["Jam manakah yang akan mengumpulkan waktu lebih banyak ketika dua jam diam ditempatkan pada ketinggian berbeda?","異なる高さに静止させた2つの時計では、どちらがより多くの時間を刻むでしょうか？"],
+  "Change the two clock heights, compare the predicted rates, then inspect the separate gravitational and kinematic GPS corrections.": ["Ubah ketinggian kedua jam, bandingkan laju yang diprediksi, lalu periksa koreksi GPS akibat gravitasi dan gerak secara terpisah.","2つの時計の高さを変更して予測される進み方を比較し、GPSに対する重力補正と運動補正を個別に確認してください。"],
+  "What is held fixed in this comparison, and why is the GPS correction not purely gravitational?": ["Apa yang dibuat tetap dalam perbandingan ini, dan mengapa koreksi GPS tidak hanya disebabkan oleh gravitasi?","この比較では何を一定に保っていますか。また、GPSの補正が重力だけによるものではないのはなぜですか？"],
+  "Predict": ["Prediksi","予測"],
+  "Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.": ["Tentukan jawaban terlebih dahulu. Setiap penjelasan baru terbuka setelah Anda mengujinya dalam eksperimen di bawah.","まず答えを選んでください。各解説は、下の実験で検証した後にのみ表示されます。"],
+  "Experiment": ["Eksperimen","実験"],
+  "Two clocks": ["Dua jam","2つの時計"],
+  "GPS satellite": ["Satelit GPS","GPS衛星"],
+  "Central mass": ["Massa pusat","中心質量"],
+  "How much each clock is slowed, compared with a clock far away": ["Seberapa lambat setiap jam dibandingkan dengan jam yang sangat jauh","遠方の時計と比べて、それぞれの時計がどれほど遅く進むか"],
+  "The curve has the shape of the gravity “well”: deeper means slower. Clocks are held at rest at these heights (a real satellite would be moving; see the GPS setup).": ["Kurva ini berbentuk seperti “sumur” gravitasi: semakin dalam, semakin lambat. Jam dibuat diam pada ketinggian ini (satelit sungguhan akan bergerak; lihat pengaturan GPS).","この曲線は重力の「井戸」の形を表し、深いほど時計は遅く進みます。時計はこの高さで静止させています（実際の衛星は運動しています。GPSの設定を参照してください）。"],
+  "Far away": ["Jauh","遠方"],
+  "Clock A": ["Jam A","時計A"],
+  "Clock B": ["Jam B","時計B"],
+  "is ahead by": ["lebih unggul sebesar","進んでいる時間："],
+  "Time-lapse: 1 day per second, up to": ["Selang waktu: 1 hari per detik, hingga","時間経過：1秒あたり1日、最大"],
+  "Run again": ["Jalankan lagi","もう一度実行"],
+  "Run the clocks": ["Jalankan jam","時計を動かす"],
+  "Clock {clock} height": ["Ketinggian jam {clock}","時計{clock}の高さ"],
+  "Clock A slowed by": ["Perlambatan jam A","時計Aの遅れ"],
+  "Clock B slowed by": ["Perlambatan jam B","時計Bの遅れ"],
+  "B gains on A, per day on clock A": ["Keunggulan B terhadap A per hari menurut jam A","時計Aで測った1日あたりのBの進み"],
+  "Ticks from A, received at B": ["Detak dari A yang diterima di B","Aからの信号をBで受信"],
+  "Ticks from B, received at A": ["Detak dari B yang diterima di A","Bからの信号をAで受信"],
+  "Ruler distance A to B": ["Jarak penggaris dari A ke B","AからBまでの物差しで測った距離"],
+  "“Received” rates are relative to the receiver’s own clock: negative means the ticks arrive slowed (redshift), positive sped up (blueshift).": ["Laju “yang diterima” relatif terhadap jam penerima: nilai negatif berarti detak tiba lebih lambat (pergeseran merah), sedangkan nilai positif berarti lebih cepat (pergeseran biru).","「受信した」進み方は受信側自身の時計を基準にしています。負の値は信号が遅く届く（赤方偏移）ことを、正の値は速く届く（青方偏移）ことを意味します。"],
+  "A GPS satellite clock compared with a ground clock": ["Jam satelit GPS dibandingkan dengan jam di permukaan Bumi","地上の時計と比較したGPS衛星の時計"],
+  "Orbit about 20 200 km above the surface, at": ["表面から約20,200 kmの軌道を、速度","地表から約20,200 kmの軌道を、速度"],
+  "Higher up, weaker gravity": ["高い場所ほど重力が弱い","高い位置ほど重力が弱い"],
+  "Orbital speed (Experiment B)": ["Kecepatan orbit (Eksperimen B)","軌道速度（実験B）"],
+  "Net effect": ["Efek bersih","正味の効果"],
+  "How GPS deals with it": ["Cara GPS mengatasinya","GPSの補正方法"],
+  "Before launch, each satellite clock is set to tick at 10.22999999543 MHz instead of 10.23 MHz, so that in orbit it runs at the right rate as seen from the ground. Switch the correction off to see what would happen without it.": ["Sebelum diluncurkan, setiap jam satelit diatur agar berdetak pada 10,22999999543 MHz, bukan 10,23 MHz, sehingga di orbit lajunya tepat jika diamati dari Bumi. Matikan koreksi untuk melihat apa yang terjadi tanpanya.","打ち上げ前に各衛星の時計は、10.23 MHzではなく10.22999999543 MHzで刻むように設定されます。これにより、軌道上で地上から見た正しい進み方になります。補正をオフにして、補正がない場合に何が起きるか確認してください。"],
+  "Ground clock": ["Jam di permukaan","地上の時計"],
+  "Satellite gained": ["Waktu tambahan satelit","衛星が進んだ時間"],
+  "Relativity correction": ["Koreksi relativitas","相対論補正"],
+  "on": ["aktif","オン"],
+  "off": ["nonaktif","オフ"],
+  "Position error": ["Kesalahan posisi","位置誤差"],
+  "The correction keeps the satellite clock in step.": ["Koreksi menjaga jam satelit tetap selaras.","補正によって衛星時計の進み方が同期します。"],
+  "Growing by about 11.5 km every day.": ["Bertambah sekitar 11,5 km setiap hari.","毎日約11.5 kmずつ増加します。"],
+  "The mathematics": ["Matematika","数学"],
+  "What does it tell us?": ["Apa maknanya?","何が分かるのでしょうか？"],
+  "Established physics": ["Fisika yang telah teruji","確立された物理学"],
+  "Clocks lower in a gravitational field run slower, and observers at both heights agree which clock is slow.": ["Jam yang lebih rendah dalam medan gravitasi berjalan lebih lambat, dan pengamat pada kedua ketinggian sepakat tentang jam mana yang lebih lambat.","重力場の低い位置にある時計ほど遅く進み、どちらの高さの観測者も、どちらの時計が遅いかについて一致します。"],
+  "Measured again and again: gamma rays up a 22.5 m tower (Pound and Rebka, 1959), a hydrogen-maser clock launched on a rocket (Gravity Probe A, 1976, agreeing to about 7 parts in 100 000), and optical clocks that detect a height change of about 33 cm (2010). GPS corrects for it every day.": ["Efek ini telah berulang kali diukur: sinar gamma yang dikirim ke atas menara 22,5 m (Pound dan Rebka, 1959), jam maser hidrogen yang diluncurkan dengan roket (Gravity Probe A, 1976, sesuai hingga sekitar 7 bagian per 100.000), serta jam optik yang mendeteksi perbedaan ketinggian sekitar 33 cm (2010). GPS mengoreksinya setiap hari.","この効果は繰り返し測定されています。高さ22.5 mの塔を使ったガンマ線の実験（パウンドとレブカ、1959年）、ロケットに搭載した水素メーザー時計（Gravity Probe A、1976年。約10万分の7の精度で一致）、約33 cmの高さの差を検出した光時計（2010年）などです。GPSは毎日この効果を補正しています。"],
+  "A clock falling into a black hole ticks normally by its own measure and crosses the horizon after a finite time on its own dial.": ["Jam yang jatuh ke dalam lubang hitam berdetak secara normal menurut pengukurannya sendiri dan melintasi horizon setelah waktu yang terbatas pada jamnya sendiri.","ブラックホールに落下する時計は、自身の時計では通常どおり進み、有限の固有時間の後に地平面を通過します。"],
+  "Interpretation: open to debate": ["Interpretasi: masih diperdebatkan","解釈：議論の余地あり"],
+  "Does gravity slow time itself, or only clocks?": ["Apakah gravitasi memperlambat waktu itu sendiri, atau hanya jam?","重力は時間そのものを遅くするのでしょうか。それとも時計だけでしょうか？"],
+  "Every clock and every process slows by the same factor, so no measurement can separate the two. Whether that means “time itself” runs slower depends on what you think time is: something that exists on its own, or a measure of how physical processes relate.": ["Setiap jam dan setiap proses melambat dengan faktor yang sama, sehingga tidak ada pengukuran yang dapat membedakan keduanya. Apakah ini berarti “waktu itu sendiri” berjalan lebih lambat bergantung pada pandangan Anda tentang waktu: sesuatu yang ada secara mandiri atau ukuran hubungan antarproses fisik.","すべての時計とあらゆる過程が同じ割合で遅くなるため、測定によって両者を区別することはできません。「時間そのもの」が遅くなるという意味かどうかは、時間を独立して存在するものと考えるか、物理過程の関係を測るものと考えるかによります。"],
+  "Is gravity a force or geometry?": ["Apakah gravitasi merupakan gaya atau geometri?","重力は力でしょうか、それとも幾何学でしょうか？"],
+  "General relativity describes it as the curvature of spacetime, and the lapse in the 3 + 1 split is exactly the clock rate you measured. Other formulations, such as the teleparallel equivalent of general relativity, describe gravity differently but make the same predictions. As in Experiment E, equal predictions leave the interpretation open.": ["Relativitas umum menggambarkannya sebagai kelengkungan ruang-waktu, dan lapse dalam pemisahan 3 + 1 tepat menggambarkan laju jam yang Anda ukur. Formulasi lain, seperti ekuivalen teleparalel relativitas umum, menggambarkan gravitasi secara berbeda tetapi menghasilkan prediksi yang sama. Seperti pada Eksperimen E, prediksi yang sama membuat interpretasinya tetap terbuka.","一般相対性理論では重力を時空の曲率として記述し、3＋1分解におけるラプス関数は、測定した時計の進み方そのものです。一般相対性理論のテレパラレル等価理論など、重力を異なる方法で記述しながら同じ予測をする定式化もあります。実験Eと同様、予測が同じであるため解釈には議論の余地が残ります。"],
+  "Next:": ["Berikutnya:","次へ："],
+  "Experiment D, where space itself evolves in time. See also Experiments B and E.": ["Eksperimen D, yang membahas perubahan ruang terhadap waktu. Lihat juga Eksperimen B dan E.","空間そのものが時間とともに変化する実験Dです。実験BとEも参照してください。"],
+  "Experiment D →": ["Eksperimen D →","実験D →"],
+  "All modules": ["Semua modul","すべてのモジュール"],
+}
+
+export function localizeGravityClocksViewText(value: string, locale: Locale): string {
+  if (locale === 'en') return value
+  const translation = translations[value]
+  return translation ? translation[locale === 'id' ? 0 : 1] : value
+}
+
+export const GRAVITY_CLOCKS_VIEW_TRANSLATION_KEYS = Object.keys(translations)
