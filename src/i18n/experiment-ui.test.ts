@@ -210,4 +210,21 @@ describe('experiment UI localization', () => {
     }
   })
 
+
+  it('localizes dynamic visualization descriptions while preserving measured values', () => {
+    const prediction = 'Chart of measured distance against ship speed, one line per description. Lorentz: 12.50 at the top speed.'
+    const scaleFactor = 'Scale factor a against time. time since the Big Bang (billion years). Today a = 1.'
+    for (const locale of ['id', 'ja'] as const) {
+      const predictionText = localizeExperimentText(prediction, locale)
+      const scaleText = localizeExperimentText(scaleFactor, locale)
+      expect(predictionText).not.toContain('Chart of')
+      expect(predictionText).not.toContain('one line per description')
+      expect(predictionText).not.toContain('at the top speed')
+      expect(predictionText).toContain('12.50')
+      expect(scaleText).not.toContain('Scale factor a against time')
+      expect(scaleText).not.toContain('time since the Big Bang')
+      expect(scaleText).not.toContain('Today')
+      expect(scaleText).toContain('1')
+    }
+  })
 })
