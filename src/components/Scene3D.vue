@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useLocale } from '@/composables/useLocale'
-import { localizeExperimentText } from '@/i18n/experiment-ui'
-const { locale } = useLocale()
 /**
  * A 3D view of a journey through space (Three.js), with z pointing up as in
  * physics. It draws the axes, a floor grid, the path, the displacement arrow,
@@ -13,6 +10,10 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer.js'
 import { frameAxes, type CoordinateFrame, type Vec3 } from '@/physics'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 export type View = '3d' | 'top' | 'front' | 'side'
 
