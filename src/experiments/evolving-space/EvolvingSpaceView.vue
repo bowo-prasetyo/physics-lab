@@ -257,7 +257,7 @@ const expansionWord = computed(() => {
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>See also:</strong> Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.</p>
+      <p><strong>{{ localizeExperimentText('See also:', locale) }}</strong> {{ localizeExperimentText('Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/gravity/clock-rates">Experiment C</RouterLink>
         <RouterLink to="/relativity/two-perspectives">Experiment E</RouterLink>
