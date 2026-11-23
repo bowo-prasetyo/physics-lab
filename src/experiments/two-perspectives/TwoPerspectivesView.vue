@@ -172,7 +172,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
             <li>
               {{ localizeExperimentText('The speed of light is the same for every observer, whatever the motion of its source (Michelson and Morley, 1887; CERN, 1964). The Galilean description cannot accommodate this.', locale) }}
@@ -183,7 +183,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
             </li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale)">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('Is spacetime real, or a convenient bookkeeping?', locale) }}</strong> {{ localizeExperimentText('Equivalent predictions cannot settle this. Some physicists and philosophers take the four-dimensional geometry as the basic reality; others see it as a compact way of describing how measurements by different observers relate, with space and time (or the behaviour of rods and clocks) more basic.', locale) }}
