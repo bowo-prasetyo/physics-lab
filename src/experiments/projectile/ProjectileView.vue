@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -142,6 +143,8 @@ const dropDifference = computed(() => {
 
     <ShareExperiment />
 
+    <LocalizedExperimentGuide experiment-id="projectile" />
+
     <ExperimentSupport experiment-id="projectile" :module-number="3" focus="In the ideal no-drag model, horizontal and vertical motion have different roles: gravity changes vertical velocity." prompt="If a ball is launched horizontally, does it begin falling immediately or only after its forward motion slows?" action="Compare launch angles and gravitational environments; then switch air resistance on and compare the trajectory." reflect="Which results rely on the no-drag approximation, and why can horizontal velocity coexist with downward acceleration?" />
 
     <section aria-labelledby="predict-title">
@@ -247,7 +250,7 @@ const dropDifference = computed(() => {
     </section>
     </details>
 
-    <details class="lesson-disclosure">
+    <details v-if="locale === 'en'" class="lesson-disclosure">
       <summary>4 · Explore the meaning and interpretation</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
