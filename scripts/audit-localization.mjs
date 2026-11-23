@@ -23,7 +23,7 @@ export function isReviewableCopy(value) {
 }
 
 /** Extract visible template text and static accessibility/content attributes. */
-export function extractTemplateCandidates(template, file) {
+export function extractTemplateCandidates(template, file, lineOffset = 0) {
   const ast = parseTemplate(template, { comments: false })
   const candidates = []
 
@@ -32,7 +32,7 @@ export function extractTemplateCandidates(template, file) {
     if (!isReviewableCopy(text)) return
     candidates.push({
       file,
-      line: loc.start.line,
+      line: loc.start.line + lineOffset,
       column: loc.start.column,
       kind,
       tag,
@@ -85,7 +85,7 @@ export async function runAudit({ root = ROOT, outputDir = OUTPUT_DIR } = {}) {
       throw new Error(`Could not parse ${file}: ${errors.map(error => error.message).join('; ')}`)
     }
     if (!descriptor.template) continue
-    candidates.push(...extractTemplateCandidates(descriptor.template.content, file))
+    candidates.push(...extractTemplateCandidates(\n      descriptor.template.content,\n      file,\n      descriptor.template.loc.start.line - 1,\n    ))
   }
 
   const unique = [...new Map(candidates.map(item => [
