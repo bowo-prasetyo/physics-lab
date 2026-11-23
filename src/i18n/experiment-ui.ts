@@ -88,6 +88,8 @@ const text: Record<string, readonly [string, string]> = {
   'parts per million': ['bagian per juta', '百万分率'],
   'parts per billion': ['bagian per miliar', '十億分率'],
   'parts per trillion': ['bagian per triliun', '兆分率'],
+  'Use at least 30 m/s from height 0, so air resistance really matters.': ['Gunakan kecepatan minimal 30 m/s dari ketinggian 0 agar hambatan udara benar-benar berpengaruh.', '空気抵抗の影響が十分に現れるよう、高さ 0 から少なくとも 30 m/s で発射してください。'],
+  'Run our universe through the middle of its history (from about 4 to 12 billion years) and watch “Expansion is…”.': ['Jalankan alam semesta kita pada bagian tengah sejarahnya (sekitar 4 hingga 12 miliar tahun) dan amati “Expansion is…”.', '私たちの宇宙を歴史の中盤（約 40 億年から 120 億年）まで実行し、「Expansion is…」の表示を観察してください。'],
   'starts speeding up': ['mulai bertambah cepat', '加速し始める'],
   'home': ['rumah', '基準銀河'],
   '1 billion light-years': ['1 miliar tahun cahaya', '10 億光年'],
