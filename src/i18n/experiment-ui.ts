@@ -657,7 +657,7 @@ export function localizeExperimentText(value: string | null | undefined, locale:
     ["Current time ", "Waktu saat ini ", "現在時刻 "],
     [" worldline with velocity ", " worldline dengan kecepatan ", " の世界線（速度 "],
     [". Current time ", "。Waktu saat ini ", "。現在時刻 "],
-    ["Chart of ", "Grafik ", ""],
+    ["Chart of ", "Grafik ", "グラフ："],
     [" against ", " terhadap ", " と "],
     [", one line per description. ", ", satu garis untuk setiap model. ", "（各モデルを 1 本の線で表示）。"],
     [" seen from the ground", " dilihat dari kerangka tanah", "地上から見た"],
@@ -679,6 +679,9 @@ export function localizeExperimentText(value: string | null | undefined, locale:
     ["Graph of position x against time t. The current run is at ", "Grafik posisi x terhadap waktu t. Percobaan saat ini berada pada ", "時間 t に対する位置 x のグラフです。現在の試行は "],
     [" velocity changed during run", " kecepatan berubah selama percobaan", "走行中に速度が変化"],
     [" earlier run(s) are shown for comparison.", " percobaan sebelumnya ditampilkan sebagai pembanding.", "以前の試行を比較用に表示しています。"],
+    [" at the top speed", " pada kecepatan tertinggi", "最高速度での値は"],
+    ["Scale factor a against time. ", "Faktor skala a terhadap waktu. ", "時間に対するスケール因子 a のグラフです。"],
+    [". Today a = 1.", ". Saat ini, a = 1.", "。現在のスケール因子は a = 1 です。"],
   ]
   for (const [en, id, ja] of phrases) translated = translated.replaceAll(en, locale === 'id' ? id : ja)
   return translated
