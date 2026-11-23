@@ -212,7 +212,7 @@ useQuerySync({
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
             <li>{{ localizeExperimentText('With v = 0, the position stays constant while the clock reading keeps increasing.', locale) }}</li>
             <li>
@@ -220,7 +220,7 @@ useQuerySync({
             </li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale)">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <p>
             {{ localizeExperimentText('We can stop moving through space, but never through time, so space and time must be fundamentally different things.', locale) }} {{ localizeExperimentText('This is a philosophical claim. The experiment is consistent with it, but does not prove it. Points to weigh:', locale) }}
           </p>
