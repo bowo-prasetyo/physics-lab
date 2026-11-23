@@ -154,7 +154,7 @@ function formatClock(seconds: number): string {
           <label class="field">
             <span>{{ tx('World') }}</span>
             <select v-model="planetId">
-              <option v-for="p in PLANETS" :key="p.id" :value="p.id">{{ p.name }} (g = {{ p.g }} m/s²)</option>
+              <option v-for="p in PLANETS" :key="p.id" :value="p.id">{{ tx(p.name) }} (g = {{ p.g }} m/s²)</option>
             </select>
           </label>
 
