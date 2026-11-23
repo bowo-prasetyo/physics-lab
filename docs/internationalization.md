@@ -59,7 +59,7 @@ The UI text helper deliberately preserves numeric values, scientific symbols, un
 
 ### P3 — Localization quality assurance
 
-Run `npm test`, `npm run audit:localization`, and `npm run build` for every localization change. The automated suite checks:
+Run `npm test`, `npm run audit:localization`, `npm run audit:localization:runtime`, and `npm run build` for every localization change. Use `npm run audit:localization:interactive` to run only the interactive-state sweep. The automated suite checks:
 
 - Message-key parity across all supported locales, non-empty values, and matching interpolation placeholders.
 - Static text and selected accessibility attributes in every Vue template under `src/`; the audit writes JSON and Markdown reports to `artifacts/localization-audit.*`.
