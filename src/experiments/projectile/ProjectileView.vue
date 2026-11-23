@@ -191,9 +191,9 @@ const dropDifference = computed(() => {
             </button>
           </div>
 
-          <ParameterSlider v-model="speed" label="Launch speed" symbol="v_0" unit="m/s" v-bind="SPEED_RANGE" :digits="0" :signed="false" :disabled="flying" />
-          <ParameterSlider v-model="angle" label="Launch angle" symbol="\theta" unit="°" v-bind="ANGLE_RANGE" :digits="0" :signed="false" :disabled="flying" />
-          <ParameterSlider v-model="height" label="Launch height" symbol="h" unit="m" v-bind="HEIGHT_RANGE" :digits="0" :signed="false" :disabled="flying" />
+          <ParameterSlider v-model="speed" :label="localizeExperimentText('Launch speed', locale) ?? 'Launch speed'" symbol="v_0" unit="m/s" v-bind="SPEED_RANGE" :digits="0" :signed="false" :disabled="flying" />
+          <ParameterSlider v-model="angle" :label="localizeExperimentText('Launch angle', locale) ?? 'Launch angle'" symbol="\theta" unit="°" v-bind="ANGLE_RANGE" :digits="0" :signed="false" :disabled="flying" />
+          <ParameterSlider v-model="height" :label="localizeExperimentText('Launch height', locale) ?? 'Launch height'" symbol="h" unit="m" v-bind="HEIGHT_RANGE" :digits="0" :signed="false" :disabled="flying" />
 
           <label class="field">
             <span>World</span>
@@ -212,12 +212,12 @@ const dropDifference = computed(() => {
           </label>
 
           <fieldset class="frame" :disabled="flying">
-            <legend>Seen from</legend>
+            <legend>{{ localizeExperimentText('Seen from', locale) ?? 'Seen from' }}</legend>
             <label><input v-model="frame" type="radio" value="ground" /> the ground</label>
             <label><input v-model="frame" type="radio" value="train" /> a moving train</label>
           </fieldset>
           <template v-if="frame === 'train'">
-            <ParameterSlider v-model="trainSpeed" label="Train speed" symbol="u" unit="m/s" v-bind="TRAIN_RANGE" :disabled="flying" />
+            <ParameterSlider v-model="trainSpeed" :label="localizeExperimentText('Train speed', locale) ?? 'Train speed'" symbol="u" unit="m/s" v-bind="TRAIN_RANGE" :disabled="flying" />
             <button class="btn btn-small" type="button" :disabled="flying" @click="matchBall">Match the ball ({{ fmt(horizontalSpeed) }} m/s)</button>
           </template>
 
@@ -238,13 +238,13 @@ const dropDifference = computed(() => {
             </template>
             <div v-if="bestAngle !== null"><dt>Best angle for these settings</dt><dd class="num">{{ fmt(bestAngle) }}°</dd></div>
           </dl>
-          <button class="btn btn-small" type="button" :disabled="history.length === 0 || flying" @click="clearHistory">Clear earlier throws</button>
+          <button class="btn btn-small" type="button" :disabled="history.length === 0 || flying" @click="clearHistory">{{ localizeExperimentText('Clear earlier throws', locale) ?? 'Clear earlier throws' }}</button>
         </div>
       </div>
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <ProjectileMath :level="level" :params="params" :planet="planet" :drag-applies="dragApplies" :best-angle="bestAngle" />
@@ -252,7 +252,7 @@ const dropDifference = computed(() => {
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">

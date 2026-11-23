@@ -158,7 +158,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     <section aria-labelledby="experiment-title">
       <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
       <fieldset class="tabs" :disabled="locked">
-        <legend>Setup</legend>
+        <legend>{{ localizeExperimentText('Setup', locale) ?? 'Setup' }}</legend>
         <label :class="{ active: mode === 'clocks' }"><input v-model="mode" type="radio" value="clocks" class="sr-only" /> Two clocks</label>
         <label :class="{ active: mode === 'gps' }"><input v-model="mode" type="radio" value="gps" class="sr-only" /> GPS satellite</label>
       </fieldset>
@@ -192,7 +192,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           <p class="status muted">Time-lapse: 1 day per second, up to {{ RUN_DAYS }} days</p>
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
-            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">Reset</button>
+            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
           </div>
 
           <div v-for="clock in (['A', 'B'] as const)" :key="clock" class="height" :class="clock === 'A' ? 'a' : 'b'">
@@ -278,7 +278,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           </div>
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
-            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">Reset</button>
+            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
           </div>
           <label class="toggle">
             <input v-model="correction" type="checkbox" :disabled="locked" />
@@ -294,7 +294,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <GravityClocksMath
@@ -312,7 +312,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">

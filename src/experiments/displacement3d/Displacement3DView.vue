@@ -162,13 +162,13 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
                 <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
                 <input v-model.number="target[axis]" type="number" :min="-BOUND" :max="BOUND" step="0.5" />
               </label>
-              <button class="btn btn-small" type="submit">Go</button>
+              <button class="btn btn-small" type="submit">{{ localizeExperimentText('Go', locale) ?? 'Go' }}</button>
             </div>
           </form>
           <div class="journey-buttons">
-            <button class="btn btn-small" type="button" :disabled="points.length < 2" @click="undo">Undo move</button>
-            <button class="btn btn-small" type="button" @click="restart(false)">New journey from here</button>
-            <button class="btn btn-small" type="button" @click="restart(true)">Back to the origin</button>
+            <button class="btn btn-small" type="button" :disabled="points.length < 2" @click="undo">{{ localizeExperimentText('Undo move', locale) ?? 'Undo move' }}</button>
+            <button class="btn btn-small" type="button" @click="restart(false)">{{ localizeExperimentText('New journey from here', locale) ?? 'New journey from here' }}</button>
+            <button class="btn btn-small" type="button" @click="restart(true)">{{ localizeExperimentText('Back to the origin', locale) ?? 'Back to the origin' }}</button>
           </div>
           <div class="presets">
             <span class="muted small">Example journeys</span>
@@ -185,12 +185,12 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
 
           <div v-if="intermediate" class="frame">
             <p class="group-title">A second coordinate system (x′, y′, z′)</p>
-            <ParameterSlider v-model="shift.x" label="Origin moved, x" symbol="O_x" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
-            <ParameterSlider v-model="shift.y" label="Origin moved, y" symbol="O_y" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
-            <ParameterSlider v-model="shift.z" label="Origin moved, z" symbol="O_z" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
-            <ParameterSlider v-model="yaw" label="Axes turned about z" symbol="\varphi" unit="°" v-bind="YAW_RANGE" :digits="0" />
-            <ParameterSlider v-if="advanced" v-model="pitch" label="Axes tilted" symbol="\psi" unit="°" v-bind="PITCH_RANGE" :digits="0" />
-            <button class="btn btn-small" type="button" :disabled="frameIsStandard" @click="resetFrame">Reset to the original axes</button>
+            <ParameterSlider v-model="shift.x" :label="localizeExperimentText('Origin moved, x', locale) ?? 'Origin moved, x'" symbol="O_x" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
+            <ParameterSlider v-model="shift.y" :label="localizeExperimentText('Origin moved, y', locale) ?? 'Origin moved, y'" symbol="O_y" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
+            <ParameterSlider v-model="shift.z" :label="localizeExperimentText('Origin moved, z', locale) ?? 'Origin moved, z'" symbol="O_z" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
+            <ParameterSlider v-model="yaw" :label="localizeExperimentText('Axes turned about z', locale) ?? 'Axes turned about z'" symbol="\varphi" unit="°" v-bind="YAW_RANGE" :digits="0" />
+            <ParameterSlider v-if="advanced" v-model="pitch" :label="localizeExperimentText('Axes tilted', locale) ?? 'Axes tilted'" symbol="\psi" unit="°" v-bind="PITCH_RANGE" :digits="0" />
+            <button class="btn btn-small" type="button" :disabled="frameIsStandard" @click="resetFrame">{{ localizeExperimentText('Reset to the original axes', locale) ?? 'Reset to the original axes' }}</button>
             <dl v-if="!frameIsStandard" class="readouts primed">
               <div><dt>Position r′</dt><dd class="num">{{ vec(inFrame.current) }}</dd></div>
               <div><dt>Displacement Δr′</dt><dd class="num">{{ vec(inFrame.displacement) }}</dd></div>
@@ -202,7 +202,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <Displacement3DMath
@@ -219,7 +219,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">

@@ -99,20 +99,20 @@ function runExperiment() {
               </tbody>
             </table>
           </div>
-          <button class="btn btn-small" type="button" :disabled="runs.length === 0" @click="runs = []">Clear recorded trials</button>
+          <button class="btn btn-small" type="button" :disabled="runs.length === 0" @click="runs = []">{{ localizeExperimentText('Clear recorded trials', locale) ?? 'Clear recorded trials' }}</button>
         </div>
         <aside class="lab-side card">
-          <ParameterSlider v-model="force" label="Net force" symbol="F_{net}" unit="N" v-bind="FORCE" :digits="0" :signed="false" />
-          <ParameterSlider v-model="mass" label="Cart mass" symbol="m" unit="kg" v-bind="MASS" :digits="0" :signed="false" />
-          <ParameterSlider v-model="time" label="Elapsed time" symbol="t" unit="s" v-bind="TIME" :digits="0" :signed="false" />
-          <button class="btn btn-primary" type="button" @click="runExperiment">Run this trial</button>
+          <ParameterSlider v-model="force" :label="localizeExperimentText('Net force', locale) ?? 'Net force'" symbol="F_{net}" unit="N" v-bind="FORCE" :digits="0" :signed="false" />
+          <ParameterSlider v-model="mass" :label="localizeExperimentText('Cart mass', locale) ?? 'Cart mass'" symbol="m" unit="kg" v-bind="MASS" :digits="0" :signed="false" />
+          <ParameterSlider v-model="time" :label="localizeExperimentText('Elapsed time', locale) ?? 'Elapsed time'" symbol="t" unit="s" v-bind="TIME" :digits="0" :signed="false" />
+          <button class="btn btn-primary" type="button" @click="runExperiment">{{ localizeExperimentText('Run this trial', locale) ?? 'Run this trial' }}</button>
           <p class="small muted">For a fair comparison, change one variable at a time and keep the other fixed.</p>
         </aside>
       </div>
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section class="card prose" aria-labelledby="maths-title">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <p>Newton’s second law relates the net force on an object to its acceleration:</p>
@@ -125,7 +125,7 @@ function runExperiment() {
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section class="card prose">
       <h2><span class="step-no">4</span> What does it tell us?</h2>
       <h3>Established physics</h3>

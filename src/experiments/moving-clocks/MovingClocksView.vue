@@ -148,7 +148,7 @@ const signed = (value: number, digits = 2) => {
       <div class="lab">
         <div class="lab-main card">
           <fieldset class="frame-switch" :disabled="status === 'running'">
-            <legend>Seen from</legend>
+            <legend>{{ localizeExperimentText('Seen from', locale) ?? 'Seen from' }}</legend>
             <label :class="{ active: frame === 'earth' }">
               <input v-model="frame" type="radio" value="earth" class="sr-only" />
               <span class="dot earth" /> the Earth
@@ -178,12 +178,12 @@ const signed = (value: number, digits = 2) => {
 
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
-            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">Reset</button>
+            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
           </div>
 
           <ParameterSlider
             v-model="beta"
-            label="Ship speed"
+            :label="localizeExperimentText('Ship speed', locale) ?? 'Ship speed'"
             symbol="v/c"
             unit="c"
             v-bind="BETA_RANGE"
@@ -212,7 +212,7 @@ const signed = (value: number, digits = 2) => {
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <MovingClocksMath :level="level" :beta="beta" :frame="frame" :t="t" :view="view" />
@@ -220,7 +220,7 @@ const signed = (value: number, digits = 2) => {
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">

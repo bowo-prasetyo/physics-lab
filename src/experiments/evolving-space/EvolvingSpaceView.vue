@@ -198,12 +198,12 @@ const expansionWord = computed(() => {
           <div class="target">
             <ParameterSlider
               v-model="target"
-              label="A distant galaxy, today at"
+              :label="localizeExperimentText('A distant galaxy, today at', locale) ?? 'A distant galaxy, today at'"
               symbol="d_0"
               unit="Gly"
               v-bind="TARGET_RANGE"
               :signed="false"
-              hint="Distance today, in billions of light-years."
+              :hint="localizeExperimentText('Distance today, in billions of light-years.', locale) ?? 'Distance today, in billions of light-years.'"
             />
             <dl class="readouts">
               <div><dt>Its distance at this time</dt><dd class="num">{{ sig(readings.targetDistance) }} Gly</dd></div>
@@ -219,7 +219,7 @@ const expansionWord = computed(() => {
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <EvolvingSpaceMath :level="level" :cosmology="cosmology" :expansion="expansion" :a="readings.a" :hubble="hubblePerGyr" :target="target" />
@@ -227,7 +227,7 @@ const expansionWord = computed(() => {
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
