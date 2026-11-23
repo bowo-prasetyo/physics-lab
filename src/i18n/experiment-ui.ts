@@ -549,6 +549,20 @@ const text: Record<string, readonly [string, string]> = {
   "the ship’s frame": ["kerangka kapal","宇宙船の基準系"],
   "the Earth’s point of view": ["sudut pandang Bumi","地球からの視点"],
   "the ship’s point of view": ["sudut pandang kapal","宇宙船からの視点"],
+  "after the Big Bang": ["setelah Dentuman Besar","ビッグバンから"],
+  "today": ["hari ini","現在"],
+  "from now": ["dari sekarang","後"],
+  "ago": ["yang lalu","前"],
+  "million years": ["juta tahun","100 万年"],
+  "thousand years": ["ribu tahun","千年"],
+  "a tiny fraction of a second": ["pecahan detik yang sangat kecil","ごくわずかな秒"],
+  "terminal speed": ["kecepatan terminal","終端速度"],
+  ". Because": [". Karena","。このため"],
+  ", and with it all lengths": [", dan bersamanya semua panjang","。これに伴い、すべての長さ"],
+  "and angles. Rotations and shifts of the origin together make up the": ["dan sudut. Rotasi dan pergeseran titik asal secara bersama-sama membentuk","と角度も保たれます。回転と原点の移動を合わせた変換は"],
+  "has components equal to the cosines of the": ["memiliki komponen yang sama dengan kosinus dari","の各成分は、次の角度の余弦に等しくなります"],
+  "angles it makes with the three axes. Here those angles are": ["sudut yang dibentuknya dengan ketiga sumbu. Sudut-sudut tersebut adalah","3 本の軸となす角です。今回の角度は"],
+  "per day.": ["per hari.","1 日あたりです。"],
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
