@@ -184,7 +184,7 @@ const dropDifference = computed(() => {
 
         <div class="lab-side card">
           <button class="btn btn-primary launch" type="button" :disabled="flying" @click="launch">{{ flying ? 'In flight…' : 'Launch' }}</button>
-          <div class="time-scale" role="group" aria-label="Playback speed">
+          <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">Playback</span>
             <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
               {{ s === 1 ? 'real time' : `×${s}` }}
@@ -285,7 +285,7 @@ const dropDifference = computed(() => {
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>See also:</strong> Experiment A for motion in one dimension, and Experiment B for what happens near the speed of light.</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>
