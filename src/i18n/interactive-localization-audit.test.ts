@@ -121,7 +121,7 @@ async function exercisePage(root: HTMLElement, route: string, locale: Locale, sn
   }
   save('default')
 
-  const controls = Array.from(root.querySelectorAll<HTMLElement>(
+  const controls = Array.from(root.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
     'main input:not([type="hidden"]), main select, main textarea',
   ))
   for (let index = 0; index < controls.length; index += 1) {
