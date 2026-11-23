@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
@@ -103,6 +104,8 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </header>
 
     <ShareExperiment />
+
+    <LocalizedExperimentGuide experiment-id="displacement3d" />
 
     <ExperimentSupport experiment-id="displacement-3d" :module-number="1" focus="Position, path length and displacement are different descriptions of a journey." prompt="If an object takes two different routes to the same destination, what should stay the same?" action="Move the object through a few points, note the distance travelled and displacement, then rotate or move the coordinate frame." reflect="Which coordinates changed when you changed the frame, and which geometric quantity stayed invariant?" />
 
@@ -214,7 +217,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
     </details>
 
-    <details class="lesson-disclosure">
+    <details v-if="locale === 'en'" class="lesson-disclosure">
       <summary>4 · Explore the meaning and interpretation</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>

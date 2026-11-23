@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -140,6 +141,8 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </header>
 
     <ShareExperiment />
+
+    <LocalizedExperimentGuide experiment-id="gravity-clocks" />
 
     <ExperimentSupport experiment-id="gravity-clock-rates" :module-number="5" focus="Compare clock rates in the stated static Schwarzschild setting; keep the model assumptions visible." prompt="Which clock should accumulate more time when two stationary clocks are held at different heights?" action="Change the two clock heights, compare the predicted rates, then inspect the separate gravitational and kinematic GPS corrections." reflect="What is held fixed in this comparison, and why is the GPS correction not purely gravitational?" />
 
@@ -307,7 +310,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
     </details>
 
-    <details class="lesson-disclosure">
+    <details v-if="locale === 'en'" class="lesson-disclosure">
       <summary>4 · Explore the meaning and interpretation</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>

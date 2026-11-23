@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -83,6 +84,8 @@ const chartSeries = computed<ChartSeries[]>(() =>
 
     <ShareExperiment />
 
+    <LocalizedExperimentGuide experiment-id="two-perspectives" />
+
     <ExperimentSupport experiment-id="two-perspectives" :module-number="4" focus="Compare predictions from Galilean, Lorentzian space-and-time, and spacetime descriptions without confusing mathematical language with experimental differences." prompt="Can two mathematical descriptions disagree about their interpretation yet make the same measurable predictions?" action="Choose each scenario, compare all three descriptions at several speeds, then reveal the measurement evidence." reflect="Which predictions agree with observation, and which disagreements are about interpretation rather than measured outcomes?" />
 
     <section aria-labelledby="predict-title">
@@ -166,7 +169,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </section>
     </details>
 
-    <details class="lesson-disclosure">
+    <details v-if="locale === 'en'" class="lesson-disclosure">
       <summary>4 · Explore the meaning and interpretation</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
