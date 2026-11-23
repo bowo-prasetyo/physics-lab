@@ -140,7 +140,7 @@ function runExperiment() {
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>{{ localizeExperimentText('Continue:', locale) }}</strong> {{ localizeExperimentText('apply force and acceleration reasoning to a projectile, where gravity changes the vertical velocity.', locale) }}</p>
+      <p>{{ localizeExperimentText('Continue: apply force and acceleration reasoning to a projectile, where gravity changes the vertical velocity.', locale) }}</p>
       <span class="nav-links"><RouterLink to="/mechanics/projectile">Projectile launcher</RouterLink><RouterLink to="/teachers">Teacher guide</RouterLink><RouterLink to="/">All modules</RouterLink></span>
     </nav>
   </article>
