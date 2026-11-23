@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useLocale } from '@/composables/useLocale'
-import { localizeGravityClocksMathText } from '@/i18n/gravity-clocks-math'
+import { localizeGravityClocksMathText, localizeGravityClockComparison } from '@/i18n/gravity-clocks-math'
 import MathFormula from '@/components/MathFormula.vue'
 import InfoCallout from '@/components/InfoCallout.vue'
 import {
@@ -31,6 +31,8 @@ const props = defineProps<{
   radialDistance: { coordinate: number; proper: number; extra: number }
 }>()
 
+const comparison = computed(() => localizeGravityClockComparison(formatSlowdown(Math.abs(props.rateBvsA)), props.rateBvsA >= 0, locale.value))
+
 /** formatNumber output as TeX. */
 const tex = (x: number) => formatNumber(x).replace(' × 10', ' \\times 10^{').replace(/([⁻⁰¹²³⁴⁵⁶⁷⁸⁹]+)$/, (m) => `${toAscii(m)}}`)
 function toAscii(sup: string): string {
@@ -39,8 +41,6 @@ function toAscii(sup: string): string {
 }
 
 const rs = computed(() => schwarzschildRadius(props.body.mass))
-const rA = computed(() => props.body.radius + props.altitudeA)
-const rB = computed(() => props.body.radius + props.altitudeB)
 
 const workedExample = computed(
   () =>
@@ -163,10 +163,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
       <p>
         {{ tx('which is a property of the two clocks’ positions in a static spacetime, not of anyone’s frame. The upward and downward ratios are exact inverses, so both observers agree that the lower clock is slow. This is unlike Experiment B, where the clocks were in symmetric relative motion.') }}
       </p>
-      <p class="muted">
-        {{ tx('For your clocks (at radii') }} {{ formatLength(rA) }} {{ tx('and') }} {{ formatLength(rB) }}{{ tx('), clock B runs') }} {{ formatSlowdown(Math.abs(rateBvsA)) }}
-        {{ rateBvsA >= 0 ? 'faster' : 'slower' }} than clock A, and both observers agree.
-      </p>
+      <p class="muted">{{ comparison }}</p>
     </template>
   </div>
 </template>

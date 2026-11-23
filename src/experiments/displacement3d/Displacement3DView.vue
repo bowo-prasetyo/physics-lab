@@ -196,9 +196,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             <ParameterSlider v-if="advanced" v-model="pitch" :label="localizeExperimentText('Axes tilted', locale) ?? 'Axes tilted'" symbol="\psi" unit="°" v-bind="PITCH_RANGE" :digits="0" />
             <button class="btn btn-small" type="button" :disabled="frameIsStandard" @click="resetFrame">{{ localizeExperimentText('Reset to the original axes', locale) ?? 'Reset to the original axes' }}</button>
             <dl v-if="!frameIsStandard" class="readouts primed">
-              <div><dt>Position r′</dt><dd class="num">{{ vec(inFrame.current) }}</dd></div>
-              <div><dt>Displacement Δr′</dt><dd class="num">{{ vec(inFrame.displacement) }}</dd></div>
-              <div><dt>Size |Δr′|</dt><dd class="num">{{ fmt(Math.hypot(inFrame.displacement.x, inFrame.displacement.y, inFrame.displacement.z), 3) }} m</dd></div>
+              <div><dt>{{ tx('Position r') }}′</dt><dd class="num">{{ vec(inFrame.current) }}</dd></div>
+              <div><dt>{{ tx('Displacement Δr') }}′</dt><dd class="num">{{ vec(inFrame.displacement) }}</dd></div>
+              <div><dt>{{ tx('Size |Δr|') }}′</dt><dd class="num">{{ fmt(Math.hypot(inFrame.displacement.x, inFrame.displacement.y, inFrame.displacement.z), 3) }} m</dd></div>
             </dl>
           </div>
         </div>

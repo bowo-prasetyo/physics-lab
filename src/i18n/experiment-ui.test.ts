@@ -2,6 +2,14 @@ import { describe, expect, it } from 'vitest'
 import { localizeExperimentText } from './experiment-ui'
 
 describe('experiment UI localization', () => {
+  it('localizes the primed-coordinate readout labels', () => {
+    for (const locale of ['id', 'ja'] as const) {
+      expect(localizeExperimentText('Position r', locale)).not.toBe('Position r')
+      expect(localizeExperimentText('Displacement Δr', locale)).not.toBe('Displacement Δr')
+      expect(localizeExperimentText('Size |Δr|', locale)).not.toBe('Size |Δr|')
+    }
+  })
+
   it('keeps English hints unchanged', () => {
     const hint = 'Make at least three moves and come back to where you started (or load “Round trip”).'
     expect(localizeExperimentText(hint, 'en')).toBe(hint)

@@ -82,3 +82,10 @@ export function localizeGravityClocksMathText(value: string, locale: Locale): st
 }
 
 export const GRAVITY_CLOCKS_MATH_TRANSLATION_KEYS = Object.keys(translations)
+/** Complete, locale-aware sentence for the live comparison between clocks A and B. */
+export function localizeGravityClockComparison(amount: string, faster: boolean, locale: Locale): string {
+  if (locale === 'id') return `Jam B berjalan ${amount} ${faster ? 'lebih cepat' : 'lebih lambat'} daripada jam A, dan kedua pengamat sepakat.`
+  if (locale === 'ja') return `時計 B は時計 A より ${amount}${faster ? '速く' : '遅く'}進み、両方の観測者が同じ結論になります。`
+  return `Clock B runs ${amount} ${faster ? 'faster' : 'slower'} than clock A, and both observers agree.`
+}
+
