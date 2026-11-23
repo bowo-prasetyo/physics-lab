@@ -15,9 +15,12 @@ import { intervalSquared } from '@/physics'
 import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
+import { useLocale } from '@/composables/useLocale'
+import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
 const level = useLevel()
+const { locale } = useLocale()
 
 const isFrame = (value: unknown): value is Frame => value === 'earth' || value === 'ship'
 
@@ -38,7 +41,7 @@ useQuerySync({
   },
 })
 
-const predictions = computed(() => PREDICTIONS.filter((p) => atLeast(level.value, p.minLevel)))
+const predictions = computed(() => localizePredictions('moving-clocks', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(allRuns.value)])))
 const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(allRuns.value) ?? null])))
 

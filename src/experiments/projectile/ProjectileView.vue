@@ -16,9 +16,12 @@ import { PLANETS, optimalAngle, specificEnergy, type ProjectileState } from '@/p
 import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
+import { useLocale } from '@/composables/useLocale'
+import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
 const level = useLevel()
+const { locale } = useLocale()
 
 // A setup can be shared as a link, e.g. #/mechanics/projectile?level=beginner&v=20&angle=45&h=0&planet=earth&air=0
 if (isLevel(route.query.level)) level.value = route.query.level
@@ -72,7 +75,7 @@ useQuerySync({
   },
 })
 
-const predictions = computed(() => PREDICTIONS.filter((p) => atLeast(level.value, p.minLevel)))
+const predictions = computed(() => localizePredictions('projectile', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(throws.value)])))
 const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(throws.value) ?? null])))
 

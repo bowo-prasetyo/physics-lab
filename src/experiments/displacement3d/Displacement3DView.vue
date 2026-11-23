@@ -15,12 +15,15 @@ import { useLevel } from '@/composables/useLevel'
 import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import type { LocationQuery } from 'vue-router'
 import { atLeast, isLevel } from '@/levels'
+import { useLocale } from '@/composables/useLocale'
+import { localizePredictions } from '@/i18n/experiment-content'
 
 // Three.js is large; it is only downloaded for this page.
 const Scene3D = defineAsyncComponent(() => import('@/components/Scene3D.vue'))
 
 const route = useRoute()
 const level = useLevel()
+const { locale } = useLocale()
 
 const { points, shift, yaw, pitch, frame, frameIsStandard, current, start, displacement, distance, size, inFrame, snapshots, moveTo, step, undo, restart, loadPreset, resetFrame } =
   useDisplacement3D()
@@ -58,7 +61,7 @@ watch(
   { immediate: true },
 )
 
-const predictions = computed(() => PREDICTIONS.filter((p) => atLeast(level.value, p.minLevel)))
+const predictions = computed(() => localizePredictions('displacement3d', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(snapshots.value)])))
 const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(snapshots.value) ?? null])))
 

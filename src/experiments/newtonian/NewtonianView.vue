@@ -9,11 +9,14 @@ import MathFormula from '@/components/MathFormula.vue'
 import { useLevel } from '@/composables/useLevel'
 import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { atLeast, isLevel } from '@/levels'
+import { useLocale } from '@/composables/useLocale'
+import { localizePredictions } from '@/i18n/experiment-content'
 import { accelerationFromNetForce, displacementFromRest, velocityFromRest } from '@/physics/newtonian'
 import { PREDICTIONS, type ForceRun } from './predictions'
 
 const route = useRoute()
 const level = useLevel()
+const { locale } = useLocale()
 if (isLevel(route.query.level)) level.value = route.query.level
 
 const FORCE = { min: 5, max: 50, step: 5 }
@@ -38,7 +41,7 @@ useQuerySync({
 const acceleration = computed(() => accelerationFromNetForce(force.value, mass.value))
 const velocity = computed(() => velocityFromRest(force.value, mass.value, time.value))
 const displacement = computed(() => displacementFromRest(force.value, mass.value, time.value))
-const predictions = computed(() => PREDICTIONS.filter((p) => atLeast(level.value, p.minLevel)))
+const predictions = computed(() => localizePredictions('newtonian', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(runs.value)])))
 const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(runs.value) ?? null])))
 const fmt = (n: number) => Number(n.toFixed(3)).toString()

@@ -33,13 +33,25 @@ The locale preference, browser-language detection, document language, message lo
 
 The shared interface and home-page catalogue are localized in English, Indonesian, and Japanese. This includes navigation, mathematical-level selection, experiment navigation, sharing, prediction workflow chrome, and experiment-support UI.
 
-Home-page module and experiment titles, summaries, audience labels, and planned-topic lists are maintained in `src/i18n/home-catalog.ts`. Keep the six-module/nine-experiment structure and route paths identical across locales.
-
 ### P2 — Experiment and teaching content
 
-The teacher guide is localized as structured curriculum content in `src/i18n/teacher-guide.ts`, with all six lesson outlines translated in each supported locale. The guide view reads the active locale through `useLocale()`; lesson data is not embedded in the Vue template.
+The teacher guide is localized in `src/i18n/teacher-guide.ts`, with six complete lesson outlines in all supported locales.
 
-The experiment-specific prediction banks, experiment introductions and explanations, chart/diagram labels, and accessibility descriptions are a larger content migration and remain a follow-on part of P2. Migrate these into typed locale catalogues incrementally, preserving prediction IDs, option IDs, thresholds, equations, and observation callbacks. Never translate values that participate in simulation logic. Add locale parity and stable-ID tests for every migrated experiment.
+The nine experiment-specific predict–observe–explain banks are localized in `src/i18n/experiment-content.ts`. The catalogue covers every question, task, answer option, and revealed explanation in the following experiments:
+
+1. Position and time (`space-vs-time`)
+2. Three-dimensional displacement (`displacement3d`)
+3. Pendulum clocks (`pendulum`)
+4. Newtonian force, mass, and acceleration (`newtonian`)
+5. Projectile motion (`projectile`)
+6. Moving clocks (`moving-clocks`)
+7. Two perspectives on special relativity (`two-perspectives`)
+8. Gravity and clock rates (`gravity-clocks`)
+9. Evolving space (`evolving-space`)
+
+The active locale is applied at the view boundary. Prediction IDs, option IDs, correct-answer IDs, level thresholds, observation predicates, hint logic, route paths, query parameters, and physics calculations remain in the experiment modules and are not translated. This separation keeps saved/shared experiment setups and assessment behavior stable across languages.
+
+Experiment-specific dynamic hints, the long-form explanatory sections surrounding the interactive lab, and some SVG/chart labels and accessibility descriptions remain a follow-on localization task. They should be migrated without changing model semantics; preserve scientific symbols, units, equations, assumptions, and uncertainty language.
 
 ## Translation quality
 
