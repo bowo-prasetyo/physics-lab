@@ -64,7 +64,6 @@ const translations: Record<string, readonly [string, string]> = {
   "All modules": ["Semua modul","すべてのモジュール"],
   "Pause": ["Jeda","一時停止"],
   "Resume": ["Lanjutkan","再開"],
-  "Run the clocks": ["Jalankan jam","時計を動かす"],
   "Clock {clock} is ahead by": ["Jam {clock} unggul sebesar","時計{clock}の進み："],
   "days": ["hari","日"],
   "per day": ["per hari","日あたり"],
