@@ -72,6 +72,7 @@ const translations: Record<string, readonly [string, string]> = {
   "Surface": ["Permukaan","表面"],
   "One radius up": ["Satu jari-jari di atas permukaan","表面から半径 1 個分上"],
   "Ten radii up": ["Sepuluh jari-jari di atas permukaan","表面から半径 10 個分上"],
+  "per day.": ["per hari.", "1 日あたりです。"],
 }
 
 export function localizeGravityClocksMathText(value: string, locale: Locale): string {

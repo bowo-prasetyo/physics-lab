@@ -30,7 +30,7 @@ const vecTex = (v: Vec3) => `(${f(v.x, 2)},\\ ${f(v.y, 2)},\\ ${f(v.z, 2)})`
 const displacementExample = computed(() => {
   const d = props.displacement
   return (
-    `\\begin{aligned} \\Delta\\mathbf r &= \\mathbf r_{\\text{end}} - \\mathbf r_{\\text{start}} = ${vecTex(d)} \\\\ ` +
+    `\\begin{aligned} \\Delta\\mathbf r &= \\mathbf r_1 - \\mathbf r_0 = ${vecTex(d)} \\\\ ` +
     `|\\Delta\\mathbf r| &= \\sqrt{${f(d.x, 2)}^2 + ${f(d.y, 2)}^2 + ${f(d.z, 2)}^2} \\\\ &= ${f(norm(d))}\\ \\text{m} \\end{aligned}`
   )
 })
