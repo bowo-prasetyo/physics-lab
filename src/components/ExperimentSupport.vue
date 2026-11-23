@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentSupport } from '@/i18n/experiment-support'
 
 const props = defineProps<{ experimentId: string; moduleNumber: number; focus: string; prompt: string; action: string; reflect: string }>()
-const { t } = useLocale()
+const { t, locale } = useLocale()
+const guidance = computed(() => ({
+  focus: localizeExperimentSupport(props.experimentId, 'focus', props.focus, locale.value),
+  prompt: localizeExperimentSupport(props.experimentId, 'prompt', props.prompt, locale.value),
+  action: localizeExperimentSupport(props.experimentId, 'action', props.action, locale.value),
+  reflect: localizeExperimentSupport(props.experimentId, 'reflect', props.reflect, locale.value),
+}))
 const labels = computed(() => [t('app.support.check1'), t('app.support.check2'), t('app.support.check3'), t('app.support.check4')])
 const enabled = ref(false)
 const completed = ref<boolean[]>([false, false, false, false])
@@ -47,10 +54,10 @@ const progressAriaLabel = computed(() => t('app.support.progressLabel').replace(
       <RouterLink class="teacher-link" :to="{ path: '/teachers', hash: `#module-${moduleNumber}` }">{{ teacherLabel }} <span aria-hidden="true">↗</span></RouterLink>
     </div>
     <div class="guidance-grid">
-      <div><h3>{{ t('app.support.keepInMind') }}</h3><p>{{ focus }}</p></div>
-      <div><h3>{{ t('app.support.before') }}</h3><p>{{ prompt }}</p></div>
-      <div><h3>{{ t('app.support.try') }}</h3><p>{{ action }}</p></div>
-      <div><h3>{{ t('app.support.after') }}</h3><p>{{ reflect }}</p></div>
+      <div><h3>{{ t('app.support.keepInMind') }}</h3><p>{{ guidance.focus }}</p></div>
+      <div><h3>{{ t('app.support.before') }}</h3><p>{{ guidance.prompt }}</p></div>
+      <div><h3>{{ t('app.support.try') }}</h3><p>{{ guidance.action }}</p></div>
+      <div><h3>{{ t('app.support.after') }}</h3><p>{{ guidance.reflect }}</p></div>
     </div>
     <div class="progress-option">
       <label class="progress-toggle"><input v-model="enabled" type="checkbox"><span>{{ t('app.support.progressToggle') }}</span></label>
