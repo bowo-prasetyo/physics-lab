@@ -126,7 +126,7 @@ async function exercisePage(root: HTMLElement, route: string, locale: Locale, sn
   ))
   for (let index = 0; index < controls.length; index += 1) {
     const element = controls[index]
-    if (!element.isConnected || element.disabled) continue
+    if (!element || !element.isConnected || element.disabled) continue
     const statePrefix = controlDescription(element, index)
     if (element instanceof HTMLInputElement) {
       if (element.type === 'range' || element.type === 'number') {
@@ -135,8 +135,9 @@ async function exercisePage(root: HTMLElement, route: string, locale: Locale, sn
         const original = element.value
         const values = [...new Set([String(min + (max - min) / 2), String(max)])]
         for (let step = 0; step < values.length; step += 1) {
-          if (values[step] === original) continue
-          element.value = values[step]
+          const value = values[step]
+          if (value === undefined || value === original) continue
+          element.value = value
           dispatchControlEvent(element, 'input')
           dispatchControlEvent(element, 'change')
           await settle()
@@ -177,7 +178,9 @@ async function exercisePage(root: HTMLElement, route: string, locale: Locale, sn
 
   const summaries = Array.from(root.querySelectorAll<HTMLElement>('main details > summary'))
   for (let index = 0; index < summaries.length; index += 1) {
-    summaries[index].click()
+    const summary = summaries[index]
+    if (!summary) continue
+    summary.click()
     await settle()
     save('disclosure#' + index + ':opened')
     stats.disclosures += 1
@@ -189,6 +192,7 @@ async function exercisePage(root: HTMLElement, route: string, locale: Locale, sn
   const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('main button'))
   for (let index = 0; index < buttons.length && index < 40; index += 1) {
     const button = buttons[index]
+    if (!button) continue
     const label = normalize(button.innerText || button.getAttribute('aria-label') || button.title)
     if (!button.isConnected || button.disabled || excludedAction.test(label)) continue
     button.click()
@@ -201,6 +205,7 @@ async function exercisePage(root: HTMLElement, route: string, locale: Locale, sn
 describe('interactive runtime localization audit', () => {
   it('exercises editable controls, disclosures, and safe workflow buttons in every locale', async () => {
     document.body.innerHTML = ''
+    window.prompt = () => null
     window.matchMedia ??= ((media: string) => ({
       matches: false, media, onchange: null,
       addListener: () => undefined, removeListener: () => undefined,
