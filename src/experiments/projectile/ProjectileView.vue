@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
+import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -137,7 +138,7 @@ const dropDifference = computed(() => {
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">{{ localizeExperimentText('Module 3 · Classical mechanics · Projectile motion', locale) ?? 'Module 3 · Classical mechanics · Projectile motion' }}</p>
+      <p class="eyebrow">{{ getExperimentModuleEyebrow('projectile', locale) }}</p>
       <h1>{{ localizeExperimentText('Projectile launcher', locale) ?? 'Projectile launcher' }}</h1>
       <p class="lead">{{ localizeExperimentText('Launch a ball at any speed and angle, from the ground or a tower, on the Earth, the Moon, Mars or Jupiter, with or without air. Watch it from the ground, or from a moving train.', locale) ?? 'Launch a ball at any speed and angle, from the ground or a tower, on the Earth, the Moon, Mars or Jupiter, with or without air. Watch it from the ground, or from a moving train.' }}</p>
     </header>
@@ -149,7 +150,7 @@ const dropDifference = computed(() => {
     <ExperimentSupport experiment-id="projectile" :module-number="3" focus="In the ideal no-drag model, horizontal and vertical motion have different roles: gravity changes vertical velocity." prompt="If a ball is launched horizontally, does it begin falling immediately or only after its forward motion slows?" action="Compare launch angles and gravitational environments; then switch air resistance on and compare the trajectory." reflect="Which results rely on the no-drag approximation, and why can horizontal velocity coexist with downward acceleration?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
       <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
@@ -157,7 +158,7 @@ const dropDifference = computed(() => {
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ experimentSectionLabel('experiment', locale) }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <TrajectoryView
@@ -244,19 +245,19 @@ const dropDifference = computed(() => {
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
+      <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
       <ProjectileMath :level="level" :params="params" :planet="planet" :drag-applies="dragApplies" :best-angle="bestAngle" />
     </section>
     </details>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
+      <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
+        <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
           <ul>
             <li>
               {{ localizeExperimentText('Without air, a projectile’s path is a parabola, and its horizontal and vertical motions are independent (Galileo, Two New Sciences, 1638).', locale) }}
@@ -266,7 +267,7 @@ const dropDifference = computed(() => {
             <li>{{ localizeExperimentText('Observers moving at constant velocity see different paths but find the same laws of motion (Galilean relativity).', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
+        <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('Is there an absolute space?', locale) }}</strong> {{ localizeExperimentText('Newton believed space is a fixed stage and that there is a true state of rest, even though no experiment with moving trains or ships can detect it. Leibniz, and later Mach, argued that only motion relative to other things is real.', locale) }}
@@ -280,7 +281,7 @@ const dropDifference = computed(() => {
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
       <p>{{ localizeExperimentText('See also: Experiment A for motion in one dimension, and Experiment B for what happens near the speed of light.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">{{ tx("Experiment A") }}</RouterLink>
