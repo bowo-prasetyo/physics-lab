@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue'
+import { stateAtTime, type ProjectileState } from '@/physics'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
 
 const { locale } = useLocale()
-import { stateAtTime, type ProjectileState } from '@/physics'
 
 const props = defineProps<{
   /** The current flight, or null before a launch. */
