@@ -152,8 +152,9 @@ const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: 
   { test: /^Still to measure at ([\d.]+)c or more: (.+)\.$/, render: (m,l) => l === 'id' ? `Masih perlu diukur pada ${m[1]}c atau lebih: ${m[2]}.` : `${m[1]}c 以上で未測定です：${m[2]}。` },
 ]
 
-export function localizeExperimentText(value: string | null | undefined, locale: Locale): string | null {
-  if (value == null || locale === 'en') return value ?? null
+export function localizeExperimentText(value: string | null | undefined, locale: Locale): string | undefined {
+  if (value == null) return undefined
+  if (locale === 'en') return value
   const exact = text[value]
   if (exact) return exact[locale === 'id' ? 0 : 1]
   for (const pattern of patterns) {
