@@ -579,6 +579,9 @@ const text: Record<string, readonly [string, string]> = {
   "Mars": ["Mars","火星"],
   "3, 4, 12 diagonal": ["Diagonal 3, 4, 12","3・4・12 の対角移動"],
   "Experiment C →": ["Eksperimen C →","実験 C →"],
+  'slowing down': ['melambat', '減速中'],
+  'coasting': ['laju ekspansi konstan', '等速膨張'],
+  'model fails': ['model tidak berlaku', 'モデルの適用限界'],
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [

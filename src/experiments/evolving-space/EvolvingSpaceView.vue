@@ -30,6 +30,7 @@ import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
+import { formatNumber } from '@/i18n/formatters'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
@@ -76,9 +77,9 @@ const timeLabel = computed(() => {
 })
 
 function formatGyr(gyr: number): string {
-  if (gyr >= 1) return `${gyr.toFixed(2)} billion years`
-  if (gyr >= 1e-3) return `${Math.round(gyr * 1000)} million years`
-  if (gyr >= 1e-6) return `${Math.round(gyr * 1e6).toLocaleString('en-US')} thousand years`
+  if (gyr >= 1) return `${formatNumber(gyr, { maximumFractionDigits: 2 })} ${tx('billion years')}`
+  if (gyr >= 1e-3) return `${formatNumber(Math.round(gyr * 1000))} ${tx('million years')}`
+  if (gyr >= 1e-6) return `${formatNumber(Math.round(gyr * 1e6))} ${tx('thousand years')}`
   return tx('a tiny fraction of a second')
 }
 
@@ -180,7 +181,7 @@ const expansionWord = computed(() => {
           <dl class="readouts">
             <div>
               <dt>{{ tx('Distances compared with today') }}</dt>
-              <dd class="num">{{ readings.a < A_BREAKDOWN ? 'model fails' : readings.a >= 0.01 ? `${sig(readings.a * 100)}%` : `1/${sig(1 / readings.a)}` }}</dd>
+              <dd class="num">{{ readings.a < A_BREAKDOWN ? tx('model fails') : readings.a >= 0.01 ? `${sig(readings.a * 100)}%` : `1/${sig(1 / readings.a)}` }}</dd>
             </div>
             <div><dt>{{ tx('Expansion is') }}</dt><dd>{{ tx(expansionWord) }}</dd></div>
             <div v-if="readings.redshift !== null"><dt>{{ tx('Light from now, seen today: redshift z') }}</dt><dd class="num">{{ sig(readings.redshift) }}</dd></div>

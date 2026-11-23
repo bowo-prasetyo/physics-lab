@@ -72,7 +72,7 @@ function primaryAction() {
 }
 
 const velocityNote = computed(() => {
-  if (snapshot.value.atBoundary && snapshot.value.v === 0 && v.value !== 0) return 'Held at the end of the track: the object cannot move further, but the clock keeps running.'
+  if (snapshot.value.atBoundary && snapshot.value.v === 0 && v.value !== 0) return tx('Held at the end of the track: the object cannot move further, but the clock keeps running.')
   if (status.value === 'ready') return tx('You can also change this while the clock runs.')
   return ''
 })
@@ -177,8 +177,8 @@ useQuerySync({
             :disabled="status !== 'ready'"
             :hint="
               status === 'ready'
-                ? 'A second observer moving along the track, passing x = 0 at t = 0. Fixed for the whole run.'
-                : 'Reset the clock to change the observer’s velocity.'
+                ? tx('A second observer moving along the track, passing x = 0 at t = 0. Fixed for the whole run.')
+                : tx('Reset the clock to change the observer’s velocity.')
             "
           />
 
