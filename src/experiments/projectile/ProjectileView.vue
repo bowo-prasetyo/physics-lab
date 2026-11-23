@@ -185,7 +185,7 @@ const dropDifference = computed(() => {
           <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">{{ tx("Playback") }}</span>
             <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
-              {{ s === 1 ? 'real time' : `×${s}` }}
+              {{ s === 1 ? tx('real time') : `×${s}` }}
             </button>
           </div>
 
@@ -244,7 +244,7 @@ const dropDifference = computed(() => {
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <ProjectileMath :level="level" :params="params" :planet="planet" :drag-applies="dragApplies" :best-angle="bestAngle" />
     </section>
     </details>
