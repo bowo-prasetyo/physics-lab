@@ -53,11 +53,11 @@ const signed = (value: number, digits = 2) => {
 const primaryLabel = computed(() => {
   switch (status.value) {
     case 'running':
-      return 'Pause'
+      return tx('Pause')
     case 'paused':
-      return 'Resume'
+      return tx('Resume')
     case 'finished':
-      return 'Run again'
+      return tx('Run again')
     default:
       return tx('Start clock')
   }
@@ -73,7 +73,7 @@ function primaryAction() {
 
 const velocityNote = computed(() => {
   if (snapshot.value.atBoundary && snapshot.value.v === 0 && v.value !== 0) return 'Held at the end of the track: the object cannot move further, but the clock keeps running.'
-  if (status.value === 'ready') return 'You can also change this while the clock runs.'
+  if (status.value === 'ready') return tx('You can also change this while the clock runs.')
   return ''
 })
 
@@ -146,7 +146,7 @@ useQuerySync({
           <div class="clock" role="timer" :aria-label="localizeExperimentText('Experiment clock', locale)">
             <span class="clock-label">{{ tx('Clock') }}</span>
             <span class="clock-value num">{{ snapshot.t.toFixed(2) }}<small> s</small></span>
-            <span class="clock-status muted">{{ status === 'finished' ? 'Run complete' : status === 'running' ? 'Running' : status === 'paused' ? tx('Paused') : tx('Ready') }}</span>
+            <span class="clock-status muted">{{ tx(status === 'finished' ? 'Run complete' : status === 'running' ? 'Running' : status === 'paused' ? 'Paused' : 'Ready') }}</span>
           </div>
 
           <div class="buttons">
@@ -244,7 +244,7 @@ useQuerySync({
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>{{ tx("Next:") }}</strong> Experiment B compares two clocks moving relative to each other near the speed of light.</p>
+      <p><strong>{{ tx("Next:") }}</strong> {{ tx('Experiment B compares two clocks moving relative to each other near the speed of light.') }}</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">{{ tx("Experiment B →") }}</RouterLink>
         <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
