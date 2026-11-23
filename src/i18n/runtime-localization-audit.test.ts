@@ -215,7 +215,7 @@ describe('runtime localization audit', () => {
     lines.push('', '## Limitations', '', ...report.limitations.map((item) => `- ${item}`))
     await writeFile(resolve(outputDir, 'localization-runtime-audit.md'), `${lines.join('\n')}\n`, 'utf8')
 
-    console.info(\`Runtime localization audit: \${renderedPages} route/locale renders; \${candidates.length} unchanged-English candidates across \${report.summary.routesWithCandidates} routes.\`)
+    console.info('Runtime localization audit: ' + renderedPages + ' route/locale renders; ' + candidates.length + ' unchanged-English candidates across ' + report.summary.routesWithCandidates + ' routes.')
     expect(renderedPages).toBe(ROUTES.length * SUPPORTED_LOCALES.length)
   }, 120_000)
 })
