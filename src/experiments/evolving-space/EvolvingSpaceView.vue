@@ -136,7 +136,7 @@ const expansionWord = computed(() => {
           <label class="model-select">
             <span>{{ tx('Universe') }}</span>
             <select v-model="model">
-              <option v-for="c in COSMOLOGIES" :key="c.id" :value="c.id">{{ c.name }}</option>
+              <option v-for="c in COSMOLOGIES" :key="c.id" :value="c.id">{{ tx(c.name) }}</option>
             </select>
           </label>
           <GalaxyField
@@ -158,7 +158,7 @@ const expansionWord = computed(() => {
         <div class="lab-side card">
           <div class="clock">
             <span class="clock-label">{{ tx('Cosmic time') }}</span>
-            <span class="clock-value">{{ timeLabel }}</span>
+            <span class="clock-value">{{ tx(timeLabel) }}</span>
             <span class="clock-sub num">a = {{ sig(readings.a, 4) }}</span>
           </div>
           <div class="buttons">
@@ -173,7 +173,7 @@ const expansionWord = computed(() => {
             <label for="cosmic-time">{{ tx('Jump to a time') }}</label>
             <input id="cosmic-time" v-model.number="timeModel" type="range" :min="expansion.tMin" :max="expansion.tMax" step="0.01" />
             <div class="presets">
-              <button v-for="m in milestones" :key="m.label" type="button" class="chip" @click="setTime(m.t)">{{ m.label }}</button>
+              <button v-for="m in milestones" :key="m.label" type="button" class="chip" @click="setTime(m.t)">{{ tx(m.label) }}</button>
             </div>
           </div>
 
@@ -182,14 +182,14 @@ const expansionWord = computed(() => {
               <dt>{{ tx('Distances compared with today') }}</dt>
               <dd class="num">{{ readings.a < A_BREAKDOWN ? 'model fails' : readings.a >= 0.01 ? `${sig(readings.a * 100)}%` : `1/${sig(1 / readings.a)}` }}</dd>
             </div>
-            <div><dt>{{ tx('Expansion is') }}</dt><dd>{{ expansionWord }}</dd></div>
+            <div><dt>{{ tx('Expansion is') }}</dt><dd>{{ tx(expansionWord) }}</dd></div>
             <div v-if="readings.redshift !== null"><dt>{{ tx('Light from now, seen today: redshift z') }}</dt><dd class="num">{{ sig(readings.redshift) }}</dd></div>
             <div v-if="readings.temperature !== null"><dt>{{ tx('Background radiation') }}</dt><dd class="num">{{ sig(readings.temperature) }} K</dd></div>
             <template v-if="intermediate">
               <div><dt>{{ tx('Hubble rate H') }}</dt><dd class="num">{{ readings.hubbleKmSMpc === null ? '—' : `${sig(readings.hubbleKmSMpc)} km/s/Mpc` }}</dd></div>
               <div><dt>{{ tx('Hubble distance c/H') }}</dt><dd class="num">{{ readings.hubbleDistance === null ? '—' : `${sig(readings.hubbleDistance)} Gly` }}</dd></div>
             </template>
-            <div v-if="advanced"><dt>Deceleration q</dt><dd class="num">{{ readings.q === null ? '—' : sig(readings.q) }}</dd></div>
+            <div v-if="advanced"><dt>{{ tx("Deceleration q") }}</dt><dd class="num">{{ readings.q === null ? '—' : sig(readings.q) }}</dd></div>
           </dl>
 
           <div class="target">
@@ -203,9 +203,9 @@ const expansionWord = computed(() => {
               :hint="localizeExperimentText('Distance today, in billions of light-years.', locale) ?? 'Distance today, in billions of light-years.'"
             />
             <dl class="readouts">
-              <div><dt>Its distance at this time</dt><dd class="num">{{ sig(readings.targetDistance) }} Gly</dd></div>
+              <div><dt>{{ tx("Its distance at this time") }}</dt><dd class="num">{{ sig(readings.targetDistance) }} Gly</dd></div>
               <div :class="{ ftl: (readings.targetSpeed ?? 0) >= 1 }">
-                <dt>Its recession speed</dt>
+                <dt>{{ tx("Its recession speed") }}</dt>
                 <dd class="num">{{ readings.targetSpeed === null ? '—' : `${sig(readings.targetSpeed)} c` }}</dd>
               </div>
             </dl>
