@@ -99,7 +99,7 @@ const compare = computed(() => (model.value === 'our' ? null : expansionOf('our'
 const accelerationMarker = computed(() => (advanced.value ? accelerationTime.value : null))
 const hubblePerGyr = computed(() => (readings.value.hubbleDistance === null ? null : 1 / readings.value.hubbleDistance))
 
-const sig = (x: number, digits = 3) => Number(x.toPrecision(digits)).toLocaleString('en-US', { maximumSignificantDigits: digits })
+const sig = (x: number, digits = 3) => formatNumber(Number(x.toPrecision(digits)), { maximumSignificantDigits: digits })
 const expansionWord = computed(() => {
   const q = readings.value.q
   if (q === null) return '—'
