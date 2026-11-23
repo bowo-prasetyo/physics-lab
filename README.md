@@ -2,6 +2,10 @@
 
 Interactive physics experiments about space, time and motion for high-school and undergraduate students.
 
+**Product direction:** [Product vision, principles, audiences and learning outcomes](docs/product/PRODUCT_VISION.md).
+
+Most introductory material starts with equations. Here every experiment follows the opposite order:
+
 Most introductory material starts with equations. Here every experiment follows the opposite order:
 
 1. **Phenomenon.** Start from something physical.
@@ -14,7 +18,7 @@ The same phenomenon is offered at three mathematical levels (Beginner, Intermedi
 
 ## Status
 
-Seven experiments are complete, at least one in each of the six modules. Further experiments are listed in the app as planned.
+Eight experiments are currently implemented across the six modules. Further experiments are listed in the app as planned.
 
 **Experiment A, Space versus time** (Module 1):
 - A track and a live position–time graph, with earlier runs overlaid for comparison.
