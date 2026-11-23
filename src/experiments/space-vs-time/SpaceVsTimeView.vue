@@ -93,16 +93,6 @@ useQuerySync({
   },
 })
 
-const copied = ref(false)
-async function copyLink() {
-  try {
-    await navigator.clipboard.writeText(window.location.href)
-    copied.value = true
-    setTimeout(() => (copied.value = false), 2000)
-  } catch {
-    window.prompt('Copy this link:', window.location.href)
-  }
-}
 </script>
 
 <template>
