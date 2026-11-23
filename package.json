@@ -12,7 +12,8 @@
     "typecheck": "vue-tsc --build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "audit:localization": "node scripts/audit-localization.mjs"
+    "audit:localization": "node scripts/audit-localization.mjs",
+    "audit:localization:runtime": "vitest run src/i18n/runtime-localization-audit.test.ts"
   },
   "dependencies": {
     "katex": "0.18.11",
