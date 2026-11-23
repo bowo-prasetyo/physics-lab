@@ -254,9 +254,9 @@ const signed = (value: number, digits = 2) => {
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p>{{ localizeExperimentText('Experiment E describes the same situations with separate space and time, and with a single spacetime.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/space/space-vs-time">← Experiment A</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">Experiment E →</RouterLink>
-        <RouterLink to="/">All modules</RouterLink>
+        <RouterLink to="/space/space-vs-time">{{ tx("← Experiment A") }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx("Experiment E →") }}</RouterLink>
+        <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>
   </article>
