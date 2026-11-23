@@ -1,0 +1,62 @@
+import type { Locale } from './locales'
+
+/** Explanatory copy used by the Space vs Time mathematics panel. */
+const translations: Record<string, readonly [string, string]> = {
+  'Every run you did follows one simple rule:': ['Setiap percobaan yang Anda lakukan mengikuti satu aturan sederhana:', 'これまでの実験は、すべて次の簡単な規則に従います。'],
+  'In words:': ['Dengan kata lain:', '言葉で表すと、'],
+  'where the object is now': ['posisi benda sekarang', '物体の現在位置'],
+  'where it started': ['posisi awalnya', '最初の位置'],
+  'its velocity': ['kecepatannya', 'その速度'],
+  'the time that has passed': ['waktu yang telah berlalu', '経過した時間'],
+  'Your current run changed velocity part-way through, so the rule applies to each straight piece of the graph separately. Reset and do a run without touching the velocity slider to check the formula.': ['Percobaan Anda saat ini mengubah kecepatan di tengah gerakan, sehingga aturan ini berlaku secara terpisah untuk setiap bagian lurus pada grafik. Atur ulang percobaan dan jalankan tanpa menyentuh penggeser kecepatan untuk memeriksa rumus.', '現在の実験では途中で速度が変化したため、この規則はグラフの各直線部分に個別に適用されます。速度スライダーに触れずにリセットして実行し、式を確かめてください。'],
+  'The slope of the line is the velocity:': ['Kemiringan garis menunjukkan kecepatan:', '直線の傾きは速度を表します。'],
+  'For constant v the integral gives x(t) = x₀ + vt, the straight lines on your graph.': ['Untuk kecepatan v yang konstan, integral menghasilkan x(t) = x₀ + vt, yaitu garis lurus pada grafik Anda.', '速度 v が一定なら、積分によって x(t) = x₀ + vt が得られ、グラフは直線になります。'],
+  'Use the observer velocity slider. With u = v the object is at rest for the observer; with v = 0 and u ≠ 0 a "stationary" object moves. Being at rest is a relation between an object and a frame of reference, not a property of the object alone.': ['Gunakan penggeser kecepatan pengamat. Jika u = v, benda diam menurut pengamat tersebut; jika v = 0 dan u ≠ 0, benda yang "diam" justru bergerak. Keadaan diam merupakan hubungan antara benda dan kerangka acuan, bukan sifat benda itu sendiri.', '観測者の速度スライダーを使ってください。u = v なら物体はその観測者から見て静止し、v = 0 かつ u ≠ 0 なら「静止」している物体も動いて見えます。静止とは物体単独の性質ではなく、物体と基準系との関係です。'],
+  'At': ['Pada kecepatan', '速度'],
+  'With': ['Jika', 'ここで'],
+  'worldline': ['garis dunia', '世界線'],
+  'the correction is': [', koreksinya adalah', 'では、補正量は'],
+  'Check it with your own run': ['Periksa dengan percobaan Anda sendiri', '自分の実験で確かめる'],
+  'Reading the graph': ['Membaca grafik', 'グラフの読み方'],
+  'Where the line starts on the vertical axis is the starting position': ['Titik awal garis pada sumbu vertikal menunjukkan posisi awal', '縦軸上で線が始まる位置は初期位置を表します'],
+  'A flat line means the object stays put.': ['Garis datar berarti benda tidak berpindah.', '水平な線は物体が静止していることを意味します。'],
+  'Key idea': ['Gagasan utama', '重要な考え方'],
+  'The time': ['Waktu', '時間'],
+  'is still in the formula when': ['tetap ada dalam rumus ketika', 'は、次の場合でも式に含まれています。'],
+  'Setting the velocity to zero removes the change in position, not the passing of time.': ['Menetapkan kecepatan menjadi nol menghilangkan perubahan posisi, bukan berlalunya waktu.', '速度をゼロにすると位置の変化はなくなりますが、時間の経過は止まりません。'],
+  'Velocity is the rate of change of position, so position is the accumulated velocity:': ['Kecepatan adalah laju perubahan posisi, sehingga posisi merupakan akumulasi kecepatan:', '速度は位置の変化率なので、位置は速度を積分したものになります。'],
+  'For constant': ['Untuk', 'が一定なら、'],
+  'the integral gives': ['yang konstan, integral menghasilkan', '積分によって次の式が得られます。'],
+  ', the straight lines on your graph.': [', yang menghasilkan garis lurus pada grafik Anda.', '。これはグラフ上の直線に対応します。'],
+  'Displacement and distance': ['Perpindahan dan jarak tempuh', '変位と移動距離'],
+  'Your current run:': ['Percobaan Anda saat ini:', '現在の実験結果：'],
+  'The two agree unless the motion reverses. Try reversing the velocity mid-run (question Q3).': ['Keduanya sama kecuali jika arah gerak berbalik. Cobalah membalik kecepatan di tengah percobaan (pertanyaan Q3).', '運動の向きが反転しない限り、この2つは一致します。実験の途中で速度を反転させてみましょう（設問 Q3）。'],
+  'In three dimensions': ['Dalam tiga dimensi', '3次元の場合'],
+  'The same law holds for each coordinate, so it can be written as one vector equation:': ['Hukum yang sama berlaku untuk setiap koordinat, sehingga dapat ditulis sebagai satu persamaan vektor:', '同じ法則が各座標に成り立つため、1つのベクトル方程式で表せます。'],
+  'On this track': ['Pada lintasan ini', 'この軌道では'],
+  'so only the': ['sehingga hanya komponen', 'なので、変化するのは'],
+  '-component changes.': ['yang berubah.', '成分だけです。'],
+  'Events and worldlines': ['Peristiwa dan garis dunia', '事象と世界線'],
+  'An event is a place at a time,': ['Peristiwa adalah suatu posisi pada waktu tertentu,', '事象とは、ある時刻における位置のことです。'],
+  'The history of the object is a continuous set of events: its worldline.': ['Riwayat gerak benda merupakan rangkaian peristiwa yang berkesinambungan: garis dunianya.', '物体の履歴は連続した事象の集まりであり、これを世界線と呼びます。'],
+  'The graph above is the worldline drawn in the': ['Grafik di atas merupakan garis dunia yang digambarkan pada bidang', '上のグラフは、次の平面に描いた世界線です。'],
+  'plane. Relativity texts usually draw time vertically; we will switch to that convention in Module 4.': ['. Buku relativitas biasanya menggambarkan waktu pada sumbu vertikal; kita akan menggunakan konvensi tersebut pada Modul 4.', '平面です。相対論の教科書では通常、時間を縦軸に取ります。モジュール4でその表記に切り替えます。'],
+  'Rest depends on the observer': ['Keadaan diam bergantung pada pengamat', '静止は観測者によって異なる'],
+  'An observer moving at constant velocity': ['Pengamat yang bergerak dengan kecepatan konstan', '一定の速度で運動する観測者は'],
+  'labels the same events with Galilean coordinates': ['memberi koordinat Galilea pada peristiwa yang sama', '同じ事象をガリレイ座標で表します。'],
+  'Use the observer velocity slider.': ['Gunakan penggeser kecepatan pengamat.', '観測者の速度スライダーを使ってください。'],
+  'the object is at rest for the observer; with': ['benda diam menurut pengamat tersebut; sedangkan jika', 'なら、その観測者から見て物体は静止します。一方、'],
+  'a "stationary" object moves. Being at rest is a relation between an object and a frame of reference, not a property of the object alone.': ['benda yang "diam" justru bergerak. Keadaan diam merupakan hubungan antara benda dan kerangka acuan, bukan sifat benda itu sendiri.', 'では「静止」している物体も動いて見えます。静止とは物体単独の性質ではなく、物体と基準系との関係です。'],
+  'What all Galilean observers agree on': ['Hal yang disepakati semua pengamat Galilea', 'すべてのガリレイ観測者が同意すること'],
+  'in Newtonian physics every observer agrees on time intervals and on which events are simultaneous.': ['dalam fisika Newton, semua pengamat menyepakati selang waktu dan peristiwa mana yang terjadi serentak.', 'ニュートン力学では、すべての観測者が時間間隔と事象の同時性について一致します。'],
+  'This is an approximation. The exact Lorentz transformation is': ['Ini merupakan pendekatan. Transformasi Lorentz yang tepat adalah', 'これは近似にすぎません。正確なローレンツ変換は次のとおりです。'],
+  'At this speed the correction is': ['Pada kecepatan ini, koreksinya adalah', 'この速度では、補正量は'],
+  ', far too small to see here, which is why the Galilean picture works so well in everyday life.': [', terlalu kecil untuk terlihat di sini. Itulah sebabnya gambaran Galilea bekerja dengan sangat baik dalam kehidupan sehari-hari.', 'となり、ここでは小さすぎて確認できません。そのため、日常生活ではガリレイの描像が非常によく成り立ちます。'],
+  'In Module 4 you will push the observer speed towards the speed of light and watch the Galilean approximation fail.': ['Pada Modul 4, Anda akan menaikkan kecepatan pengamat mendekati kecepatan cahaya dan melihat pendekatan Galilea tidak lagi berlaku.', 'モジュール4では、観測者の速度を光速に近づけ、ガリレイ近似が成り立たなくなる様子を確かめます。'],
+}
+export function localizeSpaceVsTimeMathText(value: string, locale: Locale): string {
+  if (locale === 'en') return value
+  const translation = translations[value]
+  return translation ? translation[locale === 'id' ? 0 : 1] : value
+}
+export const SPACE_VS_TIME_MATH_TRANSLATION_KEYS = Object.keys(translations)

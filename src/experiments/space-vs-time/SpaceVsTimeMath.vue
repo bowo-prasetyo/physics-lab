@@ -5,8 +5,12 @@ import InfoCallout from '@/components/InfoCallout.vue'
 import { lorentzFactorMinusOne } from '@/physics'
 import type { Level } from '@/levels'
 import type { RunSnapshot } from './useSpaceVsTime'
+import { useLocale } from '@/composables/useLocale'
+import { localizeSpaceVsTimeMathText } from '@/i18n/space-vs-time-math'
 
 const props = defineProps<{ level: Level; snapshot: RunSnapshot; u: number }>()
+const { locale } = useLocale()
+const tx = (value: string) => localizeSpaceVsTimeMathText(value, locale.value)
 
 /** Format a number for TeX, wrapping negatives in parentheses when asked. Never prints "−0.00". */
 const n = (value: number, digits = 1, paren = false) => {
@@ -56,78 +60,71 @@ const correctionSpeed = computed(() => Math.abs(props.u === 0 ? 3 : props.u).toF
   <div class="maths">
     <!-- Beginner: algebra, graphs and tables -->
     <template v-if="level === 'beginner'">
-      <p>Every run you did follows one simple rule:</p>
+      <p>{{ tx('Every run you did follows one simple rule:') }}</p>
       <MathFormula display tex="x = x_0 + v\,t" />
       <p>
-        In words: <em>where the object is now</em> = <em>where it started</em> + <em>its velocity</em> × <em>the time that has passed</em>.
+        {{ tx('In words:') }} <em>{{ tx('where the object is now') }}</em> = <em>{{ tx('where it started') }}</em> + <em>{{ tx('its velocity') }}</em> × <em>{{ tx('the time that has passed') }}</em>.
       </p>
-      <h3>Check it with your own run</h3>
+      <h3>{{ tx('Check it with your own run') }}</h3>
       <MathFormula v-if="uniform" display :tex="workedExample" />
       <p v-else class="muted">
-        Your current run changed velocity part-way through, so the rule applies to each straight piece of the graph separately. Reset and do a
-        run without touching the velocity slider to check the formula.
+        {{ tx('Your current run changed velocity part-way through, so the rule applies to each straight piece of the graph separately. Reset and do a run without touching the velocity slider to check the formula.') }}
       </p>
-      <h3>Reading the graph</h3>
+      <h3>{{ tx('Reading the graph') }}</h3>
       <ul>
-        <li>The <strong>steepness</strong> (slope) of the line is the velocity: <MathFormula tex="v = \dfrac{\Delta x}{\Delta t}" />.</li>
-        <li>Where the line <strong>starts</strong> on the vertical axis is the starting position <MathFormula tex="x_0" />.</li>
-        <li>A <strong>flat</strong> line means <MathFormula tex="v = 0" />: the object stays put.</li>
+        <li>{{ tx('The slope of the line is the velocity:') }} <MathFormula tex="v = \dfrac{\Delta x}{\Delta t}" /></li>
+        <li>{{ tx('Where the line starts on the vertical axis is the starting position') }} <MathFormula tex="x_0" />.</li>
+        <li>{{ tx('A flat line means the object stays put.') }} <MathFormula tex="v = 0" /></li>
       </ul>
-      <InfoCallout kind="physics" title="Key idea">
+      <InfoCallout kind="physics" :title="tx('Key idea')">
         <p>
-          The time <MathFormula tex="t" /> is still in the formula when <MathFormula tex="v = 0" />. Setting the velocity to zero removes the
-          <em>change in position</em>, not the passing of time.
+          {{ tx('The time') }} <MathFormula tex="t" /> {{ tx('is still in the formula when') }} <MathFormula tex="v = 0" />. {{ tx('Setting the velocity to zero removes the change in position, not the passing of time.') }}
         </p>
       </InfoCallout>
     </template>
 
     <!-- Intermediate: calculus and vectors -->
     <template v-else-if="level === 'intermediate'">
-      <p>Velocity is the rate of change of position, so position is the accumulated velocity:</p>
+      <p>{{ tx('Velocity is the rate of change of position, so position is the accumulated velocity:') }}</p>
       <MathFormula display tex="v(t) = \frac{dx}{dt} \quad\Longleftrightarrow\quad x(t) = x_0 + \int_0^t v(t')\,dt'" />
-      <p>For constant <MathFormula tex="v" /> the integral gives <MathFormula tex="x(t) = x_0 + v\,t" />, the straight lines on your graph.</p>
+      <p>{{ tx('For constant') }} <MathFormula tex="v" /> {{ tx('the integral gives') }} <MathFormula tex="x(t) = x_0 + v\,t" />{{ tx(', the straight lines on your graph.') }}</p>
 
-      <h3>Displacement and distance</h3>
+      <h3>{{ tx('Displacement and distance') }}</h3>
       <MathFormula display tex="\Delta x = \int_0^t v\,dt', \qquad s = \int_0^t |v|\,dt' \;\geq\; |\Delta x|" />
-      <p>Your current run:</p>
+      <p>{{ tx('Your current run:') }}</p>
       <MathFormula display :tex="distanceExample" />
-      <p class="muted">The two agree unless the motion reverses. Try reversing the velocity mid-run (question Q3).</p>
+      <p class="muted">{{ tx('The two agree unless the motion reverses. Try reversing the velocity mid-run (question Q3).') }}</p>
 
-      <h3>In three dimensions</h3>
-      <p>The same law holds for each coordinate, so it can be written as one vector equation:</p>
+      <h3>{{ tx('In three dimensions') }}</h3>
+      <p>{{ tx('The same law holds for each coordinate, so it can be written as one vector equation:') }}</p>
       <MathFormula display tex="\mathbf r(t) = \mathbf r_0 + \mathbf v\,t, \qquad |\Delta\mathbf r| = \sqrt{\Delta x^2 + \Delta y^2 + \Delta z^2}" />
-      <p>On this track <MathFormula tex="v_y = v_z = 0" />, so only the <MathFormula tex="x" />-component changes.</p>
+      <p>{{ tx('On this track') }} <MathFormula tex="v_y = v_z = 0" />, {{ tx('so only the') }} <MathFormula tex="x" />{{ tx('-component changes.') }}</p>
     </template>
 
     <!-- Advanced: events, worldlines and frames -->
     <template v-else>
-      <h3>Events and worldlines</h3>
+      <h3>{{ tx('Events and worldlines') }}</h3>
       <p>
-        An <strong>event</strong> is a place at a time, <MathFormula tex="(t, x)" />. The history of the object is a continuous set of events: its
-        <strong>worldline</strong>. The graph above <em>is</em> the worldline drawn in the <MathFormula tex="(t, x)" /> plane. Relativity texts
-        usually draw time vertically; we will switch to that convention in Module 4.
+        {{ tx('An event is a place at a time,') }} <MathFormula tex="(t, x)" />. {{ tx('The history of the object is a continuous set of events: its worldline.') }} {{ tx('The graph above is the worldline drawn in the') }} <MathFormula tex="(t, x)" /> {{ tx('plane. Relativity texts usually draw time vertically; we will switch to that convention in Module 4.') }}
       </p>
 
-      <h3>Rest depends on the observer</h3>
-      <p>An observer moving at constant velocity <MathFormula tex="u" /> labels the same events with Galilean coordinates</p>
+      <h3>{{ tx('Rest depends on the observer') }}</h3>
+      <p>{{ tx('An observer moving at constant velocity') }} <MathFormula tex="u" /> {{ tx('labels the same events with Galilean coordinates') }}</p>
       <MathFormula display tex="t' = t, \qquad x' = x - u\,t, \qquad v' = v - u." />
       <MathFormula display :tex="boostExample" />
       <p>
-        Use the <strong>observer velocity</strong> slider. With <MathFormula tex="u = v" /> the object is at rest for the observer; with
-        <MathFormula tex="v = 0" /> and <MathFormula tex="u \neq 0" /> a "stationary" object moves. Being at rest is a relation between an
-        object and a frame of reference, not a property of the object alone.
+        {{ tx('Use the observer velocity slider.') }} {{ tx('With') }} <MathFormula tex="u = v" /> {{ tx('the object is at rest for the observer; with') }}
+        <MathFormula tex="v = 0" /> and <MathFormula tex="u \\neq 0" /> {{ tx('a "stationary" object moves. Being at rest is a relation between an object and a frame of reference, not a property of the object alone.') }}
       </p>
 
-      <h3>What all Galilean observers agree on</h3>
+      <h3>{{ tx('What all Galilean observers agree on') }}</h3>
       <p>
-        <MathFormula tex="t' = t" />: in Newtonian physics every observer agrees on time intervals and on which events are simultaneous. This
-        is an approximation. The exact Lorentz transformation is
+        <MathFormula tex="t' = t" />: {{ tx('in Newtonian physics every observer agrees on time intervals and on which events are simultaneous.') }} {{ tx('This is an approximation. The exact Lorentz transformation is') }}
       </p>
       <MathFormula display tex="t' = \gamma\left(t - \frac{u\,x}{c^2}\right), \qquad x' = \gamma\,(x - u\,t), \qquad \gamma = \frac{1}{\sqrt{1 - u^2/c^2}}" />
       <p>
-        At <MathFormula :tex="`|u| = ${correctionSpeed}\\ \\text{m/s}`" /> the correction is
-        <MathFormula :tex="gammaCorrection" />, far too small to see here, which is why the Galilean picture works so well in everyday life.
-        In Module 4 you will push <MathFormula tex="u" /> towards <MathFormula tex="c" /> and watch <MathFormula tex="t' = t" /> fail.
+        {{ tx('At') }} <MathFormula :tex="`|u| = ${correctionSpeed}\\\\ \\\\text{m/s}`" /> {{ tx('the correction is') }} <MathFormula :tex="gammaCorrection" />{{ tx(', far too small to see here, which is why the Galilean picture works so well in everyday life.') }}
+        {{ tx('In Module 4 you will push the observer speed towards the speed of light and watch the Galilean approximation fail.') }}
       </p>
     </template>
   </div>
