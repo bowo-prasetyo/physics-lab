@@ -6,8 +6,6 @@ Interactive physics experiments about space, time and motion for high-school and
 
 Most introductory material starts with equations. Here every experiment follows the opposite order:
 
-Most introductory material starts with equations. Here every experiment follows the opposite order:
-
 1. **Phenomenon.** Start from something physical.
 2. **Predict.** The student commits to an answer before experimenting.
 3. **Experiment.** Change parameters and observe the result immediately.
@@ -15,6 +13,10 @@ Most introductory material starts with equations. Here every experiment follows 
 5. **Meaning.** Separate established physics from philosophical interpretation.
 
 The same phenomenon is offered at three mathematical levels (Beginner, Intermediate and Advanced). The experiment never changes with the level; only the depth of the mathematics does.
+
+## Curriculum coverage
+
+The home page distinguishes topics explored by implemented experiments from planned curriculum topics. See the [curriculum coverage and roadmap](docs/product/CURRICULUM_ROADMAP.md) and [learning effectiveness metrics](docs/product/LEARNING_EFFECTIVENESS.md) for scope, priorities, and evaluation.
 
 ## Status
 
