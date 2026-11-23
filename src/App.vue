@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import LevelSwitcher from '@/components/LevelSwitcher.vue'
 
-const logo = `${import.meta.env.BASE_URL}favicon.svg`
+const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
 </script>
 
 <template>
   <header class="app-header">
     <div class="container header-inner">
-      <RouterLink to="/" class="brand">
-        <img :src="logo" alt="" width="28" height="28" />
-        <span>Physica</span>
+      <RouterLink to="/" class="brand" aria-label="Physica home">
+        <img :src="logo" alt="Physica" width="148" height="40" />
       </RouterLink>
       <nav class="header-tools" aria-label="Main navigation">
         <RouterLink class="teacher-link" to="/teachers">For teachers</RouterLink>
@@ -49,11 +48,14 @@ const logo = `${import.meta.env.BASE_URL}favicon.svg`
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  color: var(--text);
-  font-weight: 750;
   text-decoration: none;
-  letter-spacing: -0.01em;
+  flex: 0 0 auto;
+}
+
+.brand img {
+  display: block;
+  width: 148px;
+  height: 40px;
 }
 
 .header-tools {
@@ -77,5 +79,6 @@ const logo = `${import.meta.env.BASE_URL}favicon.svg`
 @media (max-width: 420px) {
   .header-tools { gap: 8px; }
   .teacher-link { font-size: 0.82rem; }
+  .brand img { width: 126px; height: auto; }
 }
 </style>
