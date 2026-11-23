@@ -24,6 +24,7 @@ import { localizePredictions } from '@/i18n/experiment-content'
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
+const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 
 // A setup can be shared as a link, e.g. #/mechanics/projectile?level=beginner&v=20&angle=45&h=0&planet=earth&air=0
 if (isLevel(route.query.level)) level.value = route.query.level
@@ -146,15 +147,15 @@ const dropDifference = computed(() => {
     <ExperimentSupport experiment-id="projectile" :module-number="3" focus="In the ideal no-drag model, horizontal and vertical motion have different roles: gravity changes vertical velocity." prompt="If a ball is launched horizontally, does it begin falling immediately or only after its forward motion slows?" action="Compare launch angles and gravitational environments; then switch air resistance on and compare the trajectory." reflect="Which results rely on the no-drag approximation, and why can horizontal velocity coexist with downward acceleration?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
-      <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <TrajectoryView
@@ -169,8 +170,8 @@ const dropDifference = computed(() => {
             :show-vectors="intermediate"
           />
           <p class="muted small">
-            Drawn to scale: one metre across equals one metre up. Dashed lines are earlier throws.
-            <template v-if="intermediate"> Arrows show the sideways (green) and vertical (yellow) velocity.</template>
+            {{ tx('Drawn to scale: one metre across equals one metre up. Dashed lines are earlier throws.') }}
+            <template v-if="intermediate"> {{ tx('Arrows show the sideways (green) and vertical (yellow) velocity.') }}</template>
           </p>
           <p v-if="dropDifference" class="drop-result">{{ dropDifference }}</p>
           <div class="charts">
