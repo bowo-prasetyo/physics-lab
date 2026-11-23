@@ -124,7 +124,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
         <div class="lab-main card">
           <div class="views" role="group" :aria-label="localizeExperimentText('Camera', locale)">
             <span class="muted small">View</span>
-            <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">{{ localizeExperimentText('{{ v === \'3d\' ? \'3D\' : v === \'top\' ? \'From above\' : v === \'front\' ? \'From the front\' : \'From the side\' }}', locale) ?? '{{ v === \'3d\' ? \'3D\' : v === \'top\' ? \'From above\' : v === \'front\' ? \'From the front\' : \'From the side\' }}' }}</button>
+            <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">
+              {{ v === '3d' ? '3D' : v === 'top' ? 'From above' : v === 'front' ? 'From the front' : 'From the side' }}
+            </button>
           </div>
           <Scene3D
             :points="points"
@@ -148,9 +150,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             <p class="group-title">Move the object (1 m steps)</p>
             <p class="muted small convention">+x is east, +y is north, +z is up.</p>
             <div v-for="axis in AXES" :key="axis" class="move-row">
-              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`" @click="step(axis, -1)">{{ localizeExperimentText('− {{ axis }} · {{ DIRECTIONS[axis][0] }}', locale) ?? '− {{ axis }} · {{ DIRECTIONS[axis][0] }}' }}</button>
+              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`" @click="step(axis, -1)">− {{ axis }} · {{ DIRECTIONS[axis][0] }}</button>
               <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
-              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`" @click="step(axis, 1)">{{ localizeExperimentText('+ {{ axis }} · {{ DIRECTIONS[axis][1] }}', locale) ?? '+ {{ axis }} · {{ DIRECTIONS[axis][1] }}' }}</button>
+              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`" @click="step(axis, 1)">+ {{ axis }} · {{ DIRECTIONS[axis][1] }}</button>
             </div>
           </div>
           <form class="goto" @submit.prevent="goToTarget">
