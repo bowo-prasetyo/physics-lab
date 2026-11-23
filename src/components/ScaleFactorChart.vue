@@ -68,17 +68,17 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
       <text v-for="t in xTicks" :key="`lx${t}`" :x="sx(t)" :y="M.top + plotH + 18" class="tick">{{ t }}</text>
       <text v-for="a in yTicks" :key="`ly${a}`" :x="M.left - 8" :y="sy(a) + 4" class="tick y">{{ Number(a.toPrecision(3)) }}</text>
       <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ localizeExperimentText(xLabel, locale) }}</text>
-      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">scale factor a</text>
+      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText('scale factor a', locale) }}</text>
 
       <g :clip-path="`url(#${id}-plot)`">
         <line :x1="sx(expansion.tToday)" :x2="sx(expansion.tToday)" :y1="M.top" :y2="M.top + plotH" class="today" />
         <line :x1="M.left" :x2="M.left + plotW" :y1="sy(1)" :y2="sy(1)" class="today" />
-        <text :x="sx(expansion.tToday) + 4" :y="M.top + 12" class="today-label">today</text>
+        <text :x="sx(expansion.tToday) + 4" :y="M.top + 12" class="today-label">{{ localizeExperimentText('today', locale) }}</text>
         <path v-if="other" :d="path(other)" class="curve compare" />
         <path :d="path(main)" class="curve" />
         <template v-if="accelerationTime !== null">
           <circle :cx="sx(accelerationTime)" :cy="sy(expansion.scaleFactorAt(accelerationTime))" r="5" class="onset" />
-          <text :x="sx(accelerationTime) - 8" :y="sy(expansion.scaleFactorAt(accelerationTime)) - 10" class="onset-label">starts speeding up</text>
+          <text :x="sx(accelerationTime) - 8" :y="sy(expansion.scaleFactorAt(accelerationTime)) - 10" class="onset-label">{{ localizeExperimentText('starts speeding up', locale) }}</text>
         </template>
         <circle :cx="current.x" :cy="current.y" r="7" class="now" />
       </g>
