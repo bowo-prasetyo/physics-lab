@@ -29,7 +29,7 @@ const workedExample = computed(
 )
 
 const SPEEDS = [
-  { label: tx('Airliner (250 m/s)'), beta: 250 / 299_792_458 },
+  { label: 'Airliner (250 m/s)', beta: 250 / 299_792_458 },
   { label: '0.10c', beta: 0.1 },
   { label: '0.50c', beta: 0.5 },
   { label: '0.80c', beta: 0.8 },
@@ -40,7 +40,7 @@ const gammaRows = computed(() =>
   SPEEDS.map((s) => {
     const minusOne = lorentzFactorMinusOne(s.beta, 1)
     const value = minusOne < 1e-6 ? `1 + ${minusOne.toExponential(1).replace('e-', ' × 10⁻').replace(/\d+$/, (d) => toSuperscript(d))}` : (1 + minusOne).toFixed(3)
-    return { ...s, value, current: Math.abs(s.beta - props.beta) < 1e-6 }
+    return { ...s, label: tx(s.label), value, current: Math.abs(s.beta - props.beta) < 1e-6 }
   }),
 )
 
