@@ -20,6 +20,10 @@ describe('experiment UI localization', () => {
     const boundary = 'Held at the end of the track: the object cannot move further, but the clock keeps running.'
     expect(localizeExperimentText(boundary, 'id')).toContain('Benda tertahan')
     expect(localizeExperimentText(boundary, 'ja')).toContain('トラックの端')
+    expect(localizeExperimentText('A second observer moving along the track, passing x = 0 at t = 0. Fixed for the whole run.', 'ja')).toContain('第 2 の観測者')
+    expect(localizeExperimentText('Reset the clock to change the observer’s velocity.', 'id')).toContain('Atur ulang jam')
+    expect(localizeExperimentText('million years', 'id')).toBe('juta tahun')
+    expect(localizeExperimentText('thousand years', 'ja')).toBe('千年')
   })
 
   it('keeps English hints unchanged', () => {
