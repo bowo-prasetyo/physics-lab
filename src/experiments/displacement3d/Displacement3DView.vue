@@ -137,8 +137,8 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             :directions="DIRECTIONS"
           />
           <p class="muted small">
-            {{ tx('Drag to turn the view, scroll or pinch to zoom. x points east, y north and z up. The orange arrow is the displacement Δr from the green start to the blue
-            object.') }}
+            {{ tx(`Drag to turn the view, scroll or pinch to zoom. x points east, y north and z up. The orange arrow is the displacement Δr from the green start to the blue
+            object.`) }}
             <template v-if="intermediate"> {{ tx('Dashed lines show its x, y and z components.') }}</template>
           </p>
         </div>
