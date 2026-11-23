@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -122,6 +123,8 @@ const signed = (value: number, digits = 2) => {
 
     <ShareExperiment />
 
+    <LocalizedExperimentGuide experiment-id="moving-clocks" />
+
     <ExperimentSupport experiment-id="moving-clocks" :module-number="4" focus="Compare elapsed proper times along worldlines and distinguish them from coordinate-time descriptions." prompt="If two clocks separate and later reunite, must they record the same elapsed time?" action="Change the ship speed and observer frame, then compare the worldlines and simultaneity slices for the same events." reflect="Which events are shared by both observers, and which parts of the description depend on the chosen frame?" />
 
     <section aria-labelledby="predict-title">
@@ -215,7 +218,7 @@ const signed = (value: number, digits = 2) => {
     </section>
     </details>
 
-    <details class="lesson-disclosure">
+    <details v-if="locale === 'en'" class="lesson-disclosure">
       <summary>4 · Explore the meaning and interpretation</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
