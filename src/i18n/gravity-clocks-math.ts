@@ -49,6 +49,23 @@ const translations: Record<string, readonly [string, string]> = {
   'speed: slower': ['kecepatan: lebih lambat', '速度：遅くなる'],
   'faster': ['lebih cepat', '速く'],
   'slower': ['lebih lambat', '遅く'],
+  "When": ["Ketika",""],
+  "the square root can be expanded. For a small height difference": ["akar kuadrat dapat diekspansi. Untuk selisih ketinggian yang kecil",""],
+  "near a": ["di dekat",""],
+  "surface where gravity is": ["permukaan dengan gravitasi sebesar",""],
+  "With": ["Dengan",""],
+  "for a circular orbit: gravity": ["untuk orbit melingkar: gravitasi",""],
+  "per day, speed": ["per hari, kecepatan",""],
+  "per day, net": ["per hari, total",""],
+  "A clock at rest has": ["Jam yang diam memiliki",""],
+  "so": ["sehingga",""],
+  "For a circular orbit, the orbital motion adds to this:": ["Untuk orbit melingkar, gerak orbit menambahkan kontribusi berikut:",""],
+  "In the ADM 3 + 1 split from Experiment E,": ["Dalam pemisahan ADM 3 + 1 pada Eksperimen E,",""],
+  "Here the lapse is": ["Di sini fungsi lapse adalah",""],
+  ": the rate of a static clock. It falls to zero at the horizon. Experiment E’s formula is now something you can measure.": [": laju jam yang diam. Nilainya turun hingga nol di horizon. Rumus dari Eksperimen E kini dapat Anda ukur.",""],
+  "For your clocks (at radii": ["Untuk kedua jam Anda (pada jari-jari",""],
+  "), clock B runs": ["), jam B berjalan",""],
+  "and both observers agree.": ["dan kedua pengamat sepakat.",""],
 }
 
 export function localizeGravityClocksMathText(value: string, locale: Locale): string {
