@@ -89,7 +89,7 @@ function runExperiment() {
             <div><span class="muted">Speed after {{ time }} s</span><strong class="num">{{ fmt(velocity) }} m/s</strong></div>
             <div><span class="muted">Displacement after {{ time }} s</span><strong class="num">{{ fmt(displacement) }} m</strong></div>
           </div>
-          <h3>{{ localizeExperimentText('Recorded trials', locale) }}</h3>
+          <h3>Recorded trials</h3>
           <p v-if="runs.length === 0" class="muted">Run at least two carefully chosen cases to reveal a relationship.</p>
           <div v-else class="table-scroll">
             <table>
