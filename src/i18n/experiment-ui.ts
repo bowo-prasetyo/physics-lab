@@ -416,6 +416,8 @@ const text: Record<string, readonly [string, string]> = {
   "Experiment B": ["Eksperimen B", "実験 B"],
   "Experiment E": ["Eksperimen E", "実験 E"],
   "All modules": ["Semua modul", "すべてのモジュール"],
+  "Module 5 · General relativity · Experiment C": ["Modul 5 · Relativitas umum · Eksperimen C", "モジュール 5 · 一般相対性理論 · 実験 C"],
+  "Two identical clocks at different heights above a mass. Does gravity change how fast they tick, and what does that mean for the GPS in your phone?": ["Dua jam identik berada pada ketinggian berbeda di atas suatu massa. Apakah gravitasi mengubah laju detaknya, dan apa artinya bagi GPS di ponsel Anda?", "質量のある天体の上空の異なる高さに、同じ時計を 2 つ置きます。重力は時計の進み方を変えるのでしょうか。それは携帯電話の GPS にとって何を意味するのでしょうか。"],
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
