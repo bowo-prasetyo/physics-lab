@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { DEFAULT_LOCALE, detectLocale, isLocale, SUPPORTED_LOCALES } from './locales'
 import { messages, translate } from './messages'
 import { getLocalizedModules } from './home-catalog'
+import { getTeacherGuide } from './teacher-guide'
 
 describe('locale configuration', () => {
   it('recognizes only supported locale identifiers', () => {
@@ -42,5 +43,28 @@ describe('locale configuration', () => {
       expect(modules.reduce((count, module) => count + module.experiments.length, 0)).toBe(9)
       expect(modules.every(module => module.title.length > 0 && module.audience.length > 0)).toBe(true)
     }
+  })
+
+  it('provides six complete teacher lessons in every supported locale', () => {
+    for (const locale of SUPPORTED_LOCALES) {
+      const guide = getTeacherGuide(locale)
+      expect(guide.lessons).toHaveLength(6)
+      expect(guide.beforeItems).toHaveLength(4)
+      expect(guide.assessmentItems).toHaveLength(4)
+      for (const lesson of guide.lessons) {
+        expect(lesson.module.length).toBeGreaterThan(0)
+        expect(lesson.title.length).toBeGreaterThan(0)
+        expect(lesson.outcomes.length).toBeGreaterThan(0)
+        expect(lesson.sequence.length).toBeGreaterThan(0)
+        expect(lesson.prompts.length).toBeGreaterThan(0)
+        expect(lesson.check.length).toBeGreaterThan(0)
+      }
+    }
+  })
+
+  it('localizes curriculum content rather than reusing English copy', () => {
+    expect(getTeacherGuide('id').title).toBe('Panduan pengajar')
+    expect(getTeacherGuide('ja').title).toBe('教員向けガイド')
+    expect(getTeacherGuide('id').lessons.at(0)?.title).toBe('Posisi, jarak, dan perpindahan')
   })
 })

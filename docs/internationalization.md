@@ -1,14 +1,14 @@
 # Internationalization
 
-Physica currently supports English (`en`), Indonesian (`id`), and Japanese (`ja`). English is the fallback locale.
+Physica supports English (`en`), Indonesian (`id`), and Japanese (`ja`). English is the fallback locale.
 
 ## Adding or changing messages
 
 - Add stable, descriptive keys to `src/i18n/messages.ts`; keep the same key set in every locale.
-- Use keys based on meaning and context (for example, `app.navigation.forTeachers`), not the English wording.
-- Keep UI copy separate from experiment and curriculum content so those domains can be translated and reviewed independently.
-- Use `useLocale()` in Vue components and call `t('namespace.key')` in templates.
-- Do not put translated prose into physics calculations, model state, or identifiers. Translate only presentation text.
+- Use keys based on meaning and context, not the English wording.
+- Keep application-shell copy separate from experiment and curriculum content.
+- Use `useLocale()` in Vue components and `t('namespace.key')` in templates.
+- Keep translated prose out of physics calculations, model state, route paths, and identifiers.
 - Keep equations, variable names, SI unit symbols, and scientific notation intact unless a locale-specific convention is explicitly required.
 
 ## Locale behavior
@@ -17,21 +17,30 @@ Physica currently supports English (`en`), Indonesian (`id`), and Japanese (`ja`
 - On a first visit, the app selects the first supported language in the browser's language preference list.
 - Unsupported browser languages fall back to English.
 - An explicit language selection is persisted and updates `<html lang>`.
-- Locale selection is intentionally independent of the experiment query string, so shared experiment links remain stable.
+- Locale selection is independent of experiment query strings, so shared experiment links remain stable.
 
 ## Number and date formatting
 
-Use `formatNumber` and `formatDate` from `src/i18n/formatters.ts` for user-facing numbers and dates. These use the active locale through the platform `Intl` APIs. Keep raw numeric values in calculations and simulation state; format only at the presentation boundary.
+Use `formatNumber` and `formatDate` from `src/i18n/formatters.ts` for user-facing numbers and dates. Keep raw numeric values in calculations and simulation state; format only at the presentation boundary.
+
+## Localization phases
+
+### P0 — Foundation
+
+The locale preference, browser-language detection, document language, message lookup, and locale-aware formatters provide the shared foundation.
+
+### P1 — Application interface
+
+The shared interface and home-page catalogue are localized in English, Indonesian, and Japanese. This includes navigation, mathematical-level selection, experiment navigation, sharing, prediction workflow chrome, and experiment-support UI.
+
+Home-page module and experiment titles, summaries, audience labels, and planned-topic lists are maintained in `src/i18n/home-catalog.ts`. Keep the six-module/nine-experiment structure and route paths identical across locales.
+
+### P2 — Experiment and teaching content
+
+The teacher guide is localized as structured curriculum content in `src/i18n/teacher-guide.ts`, with all six lesson outlines translated in each supported locale. The guide view reads the active locale through `useLocale()`; lesson data is not embedded in the Vue template.
+
+The experiment-specific prediction banks, experiment introductions and explanations, chart/diagram labels, and accessibility descriptions are a larger content migration and remain a follow-on part of P2. Migrate these into typed locale catalogues incrementally, preserving prediction IDs, option IDs, thresholds, equations, and observation callbacks. Never translate values that participate in simulation logic. Add locale parity and stable-ID tests for every migrated experiment.
 
 ## Translation quality
 
-Translations in this foundation cover the application shell only. Experiment descriptions, predictions, charts, accessibility text, teacher resources, and route metadata are to be migrated in subsequent phases. Physics terminology should be reviewed consistently across locales before those catalogs are expanded.
-
-
-## Application interface localization (P1)
-
-The shared interface and home-page catalogue are localized in English, Indonesian, and Japanese. This includes the application navigation, mathematical-level selector and explanation, experiment breadcrumbs and previous/next controls, share feedback, prediction workflow labels, experiment-support headings, privacy notice, and optional progress checklist.
-
-Home-page module and experiment titles, summaries, audience labels, and planned-topic lists are maintained in `src/i18n/home-catalog.ts`. Keep the six-module/nine-experiment structure and route paths identical across locales. Do not translate route paths, stable IDs, or simulation values.
-
-The teacher guide's lesson-plan prose and experiment-specific content (including prediction questions/options/explanations, chart labels, and technical descriptions) remain in English at this phase; they are content-localization work rather than shared interface strings.
+Physics terminology should be consistent across locales and reviewed by fluent speakers with physics knowledge. Preserve the distinction between established model results, assumptions, and interpretation. Avoid translating scientific symbols or silently changing the physical meaning of an explanation.
