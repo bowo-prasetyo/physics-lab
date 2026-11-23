@@ -91,12 +91,9 @@ function formatClock(seconds: number): string {
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">Module 2 · Understanding time · Pendulum clocks</p>
-      <h1>Pendulum clocks</h1>
-      <p class="lead">
-        For three centuries the best clocks were pendulums. Find out what sets the beat of a pendulum, then take a pendulum clock to the Moon
-        and compare it with an atomic clock. What is a clock really measuring?
-      </p>
+      <p class="eyebrow">{{ localizeExperimentText('Module 2 · Understanding time · Pendulum clocks', locale) ?? 'Module 2 · Understanding time · Pendulum clocks' }}</p>
+      <h1>{{ localizeExperimentText('Pendulum clocks', locale) ?? 'Pendulum clocks' }}</h1>
+      <p class="lead">{{ localizeExperimentText('For three centuries the best clocks were pendulums. Find out what sets the beat of a pendulum, then take a pendulum clock to the Moon and compare it with an atomic clock. What is a clock really measuring?', locale) ?? 'For three centuries the best clocks were pendulums. Find out what sets the beat of a pendulum, then take a pendulum clock to the Moon and compare it with an atomic clock. What is a clock really measuring?' }}</p>
     </header>
 
     <ShareExperiment />
