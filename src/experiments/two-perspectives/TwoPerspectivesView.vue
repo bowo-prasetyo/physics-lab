@@ -148,7 +148,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
       </div>
 
       <div class="card chart-card">
-        <h3>The predictions at every speed</h3>
+        <h3>{{ tx("The predictions at every speed") }}</h3>
         <PredictionChart
           :series="chartSeries"
           :x-max="1"
