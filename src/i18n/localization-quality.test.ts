@@ -128,7 +128,7 @@ describe('localization quality assurance', () => {
     expect(localizeExperimentText('Off by 0.25 s', 'id'))
       .toBe('Selisih 0.25 s dari hasil pengukuran.')
     expect(localizeExperimentText('Off by 0.25 s', 'ja'))
-      .toBe('測定結果との差は 0.25 s です。')
+      .toBe('測定結果との差は 0.25 sです。')
   })
 
   it('formats numbers and dates using the active locale conventions', () => {
