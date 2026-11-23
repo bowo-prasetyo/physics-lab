@@ -26,17 +26,28 @@ function checkTranslations<T extends TestPrediction>(
 ) {
   for (const locale of ['id', 'ja'] as const) {
     const localized = localizePredictions(id, source, locale)
+    let translatedOptionLabels = 0
     expect(localized.map((item) => item.id)).toEqual(source.map((item) => item.id))
     expect(localized).toHaveLength(source.length)
     localized.forEach((item, index) => {
-      expect(item.question).not.toBe(source[index]?.question)
-      expect(item.task).not.toBe(source[index]?.task)
-      expect(item.explanation).not.toBe(source[index]?.explanation)
-      expect(item.options.map((option) => option.id)).toEqual(source[index]?.options.map((option) => option.id))
-      expect(item.options.every((option) => option.label.length > 0)).toBe(true)
-      expect(item.correct).toBe(source[index]?.correct)
-      expect(item.observed).toBe(source[index]?.observed)
+      const sourceItem = source[index]
+      expect(item.question.trim().length).toBeGreaterThan(0)
+      expect(item.task.trim().length).toBeGreaterThan(0)
+      expect(item.explanation.trim().length).toBeGreaterThan(0)
+      expect(item.question).not.toBe(sourceItem?.question)
+      expect(item.task).not.toBe(sourceItem?.task)
+      expect(item.explanation).not.toBe(sourceItem?.explanation)
+      expect(item.options.map((option) => option.id)).toEqual(sourceItem?.options.map((option) => option.id))
+      expect(item.options).toHaveLength(sourceItem?.options.length ?? 0)
+      item.options.forEach((option, optionIndex) => {
+        expect(option.label.trim().length).toBeGreaterThan(0)
+        if (option.label !== sourceItem?.options[optionIndex]?.label) translatedOptionLabels += 1
+      })
+      expect(item.correct).toBe(sourceItem?.correct)
+      expect(item.observed).toBe(sourceItem?.observed)
     })
+    // Short numeric answers and SI units may intentionally be identical in every language.
+    expect(translatedOptionLabels).toBeGreaterThan(0)
   }
 }
 
