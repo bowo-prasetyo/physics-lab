@@ -140,7 +140,7 @@ function formatClock(seconds: number): string {
             <button class="btn btn-primary" type="button" @click="running = !running">{{ running ? 'Pause' : state.t > 0 ? 'Resume' : 'Release' }}</button>
             <button class="btn" type="button" :disabled="state.t === 0" @click="reset">Reset</button>
           </div>
-          <div class="time-scale" role="group" aria-label="Playback speed">
+          <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">Playback</span>
             <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
               {{ s === 1 ? 'real time' : `×${s}` }}
@@ -217,7 +217,7 @@ function formatClock(seconds: number): string {
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>Next:</strong> Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>
