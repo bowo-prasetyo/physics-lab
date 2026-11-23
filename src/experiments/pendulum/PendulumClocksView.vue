@@ -24,6 +24,7 @@ import { localizePredictions } from '@/i18n/experiment-content'
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
+const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 
 // A setup can be shared as a link, e.g. #/time/pendulum?level=beginner&L=1&amp=10&m=1&planet=earth
 if (isLevel(route.query.level)) level.value = route.query.level
@@ -103,15 +104,15 @@ function formatClock(seconds: number): string {
     <ExperimentSupport experiment-id="pendulum" :module-number="2" focus="A pendulum is a physical clock: its period depends on its length, local gravitational acceleration and (beyond the small-angle limit) amplitude." prompt="Would adding mass to the bob make an ideal pendulum swing faster?" action="Vary length, mass and release angle separately; compare the measured period with the small-angle prediction." reflect="When does the small-angle approximation become less accurate, and why might a clock need recalibration in a new environment?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
-      <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <PendulumView :theta="state.theta" :amplitude-deg="amplitude" :length="length" :mass="mass" />
@@ -122,23 +123,23 @@ function formatClock(seconds: number): string {
         <div class="lab-side card">
           <div class="clocks">
             <div class="clock-card atomic">
-              <span class="clock-name">Atomic clock</span>
+              <span class="clock-name">{{ tx('Atomic clock') }}</span>
               <span class="clock-value num">{{ formatClock(clock.atomic) }}</span>
             </div>
             <div class="clock-card pendulum">
-              <span class="clock-name">Pendulum clock</span>
+              <span class="clock-name">{{ tx('Pendulum clock') }}</span>
               <span class="clock-value num">{{ formatClock(clock.pendulum) }}</span>
             </div>
           </div>
           <p class="drift" :class="{ off: Math.abs(clock.driftPerDay) >= 0.05 }">Pendulum clock {{ formatDrift(clock.driftPerDay) }}</p>
-          <p class="small muted">The pendulum clock was adjusted on the Earth, with small swings, for this length.</p>
+          <p class="small muted">{{ tx('The pendulum clock was adjusted on the Earth, with small swings, for this length.') }}</p>
 
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="running = !running">{{ running ? 'Pause' : state.t > 0 ? 'Resume' : 'Release' }}</button>
             <button class="btn" type="button" :disabled="state.t === 0" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
           </div>
           <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
-            <span class="muted small">Playback</span>
+            <span class="muted small">{{ tx('Playback') }}</span>
             <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
               {{ s === 1 ? 'real time' : `×${s}` }}
             </button>
@@ -151,20 +152,20 @@ function formatClock(seconds: number): string {
           <ParameterSlider v-model="amplitude" :label="localizeExperimentText('Release angle', locale) ?? 'Release angle'" symbol="\theta_0" unit="°" v-bind="AMPLITUDE_RANGE" :digits="0" :signed="false" />
           <ParameterSlider v-model="mass" :label="localizeExperimentText('Bob mass', locale) ?? 'Bob mass'" symbol="m" unit="kg" v-bind="MASS_RANGE" :digits="1" :signed="false" />
           <label class="field">
-            <span>World</span>
+            <span>{{ tx('World') }}</span>
             <select v-model="planetId">
               <option v-for="p in PLANETS" :key="p.id" :value="p.id">{{ p.name }} (g = {{ p.g }} m/s²)</option>
             </select>
           </label>
 
           <dl class="readouts">
-            <div><dt>Time</dt><dd class="num">{{ fmt(state.t, 4) }} s</dd></div>
-            <div><dt>Complete swings counted</dt><dd class="num">{{ swings }}</dd></div>
-            <div class="measured"><dt>Measured period</dt><dd class="num">{{ lastPeriod === null ? 'swing to measure' : `${fmt(lastPeriod)} s` }}</dd></div>
-            <div v-if="intermediate"><dt>Small-swing formula 2π√(L/g)</dt><dd class="num">{{ fmt(smallAngle) }} s</dd></div>
-            <div v-if="advanced"><dt>Exact period for this swing</dt><dd class="num">{{ fmt(exact) }} s</dd></div>
+            <div><dt>{{ tx('Time') }}</dt><dd class="num">{{ fmt(state.t, 4) }} s</dd></div>
+            <div><dt>{{ tx('Complete swings counted') }}</dt><dd class="num">{{ swings }}</dd></div>
+            <div class="measured"><dt>{{ tx('Measured period') }}</dt><dd class="num">{{ lastPeriod === null ? 'swing to measure' : `${fmt(lastPeriod)} s` }}</dd></div>
+            <div v-if="intermediate"><dt>{{ tx('Small-swing formula 2π√(L/g)') }}</dt><dd class="num">{{ fmt(smallAngle) }} s</dd></div>
+            <div v-if="advanced"><dt>{{ tx('Exact period for this swing') }}</dt><dd class="num">{{ fmt(exact) }} s</dd></div>
           </dl>
-          <p class="small muted">Changing a setting releases the pendulum again from rest. Measurements you made are kept for the questions.</p>
+          <p class="small muted">{{ tx('Changing a setting releases the pendulum again from rest. Measurements you made are kept for the questions.') }}</p>
         </div>
       </div>
     </section>
@@ -172,7 +173,7 @@ function formatClock(seconds: number): string {
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <PendulumMath :level="level" :length="length" :g="planet.g" :amplitude-deg="amplitude" :small-angle="smallAngle" :exact="exact" />
     </section>
     </details>
@@ -210,9 +211,9 @@ function formatClock(seconds: number): string {
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p>{{ localizeExperimentText('Next: Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>
-        <RouterLink to="/gravity/clock-rates">Experiment C</RouterLink>
-        <RouterLink to="/">All modules</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx('Experiment B') }}</RouterLink>
+        <RouterLink to="/gravity/clock-rates">{{ tx('Experiment C') }}</RouterLink>
+        <RouterLink to="/">{{ tx('All modules') }}</RouterLink>
       </span>
     </nav>
   </article>
