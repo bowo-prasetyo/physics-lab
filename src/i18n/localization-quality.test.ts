@@ -7,6 +7,7 @@ import { getTeacherGuide } from './teacher-guide'
 import { getExperimentSupportCopy } from './experiment-support'
 import { formatDate, formatNumber, getIntlLocale } from './formatters'
 import { setLocale } from './index'
+import { localizeExperimentText } from './experiment-ui'
 
 const placeholderNames = (value: string): string[] =>
   [...value.matchAll(/\{([a-zA-Z][\w]*)\}/g)].map((match) => match[1] ?? '').sort()
@@ -101,6 +102,33 @@ describe('localization quality assurance', () => {
         }
       }
     }
+  })
+
+  it('localizes dynamic two-perspectives verdicts and projectile chart labels', () => {
+    const labels = [
+      'Matches the measurement',
+      'Thrown ball',
+      'Vertical speed v_y',
+      'Sideways speed vₓ',
+      'Sideways speed v′ₓ (seen from the train)',
+      'Distance x',
+    ]
+
+    for (const label of labels) {
+      expect(localizeExperimentText(label, 'id'), 'Indonesian: ' + label).toBeDefined()
+      expect(localizeExperimentText(label, 'ja'), 'Japanese: ' + label).toBeDefined()
+      expect(localizeExperimentText(label, 'id')).not.toBe(label)
+      expect(localizeExperimentText(label, 'ja')).not.toBe(label)
+    }
+
+    expect(localizeExperimentText('Off by 2.5 m (12%)', 'id'))
+      .toBe('Selisih 2.5 m (12%) dari hasil pengukuran.')
+    expect(localizeExperimentText('Off by 2.5 m (12%)', 'ja'))
+      .toBe('測定結果との差は 2.5 m（12%）です。')
+    expect(localizeExperimentText('Off by 0.25 s', 'id'))
+      .toBe('Selisih 0.25 s dari hasil pengukuran.')
+    expect(localizeExperimentText('Off by 0.25 s', 'ja'))
+      .toBe('測定結果との差は 0.25 s です。')
   })
 
   it('formats numbers and dates using the active locale conventions', () => {
