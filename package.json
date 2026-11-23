@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "audit:localization": "node scripts/audit-localization.mjs",
-    "audit:localization:runtime": "vitest run src/i18n/runtime-localization-audit.test.ts"
+    "audit:localization:runtime": "vitest run src/i18n/runtime-localization-audit.test.ts src/i18n/interactive-localization-audit.test.ts",
+    "audit:localization:interactive": "vitest run src/i18n/interactive-localization-audit.test.ts"
   },
   "dependencies": {
     "katex": "0.18.11",
@@ -24,7 +25,6 @@
   "devDependencies": {
     "@tsconfig/node22": "22.0.7",
     "@types/node": "22.20.5",
-    "@types/three": "0.187.0",
     "@vitejs/plugin-vue": "6.0.11",
     "@vue/tsconfig": "0.9.1",
     "jsdom": "26.1.0",
