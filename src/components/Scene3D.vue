@@ -116,9 +116,9 @@ function buildStatic(): THREE.Group {
     cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir)
     g.add(cone)
     const words = props.directions?.[axis]
-    const axisLabels = [label(words ? `${axis} · ${localizeExperimentText(words[1], locale)}` : axis, `axis axis-${axis}`, dir.clone().multiplyScalar(n + (words && axis !== 'z' ? 2.8 : 1.4)))]
+    const axisLabels = [label(words ? `${axis} · ${localizeExperimentText(words[1], locale.value)}` : axis, `axis axis-${axis}`, dir.clone().multiplyScalar(n + (words && axis !== 'z' ? 2.8 : 1.4)))]
     // (A longer label is centred further out so it clears the arrowhead.)
-    if (words) axisLabels.push(label(localizeExperimentText(words[0], locale) ?? words[0], 'direction', dir.clone().multiplyScalar(-n - 1)))
+    if (words) axisLabels.push(label(localizeExperimentText(words[0], locale.value) ?? words[0], 'direction', dir.clone().multiplyScalar(-n - 1)))
     for (const t of [-8, -4, 4, 8]) if (Math.abs(t) < n) axisLabels.push(label(String(t), 'tick', dir.clone().multiplyScalar(t)))
     for (const l of axisLabels) {
       l.userData.axis = dir
@@ -158,7 +158,7 @@ function buildDynamic() {
   const startMarker = new THREE.Mesh(track(new THREE.SphereGeometry(0.28, 20, 20)), track(new THREE.MeshBasicMaterial({ color: success })))
   startMarker.position.copy(start)
   dynamic.add(startMarker)
-  dynamic.add(label(localizeExperimentText('start', locale) ?? 'start', 'point', start.clone().add(new THREE.Vector3(-1.1, -1.1, 0.4))))
+  dynamic.add(label(localizeExperimentText('start', locale.value) ?? 'start', 'point', start.clone().add(new THREE.Vector3(-1.1, -1.1, 0.4))))
 
   const object = new THREE.Mesh(track(new THREE.SphereGeometry(0.42, 24, 24)), track(new THREE.MeshLambertMaterial({ color: accent })))
   object.position.copy(end)
