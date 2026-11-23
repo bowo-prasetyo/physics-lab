@@ -208,7 +208,7 @@ function formatClock(seconds: number): string {
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>{{ localizeExperimentText('Next:', locale) }}</strong> {{ localizeExperimentText('Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.', locale) }}</p>
+      <p>{{ localizeExperimentText('Next: Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>
         <RouterLink to="/gravity/clock-rates">Experiment C</RouterLink>
