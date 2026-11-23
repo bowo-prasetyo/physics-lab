@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 const props = defineProps<{
   /** Current angle (rad). */
@@ -43,7 +47,7 @@ const description = computed(
 
 <template>
   <figure class="pendulum">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
       <line :x1="PIVOT.x - 60" :x2="PIVOT.x + 60" :y1="PIVOT.y" :y2="PIVOT.y" class="beam" />
       <line :x1="PIVOT.x" :x2="PIVOT.x" :y1="PIVOT.y" :y2="PIVOT.y + rodPx + 14" class="vertical" />
       <path :d="arc" class="arc" />
