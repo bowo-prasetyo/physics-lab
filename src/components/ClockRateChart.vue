@@ -34,9 +34,9 @@ const deficitAt = (h: number) => staticClockDeficit(props.body.mass, props.body.
 const unit = computed(() => {
   const max = deficitAt(props.body.hasSurface ? 0 : props.range.min)
   if (max >= 0.01) return { scale: 100, name: '%' }
-  if (max >= 1e-7) return { scale: 1e6, name: 'parts per million' }
-  if (max >= 1e-10) return { scale: 1e9, name: 'parts per billion' }
-  return { scale: 1e12, name: 'parts per trillion' }
+  if (max >= 1e-7) return { scale: 1e6, name: localizeExperimentText('parts per million', locale.value) ?? 'parts per million' }
+  if (max >= 1e-10) return { scale: 1e9, name: localizeExperimentText('parts per billion', locale.value) ?? 'parts per billion' }
+  return { scale: 1e12, name: localizeExperimentText('parts per trillion', locale.value) ?? 'parts per trillion' }
 })
 const yMax = computed(() => niceCeil(deficitAt(props.body.hasSurface ? 0 : props.range.min) * unit.value.scale))
 const sy = (d: number) => M.top + (1 - (d * unit.value.scale) / yMax.value) * plotH
