@@ -71,7 +71,7 @@ function runExperiment() {
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Choose an answer before running the model. Each explanation unlocks only after you have compared the relevant cases.</p>
       <div class="prediction-grid">
-        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" ::hint="localizeExperimentText("hints[p.id]", locale) ?? "hints[p.id]"" :index="i + 1" />
       </div>
     </section>
 
@@ -79,7 +79,7 @@ function runExperiment() {
       <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
       <div class="lab">
         <div class="lab-main card">
-          <div class="cart-scene" role="img" :aria-label="`A cart of mass ${mass} kilograms pushed to the right by a net force of ${force} newtons`">
+          <div class="cart-scene" role="img" :aria-:label="localizeExperimentText("`A cart of mass ${mass} kilograms pushed to the right by a net force of ${force} newtons`", locale) ?? "`A cart of mass ${mass} kilograms pushed to the right by a net force of ${force} newtons`"">
             <div class="force-arrow"><span>{{ force }} N net force</span><span class="arrow">⟶</span></div>
             <div class="cart"><span>{{ mass }} kg</span><i></i><i></i></div>
             <p class="muted small">Idealised horizontal track · the cart starts from rest</p>
@@ -89,7 +89,7 @@ function runExperiment() {
             <div><span class="muted">Speed after {{ time }} s</span><strong class="num">{{ fmt(velocity) }} m/s</strong></div>
             <div><span class="muted">Displacement after {{ time }} s</span><strong class="num">{{ fmt(displacement) }} m</strong></div>
           </div>
-          <h3>Recorded trials</h3>
+          <h3>{{ localizeExperimentText('Recorded trials', locale) }}</h3>
           <p v-if="runs.length === 0" class="muted">Run at least two carefully chosen cases to reveal a relationship.</p>
           <div v-else class="table-scroll">
             <table>
@@ -99,20 +99,20 @@ function runExperiment() {
               </tbody>
             </table>
           </div>
-          <button class="btn btn-small" type="button" :disabled="runs.length === 0" @click="runs = []">Clear recorded trials</button>
+          <button class="btn btn-small" type="button" :disabled="runs.length === 0" @click="runs = []">{{ localizeExperimentText("Clear recorded trials", locale) ?? "Clear recorded trials" }}</button>
         </div>
         <aside class="lab-side card">
-          <ParameterSlider v-model="force" label="Net force" symbol="F_{net}" unit="N" v-bind="FORCE" :digits="0" :signed="false" />
-          <ParameterSlider v-model="mass" label="Cart mass" symbol="m" unit="kg" v-bind="MASS" :digits="0" :signed="false" />
-          <ParameterSlider v-model="time" label="Elapsed time" symbol="t" unit="s" v-bind="TIME" :digits="0" :signed="false" />
-          <button class="btn btn-primary" type="button" @click="runExperiment">Run this trial</button>
+          <ParameterSlider v-model="force" :label="localizeExperimentText("Net force", locale) ?? "Net force"" symbol="F_{net}" unit="N" v-bind="FORCE" :digits="0" :signed="false" />
+          <ParameterSlider v-model="mass" :label="localizeExperimentText("Cart mass", locale) ?? "Cart mass"" symbol="m" unit="kg" v-bind="MASS" :digits="0" :signed="false" />
+          <ParameterSlider v-model="time" :label="localizeExperimentText("Elapsed time", locale) ?? "Elapsed time"" symbol="t" unit="s" v-bind="TIME" :digits="0" :signed="false" />
+          <button class="btn btn-primary" type="button" @click="runExperiment">{{ localizeExperimentText("Run this trial", locale) ?? "Run this trial" }}</button>
           <p class="small muted">For a fair comparison, change one variable at a time and keep the other fixed.</p>
         </aside>
       </div>
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText("3 · Explore the mathematics", locale) ?? "3 · Explore the mathematics" }}</summary>
       <section class="card prose" aria-labelledby="maths-title">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <p>Newton’s second law relates the net force on an object to its acceleration:</p>
@@ -125,7 +125,7 @@ function runExperiment() {
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText("4 · Explore the meaning and interpretation", locale) ?? "4 · Explore the meaning and interpretation" }}</summary>
       <section class="card prose">
       <h2><span class="step-no">4</span> What does it tell us?</h2>
       <h3>Established physics</h3>
@@ -139,7 +139,7 @@ function runExperiment() {
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-:label="localizeExperimentText("localizeExperimentText('Next steps', locale)", locale) ?? "localizeExperimentText('Next steps', locale)"">
       <p><strong>Continue:</strong> apply force and acceleration reasoning to a projectile, where gravity changes the vertical velocity.</p>
       <span class="nav-links"><RouterLink to="/mechanics/projectile">Projectile launcher</RouterLink><RouterLink to="/teachers">Teacher guide</RouterLink><RouterLink to="/">All modules</RouterLink></span>
     </nav>
