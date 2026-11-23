@@ -98,6 +98,45 @@ function collectRenderedCopy(markup: string, route: string, locale: Locale): Cop
   return records
 }
 
+/** Resolve the common accessible-name sources used by native and ARIA controls. */
+function accessibleName(element: Element, container: HTMLElement): string {
+  const explicit = normalize(element.getAttribute('aria-label') ?? '')
+  if (explicit) return explicit
+
+  const labelledBy = (element.getAttribute('aria-labelledby') ?? '')
+    .split(/\\s+/)
+    .filter(Boolean)
+    .map((id) => container.ownerDocument.getElementById(id)?.textContent ?? '')
+    .map(normalize)
+    .filter(Boolean)
+    .join(' ')
+  if (labelledBy) return labelledBy
+
+  const title = normalize(element.getAttribute('title') ?? '')
+  if (title) return title
+
+  if (element instanceof HTMLInputElement || element instanceof HTMLSelectElement || element instanceof HTMLTextAreaElement) {
+    const labels = Array.from(element.labels ?? []).map((label) => normalize(label.textContent ?? '')).filter(Boolean)
+    if (labels.length) return labels.join(' ')
+  }
+
+  const wrappingLabel = element.closest('label')
+  if (wrappingLabel) return normalize(wrappingLabel.textContent ?? '')
+
+  const clone = element.cloneNode(true) as Element
+  clone.querySelectorAll('[aria-hidden="true"]').forEach((hidden) => hidden.remove())
+  return normalize(clone.textContent ?? '')
+}
+
+function collectAccessibilityIssues(markup: string, route: string, locale: Locale): Array<{ route: string; locale: Locale; element: string }> {
+  const container = document.createElement('div')
+  container.innerHTML = markup
+  const selectors = 'button, input:not([type="hidden"]), select, textarea, a[href], summary, [role="button"], [role="img"], svg[role="group"]'
+  return Array.from(container.querySelectorAll(selectors))
+    .filter((element) => !accessibleName(element, container))
+    .map((element) => ({ route, locale, element: element.tagName.toLowerCase() + (element.getAttribute('role') ? '[role=' + element.getAttribute('role') + ']' : '') }))
+}
+
 function candidateKey(record: Pick<CopyRecord, 'kind' | 'attribute' | 'text'>): string {
   return [record.kind, record.attribute ?? '', record.text].join('::')
 }
@@ -123,6 +162,8 @@ describe('runtime localization audit', () => {
     await router.isReady()
 
     const snapshots = new Map<string, CopyRecord[]>()
+    const accessibilityIssues: Array<{ route: string; locale: Locale; element: string }> = []
+    const documentLanguageIssues: Array<{ route: string; locale: Locale; actual: string }> = []
     let renderedPages = 0
 
     try {
@@ -133,9 +174,13 @@ describe('runtime localization audit', () => {
         for (const locale of SUPPORTED_LOCALES) {
           setLocale(locale)
           await nextTick()
+          if (document.documentElement.lang !== locale) {
+            documentLanguageIssues.push({ route: route.name, locale, actual: document.documentElement.lang })
+          }
           const markup = await renderToString(app)
           expect(markup.length, `Expected rendered markup for ${route.name} (${locale})`).toBeGreaterThan(0)
           snapshots.set(`${route.name}:${locale}`, collectRenderedCopy(markup, route.name, locale))
+          accessibilityIssues.push(...collectAccessibilityIssues(markup, route.name, locale))
           renderedPages += 1
         }
       }
@@ -180,10 +225,13 @@ describe('runtime localization audit', () => {
       expect(candidates.some((candidate) => candidate.text === reviewedFalsePositive), reviewedFalsePositive).toBe(false)
     }
 
+    expect(documentLanguageIssues, 'The document language must follow the selected locale').toEqual([])
+    expect(accessibilityIssues, 'Every interactive control and named graphic must expose an accessible name').toEqual([])
+
     const report = {
       schemaVersion: 1,
       generatedAt: new Date().toISOString(),
-      scope: 'Rendered Vue application copy, SVG visualization labels, and selected accessibility attributes across default and shared-link experiment states in every supported locale.',
+      scope: 'Rendered Vue application copy, SVG visualization labels, selected accessibility attributes, accessible names for interactive controls and named graphics, and the document language across default and shared-link experiment states in every supported locale.',
       locales: [...SUPPORTED_LOCALES],
       routes: ROUTES.map(({ path, name }) => ({ path, name })),
       summary: {
@@ -192,6 +240,15 @@ describe('runtime localization audit', () => {
         localeCount: SUPPORTED_LOCALES.length,
         unchangedEnglishCandidates: candidates.length,
         routesWithCandidates: new Set(candidates.map((item) => item.route)).size,
+        unnamedInteractiveElements: accessibilityIssues.length,
+        documentLanguageMismatches: documentLanguageIssues.length,
+      },
+      accessibility: {
+        checkedInteractiveAndGraphicElements: renderedPages,
+        documentLanguage: 'The html lang attribute is checked against the selected locale on every route/state render.',
+        accessibleNameRule: 'Buttons, form controls, links, summaries, and named graphics must expose a non-empty accessible name through ARIA, an associated label, title, or their text content.',
+        unnamedElements: accessibilityIssues,
+        documentLanguageMismatches: documentLanguageIssues,
       },
       interpretation: 'Candidates are review leads, not confirmed translation defects. Shared scientific terms, proper nouns, formulas, and intentionally identical labels may appear. Review each item in context.',
       limitations: [
@@ -218,8 +275,16 @@ describe('runtime localization audit', () => {
       `- Route/locale renders: ${report.summary.renderedPages}`,
       `- Unchanged-English candidates: ${report.summary.unchangedEnglishCandidates}`,
       `- Routes containing candidates: ${report.summary.routesWithCandidates}`,
+      `- Unnamed interactive/graphic elements: ${report.summary.unnamedInteractiveElements}`,
+      `- Document language mismatches: ${report.summary.documentLanguageMismatches}`,
       '',
       '> Candidates are review leads, not confirmed translation defects. Shared scientific terms, proper nouns, formulas, and intentionally identical labels may appear.',
+      '',
+      '## Accessibility localization checks',
+      '',
+      `- Interactive controls and named graphics checked: ${report.accessibility.checkedInteractiveAndGraphicElements} route/locale renders`,
+      `- Unnamed elements: ${report.accessibility.unnamedElements.length}`,
+      `- Document language mismatches: ${report.accessibility.documentLanguageMismatches.length}`,
       '',
       '## Candidates',
       '',
