@@ -66,7 +66,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
   DESCRIPTIONS.map((d) => ({
     id: d,
     kind: d,
-    label: d === 'spacetime' ? `${DESCRIPTION_INFO[d].title} (dashed: lies on the Lorentz line)` : DESCRIPTION_INFO[d].title,
+    label: tx(d === 'spacetime' ? `${DESCRIPTION_INFO[d].title} (dashed: lies on the Lorentz line)` : DESCRIPTION_INFO[d].title),
     dashed: d === 'spacetime',
     points: SAMPLES.map((x) => ({ x, y: predict(scenario.value, d, x) })),
   })),
@@ -110,20 +110,20 @@ const chartSeries = computed<ChartSeries[]>(() =>
           <legend>{{ localizeExperimentText('Situation', locale) ?? 'Situation' }}</legend>
           <label v-for="s in SCENARIOS" :key="s" :class="{ active: scenario === s }">
             <input v-model="scenario" type="radio" :value="s" class="sr-only" />
-            {{ SCENARIO_INFO[s].tab }}
+            {{ tx(SCENARIO_INFO[s].tab) }}
           </label>
         </fieldset>
-        <p class="setup-text">{{ info.setup }}</p>
+        <p class="setup-text">{{ tx(info.setup) }}</p>
         <div class="setup-row">
           <ParameterSlider v-model="beta" :label="localizeExperimentText('Ship speed', locale) ?? 'Ship speed'" symbol="v/c" unit="c" v-bind="BETA_RANGE" :digits="2" :signed="false" />
-          <p class="question"><span class="muted">{{ tx('Predicting:') }}</span> <strong>{{ info.quantity }}</strong></p>
+          <p class="question"><span class="muted">{{ tx('Predicting:') }}</span> <strong>{{ tx(info.quantity) }}</strong></p>
         </div>
       </div>
 
       <div class="columns">
         <article v-for="d in DESCRIPTIONS" :key="d" :class="['card', 'description', d]">
-          <h3>{{ DESCRIPTION_INFO[d].title }}</h3>
-          <p class="assumption">{{ DESCRIPTION_INFO[d].assumption }}</p>
+          <h3>{{ tx(DESCRIPTION_INFO[d].title) }}</h3>
+          <p class="assumption">{{ tx(DESCRIPTION_INFO[d].assumption) }}</p>
           <details class="working" :open="showWorkingOpen">
             <summary>{{ localizeExperimentText('Show the working', locale) ?? 'Show the working' }}</summary>
             <MathFormula display :tex="derivation(scenario, d, beta)" />
@@ -142,7 +142,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
           </template>
           <template v-else>
             <p class="value num">{{ format(measurement) }}</p>
-            <p class="evidence">{{ info.evidence }}</p>
+            <p class="evidence">{{ tx(info.evidence) }}</p>
           </template>
         </article>
       </div>
