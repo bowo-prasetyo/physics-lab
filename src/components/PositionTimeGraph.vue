@@ -107,18 +107,18 @@ const description = computed(() => {
     </svg>
 
     <details class="graph-data">
-      <summary>Read the position–time values as a table</summary>
-      <div class="table-scroll"><table><thead><tr><th scope="col">Run / observer</th><th scope="col">Time</th><th scope="col">Position</th></tr></thead>
+      <summary>{{ localizeExperimentText('Read the position–time values as a table', locale) }}</summary>
+      <div class="table-scroll"><table><thead><tr><th scope="col">{{ localizeExperimentText('Run / observer', locale) }}</th><th scope="col">{{ localizeExperimentText('Time', locale) }}</th><th scope="col">{{ localizeExperimentText('Position', locale) }}</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Current run</th><td>{{ currentEnd.t.toFixed(2) }} s</td><td>{{ currentEnd.x.toFixed(2) }} m</td></tr>
-          <tr v-if="observerEnd"><th scope="row">Moving observer</th><td>{{ observerEnd.t.toFixed(2) }} s</td><td>{{ observerEnd.x.toFixed(2) }} m</td></tr>
+          <tr><th scope="row">{{ localizeExperimentText('Current run', locale) }}</th><td>{{ currentEnd.t.toFixed(2) }} s</td><td>{{ currentEnd.x.toFixed(2) }} m</td></tr>
+          <tr v-if="observerEnd"><th scope="row">{{ localizeExperimentText('Moving observer', locale) }}</th><td>{{ observerEnd.t.toFixed(2) }} s</td><td>{{ observerEnd.x.toFixed(2) }} m</td></tr>
           <tr v-for="(record, index) in history" :key="index"><th scope="row">Earlier run {{ index + 1 }} ({{ describeRun(record) }})</th><td>{{ graphVertices(record).at(-1)?.t.toFixed(2) }} s</td><td>{{ graphVertices(record).at(-1)?.x.toFixed(2) }} m</td></tr>
         </tbody></table></div>
     </details>
     <figcaption class="legend">
-      <span><i class="swatch current" /> Current run</span>
-      <span v-if="observerVertices"><i class="swatch observer" /> Same run, measured by the moving observer</span>
-      <span v-for="line in historyLines" :key="line.key"><i class="swatch" :style="{ background: line.colour }" /> Earlier: {{ line.label }}</span>
+      <span><i class="swatch current" /> {{ localizeExperimentText('Current run', locale) }}</span>
+      <span v-if="observerVertices"><i class="swatch observer" /> {{ localizeExperimentText('Same run, measured by the moving observer', locale) }}</span>
+      <span v-for="line in historyLines" :key="line.key"><i class="swatch" :style="{ background: line.colour }" /> {{ localizeExperimentText('Earlier', locale) }}: {{ line.label }}</span>
     </figcaption>
   </figure>
 </template>
