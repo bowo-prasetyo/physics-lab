@@ -6,6 +6,7 @@ export type ResolvedTheme = 'light' | 'dark'
 const STORAGE_KEY = 'physica-theme'
 
 function readPreference(): ThemePreference {
+  if (typeof window === 'undefined') return 'system'
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY)
     if (stored === 'light' || stored === 'dark' || stored === 'system') return stored
