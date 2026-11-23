@@ -18,6 +18,7 @@ import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
@@ -39,7 +40,7 @@ const observerVelocity = computed(() => (advanced.value && u.value !== 0 ? u.val
 
 const predictions = computed(() => localizePredictions('space-vs-time', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(allRuns.value)])))
-const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(allRuns.value) ?? null])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, localizeExperimentText(p.hint?.(allRuns.value) ?? null, locale.value)])))
 
 const showTable = ref(level.value === 'beginner')
 
