@@ -94,7 +94,7 @@ const hubbleTime = computed(() => 1 / hubbleRateToday(props.cosmology))
 
       <h3>The Friedmann equation</h3>
       <p>General relativity relates the expansion rate to what the universe contains:</p>
-      <MathFormula display tex="H^2 = H_0^2\left(\Omega_r\,a^{-4} + \Omega_m\,a^{-3} + \Omega_\Lambda\right)" />
+      <MathFormula display tex="H^2 = H_0^2\left(\Omega_r\,a^{-4} + \Omega_m\,a^{-3} + \Omega_k\,a^{-2} + \Omega_\Lambda\right)" />
       <MathFormula display :tex="friedmannExample" />
       <p>
         Radiation dilutes as <MathFormula tex="a^{-4}" /> (fewer photons per volume, and each one stretched), matter as
@@ -124,8 +124,9 @@ const hubbleTime = computed(() => 1 / hubbleRateToday(props.cosmology))
       <h3>Slowing down or speeding up</h3>
       <MathFormula display tex="q = -\frac{a\,\ddot a}{\dot a^2} = \frac{\Omega_r a^{-4} + \tfrac12\Omega_m a^{-3} - \Omega_\Lambda}{H^2/H_0^2}" />
       <p>
-        <MathFormula tex="q > 0" /> means the expansion is slowing; <MathFormula tex="q < 0" />, speeding up. With matter and dark energy the
-        switch is at <MathFormula tex="a = (\Omega_m / 2\Omega_\Lambda)^{1/3}" />.
+        <MathFormula tex="q > 0" /> means the expansion is slowing; <MathFormula tex="q < 0" />, speeding up. The transition is found by solving
+        <MathFormula tex="\Omega_r + \tfrac12\Omega_m a - \Omega_\Lambda a^4 = 0" /> for its positive root. If radiation is negligible,
+        this reduces to <MathFormula tex="a = (\Omega_m / 2\Omega_\Lambda)^{1/3}" />.
       </p>
 
       <h3>Where the model ends</h3>
