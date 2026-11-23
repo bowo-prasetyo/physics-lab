@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue'
 import { niceCeil } from './chartScale'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 export interface ChartSeries {
   readonly id: string
@@ -51,7 +55,7 @@ const description = computed(
 
 <template>
   <figure class="chart">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
       <defs>
         <clipPath :id="`${id}-plot`">
           <rect :x="M.left" :y="M.top - 4" :width="plotW + 4" :height="plotH + 8" />
@@ -63,8 +67,8 @@ const description = computed(
       </g>
       <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 18" class="tick">{{ x === 1 ? '1c' : x.toFixed(1) }}</text>
       <text v-for="y in yTicks" :key="`ly${y}`" :x="M.left - 8" :y="sy(y) + 4" class="tick y">{{ fmt(y) }}</text>
-      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ xLabel }}</text>
-      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ yLabel }}</text>
+      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ localizeExperimentText(xLabel, locale) }}</text>
+      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText(yLabel, locale) }}</text>
 
       <g :clip-path="`url(#${id}-plot)`">
         <line :x1="sx(marker)" :x2="sx(marker)" :y1="M.top" :y2="M.top + plotH" class="marker" />
@@ -73,13 +77,13 @@ const description = computed(
       </g>
     </svg>
     <details class="chart-data">
-      <summary>View the plotted values as a table</summary>
-      <div class="chart-scroll"><table><thead><tr><th scope="col">Model</th><th scope="col">{{ xLabel }}</th><th scope="col">{{ yLabel }}</th></tr></thead>
-        <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ item.label }}</th><td>{{ point.x.toFixed(3) }}</td><td>{{ point.y.toFixed(3) }}</td></tr></template>
-          <tr v-if="measured !== null"><th scope="row">Measured</th><td>{{ marker.toFixed(3) }}</td><td>{{ measured.toFixed(3) }}</td></tr></tbody></table></div>
+      <summary>{{ localizeExperimentText('View the plotted values as a table', locale) }}</summary>
+      <div class="chart-scroll"><table><thead><tr><th scope="col">{{ localizeExperimentText('Model', locale) }}</th><th scope="col">{{ localizeExperimentText(xLabel, locale) }}</th><th scope="col">{{ localizeExperimentText(yLabel, locale) }}</th></tr></thead>
+        <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ localizeExperimentText(item.label, locale) }}</th><td>{{ point.x.toFixed(3) }}</td><td>{{ point.y.toFixed(3) }}</td></tr></template>
+          <tr v-if="measured !== null"><th scope="row">{{ localizeExperimentText('Measured', locale) }}</th><td>{{ marker.toFixed(3) }}</td><td>{{ measured.toFixed(3) }}</td></tr></tbody></table></div>
     </details>
     <figcaption class="legend">
-      <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind, { dashed: line.dashed }]" /> {{ line.label }}</span>
+      <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind, { dashed: line.dashed }]" /> {{ localizeExperimentText(line.label, locale) }}</span>
       <span v-if="measured !== null"><i class="swatch measured-swatch" /> Measured</span>
     </figcaption>
   </figure>

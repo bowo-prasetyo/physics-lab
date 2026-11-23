@@ -18,6 +18,7 @@ import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
@@ -78,7 +79,7 @@ useQuerySync({
 
 const predictions = computed(() => localizePredictions('projectile', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(throws.value)])))
-const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(throws.value) ?? null])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, localizeExperimentText(p.hint?.(throws.value) ?? null, locale.value)])))
 
 const intermediate = computed(() => atLeast(level.value, 'intermediate'))
 const advanced = computed(() => atLeast(level.value, 'advanced'))
@@ -183,7 +184,7 @@ const dropDifference = computed(() => {
 
         <div class="lab-side card">
           <button class="btn btn-primary launch" type="button" :disabled="flying" @click="launch">{{ flying ? 'In flight…' : 'Launch' }}</button>
-          <div class="time-scale" role="group" aria-label="Playback speed">
+          <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">Playback</span>
             <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
               {{ s === 1 ? 'real time' : `×${s}` }}
@@ -284,7 +285,7 @@ const dropDifference = computed(() => {
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>See also:</strong> Experiment A for motion in one dimension, and Experiment B for what happens near the speed of light.</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>

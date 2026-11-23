@@ -3,6 +3,10 @@ import { computed, useId } from 'vue'
 import { staticClockDeficit, type Body } from '@/physics'
 import { niceCeil } from './chartScale'
 import { formatLength } from '@/experiments/gravity-clocks/format'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 const props = defineProps<{
   body: Body
@@ -73,7 +77,7 @@ const description = computed(
 
 <template>
   <figure class="chart">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
       <defs>
         <clipPath :id="`${id}-plot`">
           <rect :x="M.left - 10" :y="M.top - 10" :width="plotW + 20" :height="plotH + 12" />
@@ -86,9 +90,9 @@ const description = computed(
       <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 18" class="tick">{{ formatLength(x) }}</text>
       <text v-for="y in yTicks" :key="`ly${y}`" :x="M.left - 8" :y="M.top + (1 - y / yMax) * plotH + 4" class="tick y">{{ fmtY(y) }}</text>
       <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">
-        height above the {{ body.hasSurface ? 'surface' : 'horizon' }} (logarithmic scale{{ body.hasSurface ? '; left edge = on the surface' : '' }})
+        {{ localizeExperimentText(body.hasSurface ? 'height above the surface' : 'height above the horizon', locale) }} ({{ localizeExperimentText('logarithmic scale', locale) }}{{ body.hasSurface ? `; ${localizeExperimentText('left edge = on the surface', locale)}` : '' }})
       </text>
-      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">clock slowed by ({{ unit.name }})</text>
+      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText(`clock slowed by (${unit.name})`, locale) }}</text>
 
       <g :clip-path="`url(#${id}-plot)`">
         <path :d="`${curve} L${M.left + plotW},${M.top + plotH} L${M.left},${M.top + plotH} Z`" class="well" />
@@ -101,12 +105,12 @@ const description = computed(
       </g>
     </svg>
     <details class="chart-data">
-      <summary>Read the clock comparisons as a table</summary>
-      <table><thead><tr><th scope="col">Clock</th><th scope="col">Altitude</th><th scope="col">Clock-rate deficit</th></tr></thead>
+      <summary>{{ localizeExperimentText('Read the clock comparisons as a table', locale) }}</summary>
+      <table><thead><tr><th scope="col">{{ localizeExperimentText('Clock', locale) }}</th><th scope="col">{{ localizeExperimentText('Altitude', locale) }}</th><th scope="col">{{ localizeExperimentText('Clock-rate deficit', locale) }}</th></tr></thead>
         <tbody><tr><th scope="row">A</th><td>{{ formatLength(altitudeA) }}</td><td>{{ (deficitAt(altitudeA) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr>
           <tr><th scope="row">B</th><td>{{ formatLength(altitudeB) }}</td><td>{{ (deficitAt(altitudeB) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr></tbody>
       </table>
-      <p class="muted small">A positive deficit means the clock runs slower than a clock infinitely far from this body, under the static Schwarzschild model.</p>
+      <p class="muted small">{{ localizeExperimentText('A positive deficit means the clock runs slower than a clock infinitely far from this body, under the static Schwarzschild model.', locale) }}</p>
     </details>
   </figure>
 </template>

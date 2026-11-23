@@ -17,6 +17,7 @@ import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
@@ -44,7 +45,7 @@ useQuerySync({
 
 const predictions = computed(() => localizePredictions('moving-clocks', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(allRuns.value)])))
-const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(allRuns.value) ?? null])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, localizeExperimentText(p.hint?.(allRuns.value) ?? null, locale.value)])))
 
 const intermediate = computed(() => atLeast(level.value, 'intermediate'))
 const advanced = computed(() => atLeast(level.value, 'advanced'))
@@ -189,7 +190,7 @@ const signed = (value: number, digits = 2) => {
             :digits="2"
             :signed="false"
             :disabled="status === 'running'"
-            :hint="status === 'running' ? 'Pause to change the speed (this starts a new run).' : 'Relative to the Earth. 0.80c is 80% of light speed.'"
+            :hint="localizeExperimentText(status === 'running' ? 'Pause to change the speed (this starts a new run).' : 'Relative to the Earth. 0.80c is 80% of light speed.', locale)"
           />
 
           <dl class="readouts">
@@ -261,7 +262,7 @@ const signed = (value: number, digits = 2) => {
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p>
         <strong>Next:</strong> Experiment E describes the same situations with separate space and time, and with a single spacetime.
       </p>

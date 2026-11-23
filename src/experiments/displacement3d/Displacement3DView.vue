@@ -17,6 +17,7 @@ import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import type { LocationQuery } from 'vue-router'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 // Three.js is large; it is only downloaded for this page.
@@ -64,7 +65,7 @@ watch(
 
 const predictions = computed(() => localizePredictions('displacement3d', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(snapshots.value)])))
-const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(snapshots.value) ?? null])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, localizeExperimentText(p.hint?.(snapshots.value) ?? null, locale.value)])))
 
 const intermediate = computed(() => atLeast(level.value, 'intermediate'))
 const advanced = computed(() => atLeast(level.value, 'advanced'))
@@ -121,7 +122,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
       <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
       <div class="lab">
         <div class="lab-main card">
-          <div class="views" role="group" aria-label="Camera">
+          <div class="views" role="group" :aria-label="localizeExperimentText('Camera', locale)">
             <span class="muted small">View</span>
             <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">
               {{ v === '3d' ? '3D' : v === 'top' ? 'From above' : v === 'front' ? 'From the front' : 'From the side' }}
@@ -246,7 +247,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>Next:</strong> Experiment A adds time to position, and Experiment E compares space and time with spacetime.</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>

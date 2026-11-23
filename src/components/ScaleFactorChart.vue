@@ -2,6 +2,10 @@
 import { computed, useId } from 'vue'
 import type { Expansion } from '@/physics'
 import { niceCeil } from './chartScale'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 const props = defineProps<{
   expansion: Expansion
@@ -54,7 +58,7 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
 
 <template>
   <figure class="chart">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="`Scale factor a against time. ${xLabel}. Today a = 1.`">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(`Scale factor a against time. ${xLabel}. Today a = 1.`, locale)">
       <defs>
         <clipPath :id="`${id}-plot`"><rect :x="M.left" :y="M.top - 6" :width="plotW + 6" :height="plotH + 6" /></clipPath>
       </defs>
@@ -64,24 +68,24 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
       </g>
       <text v-for="t in xTicks" :key="`lx${t}`" :x="sx(t)" :y="M.top + plotH + 18" class="tick">{{ t }}</text>
       <text v-for="a in yTicks" :key="`ly${a}`" :x="M.left - 8" :y="sy(a) + 4" class="tick y">{{ Number(a.toPrecision(3)) }}</text>
-      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ xLabel }}</text>
-      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">scale factor a</text>
+      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ localizeExperimentText(xLabel, locale) }}</text>
+      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText('scale factor a', locale) }}</text>
 
       <g :clip-path="`url(#${id}-plot)`">
         <line :x1="sx(expansion.tToday)" :x2="sx(expansion.tToday)" :y1="M.top" :y2="M.top + plotH" class="today" />
         <line :x1="M.left" :x2="M.left + plotW" :y1="sy(1)" :y2="sy(1)" class="today" />
-        <text :x="sx(expansion.tToday) + 4" :y="M.top + 12" class="today-label">today</text>
+        <text :x="sx(expansion.tToday) + 4" :y="M.top + 12" class="today-label">{{ localizeExperimentText('today', locale) }}</text>
         <path v-if="other" :d="path(other)" class="curve compare" />
         <path :d="path(main)" class="curve" />
         <template v-if="accelerationTime !== null">
           <circle :cx="sx(accelerationTime)" :cy="sy(expansion.scaleFactorAt(accelerationTime))" r="5" class="onset" />
-          <text :x="sx(accelerationTime) - 8" :y="sy(expansion.scaleFactorAt(accelerationTime)) - 10" class="onset-label">starts speeding up</text>
+          <text :x="sx(accelerationTime) - 8" :y="sy(expansion.scaleFactorAt(accelerationTime)) - 10" class="onset-label">{{ localizeExperimentText('starts speeding up', locale) }}</text>
         </template>
         <circle :cx="current.x" :cy="current.y" r="7" class="now" />
       </g>
     </svg>
     <details class="chart-data">
-      <summary>Read the current model values</summary>
+      <summary>{{ localizeExperimentText('Read the current model values', locale) }}</summary>
       <table><tbody>
         <tr><th scope="row">Selected time</th><td>{{ t.toFixed(3) }} billion years</td></tr>
         <tr><th scope="row">Scale factor at selected time</th><td>{{ expansion.scaleFactorAt(t).toPrecision(5) }}</td></tr>
@@ -90,8 +94,8 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
       </tbody></table>
     </details>
     <figcaption class="legend">
-      <span><i class="swatch main" /> This model</span>
-      <span v-if="other"><i class="swatch compare" /> Our universe, for comparison</span>
+      <span><i class="swatch main" /> {{ localizeExperimentText('This model', locale) }}</span>
+      <span v-if="other"><i class="swatch compare" /> {{ localizeExperimentText('Our universe, for comparison', locale) }}</span>
     </figcaption>
   </figure>
 </template>

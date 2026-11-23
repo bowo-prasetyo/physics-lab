@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, useId } from 'vue'
 import { properTimeTicks, simultaneousTimeAt, type Event1D } from '@/physics'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 export interface DiagramWorldline {
   readonly id: string
@@ -101,8 +105,8 @@ const description = computed(() => {
 <template>
   <figure class="diagram">
     <!-- On narrow screens the diagram keeps a readable size and scrolls sideways. -->
-    <div ref="scroller" class="scroll" tabindex="0" aria-label="Spacetime diagram (scrolls sideways on small screens)">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
+    <div ref="scroller" class="scroll" tabindex="0"  :aria-label="localizeExperimentText('Spacetime diagram (scrolls sideways on small screens)', locale)">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
       <defs>
         <clipPath :id="`${id}-plot`">
           <rect :x="M.left" :y="M.top" :width="plotW" :height="plotH" />
@@ -116,8 +120,8 @@ const description = computed(() => {
       </g>
       <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 18" class="tick-label">{{ x }}</text>
       <text v-for="t in tTicks" :key="`lt${t}`" :x="M.left - 8" :y="sy(t) + 4" class="tick-label y">{{ t }}</text>
-      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">position x (light-seconds)</text>
-      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">time t (s)</text>
+      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ localizeExperimentText('position x (light-seconds)', locale) }}</text>
+      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText('time t (s)', locale) }}</text>
 
       <g :clip-path="`url(#${id}-plot)`">
         <!-- Everything below "now" has already happened, in this frame -->
@@ -126,7 +130,7 @@ const description = computed(() => {
         <!-- Light rays through the passing event -->
         <line :x1="sx(0)" :y1="sy(0)" :x2="sx(duration)" :y2="sy(duration)" class="light" />
         <line :x1="sx(0)" :y1="sy(0)" :x2="sx(-duration)" :y2="sy(duration)" class="light" />
-        <text :x="sx(duration) - 6" :y="sy(duration) + 16" class="light-label" text-anchor="end">light</text>
+        <text :x="sx(duration) - 6" :y="sy(duration) + 16" class="light-label" text-anchor="end">{{ localizeExperimentText('light', locale) }}</text>
         <text :x="sx(-duration) + 6" :y="sy(duration) + 16" class="light-label">light</text>
 
         <!-- The moving observer's "now" -->
@@ -151,7 +155,7 @@ const description = computed(() => {
 
         <!-- This frame's "now" -->
         <line :x1="M.left" :x2="M.left + plotW" :y1="sy(t)" :y2="sy(t)" class="now" />
-        <text :x="M.left + 6" :y="sy(t) - 6 < M.top + 14 ? sy(t) + 16 : sy(t) - 6" class="now-label">now in {{ frameName }}: t = {{ t.toFixed(2) }} s</text>
+        <text :x="M.left + 6" :y="sy(t) - 6 < M.top + 14 ? sy(t) + 16 : sy(t) - 6" class="now-label">{{ localizeExperimentText('Now in', locale) }} {{ localizeExperimentText(frameName, locale) }}: t = {{ t.toFixed(2) }} s</text>
 
         <!-- Worldlines with a tick at every second of proper time -->
         <g v-for="line in lines" :key="line.id" :class="['worldline', line.kind]">
@@ -176,7 +180,7 @@ const description = computed(() => {
     </div>
 
     <details class="diagram-data">
-      <summary>Read the current spacetime measurements as a table</summary>
+      <summary>{{ localizeExperimentText('Read the current spacetime measurements as a table', locale) }}</summary>
       <div class="table-scroll">
         <table><thead><tr><th scope="col">Observer</th><th scope="col">Velocity</th><th scope="col">Current event (t, x)</th><th scope="col">Proper time elapsed</th></tr></thead>
           <tbody><tr v-for="line in lines" :key="line.id"><th scope="row">{{ line.label }}</th><td>{{ line.velocity.toFixed(2) }}c</td><td>({{ line.now.t.toFixed(2) }} s, {{ line.now.x.toFixed(2) }} light-seconds)</td><td>{{ line.tauNow.toFixed(2) }} s</td></tr></tbody>
