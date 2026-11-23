@@ -242,7 +242,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>Next:</strong> Experiment A adds time to position, and Experiment E compares space and time with spacetime.</p>
+      <p><strong>{{ localizeExperimentText('Next:', locale) }}</strong> {{ localizeExperimentText('Experiment A adds time to position, and Experiment E compares space and time with spacetime.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>
         <RouterLink to="/relativity/two-perspectives">Experiment E</RouterLink>
