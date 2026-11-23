@@ -19,6 +19,7 @@ import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
+import { localizeMovingClocksSimultaneityLabel } from '@/i18n/moving-clocks-view'
 
 const route = useRoute()
 const level = useLevel()
@@ -55,6 +56,11 @@ const frameName = computed(() => (frame.value === 'earth' ? 'the Earth' : 'the s
 // Names as used mid-sentence ("the ship clock", "the Earth clock").
 const home = computed(() => (frame.value === 'earth' ? 'Earth' : 'ship'))
 const other = computed(() => (frame.value === 'earth' ? 'ship' : 'Earth'))
+const simultaneityLabel = computed(() => localizeMovingClocksSimultaneityLabel(
+  localizeExperimentText(other.value, locale.value) ?? other.value,
+  localizeExperimentText(home.value, locale.value) ?? home.value,
+  locale.value,
+))
 const capitalise = (word: string) => word.charAt(0).toUpperCase() + word.slice(1)
 
 // The resting clock's tick labels go on the same side as the moving clock,
@@ -195,7 +201,7 @@ const signed = (value: number, digits = 2) => {
             <div><dt>{{ tx('Lorentz factor') }} <MathFormula tex="\gamma" /></dt><dd class="num">{{ lorentz.toFixed(3) }}</dd></div>
             <div><dt>{{ tx('Moving clock ÷ resting clock') }}</dt><dd class="num">{{ (1 / lorentz).toFixed(3) }}</dd></div>
             <div v-if="simultaneity" class="other-now">
-              <dt>The {{ other }}’s “now” meets the {{ home }} clock at</dt>
+              <dt>{{ simultaneityLabel }}</dt>
               <dd class="num">{{ view.otherNowMeetsHomeAt.toFixed(2) }} s</dd>
             </div>
             <template v-if="advanced">
