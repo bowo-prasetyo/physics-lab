@@ -150,8 +150,7 @@ const expansionWord = computed(() => {
             @select="setHome"
           />
           <p class="muted small">
-            Click any galaxy to make it “home”. Arrows show how fast the others recede from it. The galaxies themselves keep their size:
-            gravity holds them together. The pattern repeats in every direction, so no galaxy is at an edge.
+            {{ tx('Click any galaxy to make it “home”. Arrows show how fast the others recede from it. The galaxies themselves keep their size: gravity holds them together. The pattern repeats in every direction, so no galaxy is at an edge.') }}
           </p>
           <ScaleFactorChart :expansion="expansion" :compare="compare" :t="t" :acceleration-time="accelerationMarker" />
         </div>

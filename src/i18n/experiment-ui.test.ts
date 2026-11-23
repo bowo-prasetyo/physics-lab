@@ -171,4 +171,43 @@ describe('experiment UI localization', () => {
     }
   })
 
+
+  it('localizes remaining experiment-view explanatory copy in Indonesian and Japanese', () => {
+    const explanations = [
+      'Drawn to scale: one metre across equals one metre up. Dashed lines are earlier throws.',
+      'Arrows show the sideways (green) and vertical (yellow) velocity.',
+      'Dashed lines show its x, y and z components.',
+      'Jump to a time',
+      'Distances compared with today',
+      'Expansion is',
+      'Light from now, seen today: redshift z',
+      'Background radiation',
+      'Hubble rate H',
+      'Hubble distance c/H',
+      'Click any galaxy to make it “home”. Arrows show how fast the others recede from it. The galaxies themselves keep their size: gravity holds them together. The pattern repeats in every direction, so no galaxy is at an edge.',
+      'the Earth',
+      'the ship',
+      'Moving clock ÷ resting clock',
+      'Ship event',
+      'Interval',
+      'Ship clock squared',
+      'The pendulum clock was adjusted on the Earth, with small swings, for this length.',
+      'Complete swings counted',
+      'Measured period',
+      'Small-swing formula 2π√(L/g)',
+      'Exact period for this swing',
+      'Changing a setting releases the pendulum again from rest. Measurements you made are kept for the questions.',
+      'Choose an answer before running the model. Each explanation unlocks only after you have compared the relevant cases.',
+      'Teacher guide',
+      'Observer measures',
+      'Nature decides. Compare the three predictions, then check them against real measurements.',
+      'Gravity and clock rates',
+    ]
+
+    for (const source of explanations) {
+      expect(localizeExperimentText(source, 'id'), `Indonesian: ${source}`).not.toBe(source)
+      expect(localizeExperimentText(source, 'ja'), `Japanese: ${source}`).not.toBe(source)
+    }
+  })
+
 })
