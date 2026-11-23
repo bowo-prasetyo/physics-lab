@@ -67,9 +67,10 @@ describe('localization quality assurance', () => {
 
       guide.lessons.forEach((lesson, index) => {
         const sourceLesson = source.lessons[index]
-        expect(lesson.outcomes).toHaveLength(sourceLesson?.outcomes.length)
-        expect(lesson.sequence).toHaveLength(sourceLesson?.sequence.length)
-        expect(lesson.prompts).toHaveLength(sourceLesson?.prompts.length)
+        if (!sourceLesson) throw new Error(`Missing source teacher lesson at index ${index}`)
+        expect(lesson.outcomes).toHaveLength(sourceLesson.outcomes.length)
+        expect(lesson.sequence).toHaveLength(sourceLesson.sequence.length)
+        expect(lesson.prompts).toHaveLength(sourceLesson.prompts.length)
         expect(lesson.module.trim()).not.toBe('')
         expect(lesson.title.trim()).not.toBe('')
         expect(lesson.check.trim()).not.toBe('')
