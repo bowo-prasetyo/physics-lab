@@ -242,7 +242,7 @@ const signed = (value: number, digits = 2) => {
           </ul>
         </InfoCallout>
       </div>
-      <InfoCallout kind="note" :title="localizeExperimentText('Seeing versus measuring', locale)" class="seeing">
+      <InfoCallout kind="note" :title="localizeExperimentText('Seeing versus measuring', locale) ?? 'Seeing versus measuring'" class="seeing">
         <p>
           {{ localizeExperimentText('The diagram shows what each observer measures after allowing for the time light takes to travel.', locale) }} {{ localizeExperimentText('What an astronaut would literally see through a telescope also includes that travel delay (and the Doppler effect), so the images can run faster or slower still. Time dilation is what remains after correcting for it.', locale) }}
         </p>
