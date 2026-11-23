@@ -141,7 +141,7 @@ function formatClock(seconds: number): string {
           <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">{{ tx('Playback') }}</span>
             <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
-              {{ s === 1 ? 'real time' : `×${s}` }}
+              {{ s === 1 ? tx('real time') : `×${s}` }}
             </button>
           </div>
 
@@ -161,7 +161,7 @@ function formatClock(seconds: number): string {
           <dl class="readouts">
             <div><dt>{{ tx('Time') }}</dt><dd class="num">{{ fmt(state.t, 4) }} s</dd></div>
             <div><dt>{{ tx('Complete swings counted') }}</dt><dd class="num">{{ swings }}</dd></div>
-            <div class="measured"><dt>{{ tx('Measured period') }}</dt><dd class="num">{{ lastPeriod === null ? 'swing to measure' : `${fmt(lastPeriod)} s` }}</dd></div>
+            <div class="measured"><dt>{{ tx('Measured period') }}</dt><dd class="num">{{ lastPeriod === null ? tx('swing to measure') : `${fmt(lastPeriod)} s` }}</dd></div>
             <div v-if="intermediate"><dt>{{ tx('Small-swing formula 2π√(L/g)') }}</dt><dd class="num">{{ fmt(smallAngle) }} s</dd></div>
             <div v-if="advanced"><dt>{{ tx('Exact period for this swing') }}</dt><dd class="num">{{ fmt(exact) }} s</dd></div>
           </dl>
