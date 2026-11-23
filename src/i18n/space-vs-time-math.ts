@@ -13,7 +13,7 @@ const translations: Record<string, readonly [string, string]> = {
   'For constant v the integral gives x(t) = x₀ + vt, the straight lines on your graph.': ['Untuk kecepatan v yang konstan, integral menghasilkan x(t) = x₀ + vt, yaitu garis lurus pada grafik Anda.', '速度 v が一定なら、積分によって x(t) = x₀ + vt が得られ、グラフは直線になります。'],
   'Use the observer velocity slider. With u = v the object is at rest for the observer; with v = 0 and u ≠ 0 a "stationary" object moves. Being at rest is a relation between an object and a frame of reference, not a property of the object alone.': ['Gunakan penggeser kecepatan pengamat. Jika u = v, benda diam menurut pengamat tersebut; jika v = 0 dan u ≠ 0, benda yang "diam" justru bergerak. Keadaan diam merupakan hubungan antara benda dan kerangka acuan, bukan sifat benda itu sendiri.', '観測者の速度スライダーを使ってください。u = v なら物体はその観測者から見て静止し、v = 0 かつ u ≠ 0 なら「静止」している物体も動いて見えます。静止とは物体単独の性質ではなく、物体と基準系との関係です。'],
   'At': ['Pada kecepatan', '速度'],
-  'With': ['Jika', ''],
+  'With': ['Jika', 'ここで'],
   'worldline': ['garis dunia', '世界線'],
   'the correction is': ['のとき、補正量は', 'では、補正量は'],
   'Check it with your own run': ['Periksa dengan percobaan Anda sendiri', '自分の実験で確かめる'],
