@@ -69,6 +69,19 @@ const translations: Record<string, readonly [string, string]> = {
   "per day": ["per hari","日あたり"],
   "Experiment B": ["Eksperimen B","実験B"],
   "Experiment E": ["Eksperimen E","実験E"],
+  "Black hole (10 solar masses)": ["Lubang hitam (10 massa Matahari)","ブラックホール（太陽質量の 10 倍）"],
+  "Earth": ["Bumi","地球"],
+  "Everest (8.8 km)": ["Everest (8,8 km)","エベレスト（8.8 km）"],
+  "GPS height": ["Ketinggian GPS","GPS 衛星高度"],
+  "Moon distance": ["Jarak Bulan","月までの距離"],
+  "Neutron star": ["Bintang neutron","中性子星"],
+  "Sea level": ["Permukaan laut","海面"],
+  "Tower (22.5 m)": ["Menara (22,5 m)","塔（22.5 m）"],
+  "White dwarf (Sirius B)": ["Katai putih (Sirius B)","白色矮星（シリウス B）"],
+  "on the surface": ["di permukaan","表面上"],
+  "Surface": ["Permukaan","表面"],
+  "One radius up": ["Satu jari-jari di atas permukaan","表面から半径 1 個分上"],
+  "Ten radii up": ["Sepuluh jari-jari di atas permukaan","表面から半径 10 個分上"],
 }
 
 export function localizeGravityClocksViewText(value: string, locale: Locale): string {

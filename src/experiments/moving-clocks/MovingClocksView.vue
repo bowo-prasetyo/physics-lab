@@ -84,13 +84,13 @@ const shipInterval = computed(() => intervalSquared(view.value.ship))
 const primaryLabel = computed(() => {
   switch (status.value) {
     case 'running':
-      return 'Pause'
+      return tx('Pause')
     case 'paused':
-      return 'Resume'
+      return tx('Resume')
     case 'finished':
-      return 'Run again'
+      return tx('Run again')
     default:
-      return 'Start clock'
+      return tx('Start clock')
   }
 })
 
@@ -103,7 +103,7 @@ function primaryAction() {
 }
 
 const statusText = computed(() =>
-  status.value === 'finished' ? 'Run complete' : status.value === 'running' ? 'Running' : status.value === 'paused' ? 'Paused' : 'Ready',
+  tx(status.value === 'finished' ? 'Run complete' : status.value === 'running' ? 'Running' : status.value === 'paused' ? 'Paused' : 'Ready'),
 )
 
 const signed = (value: number, digits = 2) => {
@@ -164,15 +164,15 @@ const signed = (value: number, digits = 2) => {
             <div class="clock-card earth">
               <span class="clock-name">{{ tx('Earth clock') }}</span>
               <span class="clock-value num">{{ view.earth.tau.toFixed(2) }}<small> s</small></span>
-              <span class="clock-note">{{ frame === 'earth' ? 'at rest in this frame' : 'moving in this frame' }}</span>
+              <span class="clock-note">{{ tx(frame === 'earth' ? 'at rest in this frame' : 'moving in this frame') }}</span>
             </div>
             <div class="clock-card ship">
               <span class="clock-name">{{ tx('Ship clock') }}</span>
               <span class="clock-value num">{{ view.ship.tau.toFixed(2) }}<small> s</small></span>
-              <span class="clock-note">{{ frame === 'ship' ? 'at rest in this frame' : 'moving in this frame' }}</span>
+              <span class="clock-note">{{ tx(frame === 'ship' ? 'at rest in this frame' : 'moving in this frame') }}</span>
             </div>
           </div>
-          <p class="status muted">{{ statusText }} · seen from {{ frameName }}</p>
+          <p class="status muted">{{ statusText }} · {{ tx('seen from') }} {{ tx(frameName) }}</p>
 
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
@@ -204,7 +204,7 @@ const signed = (value: number, digits = 2) => {
               <div><dt>{{ tx('Ship clock squared') }} <MathFormula tex="\tau^2" /></dt><dd class="num">{{ (view.ship.tau ** 2).toFixed(2) }} s²</dd></div>
             </template>
           </dl>
-          <p class="units muted">Units: c = 1, so distances are in light-seconds (ls).</p>
+          <p class="units muted">{{ tx('Units: c = 1, so distances are in light-seconds (ls).') }}</p>
         </div>
       </div>
     </section>
@@ -212,7 +212,7 @@ const signed = (value: number, digits = 2) => {
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <MovingClocksMath :level="level" :beta="beta" :frame="frame" :t="t" :view="view" />
     </section>
     </details>
@@ -254,9 +254,9 @@ const signed = (value: number, digits = 2) => {
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p>{{ localizeExperimentText('Experiment E describes the same situations with separate space and time, and with a single spacetime.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/space/space-vs-time">← Experiment A</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">Experiment E →</RouterLink>
-        <RouterLink to="/">All modules</RouterLink>
+        <RouterLink to="/space/space-vs-time">{{ tx("← Experiment A") }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx("Experiment E →") }}</RouterLink>
+        <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>
   </article>

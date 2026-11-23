@@ -170,7 +170,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           <label class="body-select">
             <span>{{ tx('Central mass') }}</span>
             <select v-model="bodyId" :disabled="locked">
-              <option v-for="b in BODIES" :key="b.id" :value="b.id">{{ b.name }}</option>
+              <option v-for="b in BODIES" :key="b.id" :value="b.id">{{ tx(b.name) }}</option>
             </select>
           </label>
           <h3 class="chart-title">{{ tx('How much each clock is slowed, compared with a clock far away') }}</h3>
@@ -220,7 +220,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
                 :disabled="locked"
                 @click="clock === 'A' ? (altitudeA = p.altitude) : (altitudeB = p.altitude)"
               >
-                {{ p.label }}
+                {{ tx(p.label) }}
               </button>
             </div>
           </div>

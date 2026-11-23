@@ -73,13 +73,13 @@ const kValue = computed(() => props.params.k)
       <p>{{ tx('Setting') }} <MathFormula tex="y = 0" /> {{ tx('gives a quadratic in') }} <MathFormula tex="t" />{{ tx('. Its positive root, for your launch:') }}</p>
       <MathFormula display :tex="flightTimeExample" />
       <p>
-        Every term in the range has a factor <MathFormula tex="1/g" />, so on the Moon (<MathFormula tex="g = 1.62\ \text{m/s}^2" />) the same
-        throw goes about 6 times as far as on the Earth.
+        {{ tx('Every term in the range has a factor') }} <MathFormula tex="1/g" />, {{ tx('so on the Moon (') }}<MathFormula tex="g = 1.62\ \text{m/s}^2" />) {{ tx('the same') }}
+        {{ tx('throw goes about 6 times as far as on the Earth.') }}
       </p>
       <h3>{{ tx('Seen from a moving train') }}</h3>
       <MathFormula display tex="\begin{gathered} x' = x - u\,t, \qquad v_x' = v_x - u \\ a' = a \end{gathered}" />
       <p>
-        With <MathFormula :tex="`u = v_x = ${f(vx)}\\ \\text{m/s}`" /> {{ tx('the ball has no sideways motion at all for the train: it goes straight up and down. The path depends on the observer; the acceleration, and so Newton’s laws, do not. This is') }} <strong>{{ tx('Galilean relativity') }}</strong>.
+        {{ tx('With') }} <MathFormula :tex="`u = v_x = ${f(vx)}\\ \\text{m/s}`" /> {{ tx('the ball has no sideways motion at all for the train: it goes straight up and down. The path depends on the observer; the acceleration, and so Newton’s laws, do not. This is') }} <strong>{{ tx('Galilean relativity') }}</strong>.
       </p>
     </template>
 
@@ -88,13 +88,13 @@ const kValue = computed(() => props.params.k)
       <h3>{{ tx('Newton’s law with air resistance') }}</h3>
       <MathFormula display tex="m\,\frac{d\mathbf v}{dt} = -m g\,\hat{\mathbf y} - \tfrac12 \rho\, C_d A\, |\mathbf v|\, \mathbf v" />
       <p>
-        {{ tx('Dividing by') }} <MathFormula tex="m" />: <MathFormula tex="\dot{\mathbf v} = -g\hat{\mathbf y} - k|\mathbf v|\mathbf v" /> with
+        {{ tx('Dividing by') }} <MathFormula tex="m" />: <MathFormula tex="\dot{\mathbf v} = -g\hat{\mathbf y} - k|\mathbf v|\mathbf v" /> {{ tx('with') }}
         <MathFormula tex="k = \rho C_d A / 2m" />
         <template v-if="dragApplies">
-          (here <MathFormula :tex="`k = ${f(kValue)}\\ \\text{m}^{-1}`" />, terminal speed
+          {{ tx('(here') }} <MathFormula :tex="`k = ${f(kValue)}\\ \\text{m}^{-1}`" />{{ tx('terminal speed') }}
           <MathFormula :tex="`\\sqrt{g/k} = ${f(terminalSpeed(params.g, kValue))}\\ \\text{m/s}`" />)</template
-        >. Because <MathFormula tex="|\mathbf v|" /> contains both components, the horizontal and vertical motions are now coupled, and
-        there is no formula for the path.
+        >{{ tx('. Because') }} <MathFormula tex="|\mathbf v|" />{{ tx(' contains both components, the horizontal and vertical motions are now coupled, and') }}
+        {{ tx('there is no formula for the path.') }}
       </p>
       <h3>{{ tx('Solving it step by step: RK4') }}</h3>
       <MathFormula
@@ -102,8 +102,7 @@ const kValue = computed(() => props.params.k)
         tex="\begin{aligned} \mathbf y_{n+1} &= \mathbf y_n + \tfrac{\Delta t}{6}\big(\mathbf k_1 + 2\mathbf k_2 \\ &\qquad + 2\mathbf k_3 + \mathbf k_4\big) \\ \mathbf k_1 &= \mathbf f(\mathbf y_n) \\ \mathbf k_2 &= \mathbf f(\mathbf y_n + \tfrac{\Delta t}{2}\mathbf k_1), \ \dots \end{aligned}"
       />
       <p>
-        The classical Runge–Kutta method has an error that shrinks as <MathFormula tex="\Delta t^4" />: halving the step makes it about 16
-        times smaller. This experiment uses <MathFormula tex="\Delta t = 5\ \text{ms}" />, and finds the landing moment by bisection.
+        {{ tx('The classical Runge–Kutta method has an error that shrinks as') }} <MathFormula tex="\Delta t^4" />{{ tx(': halving the step makes it about 16 times smaller. This experiment uses') }} <MathFormula tex="\Delta t = 5\ \text{ms}" />{{ tx(', and finds the landing moment by bisection.') }}
       </p>
       <h3>{{ tx('Energy') }}</h3>
       <MathFormula display tex="\frac{d}{dt}\left(\tfrac12 v^2 + g y\right) = -k\,|\mathbf v|^3 \le 0" />
@@ -111,8 +110,8 @@ const kValue = computed(() => props.params.k)
         {{ tx('Drag always removes energy. For orbits, where energy should be conserved, a symplectic method such as velocity Verlet would be the better choice, because RK4 slowly drifts.') }}
       </p>
       <p v-if="bestAngle !== null">
-        <strong>{{ tx('Best angle for your settings:') }}</strong> <MathFormula :tex="`${f(bestAngle)}^\\circ`" />, found by searching the simulated
-        range.
+        <strong>{{ tx('Best angle for your settings:') }}</strong> <MathFormula :tex="`${f(bestAngle)}^\\circ`" />{{ tx(', found by searching the simulated') }}
+        {{ tx('range.') }}
       </p>
     </template>
   </div>

@@ -59,8 +59,18 @@ const displacement = () => ({
   y: endPoint().y - startPoint().y,
   z: endPoint().z - startPoint().z,
 })
-const description = () =>
-  `Interactive 3D view of a path in Cartesian coordinates. x points east, y north and z up. Start ${formatPoint(startPoint())}; current position ${formatPoint(endPoint())}; displacement ${formatPoint(displacement())} metres. Use the view presets for standard camera angles. A numerical alternative follows.`
+const description = () => {
+  const start = formatPoint(startPoint())
+  const current = formatPoint(endPoint())
+  const delta = formatPoint(displacement())
+  if (locale.value === 'id') {
+    return `Tampilan 3D interaktif lintasan dalam koordinat Kartesius. Sumbu x mengarah ke timur, y ke utara, dan z ke atas. Titik awal ${start}; posisi saat ini ${current}; perpindahan ${delta} meter. Gunakan preset tampilan untuk sudut kamera standar. Alternatif numerik tersedia di bawah.`
+  }
+  if (locale.value === 'ja') {
+    return `デカルト座標での経路を示すインタラクティブな 3D 表示です。x 軸は東、y 軸は北、z 軸は上向きです。始点 ${start}、現在位置 ${current}、変位 ${delta} m。標準的なカメラ角度には表示プリセットを使用してください。数値による表示も利用できます。`
+  }
+  return `Interactive 3D view of a path in Cartesian coordinates. x points east, y north and z up. Start ${start}; current position ${current}; displacement ${delta} metres. Use the view presets for standard camera angles. A numerical alternative follows.`
+}
 
 const AXIS_COLOURS = { x: 0xe5484d, y: 0x30a46c, z: 0x3e63dd }
 
@@ -158,7 +168,7 @@ function buildDynamic() {
   const startMarker = new THREE.Mesh(track(new THREE.SphereGeometry(0.28, 20, 20)), track(new THREE.MeshBasicMaterial({ color: success })))
   startMarker.position.copy(start)
   dynamic.add(startMarker)
-  dynamic.add(label(localizeExperimentText('start', locale.value) ?? 'start', 'point', start.clone().add(new THREE.Vector3(-1.1, -1.1, 0.4))))
+  dynamic.add(label(locale.value === 'id' ? 'awal' : locale.value === 'ja' ? '始点' : 'start', 'point', start.clone().add(new THREE.Vector3(-1.1, -1.1, 0.4))))
 
   const object = new THREE.Mesh(track(new THREE.SphereGeometry(0.42, 24, 24)), track(new THREE.MeshLambertMaterial({ color: accent })))
   object.position.copy(end)
@@ -328,14 +338,14 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="scene-wrap">
-    <div ref="container" class="scene" role="img" :aria-label="localizeExperimentText(description(), locale)" />
+    <div ref="container" class="scene" role="img" :aria-label="description()" />
     <details class="scene-data">
       <summary>{{ localizeExperimentText('Read the 3D coordinates as text', locale) }}</summary>
       <dl>
         <div><dt>{{ localizeExperimentText('Starting point (x, y, z)', locale) }}</dt><dd>{{ formatPoint(startPoint()) }} m</dd></div>
         <div><dt>{{ localizeExperimentText('Current point (x, y, z)', locale) }}</dt><dd>{{ formatPoint(endPoint()) }} m</dd></div>
         <div><dt>{{ localizeExperimentText('Displacement (Δx, Δy, Δz)', locale) }}</dt><dd>{{ formatPoint(displacement()) }} m</dd></div>
-        <div><dt>{{ localizeExperimentText('Distance between start and current point', locale) }}</dt><dd>{{ Math.hypot(displacement().x, displacement().y, displacement().z).toFixed(2) }} m</dd></div>
+        <div><dt>{{ locale === 'id' ? 'Jarak antara titik awal dan titik saat ini' : locale === 'ja' ? '始点と現在位置の距離' : 'Distance between start and current point' }}</dt><dd>{{ Math.hypot(displacement().x, displacement().y, displacement().z).toFixed(2) }} m</dd></div>
         <div><dt>{{ localizeExperimentText('Path points recorded', locale) }}</dt><dd>{{ points.length }}</dd></div>
       </dl>
       <p class="muted small">{{ localizeExperimentText('Coordinates use the standard axes: x east, y north, z up. The displacement is the straight-line change from the starting point, not the total path length.', locale) }}</p>

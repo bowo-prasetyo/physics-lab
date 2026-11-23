@@ -91,6 +91,13 @@ const fmt = (x: number, digits = 2) => {
   return (v < 0 ? '−' : '') + Math.abs(v).toString()
 }
 const vec = (v: Vec3) => `(${fmt(v.x)}, ${fmt(v.y)}, ${fmt(v.z)})`
+function moveAriaLabel(axis: Axis, sign: -1 | 1) {
+  const direction = tx(DIRECTIONS[axis][sign < 0 ? 0 : 1])
+  const step = sign < 0 ? `−${axis}` : `+${axis}`
+  if (locale.value === 'id') return `Gerakkan 1 m ke ${direction} (${step})`
+  if (locale.value === 'ja') return `${direction}へ 1 m 移動（${step}）`
+  return `Move 1 m ${direction} (${step})`
+}
 const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
 </script>
 
@@ -123,7 +130,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
           <div class="views" role="group" :aria-label="localizeExperimentText('Camera', locale)">
             <span class="muted small">{{ tx('View') }}</span>
             <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">
-              {{ v === '3d' ? '3D' : v === 'top' ? 'From above' : v === 'front' ? 'From the front' : 'From the side' }}
+              {{ v === '3d' ? '3D' : v === 'top' ? tx('From above') : v === 'front' ? tx('From the front') : tx('From the side') }}
             </button>
           </div>
           <Scene3D
@@ -137,24 +144,23 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             :directions="DIRECTIONS"
           />
           <p class="muted small">
-            {{ tx(`Drag to turn the view, scroll or pinch to zoom. x points east, y north and z up. The orange arrow is the displacement Δr from the green start to the blue
-            object.`) }}
+            {{ locale === 'id' ? 'Seret untuk memutar tampilan, gulir atau cubit untuk memperbesar. Sumbu x mengarah ke timur, y ke utara, dan z ke atas. Panah oranye menunjukkan perpindahan Δr dari titik awal hijau ke benda biru.' : locale === 'ja' ? 'ドラッグで視点を回転し、スクロールまたはピンチで拡大します。x 軸は東、y 軸は北、z 軸は上向きです。オレンジ色の矢印は、緑の始点から青い物体への変位 Δr を示します。' : 'Drag to turn the view, scroll or pinch to zoom. x points east, y north and z up. The orange arrow is the displacement Δr from the green start to the blue object.' }}
             <template v-if="intermediate"> {{ tx('Dashed lines show its x, y and z components.') }}</template>
           </p>
         </div>
 
         <div class="lab-side card">
           <div class="moves">
-            <p class="group-title">Move the object (1 m steps)</p>
-            <p class="muted small convention">+x is east, +y is north, +z is up.</p>
+            <p class="group-title">{{ tx("Move the object (1 m steps)") }}</p>
+            <p class="muted small convention">{{ tx("+x is east, +y is north, +z is up.") }}</p>
             <div v-for="axis in AXES" :key="axis" class="move-row">
-              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`" @click="step(axis, -1)">− {{ axis }} · {{ DIRECTIONS[axis][0] }}</button>
+              <button class="btn btn-small" type="button" :aria-label="moveAriaLabel(axis, -1)" @click="step(axis, -1)">− {{ axis }} · {{ tx(DIRECTIONS[axis][0]) }}</button>
               <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
-              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`" @click="step(axis, 1)">+ {{ axis }} · {{ DIRECTIONS[axis][1] }}</button>
+              <button class="btn btn-small" type="button" :aria-label="moveAriaLabel(axis, 1)" @click="step(axis, 1)">+ {{ axis }} · {{ tx(DIRECTIONS[axis][1]) }}</button>
             </div>
           </div>
           <form class="goto" @submit.prevent="goToTarget">
-            <p class="group-title">Or go straight to a point</p>
+            <p class="group-title">{{ tx("Or go straight to a point") }}</p>
             <div class="goto-row">
               <label v-for="axis in AXES" :key="axis">
                 <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
@@ -169,20 +175,20 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             <button class="btn btn-small" type="button" @click="restart(true)">{{ localizeExperimentText('Back to the origin', locale) ?? 'Back to the origin' }}</button>
           </div>
           <div class="presets">
-            <span class="muted small">Example journeys</span>
-            <button v-for="p in PRESETS" :key="p.id" type="button" class="chip" @click="loadPreset(p.id)">{{ p.label }}</button>
+            <span class="muted small">{{ tx("Example journeys") }}</span>
+            <button v-for="p in PRESETS" :key="p.id" type="button" class="chip" @click="loadPreset(p.id)">{{ tx(p.label) }}</button>
           </div>
 
           <dl class="readouts">
-            <div><dt>Position r</dt><dd class="num">{{ vec(current) }}</dd></div>
-            <div><dt>Moves</dt><dd class="num">{{ points.length - 1 }}</dd></div>
-            <div class="highlight"><dt>Displacement Δr</dt><dd class="num">{{ vec(displacement) }}</dd></div>
-            <div class="highlight"><dt>Size |Δr|</dt><dd class="num">{{ fmt(size, 3) }} m</dd></div>
-            <div><dt>Distance travelled</dt><dd class="num">{{ fmt(distance, 3) }} m</dd></div>
+            <div><dt>{{ tx("Position r") }}</dt><dd class="num">{{ vec(current) }}</dd></div>
+            <div><dt>{{ tx("Moves") }}</dt><dd class="num">{{ points.length - 1 }}</dd></div>
+            <div class="highlight"><dt>{{ tx("Displacement Δr") }}</dt><dd class="num">{{ vec(displacement) }}</dd></div>
+            <div class="highlight"><dt>{{ tx("Size |Δr|") }}</dt><dd class="num">{{ fmt(size, 3) }} m</dd></div>
+            <div><dt>{{ tx("Distance travelled") }}</dt><dd class="num">{{ fmt(distance, 3) }} m</dd></div>
           </dl>
 
           <div v-if="intermediate" class="frame">
-            <p class="group-title">A second coordinate system (x′, y′, z′)</p>
+            <p class="group-title">{{ tx("A second coordinate system (x′, y′, z′)") }}</p>
             <ParameterSlider v-model="shift.x" :label="localizeExperimentText('Origin moved, x', locale) ?? 'Origin moved, x'" symbol="O_x" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
             <ParameterSlider v-model="shift.y" :label="localizeExperimentText('Origin moved, y', locale) ?? 'Origin moved, y'" symbol="O_y" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
             <ParameterSlider v-model="shift.z" :label="localizeExperimentText('Origin moved, z', locale) ?? 'Origin moved, z'" symbol="O_z" unit="m" v-bind="SHIFT_RANGE" :digits="0" />
@@ -202,7 +208,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <Displacement3DMath
         :level="level"
         :start="start"
@@ -245,9 +251,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>{{ localizeExperimentText('Next:', locale) }}</strong> {{ localizeExperimentText('Experiment A adds time to position, and Experiment E compares space and time with spacetime.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">Experiment E</RouterLink>
-        <RouterLink to="/">All modules</RouterLink>
+        <RouterLink to="/space/space-vs-time">{{ tx("Experiment A") }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx("Experiment E") }}</RouterLink>
+        <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>
   </article>

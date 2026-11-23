@@ -68,16 +68,22 @@ const markers = computed(() =>
   ].map((m) => ({ ...m, x: sx(m.h), y: sy(deficitAt(m.h)) })),
 )
 
-const description = computed(
-  () =>
-    `How much a clock at rest is slowed, against its height above ${props.body.hasSurface ? 'the surface' : 'the horizon'} of the ${props.body.name}, on a logarithmic height scale. ` +
-    `Clock A is at ${formatLength(props.altitudeA)} and clock B at ${formatLength(props.altitudeB)}; the lower clock is slowed more.`,
-)
+const description = computed(() => {
+  const bodyName = localizeExperimentText(props.body.name, locale.value) ?? props.body.name
+  const reference = props.body.hasSurface ? (locale.value === 'id' ? 'permukaan' : '地表') : (locale.value === 'id' ? 'horizon' : '地平面')
+  if (locale.value === 'id') {
+    return `Grafik menunjukkan seberapa besar jam yang diam melambat pada ketinggian di atas ${reference} ${bodyName}, dengan skala ketinggian logaritmik. Jam A berada pada ${formatLength(props.altitudeA)} dan jam B pada ${formatLength(props.altitudeB)}; jam yang lebih rendah berjalan lebih lambat.`
+  }
+  if (locale.value === 'ja') {
+    return `${bodyName}の${reference}からの高さに応じて、静止した時計がどれほど遅く進むかを対数スケールで示します。時計 A は ${formatLength(props.altitudeA)}、時計 B は ${formatLength(props.altitudeB)} にあり、低い位置の時計ほど遅く進みます。`
+  }
+  return `How much a clock at rest is slowed, against its height above ${props.body.hasSurface ? 'the surface' : 'the horizon'} of the ${props.body.name}, on a logarithmic height scale. Clock A is at ${formatLength(props.altitudeA)} and clock B at ${formatLength(props.altitudeB)}; the lower clock is slowed more.`
+})
 </script>
 
 <template>
   <figure class="chart">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
       <defs>
         <clipPath :id="`${id}-plot`">
           <rect :x="M.left - 10" :y="M.top - 10" :width="plotW + 20" :height="plotH + 12" />
@@ -90,7 +96,7 @@ const description = computed(
       <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 18" class="tick">{{ formatLength(x) }}</text>
       <text v-for="y in yTicks" :key="`ly${y}`" :x="M.left - 8" :y="M.top + (1 - y / yMax) * plotH + 4" class="tick y">{{ fmtY(y) }}</text>
       <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">
-        {{ localizeExperimentText(body.hasSurface ? 'height above the surface' : 'height above the horizon', locale) }} ({{ localizeExperimentText('logarithmic scale', locale) }}{{ body.hasSurface ? `; ${localizeExperimentText('left edge = on the surface', locale)}` : '' }})
+        {{ locale === 'id' ? (body.hasSurface ? 'ketinggian di atas permukaan' : 'ketinggian di atas horizon') : locale === 'ja' ? (body.hasSurface ? '地表からの高さ' : '地平面からの高さ') : (body.hasSurface ? 'height above the surface' : 'height above the horizon') }} ({{ localizeExperimentText('logarithmic scale', locale) }}{{ body.hasSurface ? (locale === 'id' ? '; tepi kiri = permukaan' : locale === 'ja' ? '；左端 = 地表' : '; left edge = on the surface') : '' }})
       </text>
       <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText(`clock slowed by (${unit.name})`, locale) }}</text>
 

@@ -84,7 +84,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
       <p>
         {{ tx('is the Schwarzschild radius: the size the mass would need to be squeezed into to become a black hole. The smaller') }} <MathFormula tex="r" /> {{ tx('is compared with') }} <MathFormula tex="r_s" />{{ tx(', the slower the clock.') }}
       </p>
-      <h3>{{ tx('Your clocks') }} ({{ body.name }})</h3>
+      <h3>{{ tx('Your clocks') }} ({{ tx(body.name) }})</h3>
       <MathFormula display :tex="workedExample" />
       <div class="table-wrap">
         <table>
@@ -93,7 +93,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
           </thead>
           <tbody>
             <tr v-for="row in rows" :key="row.name" :class="{ current: row.current }">
-              <td>{{ row.name }}</td>
+              <td>{{ tx(row.name) }}</td>
               <td class="num">{{ row.radius }}</td>
               <td class="num">{{ row.rs }}</td>
             </tr>
@@ -111,8 +111,8 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
     <template v-else-if="level === 'intermediate'">
       <h3>{{ tx('Near a surface: the weak-field rule') }}</h3>
       <p>
-        When <MathFormula tex="r_s \ll r" />, the square root can be expanded. For a small height difference <MathFormula tex="h" /> near a
-        surface where gravity is <MathFormula tex="g" />:
+        {{ tx('When') }} <MathFormula tex="r_s \ll r" />{{ tx(', the square root can be expanded. For a small height difference') }} <MathFormula tex="h" /> near a
+        {{ tx('surface where gravity is') }} <MathFormula tex="g" />:
       </p>
       <MathFormula display tex="\frac{\Delta\tau}{\tau} \approx \frac{\Delta\Phi}{c^2} = \frac{g\,h}{c^2}" />
       <MathFormula v-if="weakApplies" display :tex="weakExample" />
@@ -127,8 +127,8 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
         tex="\frac{\Delta\tau}{\tau} \approx \underbrace{\frac{GM}{c^2}\left(\frac{1}{R} - \frac{1}{r}\right)}_{\text{gravity: faster up high}} \; \underbrace{- \frac{v^2}{2c^2}}_{\text{speed: slower}}"
       />
       <p>
-        With <MathFormula tex="v^2 = GM/r" /> for a circular orbit: gravity <strong>+{{ perDay(gps.gravity) }}</strong> per day, speed
-        <strong>−{{ perDay(-gps.velocity) }}</strong> per day, net <strong>+{{ perDay(gps.net) }}</strong> per day.
+        {{ tx('With') }} <MathFormula tex="v^2 = GM/r" /> {{ tx('for a circular orbit: gravity') }} <strong>+{{ perDay(gps.gravity) }}</strong> {{ tx('per day, speed') }}
+        <strong>−{{ perDay(-gps.velocity) }}</strong> {{ tx('per day, net') }} <strong>+{{ perDay(gps.net) }}</strong> per day.
       </p>
     </template>
 
@@ -141,15 +141,13 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
         tex="\begin{aligned} ds^2 = &-\left(1 - \frac{r_s}{r}\right)c^2 dt^2 \\ &+ \frac{dr^2}{1 - r_s/r} + r^2\,d\Omega^2 \end{aligned}"
       />
       <p>
-        A clock at rest has <MathFormula tex="dr = d\Omega = 0" />, so <MathFormula tex="d\tau = \sqrt{1 - r_s/r}\;dt" />. For a circular
-        orbit, the orbital motion adds to this: <MathFormula tex="d\tau = \sqrt{1 - 3GM/(rc^2)}\;dt" />.
+        {{ tx('A clock at rest has') }} <MathFormula tex="dr = d\Omega = 0" />{{ tx('so') }} <MathFormula tex="d\tau = \sqrt{1 - r_s/r}\;dt" />{{ tx('. For a circular orbit, the orbital motion adds to this:') }} <MathFormula tex="d\tau = \sqrt{1 - 3GM/(rc^2)}\;dt" />.
       </p>
 
       <h3>{{ tx('The lapse is the clock rate') }}</h3>
       <p>
-        In the ADM 3 + 1 split from Experiment E, <MathFormula tex="ds^2 = -N^2 dt^2 + (\text{spatial part})" />. Here the lapse is
-        <MathFormula tex="N = \sqrt{1 - r_s/r}" />: the rate of a static clock. It falls to zero at the horizon. Experiment E’s formula is
-        now something you can measure.
+        {{ tx('In the ADM 3 + 1 split from Experiment E,') }} <MathFormula tex="ds^2 = -N^2 dt^2 + (\text{spatial part})" />. {{ tx('Here the lapse is') }}
+        <MathFormula tex="N = \sqrt{1 - r_s/r}" />{{ tx(': the rate of a static clock. It falls to zero at the horizon. Experiment E’s formula is now something you can measure.') }}
       </p>
 
       <h3>{{ tx('Space is curved too') }}</h3>
@@ -166,7 +164,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
         {{ tx('which is a property of the two clocks’ positions in a static spacetime, not of anyone’s frame. The upward and downward ratios are exact inverses, so both observers agree that the lower clock is slow. This is unlike Experiment B, where the clocks were in symmetric relative motion.') }}
       </p>
       <p class="muted">
-        For your clocks (at radii {{ formatLength(rA) }} and {{ formatLength(rB) }}), clock B runs {{ formatSlowdown(Math.abs(rateBvsA)) }}
+        {{ tx('For your clocks (at radii') }} {{ formatLength(rA) }} {{ tx('and') }} {{ formatLength(rB) }}{{ tx('), clock B runs') }} {{ formatSlowdown(Math.abs(rateBvsA)) }}
         {{ rateBvsA >= 0 ? 'faster' : 'slower' }} than clock A, and both observers agree.
       </p>
     </template>

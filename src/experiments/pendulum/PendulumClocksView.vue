@@ -76,11 +76,11 @@ const omegaMax = computed(() => Math.sqrt((2 * planet.value.g * (1 - Math.cos((a
 const fmt = (x: number, digits = 4) => String(Number(x.toPrecision(digits)))
 function formatDrift(secondsPerDay: number): string {
   const abs = Math.abs(secondsPerDay)
-  const word = secondsPerDay < 0 ? 'loses' : 'gains'
-  if (abs < 0.05) return 'keeps time'
-  if (abs < 120) return `${word} ${fmt(abs, 3)} s per day`
-  if (abs < 7200) return `${word} ${fmt(abs / 60, 3)} min per day`
-  return `${word} ${fmt(abs / 3600, 3)} hours per day`
+  const word = tx(secondsPerDay < 0 ? 'loses' : 'gains')
+  if (abs < 0.05) return tx('keeps time')
+  if (abs < 120) return `${word} ${fmt(abs, 3)} ${tx('s per day')}`
+  if (abs < 7200) return `${word} ${fmt(abs / 60, 3)} ${tx('min per day')}`
+  return `${word} ${fmt(abs / 3600, 3)} ${tx('hours per day')}`
 }
 function formatClock(seconds: number): string {
   const m = Math.floor(seconds / 60)
@@ -131,37 +131,37 @@ function formatClock(seconds: number): string {
               <span class="clock-value num">{{ formatClock(clock.pendulum) }}</span>
             </div>
           </div>
-          <p class="drift" :class="{ off: Math.abs(clock.driftPerDay) >= 0.05 }">Pendulum clock {{ formatDrift(clock.driftPerDay) }}</p>
+          <p class="drift" :class="{ off: Math.abs(clock.driftPerDay) >= 0.05 }">{{ tx('Pendulum clock') }} {{ formatDrift(clock.driftPerDay) }}</p>
           <p class="small muted">{{ tx('The pendulum clock was adjusted on the Earth, with small swings, for this length.') }}</p>
 
           <div class="buttons">
-            <button class="btn btn-primary" type="button" @click="running = !running">{{ running ? 'Pause' : state.t > 0 ? 'Resume' : 'Release' }}</button>
+            <button class="btn btn-primary" type="button" @click="running = !running">{{ tx(running ? 'Pause' : state.t > 0 ? 'Resume' : 'Release') }}</button>
             <button class="btn" type="button" :disabled="state.t === 0" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
           </div>
           <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">{{ tx('Playback') }}</span>
             <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
-              {{ s === 1 ? 'real time' : `×${s}` }}
+              {{ s === 1 ? tx('real time') : `×${s}` }}
             </button>
           </div>
 
           <div>
             <ParameterSlider v-model="length" :label="localizeExperimentText('Length', locale) ?? 'Length'" symbol="L" unit="m" v-bind="LENGTH_RANGE" :digits="2" :signed="false" />
-            <button class="btn btn-small" type="button" @click="useSecondsPendulum">Seconds pendulum on {{ planet.name.split(" ")[0] }} ({{ fmt(secondsLength, 3) }} m)</button>
+            <button class="btn btn-small" type="button" @click="useSecondsPendulum">{{ tx('Seconds pendulum on') }} {{ tx(planet.name.split(" ")[0] ?? planet.name) }} ({{ fmt(secondsLength, 3) }} m)</button>
           </div>
           <ParameterSlider v-model="amplitude" :label="localizeExperimentText('Release angle', locale) ?? 'Release angle'" symbol="\theta_0" unit="°" v-bind="AMPLITUDE_RANGE" :digits="0" :signed="false" />
           <ParameterSlider v-model="mass" :label="localizeExperimentText('Bob mass', locale) ?? 'Bob mass'" symbol="m" unit="kg" v-bind="MASS_RANGE" :digits="1" :signed="false" />
           <label class="field">
             <span>{{ tx('World') }}</span>
             <select v-model="planetId">
-              <option v-for="p in PLANETS" :key="p.id" :value="p.id">{{ p.name }} (g = {{ p.g }} m/s²)</option>
+              <option v-for="p in PLANETS" :key="p.id" :value="p.id">{{ tx(p.name) }} (g = {{ p.g }} m/s²)</option>
             </select>
           </label>
 
           <dl class="readouts">
             <div><dt>{{ tx('Time') }}</dt><dd class="num">{{ fmt(state.t, 4) }} s</dd></div>
             <div><dt>{{ tx('Complete swings counted') }}</dt><dd class="num">{{ swings }}</dd></div>
-            <div class="measured"><dt>{{ tx('Measured period') }}</dt><dd class="num">{{ lastPeriod === null ? 'swing to measure' : `${fmt(lastPeriod)} s` }}</dd></div>
+            <div class="measured"><dt>{{ tx('Measured period') }}</dt><dd class="num">{{ lastPeriod === null ? tx('swing to measure') : `${fmt(lastPeriod)} s` }}</dd></div>
             <div v-if="intermediate"><dt>{{ tx('Small-swing formula 2π√(L/g)') }}</dt><dd class="num">{{ fmt(smallAngle) }} s</dd></div>
             <div v-if="advanced"><dt>{{ tx('Exact period for this swing') }}</dt><dd class="num">{{ fmt(exact) }} s</dd></div>
           </dl>

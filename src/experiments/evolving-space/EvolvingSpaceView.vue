@@ -69,17 +69,17 @@ const advanced = computed(() => atLeast(level.value, 'advanced'))
 const timeModel = computed({ get: () => t.value, set: (v: number) => setTime(v) })
 const timeLabel = computed(() => {
   const e = expansion.value
-  if (e.hasBigBang) return `${formatGyr(t.value)} after the Big Bang`
+  if (e.hasBigBang) return `${formatGyr(t.value)} ${tx('after the Big Bang')}`
   const rel = t.value - e.tToday
-  if (Math.abs(rel) < 0.005) return 'today'
-  return `${formatGyr(Math.abs(rel))} ${rel > 0 ? 'from now' : 'ago'}`
+  if (Math.abs(rel) < 0.005) return tx('today')
+  return `${formatGyr(Math.abs(rel))} ${tx(rel > 0 ? 'from now' : 'ago')}`
 })
 
 function formatGyr(gyr: number): string {
   if (gyr >= 1) return `${gyr.toFixed(2)} billion years`
   if (gyr >= 1e-3) return `${Math.round(gyr * 1000)} million years`
   if (gyr >= 1e-6) return `${Math.round(gyr * 1e6).toLocaleString('en-US')} thousand years`
-  return 'a tiny fraction of a second'
+  return tx('a tiny fraction of a second')
 }
 
 const milestones = computed(() => {
@@ -136,7 +136,7 @@ const expansionWord = computed(() => {
           <label class="model-select">
             <span>{{ tx('Universe') }}</span>
             <select v-model="model">
-              <option v-for="c in COSMOLOGIES" :key="c.id" :value="c.id">{{ c.name }}</option>
+              <option v-for="c in COSMOLOGIES" :key="c.id" :value="c.id">{{ tx(c.name) }}</option>
             </select>
           </label>
           <GalaxyField
@@ -158,22 +158,22 @@ const expansionWord = computed(() => {
         <div class="lab-side card">
           <div class="clock">
             <span class="clock-label">{{ tx('Cosmic time') }}</span>
-            <span class="clock-value">{{ timeLabel }}</span>
+            <span class="clock-value">{{ tx(timeLabel) }}</span>
             <span class="clock-sub num">a = {{ sig(readings.a, 4) }}</span>
           </div>
           <div class="buttons">
             <button class="btn" type="button" :disabled="t <= expansion.tMin" @click="running && direction === -1 ? stop() : run(-1)">
-              {{ running && direction === -1 ? 'Pause' : '◀ Backwards' }}
+              {{ running && direction === -1 ? tx('Pause') : tx('◀ Backwards') }}
             </button>
             <button class="btn btn-primary" type="button" :disabled="t >= expansion.tMax" @click="running && direction === 1 ? stop() : run(1)">
-              {{ running && direction === 1 ? 'Pause' : 'Forwards ▶' }}
+              {{ running && direction === 1 ? tx('Pause') : tx('Forwards ▶') }}
             </button>
           </div>
           <div class="time-slider">
             <label for="cosmic-time">{{ tx('Jump to a time') }}</label>
             <input id="cosmic-time" v-model.number="timeModel" type="range" :min="expansion.tMin" :max="expansion.tMax" step="0.01" />
             <div class="presets">
-              <button v-for="m in milestones" :key="m.label" type="button" class="chip" @click="setTime(m.t)">{{ m.label }}</button>
+              <button v-for="m in milestones" :key="m.label" type="button" class="chip" @click="setTime(m.t)">{{ tx(m.label) }}</button>
             </div>
           </div>
 
@@ -182,14 +182,14 @@ const expansionWord = computed(() => {
               <dt>{{ tx('Distances compared with today') }}</dt>
               <dd class="num">{{ readings.a < A_BREAKDOWN ? 'model fails' : readings.a >= 0.01 ? `${sig(readings.a * 100)}%` : `1/${sig(1 / readings.a)}` }}</dd>
             </div>
-            <div><dt>{{ tx('Expansion is') }}</dt><dd>{{ expansionWord }}</dd></div>
+            <div><dt>{{ tx('Expansion is') }}</dt><dd>{{ tx(expansionWord) }}</dd></div>
             <div v-if="readings.redshift !== null"><dt>{{ tx('Light from now, seen today: redshift z') }}</dt><dd class="num">{{ sig(readings.redshift) }}</dd></div>
             <div v-if="readings.temperature !== null"><dt>{{ tx('Background radiation') }}</dt><dd class="num">{{ sig(readings.temperature) }} K</dd></div>
             <template v-if="intermediate">
               <div><dt>{{ tx('Hubble rate H') }}</dt><dd class="num">{{ readings.hubbleKmSMpc === null ? '—' : `${sig(readings.hubbleKmSMpc)} km/s/Mpc` }}</dd></div>
               <div><dt>{{ tx('Hubble distance c/H') }}</dt><dd class="num">{{ readings.hubbleDistance === null ? '—' : `${sig(readings.hubbleDistance)} Gly` }}</dd></div>
             </template>
-            <div v-if="advanced"><dt>Deceleration q</dt><dd class="num">{{ readings.q === null ? '—' : sig(readings.q) }}</dd></div>
+            <div v-if="advanced"><dt>{{ tx("Deceleration q") }}</dt><dd class="num">{{ readings.q === null ? '—' : sig(readings.q) }}</dd></div>
           </dl>
 
           <div class="target">
@@ -203,14 +203,14 @@ const expansionWord = computed(() => {
               :hint="localizeExperimentText('Distance today, in billions of light-years.', locale) ?? 'Distance today, in billions of light-years.'"
             />
             <dl class="readouts">
-              <div><dt>Its distance at this time</dt><dd class="num">{{ sig(readings.targetDistance) }} Gly</dd></div>
+              <div><dt>{{ tx("Its distance at this time") }}</dt><dd class="num">{{ sig(readings.targetDistance) }} Gly</dd></div>
               <div :class="{ ftl: (readings.targetSpeed ?? 0) >= 1 }">
-                <dt>Its recession speed</dt>
+                <dt>{{ tx("Its recession speed") }}</dt>
                 <dd class="num">{{ readings.targetSpeed === null ? '—' : `${sig(readings.targetSpeed)} c` }}</dd>
               </div>
             </dl>
           </div>
-          <p class="small muted">{{ cosmology.name }}: H₀ = {{ cosmology.h0 }} km/s/Mpc.</p>
+          <p class="small muted">{{ tx(cosmology.name) }}: H₀ = {{ cosmology.h0 }} km/s/Mpc.</p>
         </div>
       </div>
     </section>
@@ -218,7 +218,7 @@ const expansionWord = computed(() => {
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <EvolvingSpaceMath :level="level" :cosmology="cosmology" :expansion="expansion" :a="readings.a" :hubble="hubblePerGyr" :target="target" />
     </section>
     </details>
@@ -259,9 +259,9 @@ const expansionWord = computed(() => {
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>{{ localizeExperimentText('See also:', locale) }}</strong> {{ localizeExperimentText('Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/gravity/clock-rates">Experiment C</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">Experiment E</RouterLink>
-        <RouterLink to="/">All modules</RouterLink>
+        <RouterLink to="/gravity/clock-rates">{{ tx("Experiment C") }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx("Experiment E") }}</RouterLink>
+        <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>
   </article>

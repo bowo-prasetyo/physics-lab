@@ -66,8 +66,8 @@ const seriesExample = computed(() => {
       <h3>{{ tx('Small swings: simple harmonic motion') }}</h3>
       <MathFormula display tex="\begin{gathered} \sin\theta \approx \theta \;\Longrightarrow\; \theta(t) = \theta_0 \cos\!\left(\sqrt{\tfrac{g}{L}}\,t\right) \\ T_0 = 2\pi\sqrt{\tfrac{L}{g}} \end{gathered}" />
       <p>
-        Because <MathFormula tex="T_0 \propto 1/\sqrt g" />, the same pendulum on the Moon (<MathFormula tex="g = 1.62\ \text{m/s}^2" />)
-        swings <MathFormula tex="\sqrt{9.81/1.62} \approx 2.46" /> times more slowly.
+        {{ tx('Because') }} <MathFormula tex="T_0 \propto 1/\sqrt g" />, {{ tx('the same pendulum on the Moon (') }}<MathFormula tex="g = 1.62\ \text{m/s}^2" />)
+        {{ tx('swings') }} <MathFormula tex="\sqrt{9.81/1.62} \approx 2.46" /> {{ tx('times more slowly.') }}
       </p>
     </template>
 

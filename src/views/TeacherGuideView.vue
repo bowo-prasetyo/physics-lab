@@ -3,9 +3,11 @@ import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useLocale } from '@/composables/useLocale'
 import { getTeacherGuide } from '@/i18n/teacher-guide'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
 
 const { locale } = useLocale()
 const guide = computed(() => getTeacherGuide(locale.value))
+const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 const lessonLinks = [
   [{ label: 'Space versus time', to: '/space/space-vs-time' }, { label: 'Displacement in 3D', to: '/space/displacement-3d' }],
   [{ label: 'Pendulum clocks', to: '/time/pendulum' }],
@@ -51,7 +53,7 @@ const lessonLinks = [
           <h4>{{ guide.check }}</h4>
           <p>{{ lesson.check }}</p>
           <div class="lesson-links">
-            <RouterLink v-for="link in lessonLinks[index]" :key="link.to" :to="link.to">{{ link.label }}</RouterLink>
+            <RouterLink v-for="link in lessonLinks[index]" :key="link.to" :to="link.to">{{ tx(link.label) }}</RouterLink>
           </div>
         </article>
       </div>
