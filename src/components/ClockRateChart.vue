@@ -91,7 +91,7 @@ const description = computed(
       <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">
         height above the {{ body.hasSurface ? 'surface' : 'horizon' }} (logarithmic scale{{ body.hasSurface ? '; left edge = on the surface' : '' }})
       </text>
-      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">clock slowed by ({{ unit.name }})</text>
+      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText(`clock slowed by (${unit.name})`, locale) }}</text>
 
       <g :clip-path="`url(#${id}-plot)`">
         <path :d="`${curve} L${M.left + plotW},${M.top + plotH} L${M.left},${M.top + plotH} Z`" class="well" />
