@@ -25,6 +25,7 @@
   "devDependencies": {
     "@tsconfig/node22": "22.0.7",
     "@types/node": "22.20.5",
+    "@types/three": "0.187.0",
     "@vitejs/plugin-vue": "6.0.11",
     "@vue/tsconfig": "0.9.1",
     "jsdom": "26.1.0",
