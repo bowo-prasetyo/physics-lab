@@ -106,7 +106,7 @@ function accessibleName(element: Element, container: HTMLElement): string {
   const labelledBy = (element.getAttribute('aria-labelledby') ?? '')
     .split(/\\s+/)
     .filter(Boolean)
-    .map((id) => container.ownerDocument.getElementById(id)?.textContent ?? '')
+    .map((id) => Array.from(container.querySelectorAll<HTMLElement>('[id]')).find((candidate) => candidate.id === id)?.textContent ?? '')
     .map(normalize)
     .filter(Boolean)
     .join(' ')
