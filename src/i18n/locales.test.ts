@@ -65,6 +65,6 @@ describe('locale configuration', () => {
   it('localizes curriculum content rather than reusing English copy', () => {
     expect(getTeacherGuide('id').title).toBe('Panduan pengajar')
     expect(getTeacherGuide('ja').title).toBe('教員向けガイド')
-    expect(getTeacherGuide('id').lessons[0].title).toBe('Posisi, jarak, dan perpindahan')
+    expect(getTeacherGuide('id').lessons.at(0)?.title).toBe('Posisi, jarak, dan perpindahan')
   })
 })
