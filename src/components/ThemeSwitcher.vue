@@ -1,16 +1,18 @@
 <script setup lang="ts">
+import { useLocale } from '@/composables/useLocale'
 import { useTheme } from '@/composables/useTheme'
 
 const { preference } = useTheme()
+const { t } = useLocale()
 </script>
 
 <template>
   <label class="theme-switcher">
-    <span>Theme</span>
-    <select v-model="preference" aria-label="Color theme">
-      <option value="system">System</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
+    <span>{{ t('app.theme.label') }}</span>
+    <select v-model="preference" :aria-label="t('app.theme.label')">
+      <option value="system">{{ t('app.theme.system') }}</option>
+      <option value="light">{{ t('app.theme.light') }}</option>
+      <option value="dark">{{ t('app.theme.dark') }}</option>
     </select>
   </label>
 </template>

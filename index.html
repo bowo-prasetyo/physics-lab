@@ -9,17 +9,36 @@
     <title>Physica</title>
     <script>
       (() => {
-        let preference = 'system'
+        const supported = ['en', 'id', 'ja']
+        let locale = null
+        try {
+          const stored = localStorage.getItem('physica-locale')
+          if (supported.includes(stored)) locale = stored
+        } catch {
+          // Browser language detection remains available when storage is disabled.
+        }
+        if (!locale) {
+          const languages = navigator.languages?.length ? navigator.languages : [navigator.language]
+          for (const language of languages) {
+            const normalized = language.toLowerCase()
+            if (normalized === 'id' || normalized.startsWith('id-')) { locale = 'id'; break }
+            if (normalized === 'ja' || normalized.startsWith('ja-')) { locale = 'ja'; break }
+            if (normalized === 'en' || normalized.startsWith('en-')) { locale = 'en'; break }
+          }
+        }
+        document.documentElement.lang = locale || 'en'
+
+        let theme = 'system'
         try {
           const stored = localStorage.getItem('physica-theme')
-          if (stored === 'light' || stored === 'dark' || stored === 'system') preference = stored
+          if (stored === 'light' || stored === 'dark' || stored === 'system') theme = stored
         } catch {
           // Use the system preference when local storage is unavailable.
         }
         const systemDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
-        document.documentElement.dataset.theme = preference === 'system'
+        document.documentElement.dataset.theme = theme === 'system'
           ? (systemDark ? 'dark' : 'light')
-          : preference
+          : theme
       })()
     </script>
   </head>

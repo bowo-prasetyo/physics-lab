@@ -1,21 +1,25 @@
 <script setup lang="ts">
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import LevelSwitcher from '@/components/LevelSwitcher.vue'
 import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
 import ExperimentNavigation from '@/components/ExperimentNavigation.vue'
+import { useLocale } from '@/composables/useLocale'
 
+const { t } = useLocale()
 const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
 </script>
 
 <template>
   <header class="app-header">
     <div class="container header-inner">
-      <RouterLink to="/" class="brand" aria-label="Physica home">
+      <RouterLink to="/" class="brand" :aria-label="t('app.brand.homeLabel')">
         <img :src="logo" alt="Physica" width="148" height="40" />
       </RouterLink>
-      <nav class="header-tools" aria-label="Main navigation">
-        <RouterLink class="teacher-link" to="/teachers">For teachers</RouterLink>
+      <nav class="header-tools" :aria-label="t('app.navigation.main')">
+        <RouterLink class="teacher-link" to="/teachers">{{ t('app.navigation.forTeachers') }}</RouterLink>
         <LevelSwitcher />
         <ThemeSwitcher />
+        <LanguageSwitcher />
       </nav>
     </div>
   </header>
@@ -24,7 +28,7 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
     <RouterView />
   </main>
   <footer class="app-footer">
-    <div class="container muted">Physica · Open-source physics experiments for students · MIT License</div>
+    <div class="container muted">Physica · {{ t('app.footer.tagline') }} · MIT License</div>
   </footer>
 </template>
 
@@ -65,6 +69,8 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
 .header-tools {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 16px;
 }
 
