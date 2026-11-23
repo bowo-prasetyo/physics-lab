@@ -97,7 +97,7 @@ const metricCheck = computed(
     <template v-else>
       <h3>{{ tx('Why the two relativistic descriptions must agree') }}</h3>
       <p>
-        {{ tx('In matrix form, a boost is a hyperbolic rotation of') }} <MathFormula tex="x^\mu = (ct, x)" /> {{ tx('by the rapidity') }} <MathFormula tex="\varphi" />:
+        {{ tx('In matrix form, a boost is a hyperbolic rotation. Its input vector is') }} <MathFormula tex="x^\mu = (ct, x)" />{{ tx('and its rapidity is') }} <MathFormula tex="\varphi" />.
       </p>
       <MathFormula display tex="\Lambda(\varphi) = \begin{pmatrix} \cosh\varphi & -\sinh\varphi \\ -\sinh\varphi & \cosh\varphi \end{pmatrix}" />
       <p>{{ tx('It preserves the metric') }} <MathFormula tex="\eta = \operatorname{diag}(1, -1)" />:</p>
