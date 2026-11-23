@@ -91,6 +91,13 @@ const fmt = (x: number, digits = 2) => {
   return (v < 0 ? '−' : '') + Math.abs(v).toString()
 }
 const vec = (v: Vec3) => `(${fmt(v.x)}, ${fmt(v.y)}, ${fmt(v.z)})`
+function moveAriaLabel(axis: Axis, sign: -1 | 1) {
+  const direction = tx(DIRECTIONS[axis][sign < 0 ? 0 : 1])
+  const step = sign < 0 ? `−${axis}` : `+${axis}`
+  if (locale.value === 'id') return `Gerakkan 1 m ke ${direction} (${step})`
+  if (locale.value === 'ja') return `${direction}へ 1 m 移動（${step}）`
+  return `Move 1 m ${direction} (${step})`
+}
 const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
 </script>
 
@@ -148,9 +155,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             <p class="group-title">{{ tx("Move the object (1 m steps)") }}</p>
             <p class="muted small convention">{{ tx("+x is east, +y is north, +z is up.") }}</p>
             <div v-for="axis in AXES" :key="axis" class="move-row">
-              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][0]} (−${axis})`" @click="step(axis, -1)">− {{ axis }} · {{ tx(DIRECTIONS[axis][0]) }}</button>
+              <button class="btn btn-small" type="button" :aria-label="moveAriaLabel(axis, -1)" @click="step(axis, -1)">− {{ axis }} · {{ tx(DIRECTIONS[axis][0]) }}</button>
               <span :class="['axis-name', `axis-${axis}`]">{{ axis }}</span>
-              <button class="btn btn-small" type="button" :aria-label="`Move 1 m ${DIRECTIONS[axis][1]} (+${axis})`" @click="step(axis, 1)">+ {{ axis }} · {{ tx(DIRECTIONS[axis][1]) }}</button>
+              <button class="btn btn-small" type="button" :aria-label="moveAriaLabel(axis, 1)" @click="step(axis, 1)">+ {{ axis }} · {{ tx(DIRECTIONS[axis][1]) }}</button>
             </div>
           </div>
           <form class="goto" @submit.prevent="goToTarget">
