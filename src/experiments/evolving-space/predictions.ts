@@ -174,7 +174,7 @@ export const PREDICTIONS: readonly Prediction<SpaceRecord>[] = [
     explanation:
       'Radiation, matter and dark energy determine the switch. For this model, q = 0 gives Ωᵣ + (Ωₘ/2)a − ΩΛa⁴ = 0; including radiation, ' +
       'a ≈ 0.609, redshift z ≈ 0.642, about 6.14 billion years ago. If radiation is neglected, this reduces to ρ_matter = 2ρ_Λ. ' +
-      'The acceleration was discovered in 1998 from distant supernovae, and earned the 2011 '
+      'The acceleration was discovered in 1998 from distant supernovae, and earned the 2011 ' +
       'Nobel Prize in Physics.',
     observed: (r) => observedAccelerationOnset(merged(r)),
     hint: (r) => accelerationHint(merged(r)),
