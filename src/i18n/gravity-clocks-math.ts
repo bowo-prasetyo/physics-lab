@@ -57,7 +57,7 @@ const translations: Record<string, readonly [string, string]> = {
   "Here the lapse is": ["Di sini fungsi lapse adalah", "ここでラプス関数は"],
   ": the rate of a static clock. It falls to zero at the horizon. Experiment E’s formula is now something you can measure.": [": laju jam yang diam. Nilainya turun hingga nol di horizon. Rumus dari Eksperimen E kini dapat Anda ukur.", "：静止時計の進み方を表します。事象の地平面でゼロになります。実験 E の式を実際に測定できるようになりました。"],
   "For your clocks (at radii": ["Untuk kedua jam Anda (pada jari-jari", "今回の 2 つの時計では（半径"],
-  "), clock B runs": ["), "）、時計 B は"],
+  "), clock B runs": ["), jam B berjalan", "）、時計 B は"],
   "and both observers agree.": ["dan kedua pengamat sepakat.", "そして両方の観測者が同じ結論になります。"],
 }
 
