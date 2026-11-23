@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useId } from 'vue'
 import MathFormula from './MathFormula.vue'
+import { formatNumber } from '@/i18n/formatters'
 
 const props = withDefaults(
   defineProps<{
@@ -23,8 +24,13 @@ const props = withDefaults(
 const model = defineModel<number>({ required: true })
 const id = useId()
 
-const format = (value: number) =>
-  (value > 0 && props.signed ? '+' : value < 0 ? '−' : '') + Math.abs(value).toFixed(props.digits)
+const format = (value: number) => {
+  const sign = value > 0 && props.signed ? '+' : value < 0 ? '−' : ''
+  return sign + formatNumber(Math.abs(value), {
+    minimumFractionDigits: props.digits,
+    maximumFractionDigits: props.digits,
+  })
+}
 </script>
 
 <template>
