@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ShareExperiment from '@/components/ShareExperiment.vue'
+import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ParameterSlider from '@/components/ParameterSlider.vue'
@@ -99,6 +100,8 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </header>
 
     <ShareExperiment />
+
+    <ExperimentSupport experiment-id="displacement-3d" :module-number="1" focus="Position, path length and displacement are different descriptions of a journey." prompt="If an object takes two different routes to the same destination, what should stay the same?" action="Move the object through a few points, note the distance travelled and displacement, then rotate or move the coordinate frame." reflect="Which coordinates changed when you changed the frame, and which geometric quantity stayed invariant?" />
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>

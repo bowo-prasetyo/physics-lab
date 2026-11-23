@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ShareExperiment from '@/components/ShareExperiment.vue'
+import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PredictionCard from '@/components/PredictionCard.vue'
@@ -136,6 +137,8 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </header>
 
     <ShareExperiment />
+
+    <ExperimentSupport experiment-id="gravity-clock-rates" :module-number="5" focus="Compare clock rates in the stated static Schwarzschild setting; keep the model assumptions visible." prompt="Which clock should accumulate more time when two stationary clocks are held at different heights?" action="Change the two clock heights, compare the predicted rates, then inspect the separate gravitational and kinematic GPS corrections." reflect="What is held fixed in this comparison, and why is the GPS correction not purely gravitational?" />
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>

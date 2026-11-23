@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ShareExperiment from '@/components/ShareExperiment.vue'
+import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import MathFormula from '@/components/MathFormula.vue'
@@ -117,6 +118,8 @@ const signed = (value: number, digits = 2) => {
     </header>
 
     <ShareExperiment />
+
+    <ExperimentSupport experiment-id="moving-clocks" :module-number="4" focus="Compare elapsed proper times along worldlines and distinguish them from coordinate-time descriptions." prompt="If two clocks separate and later reunite, must they record the same elapsed time?" action="Change the ship speed and observer frame, then compare the worldlines and simultaneity slices for the same events." reflect="Which events are shared by both observers, and which parts of the description depend on the chosen frame?" />
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ShareExperiment from '@/components/ShareExperiment.vue'
+import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import MathFormula from '@/components/MathFormula.vue'
@@ -112,6 +113,8 @@ const expansionWord = computed(() => {
     </header>
 
     <ShareExperiment />
+
+    <ExperimentSupport experiment-id="evolving-space" :module-number="6" focus="Distinguish the expansion of distances between comoving locations from motion through static space." prompt="If the scale factor doubles, what happens to the separation of two comoving galaxies?" action="Run at least two cosmological models and compare their scale-factor and Hubble histories at the same epoch." reflect="Which conclusions follow from the chosen model, and what observational evidence would be needed to test it?" />
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>

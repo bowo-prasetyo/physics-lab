@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ShareExperiment from '@/components/ShareExperiment.vue'
+import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import ParameterSlider from '@/components/ParameterSlider.vue'
@@ -94,6 +95,8 @@ function formatClock(seconds: number): string {
     </header>
 
     <ShareExperiment />
+
+    <ExperimentSupport experiment-id="pendulum" :module-number="2" focus="A pendulum is a physical clock: its period depends on its length, local gravitational acceleration and (beyond the small-angle limit) amplitude." prompt="Would adding mass to the bob make an ideal pendulum swing faster?" action="Vary length, mass and release angle separately; compare the measured period with the small-angle prediction." reflect="When does the small-angle approximation become less accurate, and why might a clock need recalibration in a new environment?" />
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
