@@ -134,12 +134,9 @@ const dropDifference = computed(() => {
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">Module 3 · Classical mechanics · Projectile motion</p>
-      <h1>Projectile launcher</h1>
-      <p class="lead">
-        Launch a ball at any speed and angle, from the ground or a tower, on the Earth, the Moon, Mars or Jupiter, with or without air.
-        Watch it from the ground, or from a moving train.
-      </p>
+      <p class="eyebrow">{{ localizeExperimentText('Module 3 · Classical mechanics · Projectile motion', locale) ?? 'Module 3 · Classical mechanics · Projectile motion' }}</p>
+      <h1>{{ localizeExperimentText('Projectile launcher', locale) ?? 'Projectile launcher' }}</h1>
+      <p class="lead">{{ localizeExperimentText('Launch a ball at any speed and angle, from the ground or a tower, on the Earth, the Moon, Mars or Jupiter, with or without air. Watch it from the ground, or from a moving train.', locale) ?? 'Launch a ball at any speed and angle, from the ground or a tower, on the Earth, the Moon, Mars or Jupiter, with or without air. Watch it from the ground, or from a moving train.' }}</p>
     </header>
 
     <ShareExperiment />
