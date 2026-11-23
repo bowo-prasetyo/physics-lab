@@ -181,9 +181,9 @@ const dropDifference = computed(() => {
         </div>
 
         <div class="lab-side card">
-          <button class="btn btn-primary launch" type="button" :disabled="flying" @click="launch">{{ flying ? 'In flight…' : 'Launch' }}</button>
+          <button class="btn btn-primary launch" type="button" :disabled="flying" @click="launch">{{ flying ? tx('In flight…') : tx('Launch') }}</button>
           <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
-            <span class="muted small">Playback</span>
+            <span class="muted small">{{ tx("Playback") }}</span>
             <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
               {{ s === 1 ? 'real time' : `×${s}` }}
             </button>
@@ -194,9 +194,9 @@ const dropDifference = computed(() => {
           <ParameterSlider v-model="height" :label="localizeExperimentText('Launch height', locale) ?? 'Launch height'" symbol="h" unit="m" v-bind="HEIGHT_RANGE" :digits="0" :signed="false" :disabled="flying" />
 
           <label class="field">
-            <span>World</span>
+            <span>{{ tx("World") }}</span>
             <select v-model="planetId" :disabled="flying">
-              <option v-for="p in PLANETS" :key="p.id" :value="p.id">{{ p.name }} (g = {{ p.g }} m/s²)</option>
+              <option v-for="p in PLANETS" :key="p.id" :value="p.id">{{ tx(p.name) }} (g = {{ p.g }} m/s²)</option>
             </select>
           </label>
           <label class="toggle">
@@ -220,18 +220,18 @@ const dropDifference = computed(() => {
           </template>
 
           <dl class="readouts">
-            <div><dt>Time</dt><dd class="num">{{ fmt(t) }} s</dd></div>
+            <div><dt>{{ tx("Time") }}</dt><dd class="num">{{ fmt(t) }} s</dd></div>
             <template v-if="ball">
-              <div><dt>Distance x</dt><dd class="num">{{ fmt(ball.x - frameVelocity * ball.t) }} m</dd></div>
-              <div><dt>Height y</dt><dd class="num">{{ fmt(ball.y) }} m</dd></div>
+              <div><dt>{{ tx("Distance x") }}</dt><dd class="num">{{ fmt(ball.x - frameVelocity * ball.t) }} m</dd></div>
+              <div><dt>{{ tx("Height y") }}</dt><dd class="num">{{ fmt(ball.y) }} m</dd></div>
             </template>
             <template v-if="end && status === 'landed'">
               <div><dt>Range (along the ground)</dt><dd class="num">{{ fmt(end.x) }} m</dd></div>
-              <div><dt>Highest point</dt><dd class="num">{{ fmt(maxHeight ?? 0) }} m</dd></div>
+              <div><dt>{{ tx("Highest point") }}</dt><dd class="num">{{ fmt(maxHeight ?? 0) }} m</dd></div>
               <div><dt>Time in the air</dt><dd class="num">{{ fmt(end.t) }} s</dd></div>
             </template>
             <template v-if="advanced && energy">
-              <div><dt>Energy per kg</dt><dd class="num">{{ fmt(energy.e) }} J/kg</dd></div>
+              <div><dt>{{ tx("Energy per kg") }}</dt><dd class="num">{{ fmt(energy.e) }} J/kg</dd></div>
               <div><dt>Lost to air so far</dt><dd class="num">{{ fmt(energy.lost) }} J/kg</dd></div>
             </template>
             <div v-if="bestAngle !== null"><dt>Best angle for these settings</dt><dd class="num">{{ fmt(bestAngle) }}°</dd></div>
