@@ -96,7 +96,7 @@ const description = computed(() => {
       <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 18" class="tick">{{ formatLength(x) }}</text>
       <text v-for="y in yTicks" :key="`ly${y}`" :x="M.left - 8" :y="M.top + (1 - y / yMax) * plotH + 4" class="tick y">{{ fmtY(y) }}</text>
       <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">
-        {{ localizeExperimentText(body.hasSurface ? 'height above the surface' : 'height above the horizon', locale) }} ({{ localizeExperimentText('logarithmic scale', locale) }}{{ body.hasSurface ? `; ${localizeExperimentText('left edge = on the surface', locale)}` : '' }})
+        {{ locale === 'id' ? (body.hasSurface ? 'ketinggian di atas permukaan' : 'ketinggian di atas horizon') : locale === 'ja' ? (body.hasSurface ? '地表からの高さ' : '地平面からの高さ') : (body.hasSurface ? 'height above the surface' : 'height above the horizon') }} ({{ localizeExperimentText('logarithmic scale', locale) }}{{ body.hasSurface ? (locale === 'id' ? '; tepi kiri = permukaan' : locale === 'ja' ? '；左端 = 地表' : '; left edge = on the surface') : '' }})
       </text>
       <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText(`clock slowed by (${unit.name})`, locale) }}</text>
 
