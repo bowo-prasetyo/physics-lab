@@ -112,8 +112,7 @@ const phi = computed(() => (props.beta < 1 ? rapidity(props.beta) : 0))
 
       <InfoCallout kind="physics" :title="tx('Key idea')">
         <p>
-          Every clock ticks normally for the person carrying it. Time dilation appears only when you compare clocks that are moving
-          relative to each other.
+          {{ tx('Every clock ticks normally for the person carrying it. Time dilation appears only when you compare clocks that are moving relative to each other.') }}
         </p>
       </InfoCallout>
     </template>
@@ -132,14 +131,12 @@ const phi = computed(() => (props.beta < 1 ? rapidity(props.beta) : 0))
       </p>
       <MathFormula display tex="\Delta t' = -\gamma\,\frac{v\,\Delta x}{c^2}." />
       <p>
-        On the diagram, the moving observer's “now” is the tilted orange line. It passes through the {{ other }} clock's current event
-        <MathFormula tex="(t, x)" /> and meets the {{ home }} clock (at <MathFormula tex="x = 0" />) at the {{ home }}'s time
+        {{ tx("On the diagram, the moving observer's “now” is the tilted orange line. It passes through the") }} {{ other }} {{ tx("clock's current event") }}
+        <MathFormula tex="(t, x)" /> {{ tx('and meets the') }} {{ home }} {{ tx('clock (at') }} <MathFormula tex="x = 0" />{{ tx(') at the') }} {{ home }}{{ tx("'s time") }}
       </p>
       <MathFormula display :tex="simultaneityExample" />
       <p>
-        So according to the {{ other }}, the {{ home }} clock reads less than the {{ other }}'s own clock: the {{ home }} clock is the slow
-        one. Each observer finds the other's clock slow by the same factor γ. There is no contradiction, because they are comparing
-        different pairs of events.
+        {{ tx('So according to the') }} {{ other }}, {{ home }} {{ tx('clock reads less than the') }} {{ other }}{{ tx("'s own clock: the") }} {{ home }} {{ tx("clock is the slow one. Each observer finds the other's clock slow by the same factor γ. There is no contradiction, because they are comparing different pairs of events.") }}
       </p>
     </template>
 
