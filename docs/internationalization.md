@@ -51,7 +51,9 @@ The nine experiment-specific predict–observe–explain banks are localized in 
 
 The active locale is applied at the view boundary. Prediction IDs, option IDs, correct-answer IDs, level thresholds, observation predicates, hint logic, route paths, query parameters, and physics calculations remain in the experiment modules and are not translated. This separation keeps saved/shared experiment setups and assessment behavior stable across languages.
 
-Experiment-specific dynamic hints, the long-form explanatory sections surrounding the interactive lab, and some SVG/chart labels and accessibility descriptions remain a follow-on localization task. They should be migrated without changing model semantics; preserve scientific symbols, units, equations, assumptions, and uncertainty language.
+The nine experiment views also use `src/components/LocalizedExperimentGuide.vue` for Indonesian and Japanese explanations of established physics, interpretive questions, and text descriptions of the key visualizations. The English long-form interpretation remains the source-language presentation. These descriptions provide a text alternative to the visual evidence and explain axes, markers, reference frames, and model limits where relevant.
+
+The translated guides are presentation-only. They do not alter experiment state, equations, plotted data, or observation logic. Dynamic experiment hints, every individual SVG/chart control label, and the remaining native accessibility labels are still candidates for further localization. Preserve scientific symbols, units, equations, assumptions, and uncertainty language when extending coverage.
 
 ## Translation quality
 
