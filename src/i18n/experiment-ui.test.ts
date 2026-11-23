@@ -58,4 +58,59 @@ describe('experiment UI localization', () => {
     }
   })
 
+
+  it('localizes visualization labels, tables, and accessibility descriptions', () => {
+    const labels = [
+      'Starting point (x, y, z)',
+      'Current point (x, y, z)',
+      'Displacement (Δx, Δy, Δz)',
+      'Distance between start and current point',
+      'Path points recorded',
+      'observer',
+      'Horizontal position',
+      'Horizontal velocity',
+      'Vertical velocity',
+      'Launched ball',
+      'Dropped ball',
+      'Before launch',
+      'Not moving',
+      'Read the current projectile measurements as a table',
+      'Observer',
+      'Current event (t, x)',
+      'Proper time elapsed',
+      'Position at each whole second of the current run',
+      'Start the clock to fill in the table.',
+      'Light (45°)',
+      'Measured',
+      'parts per million',
+      'parts per billion',
+      'parts per trillion',
+    ]
+    for (const source of labels) {
+      expect(localizeExperimentText(source, 'id')).not.toBe(source)
+      expect(localizeExperimentText(source, 'ja')).not.toBe(source)
+    }
+    expect(localizeExperimentText('position x (m)', 'id')).toBe('posisi x (m)')
+    expect(localizeExperimentText('height (m)', 'ja')).toBe('高さ (m)')
+  })
+
+  it('localizes dynamic descriptions without changing scientific values', () => {
+    const description = 'Interactive 3D view of a path in Cartesian coordinates. x points east, y north and z up. Start (0.00, 0.00, 0.00); current position (1.00, 2.00, 3.00); displacement (1.00, 2.00, 3.00) metres. Use the view presets for standard camera angles. A numerical alternative follows.'
+    const translated = localizeExperimentText(description, 'id') ?? ''
+    expect(translated).toContain('(0.00, 0.00, 0.00)')
+    expect(translated).toContain('1.00, 2.00, 3.00')
+    expect(translated).not.toContain('Interactive 3D view')
+    expect(translated).not.toContain('current position')
+    expect(localizeExperimentText('Track from 0 to 10 metres. The object is at x = 2.00 m, started at x₀ = 0.0 m, moving at 1.0 m/s.', 'id')).toContain('Lintasan dari 0 hingga 10 meter')
+    expect(localizeExperimentText('Launcher ready, seen from the ground: 12 m/s at 30 degrees from 2 m.', 'ja')).toContain('地上から見た')
+  })
+
+
+  it('localizes phase portraits and early-universe visualization captions', () => {
+    expect(localizeExperimentText('Phase portrait: angle across, angular velocity up. Each swing traces the same closed loop.', 'id')).toContain('Potret fase')
+    expect(localizeExperimentText('Phase portrait: one closed loop per swing. The loop does not spiral, because energy is conserved.', 'ja')).toContain('エネルギーが保存')
+    expect(localizeExperimentText('First light: the universe becomes transparent.', 'id')).toBe('Cahaya pertama: alam semesta menjadi transparan.')
+    expect(localizeExperimentText('Make this galaxy home', 'ja')).not.toBe('Make this galaxy home')
+  })
+
 })

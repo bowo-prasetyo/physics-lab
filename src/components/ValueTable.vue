@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 import { positionAtTime, type RunRecord } from '@/physics'
 
 const props = defineProps<{ record: RunRecord; duration: number }>()
@@ -17,7 +21,7 @@ const rows = computed(() => {
 <template>
   <div class="table-wrap">
     <table>
-      <caption class="sr-only">Position at each whole second of the current run</caption>
+      <caption class="sr-only">{{ localizeExperimentText('Position at each whole second of the current run', locale) }}</caption>
       <thead>
         <tr>
           <th scope="row">t (s)</th>
@@ -31,7 +35,7 @@ const rows = computed(() => {
         </tr>
       </tbody>
     </table>
-    <p v-if="rows.length === 1" class="muted empty">Start the clock to fill in the table.</p>
+    <p v-if="rows.length === 1" class="muted empty">{{ localizeExperimentText('Start the clock to fill in the table.', locale) }}</p>
   </div>
 </template>
 

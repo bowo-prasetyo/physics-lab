@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 const props = defineProps<{
   /** Recent states: angle θ (rad) and angular velocity ω (rad/s). */
@@ -25,15 +29,15 @@ const now = computed(() => props.points[props.points.length - 1] ?? { theta: 0, 
 
 <template>
   <figure class="phase">
-    <svg :viewBox="`0 0 ${S} ${S}`" role="img" aria-label="Phase portrait: angle across, angular velocity up. Each swing traces the same closed loop.">
+    <svg :viewBox="`0 0 ${S} ${S}`" role="img" :aria-label="localizeExperimentText('Phase portrait: angle across, angular velocity up. Each swing traces the same closed loop.', locale)">
       <line :x1="PAD" :x2="S - PAD" :y1="cy" :y2="cy" class="axis" />
       <line :x1="cx" :x2="cx" :y1="PAD" :y2="S - PAD" class="axis" />
-      <text :x="S - PAD" :y="cy - 6" class="label end">angle θ</text>
-      <text :x="cx + 6" :y="PAD + 4" class="label">angular velocity ω</text>
+      <text :x="S - PAD" :y="cy - 6" class="label end">{{ localizeExperimentText('angle θ', locale) }}</text>
+      <text :x="cx + 6" :y="PAD + 4" class="label">{{ localizeExperimentText('angular velocity ω', locale) }}</text>
       <path :d="path" class="trace" />
       <circle :cx="sx(now.theta)" :cy="sy(now.omega)" r="5" class="dot" />
     </svg>
-    <figcaption class="muted">Phase portrait: one closed loop per swing. The loop does not spiral, because energy is conserved.</figcaption>
+    <figcaption class="muted">{{ localizeExperimentText('Phase portrait: one closed loop per swing. The loop does not spiral, because energy is conserved.', locale) }}</figcaption>
   </figure>
 </template>
 

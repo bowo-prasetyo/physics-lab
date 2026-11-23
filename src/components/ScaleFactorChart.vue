@@ -87,10 +87,10 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
     <details class="chart-data">
       <summary>{{ localizeExperimentText('Read the current model values', locale) }}</summary>
       <table><tbody>
-        <tr><th scope="row">Selected time</th><td>{{ t.toFixed(3) }} billion years</td></tr>
-        <tr><th scope="row">Scale factor at selected time</th><td>{{ expansion.scaleFactorAt(t).toPrecision(5) }}</td></tr>
-        <tr><th scope="row">Scale factor today</th><td>1</td></tr>
-        <tr v-if="accelerationTime !== null"><th scope="row">Acceleration begins</th><td>{{ accelerationTime.toFixed(3) }} billion years</td></tr>
+        <tr><th scope="row">{{ localizeExperimentText('Selected time', locale) }}</th><td>{{ t.toFixed(3) }} {{ localizeExperimentText('billion years', locale) }}</td></tr>
+        <tr><th scope="row">{{ localizeExperimentText('Scale factor at selected time', locale) }}</th><td>{{ expansion.scaleFactorAt(t).toPrecision(5) }}</td></tr>
+        <tr><th scope="row">{{ localizeExperimentText('Scale factor today', locale) }}</th><td>1</td></tr>
+        <tr v-if="accelerationTime !== null"><th scope="row">{{ localizeExperimentText('Acceleration begins', locale) }}</th><td>{{ accelerationTime.toFixed(3) }} {{ localizeExperimentText('billion years', locale) }}</td></tr>
       </tbody></table>
     </details>
     <figcaption class="legend">
