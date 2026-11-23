@@ -193,8 +193,6 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
 
     <details class="lesson-disclosure">
       <summary>3 · Explore the mathematics</summary>
-      <details class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <Displacement3DMath
@@ -208,10 +206,11 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
         :frame-is-standard="frameIsStandard"
       />
     </section>
-
-    <sec
     </details>
-    </details>tion aria-labelledby="meaning-title" class="card prose">
+
+    <details class="lesson-disclosure">
+      <summary>4 · Explore the meaning and interpretation</summary>
+      <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
         <InfoCallout kind="physics" title="Established physics">
@@ -236,6 +235,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
         </InfoCallout>
       </div>
     </section>
+    </details>
 
     <nav class="next card" aria-label="Next steps">
       <p><strong>Next:</strong> Experiment A adds time to position, and Experiment E compares space and time with spacetime.</p>

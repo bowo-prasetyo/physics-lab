@@ -103,8 +103,6 @@ function runExperiment() {
 
     <details class="lesson-disclosure">
       <summary>3 · Explore the mathematics</summary>
-      <details class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
       <section class="card prose" aria-labelledby="maths-title">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <p>Newton’s second law relates the net force on an object to its acceleration:</p>
@@ -114,10 +112,11 @@ function runExperiment() {
       <p v-if="atLeast(level, 'intermediate')">The proportionalities are testable: at fixed mass, <MathFormula tex="a \propto F_{net}" />; at fixed net force, <MathFormula tex="a \propto 1/m" />. The signed form also captures a force acting in the negative direction.</p>
       <p v-if="atLeast(level, 'advanced')">In vector form, <MathFormula tex="\sum \vec{F} = m\vec{a}" />. Acceleration is determined by the vector sum of all external forces, not by a single force considered in isolation.</p>
     </section>
-
-    <sec
     </details>
-    </details>tion class="card prose">
+
+    <details class="lesson-disclosure">
+      <summary>4 · Explore the meaning and interpretation</summary>
+      <section class="card prose">
       <h2><span class="step-no">4</span> What does it tell us?</h2>
       <h3>Established physics</h3>
       <ul>
@@ -128,6 +127,7 @@ function runExperiment() {
       <h3>Assumptions and limits</h3>
       <p>This is a one-dimensional Newtonian model in an inertial reference frame. The mass is constant, the net force is constant, and friction is omitted. The selected force represents the sum of all forces along the track; it is not simply the applied push if other forces oppose it.</p>
     </section>
+    </details>
 
     <nav class="next card" aria-label="Next steps">
       <p><strong>Continue:</strong> apply force and acceleration reasoning to a projectile, where gravity changes the vertical velocity.</p>

@@ -164,16 +164,15 @@ function formatClock(seconds: number): string {
 
     <details class="lesson-disclosure">
       <summary>3 · Explore the mathematics</summary>
-      <details class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <PendulumMath :level="level" :length="length" :g="planet.g" :amplitude-deg="amplitude" :small-angle="smallAngle" :exact="exact" />
     </section>
-
-    <sec
     </details>
-    </details>tion aria-labelledby="meaning-title" class="card prose">
+
+    <details class="lesson-disclosure">
+      <summary>4 · Explore the meaning and interpretation</summary>
+      <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
         <InfoCallout kind="physics" title="Established physics">
@@ -206,6 +205,7 @@ function formatClock(seconds: number): string {
         </InfoCallout>
       </div>
     </section>
+    </details>
 
     <nav class="next card" aria-label="Next steps">
       <p><strong>Next:</strong> Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.</p>
