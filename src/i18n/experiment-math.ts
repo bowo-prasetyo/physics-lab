@@ -1,7 +1,7 @@
 import type { Locale } from './locales'
 
 /** Learner-facing explanations in the experiment mathematics panels. */
-const copy: Record<string, readonly [string, string]> = {
+const copy: Record<string, readonly [string, string] | string> = {
   'A position in space needs three numbers, its coordinates, measured along three perpendicular axes from an origin:': ['Posisi dalam ruang memerlukan tiga angka, yaitu koordinat yang diukur sepanjang tiga sumbu saling tegak lurus dari titik asal:', '空間内の位置は、原点から互いに垂直な 3 本の軸に沿って測る 3 つの数値、つまり座標で表されます。'],
   'The displacement is the change in position: end minus start, with a size and a direction. For your journey:': ['Perpindahan adalah perubahan posisi: posisi akhir dikurangi posisi awal, beserta besar dan arahnya. Untuk perjalanan Anda:', '変位とは位置の変化、つまり終点から始点を引いたもので、大きさと方向を持ちます。今回の移動では次のようになります。'],
   'That is Pythagoras’ theorem in three dimensions. The': ['Itulah teorema Pythagoras dalam tiga dimensi. ', 'これは三次元におけるピタゴラスの定理です。'],
@@ -109,5 +109,5 @@ const copy: Record<string, readonly [string, string]> = {
 export function localizeExperimentMathText(value: string, locale: Locale): string {
   if (locale === 'en') return value
   const entry = copy[value]
-  return entry ? entry[locale === 'id' ? 0 : 1] : value
+  return typeof entry === 'string' ? entry : entry ? entry[locale === 'id' ? 0 : 1] : value
 }
