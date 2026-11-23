@@ -228,7 +228,7 @@ const expansionWord = computed(() => {
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
             <li>{{ localizeExperimentText('Distant galaxies recede with speeds proportional to their distance (Lemaître, 1927; Hubble, 1929).', locale) }}</li>
             <li>
@@ -239,7 +239,7 @@ const expansionWord = computed(() => {
             <li>{{ localizeExperimentText('Objects bound by gravity or other forces, such as galaxies, planets and people, do not expand.', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale)">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('Did time begin at the Big Bang?', locale) }}</strong> {{ localizeExperimentText('In classical general relativity the model has an edge at', locale) }} <MathFormula tex="a = 0" />{{ localizeExperimentText(', but the theory is not expected to hold there. Proposals include a quantum “no-boundary” beginning, a bounce from an earlier contracting phase, and eternal inflation. None is confirmed.', locale) }}
