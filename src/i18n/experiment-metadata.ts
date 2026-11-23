@@ -52,7 +52,9 @@ export function getExperimentModuleEyebrow(id: ExperimentMetadataId, locale: Loc
   return `${prefix} ${module.number} · ${module.title} · ${suffix}`
 }
 
-const sectionLabels: Record<Exclude<Locale, 'en'>, Record<string, string>> = {
+export type ExperimentSection = 'predict' | 'experiment' | 'mathematicsDisclosure' | 'mathematics' | 'meaningDisclosure' | 'meaning' | 'establishedPhysics' | 'interpretation' | 'nextSteps'
+
+const sectionLabels: Record<Exclude<Locale, 'en'>, Record<ExperimentSection, string>> = {
   id: {
     predict: 'Prediksi',
     experiment: 'Eksperimen',
@@ -76,8 +78,6 @@ const sectionLabels: Record<Exclude<Locale, 'en'>, Record<string, string>> = {
     nextSteps: '次のステップ',
   },
 }
-
-export type ExperimentSection = keyof typeof sectionLabels.ja
 
 /** Explicit labels for the repeated structural headings in experiment lessons. */
 export function experimentSectionLabel(section: ExperimentSection, locale: Locale): string {
