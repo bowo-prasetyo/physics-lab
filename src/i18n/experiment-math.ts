@@ -122,6 +122,12 @@ const copy: Record<string, readonly [string, string] | string> = {
   ". Because": ["。 Karena","。このため"],
   ", found by searching the simulated": ["、yang ditemukan dengan menelusuri","。シミュレーションの射程を探索して求めた"],
   "the same pendulum on the Moon (": ["bandul yang sama di Bulan (","月で同じ振り子を使うと（"],
+  "terminal speed": ["kecepatan terminal","終端速度"],
+  ", and with it all lengths": [", dan bersamanya semua panjang","。これに伴い、すべての長さ"],
+  "and angles. Rotations and shifts of the origin together make up the": ["dan sudut. Rotasi dan pergeseran titik asal secara bersama-sama membentuk","と角度も保たれます。回転と原点の移動を合わせた変換は"],
+  "has components equal to the cosines of the": ["memiliki komponen yang sama dengan kosinus dari","の各成分は、次の角度の余弦に等しくなります"],
+  "angles it makes with the three axes. Here those angles are": ["sudut yang dibentuknya dengan ketiga sumbu. Sudut-sudut tersebut adalah","3 本の軸となす角です。今回の角度は"],
+  "per day.": ["per hari.","1 日あたりです。"],
 }
 
 export function localizeExperimentMathText(value: string, locale: Locale): string {
