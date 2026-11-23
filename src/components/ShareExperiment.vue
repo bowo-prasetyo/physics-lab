@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { ref, onBeforeUnmount } from 'vue'
+import { useLocale } from '@/composables/useLocale'
 
+const { t } = useLocale()
 const copied = ref(false)
 const error = ref('')
 let feedbackTimer: ReturnType<typeof setTimeout> | undefined
 
 async function shareExperiment() {
   error.value = ''
-  // Query state is debounced by useQuerySync; let the last slider value reach the URL first.
   await new Promise((resolve) => window.setTimeout(resolve, 350))
   const url = window.location.href
   try {
     if (navigator.share) {
-      await navigator.share({ title: document.title, text: 'Explore this Physica experiment with the same setup.', url })
+      await navigator.share({ title: document.title, text: t('app.share.shareText'), url })
       return
     }
     if (navigator.clipboard && window.isSecureContext) {
@@ -21,11 +22,11 @@ async function shareExperiment() {
       clearTimeout(feedbackTimer)
       feedbackTimer = setTimeout(() => (copied.value = false), 2200)
     } else {
-      window.prompt('Copy this experiment link:', url)
+      window.prompt(t('app.share.copyPrompt'), url)
     }
   } catch (cause) {
     if (cause instanceof Error && cause.name === 'AbortError') return
-    error.value = 'Could not share automatically. Copy the page address from your browser.'
+    error.value = t('app.share.error')
   }
 }
 onBeforeUnmount(() => clearTimeout(feedbackTimer))
@@ -34,15 +35,15 @@ onBeforeUnmount(() => clearTimeout(feedbackTimer))
 <template>
   <div class="share-experiment">
     <button class="btn btn-small" type="button" @click="shareExperiment">
-      <span aria-hidden="true">↗</span> Share this experiment
+      <span aria-hidden="true">↗</span> {{ t('app.share.action') }}
     </button>
-    <span v-if="copied" class="share-status" role="status" aria-live="polite">Link copied to clipboard.</span>
+    <span v-if="copied" class="share-status" role="status" aria-live="polite">{{ t('app.share.copied') }}</span>
     <span v-if="error" class="share-status" role="status">{{ error }}</span>
   </div>
 </template>
 
 <style scoped>
-.share-experiment { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-.share-status { color: var(--text-muted); font-size: .82rem; }
-.btn-small { min-height: 40px; }
+.share-experiment { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.share-status { color:var(--text-muted); font-size:.82rem; }
+.btn-small { min-height:40px; }
 </style>
