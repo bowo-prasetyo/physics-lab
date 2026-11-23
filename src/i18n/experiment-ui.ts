@@ -98,6 +98,37 @@ const text: Record<string, readonly [string, string]> = {
   'parts per million': ['bagian per juta', '百万分率'],
   'parts per billion': ['bagian per miliar', '十億分率'],
   'parts per trillion': ['bagian per triliun', '兆分率'],
+  'View the plotted values as a table': ['Lihat nilai grafik sebagai tabel', 'プロット値を表で表示'],
+  'Read the clock comparisons as a table': ['Baca perbandingan jam sebagai tabel', '時計の比較を表で読む'],
+  'Read the current model values': ['Baca nilai model saat ini', '現在のモデル値を読む'],
+  'Measured': ['Terukur', '測定値'],
+  'Model': ['Model', 'モデル'],
+  'Series': ['Seri', '系列'],
+  'Clock': ['Jam', '時計'],
+  'Altitude': ['Ketinggian', '高度'],
+  'Selected time': ['Waktu terpilih', '選択時刻'],
+  'Scale factor at selected time': ['Faktor skala pada waktu terpilih', '選択時刻のスケール因子'],
+  'Scale factor today': ['Faktor skala hari ini', '現在のスケール因子'],
+  'Acceleration begins': ['Awal percepatan ekspansi', '加速膨張の開始'],
+  'This model': ['Model ini', 'このモデル'],
+  'Our universe, for comparison': ['Alam semesta kita, sebagai pembanding', '比較用の私たちの宇宙'],
+  'Home galaxy': ['Galaksi acuan', '基準銀河'],
+  'Make this galaxy home': ['Jadikan galaksi ini sebagai acuan', 'この銀河を基準にする'],
+  'Experiment clock': ['Jam eksperimen', '実験時計'],
+  'Camera': ['Kamera', 'カメラ'],
+  'Playback speed': ['Kecepatan pemutaran', '再生速度'],
+  'Next steps': ['Langkah berikutnya', '次のステップ'],
+  'time t (s)': ['waktu t (s)', '時間 t (s)'],
+  'position x (m)': ['posisi x (m)', '位置 x (m)'],
+  'time (s)': ['waktu (s)', '時間 (s)'],
+  'angle (degrees)': ['sudut (derajat)', '角度（度）'],
+  'height (m)': ['ketinggian (m)', '高さ (m)'],
+  'velocity (m/s)': ['kecepatan (m/s)', '速度 (m/s)'],
+  'scale factor a': ['faktor skala a', 'スケール因子 a'],
+  'position x': ['posisi x', '位置 x'],
+  '1 billion light-years': ['1 miliar tahun cahaya', '10 億光年'],
+  'today': ['hari ini', '現在'],
+
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
@@ -115,5 +146,25 @@ export function localizeExperimentText(value: string | null | undefined, locale:
     const match = value.match(pattern.test)
     if (match) return pattern.render(match, locale)
   }
-  return value
+  let translated = value
+  const phrases: Array<[string, string, string]> = [
+    ['Graph of position x against time t.', 'Grafik posisi x terhadap waktu t.', '時間 t に対する位置 x のグラフ。'],
+    ['The current run is at', 'Percobaan saat ini berada pada', '現在の試行は'],
+    ['earlier run(s) are shown for comparison.', 'percobaan sebelumnya ditampilkan sebagai pembanding.', '以前の試行を比較用に表示しています。'],
+    ['Interactive 3D view of a path in Cartesian coordinates.', 'Tampilan 3D interaktif lintasan dalam koordinat Kartesius.', 'デカルト座標での経路を示すインタラクティブな 3D 表示です。'],
+    ['Start', 'Awal', '始点'],
+    ['current position', 'posisi saat ini', '現在位置'],
+    ['displacement', 'perpindahan', '変位'],
+    ['metres.', 'meter.', 'メートル。'],
+    ['Use the view presets for standard camera angles.', 'Gunakan preset tampilan untuk sudut kamera standar.', '標準的なカメラ角度には表示プリセットを使用してください。'],
+    ['Scale factor a against time.', 'Faktor skala a terhadap waktu.', '時間に対するスケール因子 a。'],
+    ['Today a = 1.', 'Hari ini a = 1.', '現在 a = 1。'],
+    ['one line per description.', 'satu garis untuk setiap model.', '各モデルを 1 本の線で示します。'],
+    ['at the top speed', 'pada kecepatan tertinggi', '最高速度での値'],
+    ['Clock A is at', 'Jam A berada pada', '時計 A は'],
+    ['and clock B at', 'dan jam B pada', '時計 B は'],
+    ['the lower clock is slowed more.', 'jam yang lebih rendah berjalan lebih lambat.', '低い位置の時計ほど遅く進みます。']
+  ]
+  for (const [en, id, ja] of phrases) translated = translated.replaceAll(en, locale === 'id' ? id : ja)
+  return translated
 }
