@@ -8,4 +8,4 @@ export interface LocalizationCandidate {
 }
 
 export function isReviewableCopy(value: string): boolean
-export function extractTemplateCandidates(template: string, file: string): LocalizationCandidate[]
+export function extractTemplateCandidates(template: string, file: string, lineOffset?: number): LocalizationCandidate[]
