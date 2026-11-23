@@ -83,7 +83,7 @@ const description = computed(() => {
 
 <template>
   <figure class="chart">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
       <defs>
         <clipPath :id="`${id}-plot`">
           <rect :x="M.left - 10" :y="M.top - 10" :width="plotW + 20" :height="plotH + 12" />
