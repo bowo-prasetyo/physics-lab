@@ -22,7 +22,13 @@ const ROUTES = [
   { path: '/space/displacement-3d', name: 'displacement-3d' },
 ] as const
 
-const INTENTIONALLY_SHARED_COPY = new Set(['English', 'Bahasa Indonesia', 'Physica', 'MIT License'])
+const INTENTIONALLY_SHARED_COPY = new Set([
+  'English',
+  'Bahasa Indonesia',
+  'Physica',
+  'MIT License',
+  'LEARNING_EFFECTIVENESS.md',
+])
 
 const REVIEWED_ATTRIBUTES = [
   'aria-label',
@@ -47,6 +53,9 @@ function normalize(value: string): string {
 
 function isEnglishLike(value: string): boolean {
   if (INTENTIONALLY_SHARED_COPY.has(value)) return false
+  // Resource filenames and standalone scientific measurements are identifiers/data, not prose.
+  if (/^[A-Z0-9_-]+(?:\\.[A-Z0-9_-]+)+$/.test(value)) return false
+  if (/^\\d+(?:[.,]\\d+)?\\s+(?:Gly|Gyr)$/.test(value)) return false
   const words = value.match(/[A-Za-z]{3,}/g) ?? []
   if (words.length === 0 || value.length < 5) return false
   if (/^https?:\/\//i.test(value)) return false
@@ -160,6 +169,10 @@ describe('runtime localization audit', () => {
           })
         }
       }
+    }
+
+    for (const reviewedFalsePositive of ['LEARNING_EFFECTIVENESS.md', '5.0 Gly', '5 Gly', 'Mars (g = 3.71 m/s²)']) {
+      expect(candidates.some((candidate) => candidate.text === reviewedFalsePositive), reviewedFalsePositive).toBe(false)
     }
 
     const report = {
