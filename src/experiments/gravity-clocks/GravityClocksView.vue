@@ -151,14 +151,14 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
       <div class="prediction-grid">
-        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" ::hint="localizeExperimentText("hints[p.id]", locale) ?? "hints[p.id]"" :index="i + 1" />
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
     <section aria-labelledby="experiment-title">
       <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
       <fieldset class="tabs" :disabled="locked">
-        <legend>{{ localizeExperimentText("Setup", locale) ?? "Setup" }}</legend>
+        <legend>{{ localizeExperimentText('Setup', locale) ?? 'Setup' }}</legend>
         <label :class="{ active: mode === 'clocks' }"><input v-model="mode" type="radio" value="clocks" class="sr-only" /> Two clocks</label>
         <label :class="{ active: mode === 'gps' }"><input v-model="mode" type="radio" value="gps" class="sr-only" /> GPS satellite</label>
       </fieldset>
@@ -192,7 +192,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           <p class="status muted">Time-lapse: 1 day per second, up to {{ RUN_DAYS }} days</p>
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
-            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText("Reset", locale) ?? "Reset" }}</button>
+            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
           </div>
 
           <div v-for="clock in (['A', 'B'] as const)" :key="clock" class="height" :class="clock === 'A' ? 'a' : 'b'">
@@ -219,7 +219,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
                 class="chip"
                 :disabled="locked"
                 @click="clock === 'A' ? (altitudeA = p.altitude) : (altitudeB = p.altitude)"
-              >{{ localizeExperimentText("{{ p.label }}", locale) ?? "{{ p.label }}" }}</button>
+              >{{ localizeExperimentText('{{ p.label }}', locale) ?? '{{ p.label }}' }}</button>
             </div>
           </div>
 
@@ -276,7 +276,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           </div>
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
-            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText("Reset", locale) ?? "Reset" }}</button>
+            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
           </div>
           <label class="toggle">
             <input v-model="correction" type="checkbox" :disabled="locked" />
@@ -292,7 +292,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("3 · Explore the mathematics", locale) ?? "3 · Explore the mathematics" }}</summary>
+      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <GravityClocksMath
@@ -310,7 +310,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>{{ localizeExperimentText("4 · Explore the meaning and interpretation", locale) ?? "4 · Explore the meaning and interpretation" }}</summary>
+      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
@@ -346,7 +346,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
     </details>
 
-    <nav class="next card" :aria-:label="localizeExperimentText("localizeExperimentText('Next steps', locale)", locale) ?? "localizeExperimentText('Next steps', locale)"">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>Next:</strong> Experiment D, where space itself evolves in time. See also Experiments B and E.</p>
       <span class="nav-links">
         <RouterLink to="/cosmology/evolving-space">Experiment D →</RouterLink>
