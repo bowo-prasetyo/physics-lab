@@ -371,6 +371,8 @@ const text: Record<string, readonly [string, string]> = {
   "Which clock should accumulate more time when two stationary clocks are held at different heights?": ["Jam mana yang seharusnya mengumpulkan waktu lebih banyak ketika dua jam diam ditempatkan pada ketinggian berbeda?", "異なる高さに静止させた 2 つの時計では、どちらの時計の経過時間が長くなるでしょうか。"],
   "Change the two clock heights, compare the predicted rates, then inspect the separate gravitational and kinematic GPS corrections.": ["Ubah ketinggian kedua jam, bandingkan laju yang diprediksi, lalu periksa koreksi GPS gravitasi dan kinematika secara terpisah.", "2 つの時計の高さを変えて予測される進み方を比較し、GPS における重力補正と運動による補正を個別に確認してください。"],
   "What is held fixed in this comparison, and why is the GPS correction not purely gravitational?": ["Apa yang dipertahankan tetap dalam perbandingan ini, dan mengapa koreksi GPS tidak semata-mata berasal dari gravitasi?", "この比較では何を一定に保っていますか。また、GPS の補正が重力だけによるものではないのはなぜでしょうか。"],
+  "Experiment E describes the same situations with separate space and time, and with a single spacetime.": ["Eksperimen E menggambarkan situasi yang sama dengan ruang dan waktu terpisah, serta dengan satu ruang-waktu.", "実験 E では、同じ状況を空間と時間を分けて、また単一の時空として記述します。"],
+  "Experiment A for motion in one dimension, and Experiment B for what happens near the speed of light.": ["Eksperimen A membahas gerak satu dimensi, sedangkan Eksperimen B membahas apa yang terjadi saat mendekati kecepatan cahaya.", "1 次元の運動については実験 A、光速に近づくと何が起こるかについては実験 B を参照してください。"],
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
