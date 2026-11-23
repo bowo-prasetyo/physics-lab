@@ -139,7 +139,7 @@ function runExperiment() {
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>Continue:</strong> apply force and acceleration reasoning to a projectile, where gravity changes the vertical velocity.</p>
       <span class="nav-links"><RouterLink to="/mechanics/projectile">Projectile launcher</RouterLink><RouterLink to="/teachers">Teacher guide</RouterLink><RouterLink to="/">All modules</RouterLink></span>
     </nav>
