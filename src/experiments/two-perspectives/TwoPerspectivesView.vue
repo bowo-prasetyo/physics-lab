@@ -163,7 +163,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <TwoPerspectivesMath :level="level" :beta="beta" />
     </section>
     </details>
