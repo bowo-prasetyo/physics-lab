@@ -3,9 +3,13 @@ import { computed } from 'vue'
 import MathFormula from '@/components/MathFormula.vue'
 import InfoCallout from '@/components/InfoCallout.vue'
 import { gamma, rapidity } from '@/physics'
+import { useLocale } from '@/composables/useLocale'
+import { localizeTwoPerspectivesMathText } from '@/i18n/two-perspectives-math'
 import type { Level } from '@/levels'
 
 const props = defineProps<{ level: Level; beta: number }>()
+const { locale } = useLocale()
+const tx = (value: string) => localizeTwoPerspectivesMathText(value, locale.value)
 
 const f = (value: number, digits = 3) => value.toFixed(digits)
 const phi = computed(() => rapidity(props.beta))
@@ -24,50 +28,48 @@ const metricCheck = computed(
     <!-- Beginner -->
     <template v-if="level === 'beginner'">
       <p>
-        A <strong>description</strong> here means a set of mathematical rules for turning a situation into predictions you can measure. The
-        three descriptions start from different ideas:
+        {{ tx('A description here means a set of mathematical rules for turning a situation into predictions you can measure. The three descriptions start from different ideas:') }}
       </p>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">Description</th><th scope="col">Basic idea</th><th scope="col">Everyday speeds</th><th scope="col">Near light speed</th></tr>
+            <tr><th scope="col">{{ tx('Description') }}</th><th scope="col">{{ tx('Basic idea') }}</th><th scope="col">{{ tx('Everyday speeds') }}</th><th scope="col">{{ tx('Near light speed') }}</th></tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Galilean</th>
-              <td>One time for everyone; speeds add</td>
-              <td>Excellent (except for light)</td>
-              <td>Wrong</td>
+              <th scope="row">{{ tx('Galilean') }}</th>
+              <td>{{ tx('One time for everyone; speeds add') }}</td>
+              <td>{{ tx('Excellent (except for light)') }}</td>
+              <td>{{ tx('Wrong') }}</td>
             </tr>
             <tr>
-              <th scope="row">Space + time, Lorentz-related</th>
-              <td>Separate space and time, mixed when you change observer</td>
-              <td>Correct</td>
-              <td>Correct</td>
+              <th scope="row">{{ tx('Space + time, Lorentz-related') }}</th>
+              <td>{{ tx('Separate space and time, mixed when you change observer') }}</td>
+              <td>{{ tx('Correct') }}</td>
+              <td>{{ tx('Correct') }}</td>
             </tr>
             <tr>
-              <th scope="row">Spacetime</th>
-              <td>One geometry; everyone agrees on the interval</td>
-              <td>Correct</td>
-              <td>Correct</td>
+              <th scope="row">{{ tx('Spacetime') }}</th>
+              <td>{{ tx('One geometry; everyone agrees on the interval') }}</td>
+              <td>{{ tx('Correct') }}</td>
+              <td>{{ tx('Correct') }}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <InfoCallout kind="physics" title="Key idea">
+      <InfoCallout kind="physics" :title="tx('Key idea')">
         <p>
-          Measurements decide between descriptions. The Galilean description fails near the speed of light. The other two never disagree with
-          each other, so measurements alone cannot choose between them: they are two ways of writing the same physics.
+          {{ tx('Measurements decide between descriptions. The Galilean description fails near the speed of light. The other two never disagree with each other, so measurements alone cannot choose between them: they are two ways of writing the same physics.') }}
         </p>
       </InfoCallout>
     </template>
 
     <!-- Intermediate -->
     <template v-else-if="level === 'intermediate'">
-      <h3>From Galilean to Lorentz</h3>
-      <p>Galilean:</p>
+      <h3>{{ tx('From Galilean to Lorentz') }}</h3>
+      <p>{{ tx('Galilean:') }}</p>
       <MathFormula display tex="t' = t, \qquad x' = x - v\,t" />
-      <p>Lorentz:</p>
+      <p>{{ tx('Lorentz:') }}</p>
       <MathFormula display tex="\begin{aligned} t' &= \gamma\left(t - \frac{v\,x}{c^2}\right) \\ x' &= \gamma\,(x - v\,t) \end{aligned}" />
       <p>
         For <MathFormula tex="v \ll c" />, <MathFormula tex="\gamma \approx 1 + \tfrac{v^2}{2c^2}" />, so the clock correction is tiny (second
@@ -75,13 +77,13 @@ const metricCheck = computed(
         modest speeds. It is the relativity of simultaneity, and Galilean physics leaves it out entirely.
       </p>
 
-      <h3>Why speeds do not simply add</h3>
-      <p>Differentiating the Lorentz transformation gives the velocity rule</p>
+      <h3>{{ tx('Why speeds do not simply add') }}</h3>
+      <p>{{ tx('Differentiating the Lorentz transformation gives the velocity rule') }}</p>
       <MathFormula display tex="w = \frac{u + v}{1 + u v / c^2}." />
-      <p>For light (<MathFormula tex="u = c" />) at your current ship speed:</p>
+      <p>{{ tx('For light (') }}<MathFormula tex="u = c" />{{ tx(') at your current ship speed:') }}</p>
       <MathFormula display :tex="velocityAddition" />
 
-      <h3>Simultaneity</h3>
+      <h3>{{ tx('Simultaneity') }}</h3>
       <MathFormula display tex="\Delta t' = \gamma\left(\Delta t - \frac{v\,\Delta x}{c^2}\right)" />
       <p>so with <MathFormula tex="\Delta t = 0" />:</p>
       <MathFormula display tex="\Delta t' = -\gamma\,\frac{v\,\Delta x}{c^2}" />
@@ -93,7 +95,7 @@ const metricCheck = computed(
 
     <!-- Advanced -->
     <template v-else>
-      <h3>Why the two relativistic descriptions must agree</h3>
+      <h3>{{ tx('Why the two relativistic descriptions must agree') }}</h3>
       <p>In matrix form, a boost is a hyperbolic rotation of <MathFormula tex="x^\mu = (ct, x)" /> by the rapidity <MathFormula tex="\varphi" />:</p>
 <MathFormula display tex="\Lambda(\varphi) = \begin{pmatrix} \cosh\varphi & -\sinh\varphi \\ -\sinh\varphi & \cosh\varphi \end{pmatrix}" />
       <p>It preserves the metric <MathFormula tex="\eta = \operatorname{diag}(1, -1)" />:</p>
@@ -110,16 +112,16 @@ const metricCheck = computed(
         formalisms compute both kinds, and they compute them with the same group of transformations. So their predictions cannot differ.
       </p>
 
-      <h3>“Space + time” is spacetime with an observer chosen</h3>
+      <h3>{{ tx('“Space + time” is spacetime with an observer chosen') }}</h3>
       <p>
         Choose an observer with 4-velocity <MathFormula tex="u^\mu" />. Their time is the component along <MathFormula tex="u" />, and their
         space is everything orthogonal to it:
       </p>
       <MathFormula display tex="\begin{gathered} c\,t_u = \eta_{\mu\nu}\,u^\mu x^\nu \\ \text{space}_u = \{\, x : \eta_{\mu\nu}\,u^\mu x^\nu = 0 \,\} \end{gathered}" />
-      <p>Different observers make different splits. The space + time description is one such split, made explicitly.</p>
+      <p>{{ tx('Different observers make different splits. The space + time description is one such split, made explicitly.') }}</p>
 
-      <h3>Looking ahead: the 3 + 1 split in general relativity</h3>
-      <p>In curved spacetime the ADM formalism splits spacetime into a stack of spatial slices. In the (−, +, +, +) sign convention usual in GR,</p>
+      <h3>{{ tx('Looking ahead: the 3 + 1 split in general relativity') }}</h3>
+      <p>{{ tx('In curved spacetime the ADM formalism splits spacetime into a stack of spatial slices. In the (−, +, +, +) sign convention usual in GR,') }}</p>
       <MathFormula display tex="\begin{aligned} ds^2 = &-N^2\,dt^2 \\ &+ \gamma_{ij}\,(dx^i + N^i dt)(dx^j + N^j dt) \end{aligned}" />
       <p>
         with the lapse <MathFormula tex="N" /> (how much proper time passes between slices), the shift <MathFormula tex="N^i" />, and the
