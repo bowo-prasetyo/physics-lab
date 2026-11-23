@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
+
 const { locale } = useLocale()
-import { computed } from 'vue'
 
 export interface LineSeries {
   readonly id: string
@@ -64,7 +65,7 @@ const paths = computed(() =>
 
 <template>
   <figure class="chart">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="`${yLabel} against ${xLabel}: ${series.map((s) => s.label).join(', ')}.`">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(`${yLabel} against ${xLabel}: ${series.map((s) => s.label).join(', ')}.`, locale)">
       <g class="grid">
         <line v-for="x in xTicks" :key="`gx${x}`" :x1="sx(x)" :x2="sx(x)" :y1="M.top" :y2="M.top + plotH" />
         <line v-for="y in yTicks" :key="`gy${y}`" :x1="M.left" :x2="M.left + plotW" :y1="sy(y)" :y2="sy(y)" />
@@ -80,7 +81,7 @@ const paths = computed(() =>
     <details class="chart-data">
       <summary>{{ localizeExperimentText('View the plotted values as a table', locale) }}</summary>
       <div class="chart-scroll">
-        <table><thead><tr><th scope="col">Series</th><th scope="col">Time / x</th><th scope="col">Value / y</th></tr></thead>
+        <table><thead><tr><th scope="col">{{ localizeExperimentText('Series', locale) }}</th><th scope="col">{{ localizeExperimentText('Time / x', locale) }}</th><th scope="col">{{ localizeExperimentText('Value / y', locale) }}</th></tr></thead>
           <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ item.label }}</th><td>{{ point.x }}</td><td>{{ point.y }}</td></tr></template></tbody>
         </table>
       </div>
