@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+const { locale } = useLocale()
 /**
  * A 3D view of a journey through space (Three.js), with z pointing up as in
  * physics. It draws the axes, a floor grid, the path, the displacement arrow,
@@ -324,7 +327,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="scene-wrap">
-    <div ref="container" class="scene" role="img" :aria-label="description()" />
+    <div ref="container" class="scene" role="img" :aria-label="localizeExperimentText(description(), locale)" />
     <details class="scene-data">
       <summary>Read the 3D coordinates as text</summary>
       <dl>
