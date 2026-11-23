@@ -91,9 +91,9 @@ const kValue = computed(() => props.params.k)
         {{ tx('Dividing by') }} <MathFormula tex="m" />: <MathFormula tex="\dot{\mathbf v} = -g\hat{\mathbf y} - k|\mathbf v|\mathbf v" /> {{ tx('with') }}
         <MathFormula tex="k = \rho C_d A / 2m" />
         <template v-if="dragApplies">
-          {{ tx('(here') }} <MathFormula :tex="`k = ${f(kValue)}\\ \\text{m}^{-1}`" />{{ tx(', terminal speed') }}
+          {{ tx('(here') }} <MathFormula :tex="`k = ${f(kValue)}\\ \\text{m}^{-1}`" />{{ tx('terminal speed') }}
           <MathFormula :tex="`\\sqrt{g/k} = ${f(terminalSpeed(params.g, kValue))}\\ \\text{m/s}`" />)</template
-        >. Because <MathFormula tex="|\mathbf v|" />{{ tx(' contains both components, the horizontal and vertical motions are now coupled, and') }}
+        >{{ tx('. Because') }} <MathFormula tex="|\mathbf v|" />{{ tx(' contains both components, the horizontal and vertical motions are now coupled, and') }}
         {{ tx('there is no formula for the path.') }}
       </p>
       <h3>{{ tx('Solving it step by step: RK4') }}</h3>
