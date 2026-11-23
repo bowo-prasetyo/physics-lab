@@ -49,6 +49,7 @@ const text: Record<string, readonly [string, string]> = {
   "The 3D view needs WebGL, which this browser does not offer. The readouts and controls still work.": ["Tampilan 3D memerlukan WebGL yang tidak tersedia di browser ini. Informasi numerik dan kontrol tetap dapat digunakan.","この 3D 表示には WebGL が必要ですが、このブラウザーでは利用できません。数値表示とコントロールは引き続き使用できます。"],
   "Coordinates use the standard axes: x east, y north, z up. The displacement is the straight-line change from the starting point, not the total path length.": ["Koordinat menggunakan sumbu standar: x ke timur, y ke utara, dan z ke atas. Perpindahan adalah perubahan garis lurus dari titik awal, bukan total panjang lintasan.","座標には標準軸を使用します。x は東、y は北、z は上向きです。変位は始点からの直線的な変化であり、経路全体の長さではありません。"],
   "Path points recorded": ["Titik lintasan yang tercatat","記録された経路上の点"],
+  "Read the 3D coordinates as text": ["Baca koordinat 3D sebagai teks","3D 座標をテキストで読む"],
   "Distance between start and current point": ["Jarak antara titik awal dan titik saat ini","始点と現在の点の間の距離"],
   "Displacement (Δx, Δy, Δz)": ["Perpindahan (Δx, Δy, Δz)","変位 (Δx, Δy, Δz)"],
   "Current point (x, y, z)": ["Titik saat ini (x, y, z)","現在の点 (x, y, z)"],
