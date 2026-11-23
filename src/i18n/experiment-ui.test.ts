@@ -105,4 +105,12 @@ describe('experiment UI localization', () => {
     expect(localizeExperimentText('Launcher ready, seen from the ground: 12 m/s at 30 degrees from 2 m.', 'ja')).toContain('地上から見た')
   })
 
+
+  it('localizes phase portraits and early-universe visualization captions', () => {
+    expect(localizeExperimentText('Phase portrait: angle across, angular velocity up. Each swing traces the same closed loop.', 'id')).toContain('Potret fase')
+    expect(localizeExperimentText('Phase portrait: one closed loop per swing. The loop does not spiral, because energy is conserved.', 'ja')).toContain('エネルギーが保存')
+    expect(localizeExperimentText('First light: the universe becomes transparent.', 'id')).toBe('Cahaya pertama: alam semesta menjadi transparan.')
+    expect(localizeExperimentText('Make this galaxy home', 'ja')).not.toBe('Make this galaxy home')
+  })
+
 })
