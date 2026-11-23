@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { useLocale } from '@/composables/useLocale'
-import { localizeExperimentText } from '@/i18n/experiment-ui'
-const { locale } = useLocale()
 import { computed, useId } from 'vue'
 import { staticClockDeficit, type Body } from '@/physics'
 import { niceCeil } from './chartScale'
 import { formatLength } from '@/experiments/gravity-clocks/format'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 const props = defineProps<{
   body: Body
@@ -105,7 +106,7 @@ const description = computed(
     </svg>
     <details class="chart-data">
       <summary>{{ localizeExperimentText('Read the clock comparisons as a table', locale) }}</summary>
-      <table><thead><tr><th scope="col">Clock</th><th scope="col">Altitude</th><th scope="col">Clock-rate deficit</th></tr></thead>
+      <table><thead><tr><th scope="col">{{ localizeExperimentText('Clock', locale) }}</th><th scope="col">{{ localizeExperimentText('Altitude', locale) }}</th><th scope="col">{{ localizeExperimentText('Clock-rate deficit', locale) }}</th></tr></thead>
         <tbody><tr><th scope="row">A</th><td>{{ formatLength(altitudeA) }}</td><td>{{ (deficitAt(altitudeA) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr>
           <tr><th scope="row">B</th><td>{{ formatLength(altitudeB) }}</td><td>{{ (deficitAt(altitudeB) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr></tbody>
       </table>
