@@ -26,9 +26,12 @@ import { BODIES, SECONDS_PER_DAY } from '@/physics'
 import { useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
+import { useLocale } from '@/composables/useLocale'
+import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
 const level = useLevel()
+const { locale } = useLocale()
 
 const isMode = (value: unknown): value is Mode => value === 'clocks' || value === 'gps'
 const num = (value: unknown) => (typeof value === 'string' && value.trim() !== '' ? Number(value) : undefined)
@@ -68,7 +71,7 @@ useQuerySync({
   },
 })
 
-const predictions = computed(() => PREDICTIONS.filter((p) => atLeast(level.value, p.minLevel)))
+const predictions = computed(() => localizePredictions('gravity-clocks', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(allRuns.value)])))
 const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(allRuns.value) ?? null])))
 

@@ -16,9 +16,12 @@ import { PLANETS, secondsPendulumLength } from '@/physics'
 import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
+import { useLocale } from '@/composables/useLocale'
+import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
 const level = useLevel()
+const { locale } = useLocale()
 
 // A setup can be shared as a link, e.g. #/time/pendulum?level=beginner&L=1&amp=10&m=1&planet=earth
 if (isLevel(route.query.level)) level.value = route.query.level
@@ -48,7 +51,7 @@ useQuerySync({
   },
 })
 
-const predictions = computed(() => PREDICTIONS.filter((p) => atLeast(level.value, p.minLevel)))
+const predictions = computed(() => localizePredictions('pendulum', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(measurements.value)])))
 const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(measurements.value) ?? null])))
 

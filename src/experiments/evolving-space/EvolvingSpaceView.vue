@@ -27,9 +27,12 @@ import { COSMOLOGIES } from '@/physics'
 import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
+import { useLocale } from '@/composables/useLocale'
+import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
 const level = useLevel()
+const { locale } = useLocale()
 const num = (value: unknown) => (typeof value === 'string' && value.trim() !== '' && Number.isFinite(Number(value)) ? Number(value) : undefined)
 
 // A setup can be shared as a link, e.g. #/cosmology/evolving-space?level=advanced&model=our&t=13.8
@@ -53,7 +56,7 @@ useQuerySync({
   },
 })
 
-const predictions = computed(() => PREDICTIONS.filter((p) => atLeast(level.value, p.minLevel)))
+const predictions = computed(() => localizePredictions('evolving-space', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed([record.value])])))
 const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.([record.value]) ?? null])))
 
