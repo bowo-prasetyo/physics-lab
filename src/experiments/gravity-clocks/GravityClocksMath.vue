@@ -18,7 +18,6 @@ import { formatDuration, formatLength, formatNumber, formatSlowdown } from './fo
 
 const { locale } = useLocale()
 const tx = (value: string) => localizeGravityClocksMathText(value, locale.value)
-const comparison = computed(() => localizeGravityClockComparison(formatSlowdown(Math.abs(props.rateBvsA)), props.rateBvsA >= 0, locale.value))
 
 const props = defineProps<{
   level: Level
@@ -31,6 +30,8 @@ const props = defineProps<{
   gps: GpsBreakdown
   radialDistance: { coordinate: number; proper: number; extra: number }
 }>()
+
+const comparison = computed(() => localizeGravityClockComparison(formatSlowdown(Math.abs(props.rateBvsA)), props.rateBvsA >= 0, locale.value))
 
 /** formatNumber output as TeX. */
 const tex = (x: number) => formatNumber(x).replace(' × 10', ' \\times 10^{').replace(/([⁻⁰¹²³⁴⁵⁶⁷⁸⁹]+)$/, (m) => `${toAscii(m)}}`)
