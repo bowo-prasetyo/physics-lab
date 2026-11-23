@@ -26,6 +26,7 @@ function checkTranslations<T extends TestPrediction>(
 ) {
   for (const locale of ['id', 'ja'] as const) {
     const localized = localizePredictions(id, source, locale)
+    let translatedOptionLabels = 0
     expect(localized.map((item) => item.id)).toEqual(source.map((item) => item.id))
     expect(localized).toHaveLength(source.length)
     localized.forEach((item, index) => {
@@ -40,11 +41,13 @@ function checkTranslations<T extends TestPrediction>(
       expect(item.options).toHaveLength(sourceItem?.options.length ?? 0)
       item.options.forEach((option, optionIndex) => {
         expect(option.label.trim().length).toBeGreaterThan(0)
-        expect(option.label).not.toBe(sourceItem?.options[optionIndex]?.label)
+        if (option.label !== sourceItem?.options[optionIndex]?.label) translatedOptionLabels += 1
       })
       expect(item.correct).toBe(sourceItem?.correct)
       expect(item.observed).toBe(sourceItem?.observed)
     })
+    // Short numeric answers and SI units may intentionally be identical in every language.
+    expect(translatedOptionLabels).toBeGreaterThan(0)
   }
 }
 
