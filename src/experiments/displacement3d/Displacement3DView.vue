@@ -215,28 +215,25 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
     </details>
 
-    <details v-if="locale === 'en'" class="lesson-disclosure">
+    <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" title="Established physics">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
           <ul>
-            <li>Over everyday distances, space is described extremely well by Euclidean geometry: Pythagoras holds, and triangles have angles adding up to 180°.</li>
-            <li>Coordinates are a human choice; distances, lengths and angles are not. Physical laws are written so that they do not depend on the choice.</li>
-            <li>Near massive bodies space is very slightly curved, and Euclidean geometry is only an approximation (Experiment C).</li>
+            <li>{{ localizeExperimentText('Over everyday distances, space is described extremely well by Euclidean geometry: Pythagoras holds, and triangles have angles adding up to 180°.', locale) }}</li>
+            <li>{{ localizeExperimentText('Coordinates are a human choice; distances, lengths and angles are not. Physical laws are written so that they do not depend on the choice.', locale) }}</li>
+            <li>{{ localizeExperimentText('Near massive bodies space is very slightly curved, and Euclidean geometry is only an approximation (Experiment C).', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" title="Interpretation: open to debate">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale)">
           <ul>
             <li>
-              <strong>Is space a thing, or only relations between things?</strong> Newton treated space as a container that exists even when empty;
-              Leibniz argued that only the distances and directions between objects are real. Their followers debated it in letters in 1715–16,
-              and the question is still discussed.
+              <strong>{{ localizeExperimentText('Is space a thing, or only relations between things?', locale) }}</strong> {{ localizeExperimentText('Newton treated space as a container that exists even when empty; Leibniz argued that only the distances and directions between objects are real. Their followers debated it in letters in 1715–16, and the question is still discussed.', locale) }}
             </li>
             <li>
-              <strong>Why three dimensions?</strong> Every observation so far fits three. Some theories propose extra dimensions too small to
-              notice, but there is no evidence for them yet.
+              <strong>{{ localizeExperimentText('Why three dimensions?', locale) }}</strong> {{ localizeExperimentText('Every observation so far fits three. Some theories propose extra dimensions too small to notice, but there is no evidence for them yet.', locale) }}
             </li>
           </ul>
         </InfoCallout>
