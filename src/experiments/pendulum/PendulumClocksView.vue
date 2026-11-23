@@ -116,7 +116,7 @@ function formatClock(seconds: number): string {
       <div class="lab">
         <div class="lab-main card">
           <PendulumView :theta="state.theta" :amplitude-deg="amplitude" :length="length" :mass="mass" />
-          <LineChart :series="angleSeries" :x-max="graphTime" x-label="time (s)" y-label="angle (degrees)" :marker="null" />
+          <LineChart :series="angleSeries" :x-max="graphTime" :x-label="tx('time (s)')" :y-label="tx('angle (degrees)')" :marker="null" />
           <PhasePortrait v-if="advanced" :points="phasePoints" :omega-max="omegaMax" />
         </div>
 
