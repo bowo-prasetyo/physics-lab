@@ -10,6 +10,13 @@ describe('localization source audit', () => {
     expect(isReviewableCopy('')).toBe(false)
   })
 
+  it('ignores intentional brand names and standard scientific notation', () => {
+    for (const value of ['Physica', 'Physica ·', '· MIT License', 'Gly', 'km/s/Mpc.']) {
+      expect(isReviewableCopy(value), value).toBe(false)
+    }
+    expect(isReviewableCopy('Learning effectiveness guidance')).toBe(true)
+  })
+
   it('extracts template text, SVG annotations, and static accessibility attributes with locations', () => {
     const template = `
       <section aria-label="Experiment controls">
