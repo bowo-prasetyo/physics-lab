@@ -214,7 +214,7 @@ useQuerySync({
       <div class="meaning">
         <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
           <ul>
-            <li>{{ localizeExperimentText('With', locale) }} <MathFormula tex="v = 0" /> {{ localizeExperimentText('the position stays constant while the clock reading keeps increasing.', locale) }}</li>
+            <li>{{ localizeExperimentText('With v = 0, the position stays constant while the clock reading keeps increasing.', locale) }}</li>
             <li>
               {{ localizeExperimentText('Clocks keep ticking whether or not they move. At the speeds on this track, a moving clock and a stationary one also tick at the same rate to better than one part in', locale) }} <MathFormula tex="10^{16}" />{{ localizeExperimentText('. At speeds close to light, they do not (Module 4).', locale) }}
             </li>
