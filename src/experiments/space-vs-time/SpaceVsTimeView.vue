@@ -122,7 +122,7 @@ useQuerySync({
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
       <div class="prediction-grid">
-        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" ::hint="localizeExperimentText("hints[p.id]", locale) ?? "hints[p.id]"" :index="i + 1" />
       </div>
     </section>
 
@@ -139,13 +139,13 @@ useQuerySync({
             :observer-velocity="observerVelocity"
           />
           <details class="table-toggle" :open="showTable" @toggle="showTable = ($event.target as HTMLDetailsElement).open">
-            <summary>Table of values</summary>
+            <summary>{{ localizeExperimentText("Table of values", locale) ?? "Table of values" }}</summary>
             <ValueTable :record="snapshot.record" :duration="DURATION" />
           </details>
         </div>
 
         <div class="lab-side card">
-          <div class="clock" role="timer" :aria-label="localizeExperimentText('Experiment clock', locale)">
+          <div class="clock" role="timer" :aria-:label="localizeExperimentText("localizeExperimentText('Experiment clock', locale)", locale) ?? "localizeExperimentText('Experiment clock', locale)"">
             <span class="clock-label">Clock</span>
             <span class="clock-value num">{{ snapshot.t.toFixed(2) }}<small> s</small></span>
             <span class="clock-status muted">{{ status === 'finished' ? 'Run complete' : status === 'running' ? 'Running' : status === 'paused' ? 'Paused' : 'Ready' }}</span>
@@ -153,35 +153,31 @@ useQuerySync({
 
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
-            <button class="btn" type="button" :disabled="status === 'ready' && snapshot.t === 0" @click="reset">Reset</button>
+            <button class="btn" type="button" :disabled="status === 'ready' && snapshot.t === 0" @click="reset">{{ localizeExperimentText("Reset", locale) ?? "Reset" }}</button>
           </div>
 
           <ParameterSlider
             v-model="x0"
-            label="Starting position"
+            :label="localizeExperimentText("Starting position", locale) ?? "Starting position""
             symbol="x_0"
             unit="m"
             v-bind="X0_RANGE"
             :disabled="status !== 'ready'"
-            :hint="localizeExperimentText(status !== 'ready' ? 'Reset the clock to choose a new starting position.' : '', locale)"
+            ::hint="localizeExperimentText("localizeExperimentText(status !== 'ready' ? 'Reset the clock to choose a new starting position.' : '', locale)", locale) ?? "localizeExperimentText(status !== 'ready' ? 'Reset the clock to choose a new starting position.' : '', locale)""
           />
           <div>
-            <ParameterSlider v-model="v" label="Velocity" symbol="v" unit="m/s" v-bind="V_RANGE" :disabled="status === 'finished'" :hint="velocityNote" />
-            <button class="btn btn-small" type="button" :disabled="v === 0 || status === 'finished'" @click="v = 0">Set v = 0</button>
+            <ParameterSlider v-model="v" :label="localizeExperimentText("Velocity", locale) ?? "Velocity"" symbol="v" unit="m/s" v-bind="V_RANGE" :disabled="status === 'finished'" ::hint="localizeExperimentText("velocityNote", locale) ?? "velocityNote"" />
+            <button class="btn btn-small" type="button" :disabled="v === 0 || status === 'finished'" @click="v = 0">{{ localizeExperimentText("Set v = 0", locale) ?? "Set v = 0" }}</button>
           </div>
           <ParameterSlider
             v-if="advanced"
             v-model="u"
-            label="Observer velocity"
+            :label="localizeExperimentText("Observer velocity", locale) ?? "Observer velocity""
             symbol="u"
             unit="m/s"
             v-bind="U_RANGE"
             :disabled="status !== 'ready'"
-            :hint="
-              status === 'ready'
-                ? 'A second observer moving along the track, passing x = 0 at t = 0. Fixed for the whole run.'
-                : 'Reset the clock to change the observer’s velocity.'
-            "
+            ::hint="localizeExperimentText("\n              status === 'ready'\n                ? 'A second observer moving along the track, passing x = 0 at t = 0. Fixed for the whole run.'\n                : 'Reset the clock to change the observer’s velocity.'\n            ", locale) ?? "\n              status === 'ready'\n                ? 'A second observer moving along the track, passing x = 0 at t = 0. Fixed for the whole run.'\n                : 'Reset the clock to change the observer’s velocity.'\n            ""
           />
 
           <dl class="readouts">
@@ -196,14 +192,14 @@ useQuerySync({
           </dl>
 
           <div class="side-footer">
-            <button class="btn btn-small" type="button" :disabled="history.length === 0" @click="clearHistory">Clear earlier runs</button>
+            <button class="btn btn-small" type="button" :disabled="history.length === 0" @click="clearHistory">{{ localizeExperimentText("Clear earlier runs", locale) ?? "Clear earlier runs" }}</button>
           </div>
         </div>
       </div>
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText("3 · Explore the mathematics", locale) ?? "3 · Explore the mathematics" }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <SpaceVsTimeMath :level="level" :snapshot="snapshot" :u="u" />
@@ -211,7 +207,7 @@ useQuerySync({
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText("4 · Explore the meaning and interpretation", locale) ?? "4 · Explore the meaning and interpretation" }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
@@ -249,7 +245,7 @@ useQuerySync({
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-:label="localizeExperimentText("localizeExperimentText('Next steps', locale)", locale) ?? "localizeExperimentText('Next steps', locale)"">
       <p><strong>Next:</strong> Experiment B compares two clocks moving relative to each other near the speed of light.</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">Experiment B →</RouterLink>
