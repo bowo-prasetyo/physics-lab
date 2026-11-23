@@ -90,7 +90,7 @@ const primaryLabel = computed(() => {
     case 'finished':
       return 'Run again'
     default:
-      return 'Start clock'
+      return tx('Start clock')
   }
 })
 
@@ -103,7 +103,7 @@ function primaryAction() {
 }
 
 const statusText = computed(() =>
-  status.value === 'finished' ? 'Run complete' : status.value === 'running' ? 'Running' : status.value === 'paused' ? 'Paused' : 'Ready',
+  tx(status.value === 'finished' ? 'Run complete' : status.value === 'running' ? 'Running' : status.value === 'paused' ? 'Paused' : 'Ready'),
 )
 
 const signed = (value: number, digits = 2) => {
@@ -164,12 +164,12 @@ const signed = (value: number, digits = 2) => {
             <div class="clock-card earth">
               <span class="clock-name">{{ tx('Earth clock') }}</span>
               <span class="clock-value num">{{ view.earth.tau.toFixed(2) }}<small> s</small></span>
-              <span class="clock-note">{{ frame === 'earth' ? 'at rest in this frame' : 'moving in this frame' }}</span>
+              <span class="clock-note">{{ tx(frame === 'earth' ? 'at rest in this frame' : 'moving in this frame') }}</span>
             </div>
             <div class="clock-card ship">
               <span class="clock-name">{{ tx('Ship clock') }}</span>
               <span class="clock-value num">{{ view.ship.tau.toFixed(2) }}<small> s</small></span>
-              <span class="clock-note">{{ frame === 'ship' ? 'at rest in this frame' : 'moving in this frame' }}</span>
+              <span class="clock-note">{{ tx(frame === 'ship' ? 'at rest in this frame' : 'moving in this frame') }}</span>
             </div>
           </div>
           <p class="status muted">{{ statusText }} · seen from {{ frameName }}</p>
@@ -212,7 +212,7 @@ const signed = (value: number, digits = 2) => {
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <MovingClocksMath :level="level" :beta="beta" :frame="frame" :t="t" :view="view" />
     </section>
     </details>
