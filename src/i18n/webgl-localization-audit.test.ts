@@ -91,9 +91,9 @@ describe('WebGL scene localization audit', () => {
     ])
 
     const expected = {
-      en: { start: 'start', east: 'x · east', west: 'west', north: 'y · north', up: 'z · up', description: 'Interactive 3D view of a path' },
-      id: { start: 'awal', east: 'x · timur', west: 'barat', north: 'y · utara', up: 'z · atas', description: 'Tampilan 3D interaktif lintasan' },
-      ja: { start: '始点', east: 'x · 東', west: '西', north: 'y · 北', up: 'z · 上', description: 'デカルト座標での経路' },
+      en: { start: 'start', east: 'x · east', west: 'west', north: 'y · north', up: 'z · up', description: 'Interactive 3D view of a path', details: 'Read the 3D coordinates as text' },
+      id: { start: 'awal', east: 'x · timur', west: 'barat', north: 'y · utara', up: 'z · atas', description: 'Tampilan 3D interaktif lintasan', details: 'Baca koordinat 3D sebagai teks' },
+      ja: { start: '始点', east: 'x · 東', west: '西', north: 'y · 北', up: 'z · 上', description: 'デカルト座標での経路', details: '3D 座標をテキストで読む' },
     } as const
 
     const report: Array<{
@@ -155,7 +155,7 @@ describe('WebGL scene localization audit', () => {
       expect(details).not.toBeNull()
       const detailsSummary = details?.querySelector('summary')?.textContent?.trim() ?? ''
       expect(detailsSummary.length).toBeGreaterThan(0)
-      expect(detailsSummary).not.toBe('Read the 3D coordinates as text')
+      expect(detailsSummary).toBe(expected[locale].details)
 
       report.push({
         locale,
