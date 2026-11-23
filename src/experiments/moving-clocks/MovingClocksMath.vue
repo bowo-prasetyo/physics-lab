@@ -77,8 +77,7 @@ const phi = computed(() => (props.beta < 1 ? rapidity(props.beta) : 0))
       <p>{{ tx('A clock moving at speed') }} <MathFormula tex="v" /> {{ tx('relative to you runs slow by the') }} <strong>{{ tx('Lorentz factor') }}</strong> γ:</p>
       <MathFormula display tex="\Delta\tau = \frac{\Delta t}{\gamma}, \qquad \gamma = \frac{1}{\sqrt{1 - v^2/c^2}}" />
       <p>
-        <MathFormula tex="\Delta t" /> is the time on your clock, and <MathFormula tex="\Delta\tau" /> (tau) is the time shown by the moving
-        clock.
+        <MathFormula tex="\Delta t" /> {{ tx('is the time on your clock, and') }} <MathFormula tex="\Delta\tau" /> {{ tx('(tau) is the time shown by the moving clock.') }}
       </p>
 
       <h3>{{ tx('Check it with your own run') }}</h3>
@@ -126,8 +125,7 @@ const phi = computed(() => (props.beta < 1 ? rapidity(props.beta) : 0))
 
       <h3>{{ tx('Why both observers can be right') }}</h3>
       <p>
-        The term <MathFormula tex="v x / c^2" /> means that events at the same time in one frame (<MathFormula tex="\Delta t = 0" />) are not
-        at the same time in the other:
+        {{ tx('The term') }} <MathFormula tex="v x / c^2" /> {{ tx('means that events at the same time in one frame (') }}<MathFormula tex="\Delta t = 0" />){{ tx(') are not at the same time in the other:') }}
       </p>
       <MathFormula display tex="\Delta t' = -\gamma\,\frac{v\,\Delta x}{c^2}." />
       <p>
@@ -152,9 +150,8 @@ const phi = computed(() => (props.beta < 1 ? rapidity(props.beta) : 0))
       <h3>{{ tx('Proper time is the length of a worldline') }}</h3>
       <MathFormula display tex="\tau = \int \sqrt{1 - \frac{v(t)^2}{c^2}}\;dt = \int \frac{ds}{c}" />
       <p>
-        Every observer computes the same <MathFormula tex="\tau" /> for a given worldline. Because of the minus sign in
-        <MathFormula tex="s^2" />, a straight (inertial) worldline between two events has the <em>longest</em> proper time. This resolves the
-        twin paradox, which a later experiment explores.
+        {{ tx('Every observer computes the same') }} <MathFormula tex="\tau" /> {{ tx('for a given worldline. Because of the minus sign in') }}
+        <MathFormula tex="s^2" />{{ tx(', a straight (inertial) worldline between two events has the') }} <em>longest</em>{{ tx('proper time. This resolves the twin paradox, which a later experiment explores.') }}
       </p>
 
       <h3>{{ tx('Four-vectors and the metric') }}</h3>
