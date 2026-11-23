@@ -68,8 +68,7 @@ const correctionSpeed = computed(() => Math.abs(props.u === 0 ? 3 : props.u).toF
       <h3>{{ tx('Check it with your own run') }}</h3>
       <MathFormula v-if="uniform" display :tex="workedExample" />
       <p v-else class="muted">
-        Your current run changed velocity part-way through, so the rule applies to each straight piece of the graph separately. Reset and do a
-        run without touching the velocity slider to check the formula.
+        {{ tx('Your current run changed velocity part-way through, so the rule applies to each straight piece of the graph separately. Reset and do a run without touching the velocity slider to check the formula.') }}
       </p>
       <h3>{{ tx('Reading the graph') }}</h3>
       <ul>
@@ -125,7 +124,8 @@ const correctionSpeed = computed(() => Math.abs(props.u === 0 ? 3 : props.u).toF
       </p>
       <MathFormula display tex="t' = \gamma\left(t - \frac{u\,x}{c^2}\right), \qquad x' = \gamma\,(x - u\,t), \qquad \gamma = \frac{1}{\sqrt{1 - u^2/c^2}}" />
       <p>
-        {{ tx('At this speed the correction is') }} <MathFormula :tex="gammaCorrection" />{{ tx(', far too small to see here, which is why the Galilean picture works so well in everyday life.') }} {{ tx('In Module 4 you will push the observer speed towards the speed of light and watch the Galilean approximation fail.') }}
+        {{ tx('At') }} <MathFormula :tex="`|u| = ${correctionSpeed}\\\\ \\\\text{m/s}`" /> {{ tx('the correction is') }} <MathFormula :tex="gammaCorrection" />{{ tx(', far too small to see here, which is why the Galilean picture works so well in everyday life.') }}
+        {{ tx('In Module 4 you will push the observer speed towards the speed of light and watch the Galilean approximation fail.') }}
       </p>
     </template>
   </div>
