@@ -332,15 +332,15 @@ onBeforeUnmount(() => {
     <details class="scene-data">
       <summary>{{ localizeExperimentText('Read the 3D coordinates as text', locale) }}</summary>
       <dl>
-        <div><dt>Starting point (x, y, z)</dt><dd>{{ formatPoint(startPoint()) }} m</dd></div>
-        <div><dt>Current point (x, y, z)</dt><dd>{{ formatPoint(endPoint()) }} m</dd></div>
-        <div><dt>Displacement (Δx, Δy, Δz)</dt><dd>{{ formatPoint(displacement()) }} m</dd></div>
-        <div><dt>Distance between start and current point</dt><dd>{{ Math.hypot(displacement().x, displacement().y, displacement().z).toFixed(2) }} m</dd></div>
-        <div><dt>Path points recorded</dt><dd>{{ points.length }}</dd></div>
+        <div><dt>{{ localizeExperimentText('Starting point (x, y, z)', locale) }}</dt><dd>{{ formatPoint(startPoint()) }} m</dd></div>
+        <div><dt>{{ localizeExperimentText('Current point (x, y, z)', locale) }}</dt><dd>{{ formatPoint(endPoint()) }} m</dd></div>
+        <div><dt>{{ localizeExperimentText('Displacement (Δx, Δy, Δz)', locale) }}</dt><dd>{{ formatPoint(displacement()) }} m</dd></div>
+        <div><dt>{{ localizeExperimentText('Distance between start and current point', locale) }}</dt><dd>{{ Math.hypot(displacement().x, displacement().y, displacement().z).toFixed(2) }} m</dd></div>
+        <div><dt>{{ localizeExperimentText('Path points recorded', locale) }}</dt><dd>{{ points.length }}</dd></div>
       </dl>
-      <p class="muted small">Coordinates use the standard axes: x east, y north, z up. The displacement is the straight-line change from the starting point, not the total path length.</p>
+      <p class="muted small">{{ localizeExperimentText('{{ localizeExperimentText('Coordinates use the standard axes: x east, y north, z up. The displacement is the straight-line change from the starting point, not the total path length.', locale) }}', locale) }}</p>
     </details>
-    <p v-if="failed" class="no-webgl">The 3D view needs WebGL, which this browser does not offer. The readouts and controls still work.</p>
+    <p v-if="failed" class="no-webgl">{{ localizeExperimentText('{{ localizeExperimentText('The 3D view needs WebGL, which this browser does not offer. The readouts and controls still work.', locale) }}', locale) }}</p>
   </div>
 </template>
 
