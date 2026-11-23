@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LevelSwitcher from '@/components/LevelSwitcher.vue'
+import ExperimentNavigation from '@/components/ExperimentNavigation.vue'
 
 const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
 </script>
@@ -16,6 +17,7 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
       </nav>
     </div>
   </header>
+  <ExperimentNavigation />
   <main>
     <RouterView />
   </main>
@@ -76,7 +78,7 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
   font-size: 0.85rem;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 480px) {
   .header-tools { gap: 8px; }
   .teacher-link { font-size: 0.82rem; }
   .brand img { width: 126px; height: auto; }

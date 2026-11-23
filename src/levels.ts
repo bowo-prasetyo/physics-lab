@@ -1,6 +1,6 @@
 /**
- * Educational levels. The physical phenomenon in an experiment never changes
- * with the level; only the depth of the mathematical treatment does.
+ * Educational levels. The physical phenomenon and experiment stay the same;
+ * levels change the depth and mathematical language used to explain them.
  */
 
 export type Level = 'beginner' | 'intermediate' | 'advanced'
@@ -13,9 +13,9 @@ export interface LevelInfo {
 }
 
 export const LEVELS: readonly LevelInfo[] = [
-  { id: 'beginner', label: 'Beginner', audience: 'High school', maths: 'Algebra, graphs and tables' },
-  { id: 'intermediate', label: 'Intermediate', audience: 'Undergraduate', maths: 'Calculus and vectors' },
-  { id: 'advanced', label: 'Advanced', audience: 'Physics undergraduate', maths: 'Events, worldlines and reference frames' },
+  { id: 'beginner', label: 'Beginner', audience: 'High school', maths: 'Algebra, proportional reasoning, graphs and tables' },
+  { id: 'intermediate', label: 'Intermediate', audience: 'Undergraduate', maths: 'Vectors, functions, calculus and quantitative models' },
+  { id: 'advanced', label: 'Advanced', audience: 'Physics undergraduate', maths: 'Deeper derivations and specialised frameworks, such as spacetime events and worldlines where relevant' },
 ]
 
 const ORDER: Record<Level, number> = { beginner: 0, intermediate: 1, advanced: 2 }
