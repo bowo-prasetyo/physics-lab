@@ -278,7 +278,7 @@ export function localizeExperimentText(value: string | null | undefined, locale:
     ['Scale factor a', 'Faktor skala a', 'スケール因子 a'],
     ['Spacetime diagram', 'Diagram ruang-waktu', '時空図'],
     ['position x (light-seconds)', 'posisi x (detik cahaya)', '位置 x（光秒）'],
-    ['time t (s)', 'waktu t (s)', '時間 t (s)']
+    ['time t (s)', 'waktu t (s)', '時間 t (s)'],
     ["Module 6 · Cosmology · Experiment D", "Modul 6 · Kosmologi · Eksperimen D", "モジュール 6 · 宇宙論 · 実験 D"],
     ["Evolving space", "Ruang yang berevolusi", "進化する空間"],
     ["A model universe filled with galaxies. Run it forwards and backwards in time. What grows, what stays the same, and where does the model stop making sense?", "Model alam semesta yang dipenuhi galaksi. Jalankan maju dan mundur dalam waktu. Apa yang membesar, apa yang tetap sama, dan kapan model ini tidak lagi masuk akal?", "銀河で満たされた宇宙モデルを時間の順方向と逆方向に動かします。何が大きくなり、何が変わらず、どこでモデルが成り立たなくなるのでしょうか。"],
