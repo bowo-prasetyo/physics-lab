@@ -101,7 +101,7 @@ const text: Record<string, readonly [string, string]> = {
   'View the plotted values as a table': ['Lihat nilai grafik sebagai tabel', 'プロット値を表で表示'],
   'Read the clock comparisons as a table': ['Baca perbandingan jam sebagai tabel', '時計の比較を表で読む'],
   'Read the current model values': ['Baca nilai model saat ini', '現在のモデル値を読む'],
-  'Model': ['Model', 'モデル'],
+  'Model': ['Model fisika', 'モデル'],
   'Series': ['Seri', '系列'],
   'Clock': ['Jam', '時計'],
   'Altitude': ['Ketinggian', '高度'],
@@ -575,6 +575,10 @@ const text: Record<string, readonly [string, string]> = {
   "min per day": ["menit per hari","分/日"],
   "hours per day": ["jam per hari","時間/日"],
   "seen from": ["dilihat dari","から見た"],
+  "Jupiter (cloud tops)": ["Jupiter (puncak awan)","木星（雲頂）"],
+  "Mars": ["Mars","火星"],
+  "3, 4, 12 diagonal": ["Diagonal 3, 4, 12","3・4・12 の対角移動"],
+  "Experiment C →": ["Eksperimen C →","実験 C →"],
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
