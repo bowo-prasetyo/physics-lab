@@ -1,0 +1,55 @@
+import { MODULES, type ModuleEntry } from '@/modules'
+import type { Locale } from './locales'
+
+const translated: Record<Exclude<Locale, 'en'>, readonly ModuleEntry[]> = {
+  id: [
+    { number: 1, title: 'Memahami ruang', audience: 'Sekolah menengah atas', coverage: [], plannedTopics: ['Geometri koordinat 2D dan transformasi secara lebih mendalam', 'Pengukuran dan geometri ruang di luar contoh vektor saat ini'], experiments: [
+      { title: 'A · Ruang versus waktu', summary: 'Gerakkan benda di sepanjang lintasan, lalu hentikan. Apakah waktu juga berhenti?', path: '/space/space-vs-time' },
+      { title: 'Perpindahan dalam 3D', summary: 'Gerakkan benda dalam ruang 3D, ukur perpindahannya, dan amati dampak perubahan koordinat.', path: '/space/displacement-3d' },
+    ] },
+    { number: 2, title: 'Memahami waktu', audience: 'Sekolah menengah atas', coverage: [], plannedTopics: ['Mekanisme jam fisik lainnya dan perbandingannya', 'Pembahasan lebih luas tentang pengukuran waktu dan ketidakpastian'], experiments: [
+      { title: 'Jam pendulum', summary: 'Ukur periode pendulum, bawa jam pendulum ke Bulan, dan tanyakan apa yang sebenarnya diukur oleh jam.', path: '/time/pendulum' },
+    ] },
+    { number: 3, title: 'Mekanika klasik', audience: 'Sekolah menengah atas / Sarjana', coverage: [], plannedTopics: ['Diagram benda bebas dengan beberapa gaya', 'Gerak melingkar', 'Momentum dan tumbukan', 'Usaha, energi, dan kekekalan di luar contoh proyektil', 'Gravitasi sebagai gaya dan gerak orbit'], experiments: [
+      { title: 'Gaya, massa, dan percepatan', summary: 'Ubah gaya resultan dan massa kereta untuk menyelidiki hukum kedua Newton.', path: '/mechanics/newtonian' },
+      { title: 'Peluncur proyektil', summary: 'Luncurkan bola di Bumi, Bulan, Mars, atau Jupiter, dengan atau tanpa hambatan udara, dan amati dari tanah atau kereta bergerak.', path: '/mechanics/projectile' },
+    ] },
+    { number: 4, title: 'Relativitas khusus', audience: 'Sarjana', coverage: [], plannedTopics: ['Kontraksi panjang sebagai pelajaran prediksi–eksperimen–penjelasan tersendiri', 'Penjumlahan kecepatan dan momentum relativistik', 'Hubungan yang lebih jelas antara pengukuran kerangka inersial dan bukti eksperimen'], experiments: [
+      { title: 'B · Jam berbeda, waktu berlalu berbeda', summary: 'Pesawat ruang angkasa melintasi Bumi. Bandingkan jam mereka pada diagram ruang-waktu dari kedua sudut pandang.', path: '/relativity/moving-clocks' },
+      { title: 'E · Ruang dan waktu versus ruang-waktu', summary: 'Bandingkan prediksi Galilea, ruang + waktu (Lorentz), dan ruang-waktu dengan hasil eksperimen.', path: '/relativity/two-perspectives' },
+    ] },
+    { number: 5, title: 'Relativitas umum', audience: 'Sarjana tingkat lanjut', coverage: [], plannedTopics: ['Gerak geodesik dan jatuh bebas', 'Persamaan medan Einstein dan peran energi-momentum', 'Penghubung yang cermat dari prinsip ekuivalensi menuju ruang-waktu melengkung', 'Di luar kondisi Schwarzschild yang statis dan simetris bola'], experiments: [
+      { title: 'C · Gravitasi dan laju jam', summary: 'Dua jam pada ketinggian berbeda, dari Bumi hingga lubang hitam, dan alasan GPS memerlukan relativitas.', path: '/gravity/clock-rates' },
+    ] },
+    { number: 6, title: 'Kosmologi', audience: 'Sarjana tingkat lanjut', coverage: [], plannedTopics: ['Bukti observasi dan inferensi parameter dalam kosmologi modern', 'Ukuran jarak kosmik dan horizon', 'Pembahasan lebih mendalam tentang alam semesta awal dan inflasi', 'Status dan batas ekstrapolasi kosmologi klasik menuju singularitas awal'], experiments: [
+      { title: 'Ruang yang berevolusi', summary: 'Jalankan model alam semesta maju dan mundur: hukum Hubble, pergeseran merah, energi gelap, dan batas model.', path: '/cosmology/evolving-space' },
+    ] },
+  ],
+  ja: [
+    { number: 1, title: '空間を理解する', audience: '高校', coverage: [], plannedTopics: ['2次元座標幾何と変換のより詳しい学習', '現在のベクトル例を超えた空間測定と幾何'], experiments: [
+      { title: 'A · 空間と時間', summary: '物体を軌道上で動かしてから停止させます。時間も止まるでしょうか？', path: '/space/space-vs-time' },
+      { title: '3次元の変位', summary: '3次元空間で物体を動かし、変位を測定して、座標の変更が何をもたらすかを調べます。', path: '/space/displacement-3d' },
+    ] },
+    { number: 2, title: '時間を理解する', audience: '高校', coverage: [], plannedTopics: ['他の物理時計の仕組みと比較', '時間測定と不確かさのより広い考察'], experiments: [
+      { title: '振り子時計', summary: '振り子の周期を測り、時計を月へ持っていき、時計が本当に測っているものを考えます。', path: '/time/pendulum' },
+    ] },
+    { number: 3, title: '古典力学', audience: '高校 / 学部', coverage: [], plannedTopics: ['複数の力を扱う力の図', '円運動', '運動量と衝突', '投射運動以外の仕事・エネルギー・保存則', '力としての重力と軌道運動'], experiments: [
+      { title: '力・質量・加速度', summary: '合力と台車の質量を変えて、ニュートンの運動方程式を調べます。', path: '/mechanics/newtonian' },
+      { title: '投射装置', summary: '地球、月、火星、木星で空気抵抗の有無を切り替えてボールを発射し、地上や移動する列車から観察します。', path: '/mechanics/projectile' },
+    ] },
+    { number: 4, title: '特殊相対性理論', audience: '学部', coverage: [], plannedTopics: ['予測・実験・説明による長さの収縮の独立した学習', '速度の合成と相対論的運動量', '慣性系での測定と実験的証拠の明確な関連付け'], experiments: [
+      { title: 'B · 異なる時計、異なる経過時間', summary: '宇宙船が地球のそばを通過します。時空図を使い、両方の視点から時計を比較します。', path: '/relativity/moving-clocks' },
+      { title: 'E · 空間と時間、それとも時空', summary: 'ガリレイ変換、空間と時間（ローレンツ変換）、時空の予測を実験結果と比較します。', path: '/relativity/two-perspectives' },
+    ] },
+    { number: 5, title: '一般相対性理論', audience: '学部上級', coverage: [], plannedTopics: ['測地線運動と自由落下', 'アインシュタイン方程式とエネルギー運動量の役割', '等価原理から曲がった時空への慎重な橋渡し', '静的・球対称なシュワルツシルト時空を超えて'], experiments: [
+      { title: 'C · 重力と時計の進み方', summary: '地球からブラックホールまで、高さの異なる2つの時計とGPSに相対論が必要な理由を調べます。', path: '/gravity/clock-rates' },
+    ] },
+    { number: 6, title: '宇宙論', audience: '学部上級', coverage: [], plannedTopics: ['現代宇宙論における観測的証拠とパラメーター推定', '宇宙距離の尺度と地平線', '初期宇宙とインフレーションの詳しい考察', '初期特異点に向けた古典宇宙論の外挿の位置付けと限界'], experiments: [
+      { title: '時間とともに変化する空間', summary: 'モデル宇宙を未来と過去へ進め、ハッブルの法則、赤方偏移、ダークエネルギー、モデルの限界を調べます。', path: '/cosmology/evolving-space' },
+    ] },
+  ],
+}
+
+export function getLocalizedModules(locale: Locale): readonly ModuleEntry[] {
+  return locale === 'en' ? MODULES : translated[locale]
+}
