@@ -69,17 +69,17 @@ const advanced = computed(() => atLeast(level.value, 'advanced'))
 const timeModel = computed({ get: () => t.value, set: (v: number) => setTime(v) })
 const timeLabel = computed(() => {
   const e = expansion.value
-  if (e.hasBigBang) return `${formatGyr(t.value)} after the Big Bang`
+  if (e.hasBigBang) return `${formatGyr(t.value)} ${tx('after the Big Bang')}`
   const rel = t.value - e.tToday
-  if (Math.abs(rel) < 0.005) return 'today'
-  return `${formatGyr(Math.abs(rel))} ${rel > 0 ? 'from now' : 'ago'}`
+  if (Math.abs(rel) < 0.005) return tx('today')
+  return `${formatGyr(Math.abs(rel))} ${tx(rel > 0 ? 'from now' : 'ago')}`
 })
 
 function formatGyr(gyr: number): string {
   if (gyr >= 1) return `${gyr.toFixed(2)} billion years`
   if (gyr >= 1e-3) return `${Math.round(gyr * 1000)} million years`
   if (gyr >= 1e-6) return `${Math.round(gyr * 1e6).toLocaleString('en-US')} thousand years`
-  return 'a tiny fraction of a second'
+  return tx('a tiny fraction of a second')
 }
 
 const milestones = computed(() => {
@@ -210,7 +210,7 @@ const expansionWord = computed(() => {
               </div>
             </dl>
           </div>
-          <p class="small muted">{{ cosmology.name }}: H₀ = {{ cosmology.h0 }} km/s/Mpc.</p>
+          <p class="small muted">{{ tx(cosmology.name) }}: H₀ = {{ cosmology.h0 }} km/s/Mpc.</p>
         </div>
       </div>
     </section>
