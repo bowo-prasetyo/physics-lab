@@ -9,7 +9,7 @@ const logo = `${import.meta.env.BASE_URL}favicon.svg`
     <div class="container header-inner">
       <RouterLink to="/" class="brand">
         <img :src="logo" alt="" width="28" height="28" />
-        <span>Space &amp; Time Laboratory</span>
+        <span>Physica</span>
       </RouterLink>
       <nav class="header-tools" aria-label="Main navigation">
         <RouterLink class="teacher-link" to="/teachers">For teachers</RouterLink>
@@ -21,7 +21,7 @@ const logo = `${import.meta.env.BASE_URL}favicon.svg`
     <RouterView />
   </main>
   <footer class="app-footer">
-    <div class="container muted">Space &amp; Time Laboratory · Open-source physics experiments for students · MIT License</div>
+    <div class="container muted">Physica · Open-source physics experiments for students · MIT License</div>
   </footer>
 </template>
 

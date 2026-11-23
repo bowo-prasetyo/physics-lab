@@ -2,11 +2,11 @@
 
 ## Product vision
 
-**Physics Lab helps learners understand the physical universe by letting them investigate phenomena, test predictions, connect observations to mathematics, and reason carefully about what the evidence does—and does not—establish.**
+**Physica helps learners understand the physical universe by letting them investigate phenomena, test predictions, connect observations to mathematics, and reason carefully about what the evidence does—and does not—establish.**
 
 We want learners to move beyond memorising equations. They should be able to ask a physical question, make a prediction, design or run a simple investigation, interpret what happens, and use mathematical models to explain the result.
 
-Physics Lab is an interactive learning environment, not a general-purpose simulator and not a digital textbook with animations. Its defining experience is a guided cycle of inquiry:
+Physica is an interactive learning environment, not a general-purpose simulator and not a digital textbook with animations. Its defining experience is a guided cycle of inquiry:
 
 1. **Phenomenon** — encounter a concrete physical situation.
 2. **Predict** — commit to an expectation before seeing the explanation.
