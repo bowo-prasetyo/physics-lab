@@ -121,7 +121,7 @@ const phi = computed(() => (props.beta < 1 ? rapidity(props.beta) : 0))
     <template v-else-if="level === 'intermediate'">
       <p>{{ tx('An observer moving at velocity') }} <MathFormula tex="v" /> {{ tx('labels events with coordinates given by the') }} <strong>{{ tx('Lorentz transformation') }}</strong>:</p>
       <MathFormula display tex="t' = \gamma\left(t - \frac{v\,x}{c^2}\right), \qquad x' = \gamma\,(x - v\,t)" />
-      <p>On the ship's own worldline <MathFormula tex="x = v\,t" />, so its clock reads</p>
+      <p>{{ tx("On the ship's own worldline") }} <MathFormula tex="x = v\,t" />{{ tx(', so its clock reads') }}</p>
       <MathFormula display tex="t' = \gamma\,t\left(1 - \frac{v^2}{c^2}\right) = \frac{t}{\gamma}." />
 
       <h3>{{ tx('Why both observers can be right') }}</h3>
@@ -165,14 +165,13 @@ const phi = computed(() => (props.beta < 1 ? rapidity(props.beta) : 0))
 
       <h3>{{ tx('Boosts are hyperbolic rotations') }}</h3>
       <p>
-        With rapidity <MathFormula tex="\varphi = \operatorname{artanh}(v/c)" /> (here
+        {{ tx('With rapidity') }} <MathFormula tex="\varphi = \operatorname{artanh}(v/c)" /> {{ tx('(here') }}
         <MathFormula :tex="`\\varphi = ${f(phi, 3)}`" />):
       </p>
       <MathFormula display tex="\begin{aligned} ct' &= ct\cosh\varphi - x\sinh\varphi \\ x' &= x\cosh\varphi - ct\sinh\varphi \end{aligned}" />
       <p>
-        Rapidities add under successive boosts, while velocities combine as
-        <MathFormula tex="w' = \dfrac{w - u}{1 - w u / c^2}" />, which never exceeds <MathFormula tex="c" />. Experiment E compares this
-        spacetime description with the separate space-and-time description you have been using.
+        {{ tx('Rapidities add under successive boosts, while velocities combine as') }}
+        <MathFormula tex="w' = \dfrac{w - u}{1 - w u / c^2}" />{{ tx(', which never exceeds') }} <MathFormula tex="c" />{{ tx('. Experiment E compares this spacetime description with the separate space-and-time description you have been using.') }}
       </p>
     </template>
   </div>
