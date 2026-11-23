@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+const { locale } = useLocale()
 import { computed, useId } from 'vue'
 import type { Expansion } from '@/physics'
 import { niceCeil } from './chartScale'
@@ -64,7 +67,7 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
       </g>
       <text v-for="t in xTicks" :key="`lx${t}`" :x="sx(t)" :y="M.top + plotH + 18" class="tick">{{ t }}</text>
       <text v-for="a in yTicks" :key="`ly${a}`" :x="M.left - 8" :y="sy(a) + 4" class="tick y">{{ Number(a.toPrecision(3)) }}</text>
-      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ xLabel }}</text>
+      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ localizeExperimentText(xLabel, locale) }}</text>
       <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">scale factor a</text>
 
       <g :clip-path="`url(#${id}-plot)`">
@@ -81,7 +84,7 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
       </g>
     </svg>
     <details class="chart-data">
-      <summary>Read the current model values</summary>
+      <summary>{{ localizeExperimentText('Read the current model values', locale) }}</summary>
       <table><tbody>
         <tr><th scope="row">Selected time</th><td>{{ t.toFixed(3) }} billion years</td></tr>
         <tr><th scope="row">Scale factor at selected time</th><td>{{ expansion.scaleFactorAt(t).toPrecision(5) }}</td></tr>
