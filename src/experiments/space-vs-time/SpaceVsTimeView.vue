@@ -59,7 +59,7 @@ const primaryLabel = computed(() => {
     case 'finished':
       return 'Run again'
     default:
-      return 'Start clock'
+      return tx('Start clock')
   }
 })
 
@@ -146,7 +146,7 @@ useQuerySync({
           <div class="clock" role="timer" :aria-label="localizeExperimentText('Experiment clock', locale)">
             <span class="clock-label">{{ tx('Clock') }}</span>
             <span class="clock-value num">{{ snapshot.t.toFixed(2) }}<small> s</small></span>
-            <span class="clock-status muted">{{ status === 'finished' ? 'Run complete' : status === 'running' ? 'Running' : status === 'paused' ? 'Paused' : 'Ready' }}</span>
+            <span class="clock-status muted">{{ status === 'finished' ? 'Run complete' : status === 'running' ? 'Running' : status === 'paused' ? tx('Paused') : tx('Ready') }}</span>
           </div>
 
           <div class="buttons">
@@ -203,7 +203,7 @@ useQuerySync({
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <SpaceVsTimeMath :level="level" :snapshot="snapshot" :u="u" />
     </section>
     </details>
