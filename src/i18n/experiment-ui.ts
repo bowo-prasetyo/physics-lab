@@ -131,8 +131,6 @@ const text: Record<string, readonly [string, string]> = {
   'position x': ['posisi x', '位置 x'],
   'time': ['waktu', '時間'],
   'height above the ': ['ketinggian di atas ', 'からの高さ '],
-  'surface': ['permukaan', '表面'],
-  'horizon': ['horizon', '地平面'],
   'clock slowed by': ['perlambatan jam sebesar', '時計の遅れ'],
 
 }
