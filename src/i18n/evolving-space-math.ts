@@ -45,7 +45,7 @@ const translations: Record<string, readonly [string, string]> = {
   'speeding up. The transition is found by solving': ['berarti semakin cepat. Titik peralihannya ditemukan dengan menyelesaikan', 'は加速していることを意味します。転換点は次の方程式を解いて求めます'],
   'for its positive root. If radiation is negligible, this reduces to': ['untuk mencari akar positifnya. Jika radiasi dapat diabaikan, persamaan ini menyederhana menjadi', 'の正の解を求めます。放射を無視できる場合、これは次の式に簡約されます'],
   'Where the model ends': ['Batas akhir model', 'モデルの限界'],
-  'As': ['Ketika', ''],
+  'As': ['Ketika', 'a が'],
   'the density grows as': ['kerapatan meningkat sebanding dengan', '密度は'],
   'or faster and becomes infinite. The singularity theorems of Penrose and Hawking show that, given classical general relativity and ordinary matter, this cannot be avoided. Most physicists read it as the point where classical general relativity stops applying, not as a physical event. In canonical quantum gravity, the Wheeler–DeWitt equation': ['atau lebih cepat hingga menjadi tak terhingga. Teorema singularitas Penrose dan Hawking menunjukkan bahwa, dengan relativitas umum klasik dan materi biasa, hal ini tidak dapat dihindari. Kebanyakan fisikawan menafsirkannya sebagai titik ketika relativitas umum klasik tidak lagi berlaku, bukan sebagai peristiwa fisik. Dalam gravitasi kuantum kanonis, persamaan Wheeler–DeWitt', 'またはそれより速く増大し、無限大になります。ペンローズとホーキングの特異点定理は、古典的一般相対性理論と通常の物質を仮定すると、これを避けられないことを示しています。多くの物理学者は、これを物理的な出来事ではなく、古典的一般相対性理論が適用できなくなる点と解釈します。正準量子重力では、ホイーラー＝ドウィット方程式'],
   'contains no time variable at all: this is the': ['sama sekali tidak memuat variabel waktu: inilah', 'には時間変数がまったく含まれていません。これが'],
