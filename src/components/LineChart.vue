@@ -82,12 +82,12 @@ const paths = computed(() =>
       <summary>{{ localizeExperimentText('View the plotted values as a table', locale) }}</summary>
       <div class="chart-scroll">
         <table><thead><tr><th scope="col">{{ localizeExperimentText('Series', locale) }}</th><th scope="col">{{ localizeExperimentText('Time / x', locale) }}</th><th scope="col">{{ localizeExperimentText('Value / y', locale) }}</th></tr></thead>
-          <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ item.label }}</th><td>{{ point.x }}</td><td>{{ point.y }}</td></tr></template></tbody>
+          <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ localizeExperimentText(item.label, locale) }}</th><td>{{ point.x }}</td><td>{{ point.y }}</td></tr></template></tbody>
         </table>
       </div>
     </details>
     <figcaption class="legend">
-      <span v-for="s in series" :key="s.id"><i class="swatch" :style="{ background: s.colour }" /> {{ s.label }}</span>
+      <span v-for="s in series" :key="s.id"><i class="swatch" :style="{ background: s.colour }" /> {{ localizeExperimentText(s.label, locale) }}</span>
     </figcaption>
   </figure>
 </template>
