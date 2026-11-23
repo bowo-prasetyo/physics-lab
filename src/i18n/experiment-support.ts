@@ -106,6 +106,18 @@ const supportCopy: Record<string, LocalizedSupportCopy> = {
       reflect: 'どの予測が観測と一致しますか。また、測定結果ではなく解釈に関する違いはどれでしょうか。'
     }
   },
+  pendulum: {
+    id: { focus: 'Bandul adalah jam fisik: periodenya bergantung pada panjang tali, percepatan gravitasi setempat, dan (di luar batas sudut kecil) amplitudo.', prompt: 'Apakah menambah massa beban akan membuat bandul ideal berayun lebih cepat?', action: 'Ubah panjang, massa, dan sudut pelepasan secara terpisah; bandingkan periode terukur dengan prediksi sudut kecil.', reflect: 'Kapan pendekatan sudut kecil menjadi kurang akurat, dan mengapa jam mungkin perlu dikalibrasi ulang di lingkungan baru?' },
+    ja: { focus: '振り子は物理的な時計です。周期は糸の長さ、局所的な重力加速度、そして（小振幅の範囲を超えると）振幅に依存します。', prompt: 'おもりの質量を増やすと、理想的な振り子は速く振れるようになるでしょうか。', action: '長さ、質量、放す角度をそれぞれ別々に変え、測定した周期を小振幅近似の予測と比較してください。', reflect: '小振幅近似はいつ不正確になりますか。また、新しい環境では時計の再調整が必要になるのはなぜでしょうか。' }
+  },
+  newtonian: {
+    id: { focus: 'Percepatan bergantung pada gaya resultan dan massa, bukan sekadar apakah benda sedang bergerak.', prompt: 'Pada massa tetap, apa yang terjadi pada percepatan jika gaya resultan menjadi dua kali lipat? Bagaimana jika massanya yang menjadi dua kali lipat?', action: 'Ubah satu variabel setiap kali, catat percepatannya, lalu bandingkan percobaan dengan rasio gaya terhadap massa yang sama.', reflect: 'Mengapa Anda harus menggunakan gaya resultan, bukan hanya gaya dorong yang diberikan? Idealisasi apa yang digunakan model ini?' },
+    ja: { focus: '加速度を決めるのは合力と質量であり、物体が動いているかどうかだけではありません。', prompt: '質量一定で合力を 2 倍にすると加速度はどうなりますか。逆に質量を 2 倍にした場合はどうでしょうか。', action: '一度に一つの変数だけを変えて加速度を記録し、力と質量の比が同じ試行を比較してください。', reflect: 'なぜ加えた押す力だけでなく合力を使う必要があるのでしょうか。このモデルではどのような理想化をしていますか。' }
+  },
+  projectile: {
+    id: { focus: 'Dalam model ideal tanpa hambatan udara, gerak horizontal dan vertikal memiliki peran berbeda: gravitasi mengubah kecepatan vertikal.', prompt: 'Jika bola diluncurkan secara horizontal, apakah bola mulai jatuh seketika atau baru setelah gerak majunya melambat?', action: 'Bandingkan sudut peluncuran dan lingkungan gravitasi; kemudian aktifkan hambatan udara dan bandingkan lintasannya.', reflect: 'Hasil mana yang bergantung pada pendekatan tanpa hambatan? Mengapa kecepatan horizontal dapat tetap ada bersamaan dengan percepatan ke bawah?' },
+    ja: { focus: '空気抵抗のない理想モデルでは、水平運動と鉛直運動は異なる役割を持ちます。重力が変化させるのは鉛直速度です。', prompt: 'ボールを水平に投げた場合、前進速度が遅くなってから落下するのでしょうか。それとも直ちに落下し始めるのでしょうか。', action: '発射角度と重力環境を比較し、その後、空気抵抗を有効にして軌道の違いを調べてください。', reflect: 'どの結果が空気抵抗を無視する近似に依存していますか。なぜ水平方向の速度と下向きの加速度は同時に存在できるのでしょうか。' }
+  },
   'gravity-clock-rates': {
     id: {
       focus: 'Bandingkan laju jam dalam kondisi Schwarzschild statis yang dinyatakan, dan perhatikan selalu asumsi modelnya.',
