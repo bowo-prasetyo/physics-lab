@@ -45,7 +45,7 @@ const translations: Record<string, readonly [string, string]> = {
   'Why the two relativistic descriptions must agree': ['Mengapa kedua deskripsi relativistik harus selaras', '2つの相対論的記述が一致しなければならない理由'],
   'In matrix form, a boost is a hyperbolic rotation of': ['Dalam bentuk matriks, boost merupakan rotasi hiperbolik dari', '行列で表すと、ローレンツ・ブーストは次のベクトルに対する双曲回転です：'],
   'by the rapidity': ['dengan rapiditas', 'ラピディティによる'],
-  'It preserves the metric': ['Transformasi ini mempertahankan metrik', 'この変換は計量'],
+  'It preserves the metric': ['Transformasi ini mempertahankan metrik', 'この変換は次の計量を保ちます'],
   'With': ['Dengan', 'ここで'],
   'Writing': ['Dengan menuliskan', 'さらに、'],
   'turns': ['mengubah', 'と置くと、'],
@@ -76,7 +76,7 @@ const translations: Record<string, readonly [string, string]> = {
   ],
   'with the lapse': ['dengan lapse', 'ここで、ラプス関数'],
   '(how much proper time passes between slices), the shift': ['(berapa banyak waktu wajar yang berlalu di antara irisan), shift', '（切片間で経過する固有時を表す）、シフトベクトル'],
-  ', and the spatial metric': ', dan metrik spasial', '、空間計量'],
+  ', and the spatial metric': [', dan metrik spasial', '、空間計量'],
   ', which evolves in time. The choice of slicing is again free, and measurable predictions do not depend on it. Module 5 builds on this.': [
     ', yang berevolusi terhadap waktu. Pemilihan irisan juga bebas, dan prediksi yang dapat diukur tidak bergantung padanya. Modul 5 akan mengembangkan gagasan ini.',
     'は時間とともに変化します。切片の選び方も任意であり、測定可能な予測はその選択に依存しません。モジュール5では、この内容をさらに発展させます。',
