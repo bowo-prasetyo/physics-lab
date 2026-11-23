@@ -18,6 +18,7 @@ import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
@@ -43,7 +44,7 @@ useQuerySync({
 
 const predictionList = computed(() => localizePredictions('two-perspectives', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(observations.value)])))
-const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.hint?.(observations.value) ?? null])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, localizeExperimentText(p.hint?.(observations.value) ?? null, locale.value)])))
 
 const info = computed(() => SCENARIO_INFO[scenario.value])
 const showWorkingOpen = computed(() => atLeast(level.value, 'intermediate'))
