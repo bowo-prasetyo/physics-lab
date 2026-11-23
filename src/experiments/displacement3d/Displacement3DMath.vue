@@ -96,13 +96,13 @@ const rotationTex = computed(() => {
       <p>{{ tx('Turning the axes by') }} <MathFormula tex="\varphi" /> {{ tx('about z (here') }} <MathFormula :tex="`\\varphi = ${f(yawDeg, 0)}^\\circ`" />):</p>
       <MathFormula display :tex="rotationTex" />
       <p>
-        {{ tx('Every rotation preserves the dot product') }} <MathFormula tex="\mathbf a \cdot \mathbf b = \delta_{ij}\,a^i b^j" />, and with it all lengths
-        and angles. Rotations and shifts of the origin together make up the <strong>{{ tx('Euclidean group') }}</strong>{{ tx(': the symmetries of space.') }}
+        {{ tx('Every rotation preserves the dot product') }} <MathFormula tex="\mathbf a \cdot \mathbf b = \delta_{ij}\,a^i b^j" />{{ tx(', and with it all lengths') }}
+        {{ tx('and angles. Rotations and shifts of the origin together make up the') }} <strong>{{ tx('Euclidean group') }}</strong>{{ tx(': the symmetries of space.') }}
       </p>
       <h3>{{ tx('Direction') }}</h3>
       <p v-if="angles">
-        {{ tx('The unit vector') }} <MathFormula tex="\hat{\mathbf r} = \Delta\mathbf r / |\Delta\mathbf r|" /> has components equal to the cosines of the
-        angles it makes with the three axes. Here those angles are <MathFormula :tex="`${f(angles[0], 1)}^\\circ,\\ ${f(angles[1], 1)}^\\circ,\\ ${f(angles[2], 1)}^\\circ`" />.
+        {{ tx('The unit vector') }} <MathFormula tex="\hat{\mathbf r} = \Delta\mathbf r / |\Delta\mathbf r|" /> {{ tx('has components equal to the cosines of the') }}
+        {{ tx('angles it makes with the three axes. Here those angles are') }} <MathFormula :tex="`${f(angles[0], 1)}^\\circ,\\ ${f(angles[1], 1)}^\\circ,\\ ${f(angles[2], 1)}^\\circ`" />.
       </p>
       <p v-else class="muted">{{ tx('Make a journey to see its direction.') }}</p>
       <h3>{{ tx('Shortest in space, longest in spacetime') }}</h3>
