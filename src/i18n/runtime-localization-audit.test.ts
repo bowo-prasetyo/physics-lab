@@ -54,8 +54,8 @@ function normalize(value: string): string {
 function isEnglishLike(value: string): boolean {
   if (INTENTIONALLY_SHARED_COPY.has(value)) return false
   // Resource filenames and standalone scientific measurements are identifiers/data, not prose.
-  if (/^[A-Z0-9_-]+(?:\\.[A-Z0-9_-]+)+$/.test(value)) return false
-  if (/^\\d+(?:[.,]\\d+)?\\s+(?:Gly|Gyr)$/.test(value)) return false
+  if (/^[A-Z0-9_-]+(?:\.[A-Z0-9_-]+)+$/.test(value)) return false
+  if (/^\d+(?:[.,]\d+)?\s+(?:Gly|Gyr)$/.test(value)) return false
   const words = value.match(/[A-Za-z]{3,}/g) ?? []
   if (words.length === 0 || value.length < 5) return false
   if (/^https?:\/\//i.test(value)) return false
