@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
+import { useLocale } from '@/composables/useLocale'
+
 const props = defineProps<{ experimentId: string; moduleNumber: number; focus: string; prompt: string; action: string; reflect: string }>()
-const labels = ['I made a prediction before revealing the explanation','I tested the idea by changing a meaningful setting','I can explain the result using evidence from the experiment','I can name an assumption or limitation of the model']
+const { t } = useLocale()
+const labels = computed(() => [
+  t('app.support.progressLabel').startsWith('Learning') ? 'I made a prediction before revealing the explanation' : t('app.support.progressLabel').startsWith('Daftar') ? 'Saya membuat prediksi sebelum melihat penjelasan' : '説明を見る前に予測を立てた',
+  t('app.support.progressLabel').startsWith('Learning') ? 'I tested the idea by changing a meaningful setting' : t('app.support.progressLabel').startsWith('Daftar') ? 'Saya menguji gagasan dengan mengubah pengaturan yang bermakna' : '意味のある設定を変更して考えを検証した',
+  t('app.support.progressLabel').startsWith('Learning') ? 'I can explain the result using evidence from the experiment' : t('app.support.progressLabel').startsWith('Daftar') ? 'Saya dapat menjelaskan hasil menggunakan bukti eksperimen' : '実験の証拠を使って結果を説明できる',
+  t('app.support.progressLabel').startsWith('Learning') ? 'I can name an assumption or limitation of the model' : t('app.support.progressLabel').startsWith('Daftar') ? 'Saya dapat menyebutkan asumsi atau keterbatasan model' : 'モデルの仮定または限界を挙げられる',
+])
 const enabled = ref(false)
 const completed = ref<boolean[]>([false, false, false, false])
 const progress = computed(() => completed.value.filter(Boolean).length)
-const percentage = computed(() => Math.round((progress.value / labels.length) * 100))
+const percentage = computed(() => Math.round((progress.value / labels.value.length) * 100))
 const storageKey = computed(() => `physica:learning-progress:${props.experimentId}`)
 function saveProgress() {
   if (!enabled.value) return
@@ -18,7 +26,7 @@ onMounted(() => {
     const parsed: unknown = JSON.parse(saved)
     if (typeof parsed === 'object' && parsed !== null && 'completed' in parsed) {
       const values = (parsed as { completed?: unknown }).completed
-      if (Array.isArray(values) && values.length === labels.length && values.every(value => typeof value === 'boolean')) {
+      if (Array.isArray(values) && values.length === labels.value.length && values.every(value => typeof value === 'boolean')) {
         completed.value = values
         enabled.value = true
       }
@@ -33,27 +41,30 @@ watch(enabled, value => {
     try { localStorage.removeItem(storageKey.value) } catch { /* The checklist is still disabled in memory. */ }
   }
 })
+const teacherLabel = computed(() => t('app.support.teacherResources').replace('{number}', String(props.moduleNumber)))
+const completionLabel = computed(() => t('app.support.complete').replace('{done}', String(progress.value)).replace('{total}', String(labels.value.length)).replace('{percent}', String(percentage.value)))
+const progressAriaLabel = computed(() => t('app.support.progressLabel').replace('{done}', String(progress.value)).replace('{total}', String(labels.value.length)))
 </script>
 <template>
   <section class="experiment-support card" aria-labelledby="learning-guide-title">
     <div class="support-heading">
-      <div><p class="eyebrow">Make the most of this experiment</p><h2 id="learning-guide-title">A guide for your investigation</h2></div>
-      <RouterLink class="teacher-link" :to="{ path: '/teachers', hash: `#module-${moduleNumber}` }">Teacher resources for Module {{ moduleNumber }} <span aria-hidden="true">↗</span></RouterLink>
+      <div><p class="eyebrow">{{ t('app.support.eyebrow') }}</p><h2 id="learning-guide-title">{{ t('app.support.title') }}</h2></div>
+      <RouterLink class="teacher-link" :to="{ path: '/teachers', hash: `#module-${moduleNumber}` }">{{ teacherLabel }} <span aria-hidden="true">↗</span></RouterLink>
     </div>
     <div class="guidance-grid">
-      <div><h3>Keep in mind</h3><p>{{ focus }}</p></div>
-      <div><h3>Before you run it</h3><p>{{ prompt }}</p></div>
-      <div><h3>Try this</h3><p>{{ action }}</p></div>
-      <div><h3>After observing</h3><p>{{ reflect }}</p></div>
+      <div><h3>{{ t('app.support.keepInMind') }}</h3><p>{{ focus }}</p></div>
+      <div><h3>{{ t('app.support.before') }}</h3><p>{{ prompt }}</p></div>
+      <div><h3>{{ t('app.support.try') }}</h3><p>{{ action }}</p></div>
+      <div><h3>{{ t('app.support.after') }}</h3><p>{{ reflect }}</p></div>
     </div>
     <div class="progress-option">
-      <label class="progress-toggle"><input v-model="enabled" type="checkbox"><span>Show my optional learning progress</span></label>
-      <p class="privacy-note">Optional self-check only. If enabled, your checklist is saved in this browser on this device; it is not sent to Physica or shared with a teacher. Turning it off clears this experiment's saved checklist.</p>
+      <label class="progress-toggle"><input v-model="enabled" type="checkbox"><span>{{ t('app.support.progressToggle') }}</span></label>
+      <p class="privacy-note">{{ t('app.support.privacy') }}</p>
     </div>
     <div v-if="enabled" class="progress-panel">
-      <div class="progress-summary"><strong>Investigation checklist</strong><span>{{ progress }} of {{ labels.length }} complete · {{ percentage }}%</span></div>
-      <div class="progress-track" role="progressbar" :aria-valuenow="progress" :aria-valuemin="0" :aria-valuemax="labels.length" :aria-label="`Learning checklist: ${progress} of ${labels.length} steps complete`"><span :style="{ width: percentage + '%' }"></span></div>
-      <ul><li v-for="(label, index) in labels" :key="label"><label><input v-model="completed[index]" type="checkbox"> {{ label }}</label></li></ul>
+      <div class="progress-summary"><strong>{{ t('app.support.checklist') }}</strong><span>{{ completionLabel }}</span></div>
+      <div class="progress-track" role="progressbar" :aria-valuenow="progress" :aria-valuemin="0" :aria-valuemax="labels.length" :aria-label="progressAriaLabel"><span :style="{ width: percentage + '%' }"></span></div>
+      <ul><li v-for="(label, index) in labels" :key="index"><label><input v-model="completed[index]" type="checkbox"> {{ label }}</label></li></ul>
     </div>
   </section>
 </template>
