@@ -48,7 +48,7 @@ const lines = computed(() =>
 const description = computed(
   () =>
     `Chart of ${props.yLabel} against ${props.xLabel}, one line per description. ` +
-    props.series.map((s) => `${s.label}: ${s.points.at(-1)?.y.toFixed(2)} at the top speed`).join('; ') +
+    props.series.map((s) => `${localizeExperimentText(s.label, locale.value) ?? s.label}: ${s.points.at(-1)?.y.toFixed(2)} at the top speed`).join('; ') +
     '.',
 )
 </script>
