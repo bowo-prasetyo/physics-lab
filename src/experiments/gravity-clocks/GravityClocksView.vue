@@ -183,13 +183,13 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
         <div class="lab-side card">
           <div class="clocks">
             <div class="clock-card far"><span class="clock-name">{{ tx('Far away') }}</span><span class="clock-value num">{{ daysText }}</span></div>
-            <div class="clock-card a"><span class="clock-name">{{ tx('Clock A') }}</span><span class="clock-value num">{{ (elapsed.a / SECONDS_PER_DAY).toFixed(1) }} days</span></div>
-            <div class="clock-card b"><span class="clock-name">{{ tx('Clock B') }}</span><span class="clock-value num">{{ (elapsed.b / SECONDS_PER_DAY).toFixed(1) }} days</span></div>
+            <div class="clock-card a"><span class="clock-name">{{ tx('Clock A') }}</span><span class="clock-value num">{{ (elapsed.a / SECONDS_PER_DAY).toFixed(1) }} {{ tx('days') }}</span></div>
+            <div class="clock-card b"><span class="clock-name">{{ tx('Clock B') }}</span><span class="clock-value num">{{ (elapsed.b / SECONDS_PER_DAY).toFixed(1) }} {{ tx('days') }}</span></div>
           </div>
           <p class="ahead" :class="bFaster ? 'b-ahead' : 'a-ahead'">
-            {{ tx('Clock {clock} height').replace('{clock}', bFaster ? 'B' : 'A') }} <strong class="num">{{ formatDuration(Math.abs(elapsed.bAhead)) }}</strong>
+            {{ tx('Clock {clock} is ahead by').replace('{clock}', bFaster ? 'B' : 'A') }} <strong class="num">{{ formatDuration(Math.abs(elapsed.bAhead)) }}</strong>
           </p>
-          <p class="status muted">{{ tx('Time-lapse: 1 day per second, up to') }} {{ RUN_DAYS }} {{ locale === 'id' ? 'hari' : locale === 'ja' ? '日' : 'days' }}</p>
+          <p class="status muted">{{ tx('Time-lapse: 1 day per second, up to') }} {{ RUN_DAYS }} {{ tx('days') }}</p>
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
             <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText('Reset', locale) ?? 'Reset' }}</button>
@@ -257,7 +257,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
               <span class="bar-track">
                 <span class="bar" :class="[bar.id, bar.value >= 0 ? 'pos' : 'neg']" :style="{ width: `${bar.width}%` }" />
               </span>
-              <span class="bar-value num">{{ signed(bar.perDay) }} {{ locale === 'id' ? 'per hari' : locale === 'ja' ? '日あたり' : 'per day' }}</span>
+              <span class="bar-value num">{{ signed(bar.perDay) }} {{ tx('per day') }}</span>
             </div>
           </div>
           <InfoCallout v-if="intermediate" kind="note" :title="tx('How GPS deals with it')">
@@ -343,8 +343,8 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
       <p><strong>{{ tx('Next:') }}</strong> {{ tx('Experiment D, where space itself evolves in time. See also Experiments B and E.') }}</p>
       <span class="nav-links">
         <RouterLink to="/cosmology/evolving-space">{{ tx('Experiment D →') }}</RouterLink>
-        <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">Experiment E</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx('Experiment B') }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx('Experiment E') }}</RouterLink>
         <RouterLink to="/">{{ tx('All modules') }}</RouterLink>
       </span>
     </nav>
