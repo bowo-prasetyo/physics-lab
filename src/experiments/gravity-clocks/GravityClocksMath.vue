@@ -84,7 +84,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
       <p>
         {{ tx('is the Schwarzschild radius: the size the mass would need to be squeezed into to become a black hole. The smaller') }} <MathFormula tex="r" /> {{ tx('is compared with') }} <MathFormula tex="r_s" />{{ tx(', the slower the clock.') }}
       </p>
-      <h3>{{ tx('Your clocks') }} ({{ body.name }})</h3>
+      <h3>{{ tx('Your clocks') }} ({{ tx(body.name) }})</h3>
       <MathFormula display :tex="workedExample" />
       <div class="table-wrap">
         <table>
