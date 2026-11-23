@@ -114,12 +114,9 @@ const signed = (value: number, digits = 2) => {
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">Module 4 · Special relativity · Experiment B</p>
-      <h1>Different clocks, different elapsed times</h1>
-      <p class="lead">
-        A spaceship flies past the Earth. At the moment they pass, both clocks read zero. How much time has passed on each clock a little
-        later, and does the answer depend on who you ask?
-      </p>
+      <p class="eyebrow">{{ localizeExperimentText('Module 4 · Special relativity · Experiment B', locale) ?? 'Module 4 · Special relativity · Experiment B' }}</p>
+      <h1>{{ localizeExperimentText('Different clocks, different elapsed times', locale) ?? 'Different clocks, different elapsed times' }}</h1>
+      <p class="lead">{{ localizeExperimentText('A spaceship flies past the Earth. At the moment they pass, both clocks read zero. How much time has passed on each clock a little later, and does the answer depend on who you ask?', locale) ?? 'A spaceship flies past the Earth. At the moment they pass, both clocks read zero. How much time has passed on each clock a little later, and does the answer depend on who you ask?' }}</p>
     </header>
 
     <ShareExperiment />

@@ -104,12 +104,9 @@ useQuerySync({
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">Module 1 · Understanding space · Experiment A</p>
-      <h1>Space versus time</h1>
-      <p class="lead">
-        An object sits on a straight track while a clock runs. You control where it starts and how fast it moves. What happens to its
-        position, and what happens to time, when you stop it?
-      </p>
+      <p class="eyebrow">{{ localizeExperimentText('Module 1 · Understanding space · Experiment A', locale) ?? 'Module 1 · Understanding space · Experiment A' }}</p>
+      <h1>{{ localizeExperimentText('Space versus time', locale) ?? 'Space versus time' }}</h1>
+      <p class="lead">{{ localizeExperimentText('An object sits on a straight track while a clock runs. You control where it starts and how fast it moves. What happens to its position, and what happens to time, when you stop it?', locale) ?? 'An object sits on a straight track while a clock runs. You control where it starts and how fast it moves. What happens to its position, and what happens to time, when you stop it?' }}</p>
     </header>
 
     <ShareExperiment />

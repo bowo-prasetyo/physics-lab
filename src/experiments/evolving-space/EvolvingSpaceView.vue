@@ -109,12 +109,9 @@ const expansionWord = computed(() => {
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">Module 6 · Cosmology · Experiment D</p>
-      <h1>Evolving space</h1>
-      <p class="lead">
-        A model universe filled with galaxies. Run it forwards and backwards in time. What grows, what stays the same, and where does the
-        model stop making sense?
-      </p>
+      <p class="eyebrow">{{ localizeExperimentText('Module 6 · Cosmology · Experiment D', locale) ?? 'Module 6 · Cosmology · Experiment D' }}</p>
+      <h1>{{ localizeExperimentText('Evolving space', locale) ?? 'Evolving space' }}</h1>
+      <p class="lead">{{ localizeExperimentText('A model universe filled with galaxies. Run it forwards and backwards in time. What grows, what stays the same, and where does the model stop making sense?', locale) ?? 'A model universe filled with galaxies. Run it forwards and backwards in time. What grows, what stays the same, and where does the model stop making sense?' }}</p>
     </header>
 
     <ShareExperiment />

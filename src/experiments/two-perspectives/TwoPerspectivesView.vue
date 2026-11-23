@@ -75,12 +75,9 @@ const chartSeries = computed<ChartSeries[]>(() =>
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">Module 4 · Special relativity · Experiment E · Two perspectives</p>
-      <h1>Space and time versus spacetime</h1>
-      <p class="lead">
-        Three mathematical descriptions of the same situations. Which ones match what we measure, and do the ones that match disagree about
-        anything at all?
-      </p>
+      <p class="eyebrow">{{ localizeExperimentText('Module 4 · Special relativity · Experiment E · Two perspectives', locale) ?? 'Module 4 · Special relativity · Experiment E · Two perspectives' }}</p>
+      <h1>{{ localizeExperimentText('Space and time versus spacetime', locale) ?? 'Space and time versus spacetime' }}</h1>
+      <p class="lead">{{ localizeExperimentText('Three mathematical descriptions of the same situations. Which ones match what we measure, and do the ones that match disagree about anything at all?', locale) ?? 'Three mathematical descriptions of the same situations. Which ones match what we measure, and do the ones that match disagree about anything at all?' }}</p>
     </header>
 
     <ShareExperiment />

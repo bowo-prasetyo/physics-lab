@@ -32,4 +32,30 @@ describe('experiment UI localization', () => {
     expect(localizeExperimentText('A new experimental label', 'id')).toBe('A new experimental label')
     expect(localizeExperimentText(null, 'id')).toBeUndefined()
   })
+
+  it('translates the introductory copy for all priority experiment views', () => {
+    const introductions = [
+      'Evolving space',
+      'Space versus time',
+      'Displacement in 3D',
+      'Pendulum clocks',
+      'Force, mass and acceleration',
+      'Projectile launcher',
+      'Different clocks, different elapsed times',
+      'Space and time versus spacetime',
+      'A model universe filled with galaxies. Run it forwards and backwards in time. What grows, what stays the same, and where does the model stop making sense?',
+      'An object sits on a straight track while a clock runs. You control where it starts and how fast it moves. What happens to its position, and what happens to time, when you stop it?',
+      'Move an object through three-dimensional space and measure where it ends up. Then change the coordinate system and find out which numbers change, and which belong to space itself.',
+      'For three centuries the best clocks were pendulums. Find out what sets the beat of a pendulum, then take a pendulum clock to the Moon and compare it with an atomic clock. What is a clock really measuring?',
+      'Push a cart with a constant net force. Change the force or the cart’s mass, predict what will happen, and test Newton’s second law.',
+      'Launch a ball at any speed and angle, from the ground or a tower, on the Earth, the Moon, Mars or Jupiter, with or without air. Watch it from the ground, or from a moving train.',
+      'A spaceship flies past the Earth. At the moment they pass, both clocks read zero. How much time has passed on each clock a little later, and does the answer depend on who you ask?',
+      'Three mathematical descriptions of the same situations. Which ones match what we measure, and do the ones that match disagree about anything at all?',
+    ]
+    for (const source of introductions) {
+      expect(localizeExperimentText(source, 'id')).not.toBe(source)
+      expect(localizeExperimentText(source, 'ja')).not.toBe(source)
+    }
+  })
+
 })
