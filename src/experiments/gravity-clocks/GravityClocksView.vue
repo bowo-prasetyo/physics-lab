@@ -219,7 +219,9 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
                 class="chip"
                 :disabled="locked"
                 @click="clock === 'A' ? (altitudeA = p.altitude) : (altitudeB = p.altitude)"
-              >{{ localizeExperimentText('{{ p.label }}', locale) ?? '{{ p.label }}' }}</button>
+              >
+                {{ p.label }}
+              </button>
             </div>
           </div>
 
