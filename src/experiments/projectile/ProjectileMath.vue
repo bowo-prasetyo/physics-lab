@@ -35,6 +35,17 @@ const kValue = computed(() => props.params.k)
 
 <template>
   <div class="maths">
+    <InfoCallout kind="note" title="What this model assumes">
+      <p>
+        The ideal trajectory uses a flat, non-rotating local frame and constant gravitational acceleration. It ignores changes in gravity
+        with height and the planet’s curvature and rotation.
+      </p>
+      <p>
+        When air resistance is enabled, the model uses quadratic drag with constant air density and drag coefficient. It does not include
+        wind, spin (Magnus force), or changes in air density or drag coefficient with altitude and speed. Real trajectories can therefore differ,
+        especially over large height or speed ranges.
+      </p>
+    </InfoCallout>
     <!-- Beginner -->
     <template v-if="level === 'beginner'">
       <p>Split the motion into two parts that do not affect each other. Sideways, nothing pushes the ball, so it keeps a steady speed:</p>
