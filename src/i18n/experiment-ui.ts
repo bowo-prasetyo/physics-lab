@@ -561,6 +561,20 @@ const text: Record<string, readonly [string, string]> = {
   "has components equal to the cosines of the": ["memiliki komponen yang sama dengan kosinus dari","の各成分は、次の角度の余弦に等しくなります"],
   "angles it makes with the three axes. Here those angles are": ["sudut yang dibentuknya dengan ketiga sumbu. Sudut-sudut tersebut adalah","3 本の軸となす角です。今回の角度は"],
   "per day.": ["per hari.","1 日あたりです。"],
+  "Range (along the ground)": ["Jangkauan (sepanjang permukaan tanah)","射程（地面に沿った距離）"],
+  "Time in the air": ["Waktu di udara","飛行時間"],
+  "Lost to air so far": ["Energi yang hilang akibat hambatan udara","空気抵抗によるエネルギー損失"],
+  "Best angle for these settings": ["Sudut terbaik untuk pengaturan ini","この条件での最適角度"],
+  "The Moon has no air, so there is no air resistance there.": ["Bulan tidak memiliki atmosfer, sehingga tidak ada hambatan udara di sana.","月には大気がないため、空気抵抗はありません。"],
+  "Match the ball": ["Samakan dengan bola","ボールに合わせる"],
+  "Seconds pendulum on": ["Bandul detik di","秒振り子："],
+  "loses": ["tertinggal","遅れる"],
+  "gains": ["lebih cepat","進む"],
+  "keeps time": ["tepat waktu","正確に時を刻む"],
+  "s per day": ["detik per hari","秒/日"],
+  "min per day": ["menit per hari","分/日"],
+  "hours per day": ["jam per hari","時間/日"],
+  "seen from": ["dilihat dari","から見た"],
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
