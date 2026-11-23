@@ -152,7 +152,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
         <PredictionChart
           :series="chartSeries"
           :x-max="1"
-          x-label="ship speed v (fraction of c)"
+          :x-label="tx('ship speed v (fraction of c)')"
           :y-label="info.axis"
           :marker="beta"
           :measured="measured ? measurement : null"
