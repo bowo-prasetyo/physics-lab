@@ -145,7 +145,7 @@ useQuerySync({
         </div>
 
         <div class="lab-side card">
-          <div class="clock" role="timer" aria-label="Experiment clock">
+          <div class="clock" role="timer" :aria-label="localizeExperimentText('Experiment clock', locale)">
             <span class="clock-label">Clock</span>
             <span class="clock-value num">{{ snapshot.t.toFixed(2) }}<small> s</small></span>
             <span class="clock-status muted">{{ status === 'finished' ? 'Run complete' : status === 'running' ? 'Running' : status === 'paused' ? 'Paused' : 'Ready' }}</span>
@@ -163,7 +163,7 @@ useQuerySync({
             unit="m"
             v-bind="X0_RANGE"
             :disabled="status !== 'ready'"
-            :hint="status !== 'ready' ? 'Reset the clock to choose a new starting position.' : ''"
+            :hint="localizeExperimentText(status !== 'ready' ? 'Reset the clock to choose a new starting position.' : '', locale)"
           />
           <div>
             <ParameterSlider v-model="v" label="Velocity" symbol="v" unit="m/s" v-bind="V_RANGE" :disabled="status === 'finished'" :hint="velocityNote" />
@@ -249,7 +249,7 @@ useQuerySync({
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>Next:</strong> Experiment B compares two clocks moving relative to each other near the speed of light.</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">Experiment B →</RouterLink>
