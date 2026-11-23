@@ -17,6 +17,7 @@ const phi = computed(() => rapidity(props.beta))
 const velocityAddition = computed(
   () => `w = \\frac{c + v}{1 + c\\,v/c^2} = \\frac{1 + ${f(props.beta, 2)}}{1 + ${f(props.beta, 2)}}\\,c = c`,
 )
+const rapidityDisplay = computed(() => '\\varphi = \\operatorname{artanh(' + f(props.beta, 2) + ')} = ' + f(phi.value, 4))
 const metricCheck = computed(
   () =>
     `\\begin{aligned} &\\cosh^2\\varphi - \\sinh^2\\varphi \\\\ &= ${f(Math.cosh(phi.value) ** 2, 4)} - ${f(Math.sinh(phi.value) ** 2, 4)} = 1 \\end{aligned}`,
@@ -94,17 +95,25 @@ const metricCheck = computed(
     <!-- Advanced -->
     <template v-else>
       <h3>{{ tx('Why the two relativistic descriptions must agree') }}</h3>
-      <p>{{ tx("In matrix form, a boost is a hyperbolic rotation of") }} <MathFormula tex="x^\mu = (ct, x)" /> {{ tx("by the rapidity") }} <MathFormula tex="\varphi" />:</p>
+      <p>
+        {{ tx('In matrix form, a boost is a hyperbolic rotation of') }} <MathFormula tex="x^\mu = (ct, x)" /> {{ tx('by the rapidity') }} <MathFormula tex="\varphi" />:
+      </p>
+      <MathFormula display tex="\Lambda(\varphi) = \begin{pmatrix} \cosh\varphi & -\sinh\varphi \\ -\sinh\varphi & \cosh\varphi \end{pmatrix}" />
+      <p>{{ tx('It preserves the metric') }} <MathFormula tex="\eta = \operatorname{diag}(1, -1)" />:</p>
+      <MathFormula display tex="\begin{gathered} \Lambda^{\mathsf T}\eta\,\Lambda = \eta \\ \Longleftrightarrow\; \cosh^2\varphi - \sinh^2\varphi = 1 \end{gathered}" />
+      <p>
+        {{ tx('With') }} <MathFormula :tex="rapidityDisplay" />:
+      </p>
       <MathFormula display :tex="metricCheck" />
       <p>
-        {{ tx("Writing") }} <MathFormula tex="\cosh\varphi = \gamma" /> {{ tx("and") }} <MathFormula tex="\sinh\varphi = \gamma\beta" /> {{ tx("turns") }}
-        <MathFormula tex="\Lambda" /> {{ tx("into the Lorentz transformation of the space + time description, term by term. Every measurable prediction is either an") }} <strong>{{ tx("invariant") }}</strong> {{ tx("(a proper time, the vanishing interval of light, the sign of") }}
-        <MathFormula tex="s^2" />{{ tx(") or a") }} <strong>{{ tx("component in a stated frame") }}</strong> {{ tx("(the time between the flashes for the ship). Both formalisms compute both kinds, and they compute them with the same group of transformations. So their predictions cannot differ.") }}
+        {{ tx('Writing') }} <MathFormula tex="\cosh\varphi = \gamma" /> {{ tx('and') }} <MathFormula tex="\sinh\varphi = \gamma\beta" /> {{ tx('turns') }}
+        <MathFormula tex="\Lambda" /> {{ tx('into the Lorentz transformation of the space + time description, term by term. Every measurable prediction is either an') }} <strong>{{ tx('invariant') }}</strong> {{ tx('(a proper time, the vanishing interval of light, the sign of') }}
+        <MathFormula tex="s^2" />{{ tx(') or a') }} <strong>{{ tx('component in a stated frame') }}</strong> {{ tx('(the time between the flashes for the ship). Both formalisms compute both kinds, and they compute them with the same group of transformations. So their predictions cannot differ.') }}
       </p>
 
       <h3>{{ tx('“Space + time” is spacetime with an observer chosen') }}</h3>
       <p>
-        {{ tx("Choose an observer with 4-velocity") }} <MathFormula tex="u^\mu" />{{ tx(". Their time is the component along") }} <MathFormula tex="u" />{{ tx(", and their space is everything orthogonal to it:") }}
+        {{ tx('Choose an observer with 4-velocity') }} <MathFormula tex="u^\mu" />{{ tx('. Their time is the component along') }} <MathFormula tex="u" />{{ tx(', and their space is everything orthogonal to it:') }}
       </p>
       <MathFormula display tex="\begin{gathered} c\,t_u = \eta_{\mu\nu}\,u^\mu x^\nu \\ \text{space}_u = \{\, x : \eta_{\mu\nu}\,u^\mu x^\nu = 0 \,\} \end{gathered}" />
       <p>{{ tx('Different observers make different splits. The space + time description is one such split, made explicitly.') }}</p>
@@ -113,8 +122,8 @@ const metricCheck = computed(
       <p>{{ tx('In curved spacetime the ADM formalism splits spacetime into a stack of spatial slices. In the (−, +, +, +) sign convention usual in GR,') }}</p>
       <MathFormula display tex="\begin{aligned} ds^2 = &-N^2\,dt^2 \\ &+ \gamma_{ij}\,(dx^i + N^i dt)(dx^j + N^j dt) \end{aligned}" />
       <p>
-        {{ tx("with the lapse") }} <MathFormula tex="N" /> {{ tx("(how much proper time passes between slices), the shift") }} <MathFormula tex="N^i" />{{ tx(", and the spatial metric") }}
-        <MathFormula tex="\gamma_{ij}" />{{ tx(", which evolves in time. The choice of slicing is again free, and measurable predictions do not depend on it. Module 5 builds on this.") }}
+        {{ tx('with the lapse') }} <MathFormula tex="N" /> {{ tx('(how much proper time passes between slices), the shift') }} <MathFormula tex="N^i" />{{ tx(', and the spatial metric') }}
+        <MathFormula tex="\gamma_{ij}" />{{ tx(', which evolves in time. The choice of slicing is again free, and measurable predictions do not depend on it. Module 5 builds on this.') }}
       </p>
     </template>
   </div>
