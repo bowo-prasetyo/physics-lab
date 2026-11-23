@@ -53,9 +53,33 @@ The active locale is applied at the view boundary. Prediction IDs, option IDs, c
 
 The nine experiment views also use `src/components/LocalizedExperimentGuide.vue` for Indonesian and Japanese explanations of established physics, interpretive questions, and text descriptions of the key visualizations. The four longer learning prompts in each experiment's support panel (key concept, prediction question, suggested activity, and reflection) are localized through `src/i18n/experiment-support.ts`. The English long-form interpretation remains the source-language presentation. These descriptions provide a text alternative to the visual evidence and explain axes, markers, reference frames, and model limits where relevant.
 
-The translated guides are presentation-only. They do not alter experiment state, equations, plotted data, or observation logic. Dynamic prediction hints are now localized at the experiment-view boundary through `src/i18n/experiment-ui.ts`, preserving the original prediction functions and observation logic. Shared line, prediction, clock-rate, scale-factor, position–time, and spacetime visualizations localize axis titles, accessible chart descriptions, table summaries and key data headings. The 3D scene and galaxy field expose localized accessible descriptions and galaxy-selection labels. The experiment views also localize key control-group and navigation labels. This follow-up extends coverage to individual experiment controls: slider labels and hints, common action buttons, recorded-trial and view controls, and disclosure/fieldset labels.
+The translated guides are presentation-only. They do not alter experiment state, equations, plotted data, or observation logic. Dynamic prediction hints are localized at the experiment-view boundary through `src/i18n/experiment-ui.ts`, preserving the original prediction functions and observation logic. Shared line, prediction, clock-rate, scale-factor, position–time, and spacetime visualizations localize axis titles, accessible chart descriptions, table summaries and key data headings. The 3D scene and galaxy field expose localized accessible descriptions and galaxy-selection labels. The experiment views also localize key control-group and navigation labels. This includes individual experiment controls: slider labels and hints, common action buttons, recorded-trial and view controls, and disclosure/fieldset labels.
 
-The UI text helper deliberately preserves numeric values, scientific symbols, units, and unknown text. Any newly introduced dynamic hint or SVG/chart label should be added to the shared vocabulary and covered by a localization test. The experiment-support prose is presentation-only and retains the original English text as the fallback. Its translations are tested for coverage across all nine experiments and both additional locales. Less prominent SVG annotations may still be English; this pass focuses on the longer teaching guidance without changing physics content.
+The UI text helper deliberately preserves numeric values, scientific symbols, units, and unknown text. The experiment-support prose is presentation-only and retains the original English text as the fallback. Less prominent SVG annotations may still be English; localization coverage should be assessed against the current UI rather than assumed to be complete.
+
+### P3 — Localization quality assurance
+
+Run `npm test` and `npm run build` for every localization change. The automated suite checks:
+
+- Message-key parity across all supported locales, non-empty values, and matching interpolation placeholders.
+- Locale selector metadata and browser-language fallback behavior.
+- Stable experiment routes and catalogue structure across languages.
+- Complete teacher-guide lesson structure and experiment-support copy.
+- Prediction question, task, option, and explanation coverage, including preservation of stable prediction and option IDs.
+- Locale-aware number and date formatting.
+
+Automated checks cannot judge translation naturalness, register, terminology consistency, or scientific nuance. Before release, review each locale in the running application and complete the following checklist:
+
+- [ ] Review English, Indonesian, and Japanese on desktop and narrow mobile layouts.
+- [ ] Check that headings, buttons, hints, support panels, teacher resources, chart labels, SVG annotations, and accessible names use the selected language where translations are available.
+- [ ] Check that long Japanese and Indonesian text wraps without clipping, overlap, or horizontal overflow.
+- [ ] Check number/date separators and ensure units, symbols, equations, and significant digits remain meaningful.
+- [ ] Check interpolation in context (counts, progress, module numbers) and confirm no raw placeholder tokens are visible.
+- [ ] Check language switching, reload persistence, browser-language detection, and English fallback.
+- [ ] Have a fluent reviewer with physics knowledge check terminology, assumptions, model limits, and whether translations preserve the source meaning.
+- [ ] Re-run the prediction workflow in each locale and confirm that only presentation changes: IDs, answers, observations, and physics results remain identical.
+
+Record any remaining English text as a known coverage gap rather than silently treating it as translated. Translation review is a human sign-off; passing automated tests does not certify linguistic or scientific accuracy.
 
 ## Translation quality
 
