@@ -220,7 +220,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
                 :disabled="locked"
                 @click="clock === 'A' ? (altitudeA = p.altitude) : (altitudeB = p.altitude)"
               >
-                {{ p.label }}
+                {{ tx(p.label) }}
               </button>
             </div>
           </div>
