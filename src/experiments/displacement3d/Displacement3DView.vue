@@ -122,7 +122,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
       <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
       <div class="lab">
         <div class="lab-main card">
-          <div class="views" role="group" aria-label="Camera">
+          <div class="views" role="group" :aria-label="localizeExperimentText('Camera', locale)">
             <span class="muted small">View</span>
             <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">
               {{ v === '3d' ? '3D' : v === 'top' ? 'From above' : v === 'front' ? 'From the front' : 'From the side' }}
@@ -247,7 +247,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
     </details>
 
-    <nav class="next card" aria-label="Next steps">
+    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p><strong>Next:</strong> Experiment A adds time to position, and Experiment E compares space and time with spacetime.</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>
