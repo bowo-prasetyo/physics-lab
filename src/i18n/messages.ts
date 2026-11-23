@@ -83,6 +83,10 @@ export const messages = {
     'app.support.checklist': 'Investigation checklist',
     'app.support.complete': '{done} of {total} complete · {percent}%',
     'app.support.progressLabel': 'Learning checklist: {done} of {total} steps complete',
+    'app.support.check1': 'I made a prediction before revealing the explanation',
+    'app.support.check2': 'I tested the idea by changing a meaningful setting',
+    'app.support.check3': 'I can explain the result using evidence from the experiment',
+    'app.support.check4': 'I can name an assumption or limitation of the model',
   },
   id: {
     'app.brand.homeLabel': 'Beranda Physica',
@@ -166,6 +170,10 @@ export const messages = {
     'app.support.checklist': 'Daftar periksa penyelidikan',
     'app.support.complete': '{done} dari {total} selesai · {percent}%',
     'app.support.progressLabel': 'Daftar belajar: {done} dari {total} langkah selesai',
+    'app.support.check1': 'Saya membuat prediksi sebelum melihat penjelasan',
+    'app.support.check2': 'Saya menguji gagasan dengan mengubah pengaturan yang bermakna',
+    'app.support.check3': 'Saya dapat menjelaskan hasil menggunakan bukti eksperimen',
+    'app.support.check4': 'Saya dapat menyebutkan asumsi atau keterbatasan model',
   },
   ja: {
     'app.brand.homeLabel': 'Physica ホーム',
@@ -249,6 +257,10 @@ export const messages = {
     'app.support.checklist': '探究チェックリスト',
     'app.support.complete': '{total}項目中{done}項目完了 · {percent}%',
     'app.support.progressLabel': '学習チェックリスト: {total}項目中{done}項目完了',
+    'app.support.check1': '説明を見る前に予測を立てた',
+    'app.support.check2': '意味のある設定を変更して考えを検証した',
+    'app.support.check3': '実験の証拠を使って結果を説明できる',
+    'app.support.check4': 'モデルの仮定または限界を挙げられる',
   },
 } as const
 
