@@ -23,18 +23,17 @@ export const locale = ref<Locale>(readInitialLocale())
 
 watch(locale, (nextLocale) => {
   if (typeof document !== 'undefined') document.documentElement.lang = nextLocale
-
-  if (typeof window !== 'undefined') {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, nextLocale)
-    } catch {
-      // The selected language remains active for this session.
-    }
-  }
 }, { immediate: true })
 
 export function setLocale(nextLocale: Locale): void {
   locale.value = nextLocale
+  if (typeof window === 'undefined') return
+
+  try {
+    window.localStorage.setItem(STORAGE_KEY, nextLocale)
+  } catch {
+    // The selected language remains active for this session.
+  }
 }
 
 export function t(key: MessageKey): string {
