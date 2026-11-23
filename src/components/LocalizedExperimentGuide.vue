@@ -16,6 +16,7 @@ type ExperimentId =
 defineProps<{ experimentId: ExperimentId }>()
 
 const { locale } = useLocale()
+const props = defineProps<{ experimentId: ExperimentId }>()
 
 type GuideCopy = {
   establishedTitle: string
@@ -375,7 +376,7 @@ const copy: Record<ExperimentId, Record<'id' | 'ja', GuideCopy>> = {
   }
 }
 
-const guide = computed(() => locale.value === 'en' ? null : copy[propsExperiment.value][locale.value])
+const guide = computed(() => locale.value === 'en' ? null : copy[props.experimentId][locale.value])
 </script>
 
 <template>
