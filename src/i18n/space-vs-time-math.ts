@@ -2,6 +2,7 @@ import type { Locale } from './locales'
 
 /** Explanatory copy used by the Space vs Time mathematics panel. */
 const translations: Record<string, readonly [string, string]> = {
+  'and': ['dan', 'と'],
   'Every run you did follows one simple rule:': ['Setiap percobaan yang Anda lakukan mengikuti satu aturan sederhana:', 'これまでの実験は、すべて次の簡単な規則に従います。'],
   'In words:': ['Dengan kata lain:', '言葉で表すと、'],
   'where the object is now': ['posisi benda sekarang', '物体の現在位置'],
