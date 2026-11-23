@@ -142,12 +142,14 @@ function formatClock(seconds: number): string {
           </div>
           <div class="time-scale" role="group" :aria-label="localizeExperimentText('Playback speed', locale)">
             <span class="muted small">Playback</span>
-            <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">{{ localizeExperimentText('{{ s === 1 ? \'real time\' : `×${s}` }}', locale) ?? '{{ s === 1 ? \'real time\' : `×${s}` }}' }}</button>
+            <button v-for="s in TIME_SCALES" :key="s" type="button" class="chip" :class="{ active: timeScale === s }" @click="timeScale = s">
+              {{ s === 1 ? 'real time' : `×${s}` }}
+            </button>
           </div>
 
           <div>
             <ParameterSlider v-model="length" :label="localizeExperimentText('Length', locale) ?? 'Length'" symbol="L" unit="m" v-bind="LENGTH_RANGE" :digits="2" :signed="false" />
-            <button class="btn btn-small" type="button" @click="useSecondsPendulum">{{ localizeExperimentText('Seconds pendulum on {{ planet.name.split(" ")[0] }} ({{ fmt(secondsLength, 3) }} m)', locale) ?? 'Seconds pendulum on {{ planet.name.split(" ")[0] }} ({{ fmt(secondsLength, 3) }} m)' }}</button>
+            <button class="btn btn-small" type="button" @click="useSecondsPendulum">Seconds pendulum on {{ planet.name.split(" ")[0] }} ({{ fmt(secondsLength, 3) }} m)</button>
           </div>
           <ParameterSlider v-model="amplitude" :label="localizeExperimentText('Release angle', locale) ?? 'Release angle'" symbol="\theta_0" unit="°" v-bind="AMPLITUDE_RANGE" :digits="0" :signed="false" />
           <ParameterSlider v-model="mass" :label="localizeExperimentText('Bob mass', locale) ?? 'Bob mass'" symbol="m" unit="kg" v-bind="MASS_RANGE" :digits="1" :signed="false" />
