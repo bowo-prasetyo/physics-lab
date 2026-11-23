@@ -134,6 +134,10 @@ const copy: Record<string, readonly [string, string] | string> = {
   "Because": ["Karena",""],
   "swings": ["berayun",""],
   "times more slowly.": ["kali lebih lambat.","倍ゆっくり振動します。"],
+  "the same": ["bandul yang sama","同じ振り子"],
+  ". Because": ["。 Karena","。このため"],
+  ", found by searching the simulated": ["、yang ditemukan dengan menelusuri","。シミュレーションの射程を探索して求めた"],
+  "the same pendulum on the Moon (": ["bandul yang sama di Bulan (","月で同じ振り子を使うと（"],
 }
 
 export function localizeExperimentMathText(value: string, locale: Locale): string {
