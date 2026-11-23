@@ -32,6 +32,13 @@ const text: Record<string, readonly [string, string]> = {
   "Not moving": ["Tidak bergerak","静止"],
   "Before launch": ["Sebelum peluncuran","発射前"],
   "Dropped ball": ["Bola yang dijatuhkan","落下させたボール"],
+  "Thrown ball": ["Bola yang dilempar","投射されたボール"],
+  "Vertical speed v_y": ["Kecepatan vertikal v_y","鉛直速度 v_y"],
+  "Sideways speed vₓ": ["Kecepatan horizontal vₓ","水平速度 vₓ"],
+  "Sideways speed v′ₓ (seen from the train)": ["Kecepatan horizontal relatif terhadap kereta v′ₓ","列車から見た水平速度 v′ₓ"],
+  "Distance x": ["Jarak x","距離 x"],
+  "Matches the measurement": ["Sesuai dengan hasil pengukuran","測定結果と一致"],
+
   "Launched ball": ["Bola yang diluncurkan","投射したボール"],
   "Vertical velocity": ["Kecepatan vertikal","鉛直速度"],
   "Horizontal velocity": ["Kecepatan horizontal","水平速度"],
@@ -585,6 +592,7 @@ const text: Record<string, readonly [string, string]> = {
 }
 
 const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: Exclude<Locale, 'en'>) => string }> = [
+  { test: /^Off by ([\\d.]+) (.+?)(?: \\(([^)]+)\\))?$/, render: (m,l) => l === 'id' ? 'Selisih ' + m[1] + ' ' + m[2] + (m[3] ? ' (' + m[3] + ')' : '') + ' dari hasil pengukuran.' : '測定結果との差は ' + m[1] + ' ' + m[2] + (m[3] ? '（' + m[3] + '）' : '') + ' です。' },
   { test: /^At low speeds the difference is hard to see\. Set the ship speed to at least ([\d.]+)c and run again\.$/, render: (m,l) => l === 'id' ? `Pada kecepatan rendah perbedaannya sulit terlihat. Atur kecepatan kapal minimal ${m[1]}c dan jalankan kembali.` : `低速では差が見えにくくなります。宇宙船の速度を少なくとも ${m[1]}c に設定して再実行してください。` },
   { test: /^Set the ship speed to at least ([\d.]+)c and make the measurement again\.$/, render: (m,l) => l === 'id' ? `Atur kecepatan kapal minimal ${m[1]}c dan lakukan pengukuran kembali.` : `宇宙船の速度を少なくとも ${m[1]}c に設定し、もう一度測定してください。` },
   { test: /^That speed is too high to be “everyday”\. Lower it to ([\d.]+)c or less \(but above 0\), e\.g\. 0\.01c\.$/, render: (m,l) => l === 'id' ? `Kecepatan itu terlalu tinggi untuk disebut “sehari-hari”. Turunkan menjadi ${m[1]}c atau kurang (tetapi di atas 0), misalnya 0,01c.` : `その速度は「日常的」と呼ぶには高すぎます。${m[1]}c 以下（ただし 0 より大きく）、たとえば 0.01c に下げてください。` },
