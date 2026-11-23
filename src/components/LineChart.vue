@@ -65,7 +65,7 @@ const paths = computed(() =>
 
 <template>
   <figure class="chart">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(`${yLabel} against ${xLabel}: ${series.map((s) => s.label).join(', ')}.`, locale)">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(`${yLabel} against ${xLabel}: ${series.map((s) => localizeExperimentText(s.label, locale) ?? s.label).join(', ')}.`, locale)">
       <g class="grid">
         <line v-for="x in xTicks" :key="`gx${x}`" :x1="sx(x)" :x2="sx(x)" :y1="M.top" :y2="M.top + plotH" />
         <line v-for="y in yTicks" :key="`gy${y}`" :x1="M.left" :x2="M.left + plotW" :y1="sy(y)" :y2="sy(y)" />
