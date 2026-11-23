@@ -82,7 +82,7 @@ function runExperiment() {
           <div class="cart-scene" role="img" :aria-label="`A cart of mass ${mass} kilograms pushed to the right by a net force of ${force} newtons`">
             <div class="force-arrow"><span>{{ force }} N net force</span><span class="arrow">⟶</span></div>
             <div class="cart"><span>{{ mass }} kg</span><i></i><i></i></div>
-            <p class="muted small">Idealised horizontal track · the cart starts from rest</p>
+            <p class="muted small">{{ localizeExperimentText('Idealised horizontal track · the cart starts from rest', locale) }}</p>
           </div>
           <div class="readout-grid">
             <div><span class="muted">Acceleration</span><strong class="num">{{ fmt(acceleration) }} m/s²</strong></div>
@@ -90,7 +90,7 @@ function runExperiment() {
             <div><span class="muted">Displacement after {{ time }} s</span><strong class="num">{{ fmt(displacement) }} m</strong></div>
           </div>
           <h3>Recorded trials</h3>
-          <p v-if="runs.length === 0" class="muted">Run at least two carefully chosen cases to reveal a relationship.</p>
+          <p v-if="runs.length === 0" class="muted">{{ localizeExperimentText('Run at least two carefully chosen cases to reveal a relationship.', locale) }}</p>
           <div v-else class="table-scroll">
             <table>
               <thead><tr><th>Trial</th><th>Net force</th><th>Mass</th><th>Acceleration</th></tr></thead>
@@ -106,7 +106,7 @@ function runExperiment() {
           <ParameterSlider v-model="mass" :label="localizeExperimentText('Cart mass', locale) ?? 'Cart mass'" symbol="m" unit="kg" v-bind="MASS" :digits="0" :signed="false" />
           <ParameterSlider v-model="time" :label="localizeExperimentText('Elapsed time', locale) ?? 'Elapsed time'" symbol="t" unit="s" v-bind="TIME" :digits="0" :signed="false" />
           <button class="btn btn-primary" type="button" @click="runExperiment">{{ localizeExperimentText('Run this trial', locale) ?? 'Run this trial' }}</button>
-          <p class="small muted">For a fair comparison, change one variable at a time and keep the other fixed.</p>
+          <p class="small muted">{{ localizeExperimentText('For a fair comparison, change one variable at a time and keep the other fixed.', locale) }}</p>
         </aside>
       </div>
     </section>
@@ -115,32 +115,32 @@ function runExperiment() {
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section class="card prose" aria-labelledby="maths-title">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
-      <p>Newton’s second law relates the net force on an object to its acceleration:</p>
+      <p>{{ localizeExperimentText('Newton’s second law relates the net force on an object to its acceleration:', locale) }}</p>
       <MathFormula tex="\sum F = ma" :display="true" />
-      <p>For this one-dimensional model, with constant mass and constant net force:</p>
+      <p>{{ localizeExperimentText('For this one-dimensional model, with constant mass and constant net force:', locale) }}</p>
       <MathFormula tex="a = \frac{F_{net}}{m}, \qquad v = at, \qquad \Delta x = \frac{1}{2}at^2" :display="true" />
-      <p v-if="atLeast(level, 'intermediate')">The proportionalities are testable: at fixed mass, <MathFormula tex="a \propto F_{net}" />; at fixed net force, <MathFormula tex="a \propto 1/m" />. The signed form also captures a force acting in the negative direction.</p>
-      <p v-if="atLeast(level, 'advanced')">In vector form, <MathFormula tex="\sum \vec{F} = m\vec{a}" />. Acceleration is determined by the vector sum of all external forces, not by a single force considered in isolation.</p>
+      <p v-if="atLeast(level, 'intermediate')">{{ localizeExperimentText('The proportionalities are testable: at fixed mass,', locale) }} <MathFormula tex="a \propto F_{net}" />; {{ localizeExperimentText('at fixed net force,', locale) }} <MathFormula tex="a \propto 1/m" />. {{ localizeExperimentText('The signed form also captures a force acting in the negative direction.', locale) }}</p>
+      <p v-if="atLeast(level, 'advanced')">{{ localizeExperimentText('In vector form,', locale) }} <MathFormula tex="\sum \vec{F} = m\vec{a}" />. {{ localizeExperimentText('Acceleration is determined by the vector sum of all external forces, not by a single force considered in isolation.', locale) }}</p>
     </section>
     </details>
 
-    <details v-if="locale === 'en'" class="lesson-disclosure">
+    <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section class="card prose">
-      <h2><span class="step-no">4</span> What does it tell us?</h2>
-      <h3>Established physics</h3>
+      <h2><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
+      <h3>{{ localizeExperimentText('Established physics', locale) }}</h3>
       <ul>
-        <li>Acceleration is caused by the net force, not necessarily by the largest individual force.</li>
-        <li>For the same net force, a more massive object accelerates less.</li>
-        <li>For the same mass, a larger net force produces a proportionally larger acceleration.</li>
+        <li>{{ localizeExperimentText('Acceleration is caused by the net force, not necessarily by the largest individual force.', locale) }}</li>
+        <li>{{ localizeExperimentText('For the same net force, a more massive object accelerates less.', locale) }}</li>
+        <li>{{ localizeExperimentText('For the same mass, a larger net force produces a proportionally larger acceleration.', locale) }}</li>
       </ul>
-      <h3>Assumptions and limits</h3>
-      <p>This is a one-dimensional Newtonian model in an inertial reference frame. The mass is constant, the net force is constant, and friction is omitted. The selected force represents the sum of all forces along the track; it is not simply the applied push if other forces oppose it.</p>
+      <h3>{{ localizeExperimentText('Assumptions and limits', locale) }}</h3>
+      <p>{{ localizeExperimentText('This is a one-dimensional Newtonian model in an inertial reference frame. The mass is constant, the net force is constant, and friction is omitted. The selected force represents the sum of all forces along the track; it is not simply the applied push if other forces oppose it.', locale) }}</p>
     </section>
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>Continue:</strong> apply force and acceleration reasoning to a projectile, where gravity changes the vertical velocity.</p>
+      <p><strong>{{ localizeExperimentText('Continue:', locale) }}</strong> {{ localizeExperimentText('apply force and acceleration reasoning to a projectile, where gravity changes the vertical velocity.', locale) }}</p>
       <span class="nav-links"><RouterLink to="/mechanics/projectile">Projectile launcher</RouterLink><RouterLink to="/teachers">Teacher guide</RouterLink><RouterLink to="/">All modules</RouterLink></span>
     </nav>
   </article>
