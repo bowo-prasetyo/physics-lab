@@ -90,7 +90,7 @@ const description = computed(
       <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 18" class="tick">{{ formatLength(x) }}</text>
       <text v-for="y in yTicks" :key="`ly${y}`" :x="M.left - 8" :y="M.top + (1 - y / yMax) * plotH + 4" class="tick y">{{ fmtY(y) }}</text>
       <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">
-        height above the {{ body.hasSurface ? 'surface' : 'horizon' }} (logarithmic scale{{ body.hasSurface ? '; left edge = on the surface' : '' }})
+        {{ localizeExperimentText(body.hasSurface ? 'height above the surface' : 'height above the horizon', locale) }} ({{ localizeExperimentText('logarithmic scale', locale) }}{{ body.hasSurface ? `; ${localizeExperimentText('left edge = on the surface', locale)}` : '' }})
       </text>
       <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText(`clock slowed by (${unit.name})`, locale) }}</text>
 
@@ -110,7 +110,7 @@ const description = computed(
         <tbody><tr><th scope="row">A</th><td>{{ formatLength(altitudeA) }}</td><td>{{ (deficitAt(altitudeA) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr>
           <tr><th scope="row">B</th><td>{{ formatLength(altitudeB) }}</td><td>{{ (deficitAt(altitudeB) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr></tbody>
       </table>
-      <p class="muted small">A positive deficit means the clock runs slower than a clock infinitely far from this body, under the static Schwarzschild model.</p>
+      <p class="muted small">{{ localizeExperimentText('A positive deficit means the clock runs slower than a clock infinitely far from this body, under the static Schwarzschild model.', locale) }}</p>
     </details>
   </figure>
 </template>
