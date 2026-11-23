@@ -24,6 +24,7 @@ describe('Two Perspectives mathematics localization', () => {
 
   it('translates key relativity and ADM terminology', () => {
     expect(localizeTwoPerspectivesMathText('Simultaneity', 'id')).toBe('Keserentakan')
+    expect(localizeTwoPerspectivesMathText('and', 'ja')).toBe('と')
     expect(localizeTwoPerspectivesMathText('Spacetime', 'ja')).toBe('時空')
     expect(localizeTwoPerspectivesMathText('Looking ahead: the 3 + 1 split in general relativity', 'id')).toContain('relativitas umum')
   })
