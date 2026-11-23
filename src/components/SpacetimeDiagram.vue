@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+const { locale } = useLocale()
 import { computed, onMounted, ref, useId } from 'vue'
 import { properTimeTicks, simultaneousTimeAt, type Event1D } from '@/physics'
 
@@ -102,7 +105,7 @@ const description = computed(() => {
   <figure class="diagram">
     <!-- On narrow screens the diagram keeps a readable size and scrolls sideways. -->
     <div ref="scroller" class="scroll" tabindex="0" aria-label="Spacetime diagram (scrolls sideways on small screens)">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
       <defs>
         <clipPath :id="`${id}-plot`">
           <rect :x="M.left" :y="M.top" :width="plotW" :height="plotH" />
