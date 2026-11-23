@@ -166,8 +166,8 @@ function onKey(event: KeyboardEvent, id: number) {
         <text :x="20" :y="H - 30">{{ localizeExperimentText('1 billion light-years', locale) }}</text>
       </g>
       <text v-if="stageLines" :x="CX" :y="34" class="stage-text">
-        <tspan :x="CX" dy="0">{{ stageLines[0] }}</tspan>
-        <tspan :x="CX" dy="22" class="second">{{ stageLines[1] }}</tspan>
+        <tspan :x="CX" dy="0">{{ localizeExperimentText(stageLines[0], locale) }}</tspan>
+        <tspan :x="CX" dy="22" class="second">{{ localizeExperimentText(stageLines[1], locale) }}</tspan>
       </text>
     </svg>
   </figure>
