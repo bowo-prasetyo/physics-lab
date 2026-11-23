@@ -110,7 +110,7 @@ const description = computed(
         <tbody><tr><th scope="row">A</th><td>{{ formatLength(altitudeA) }}</td><td>{{ (deficitAt(altitudeA) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr>
           <tr><th scope="row">B</th><td>{{ formatLength(altitudeB) }}</td><td>{{ (deficitAt(altitudeB) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr></tbody>
       </table>
-      <p class="muted small">{{ localizeExperimentText('A positive deficit means the clock runs slower than a clock infinitely far from this body, under the static Schwarzschild model.', locale) }}</p>
+      <p class="muted small">{{ localizeExperimentText('{{ localizeExperimentText('A positive deficit means the clock runs slower than a clock infinitely far from this body, under the static Schwarzschild model.', locale) }}', locale) }}</p>
     </details>
   </figure>
 </template>
