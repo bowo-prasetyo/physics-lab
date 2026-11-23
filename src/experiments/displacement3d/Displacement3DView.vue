@@ -123,7 +123,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
           <div class="views" role="group" :aria-label="localizeExperimentText('Camera', locale)">
             <span class="muted small">{{ tx('View') }}</span>
             <button v-for="v in (['3d', 'top', 'front', 'side'] as const)" :key="v" type="button" class="chip" :class="{ active: view === v }" @click="setView(v)">
-              {{ v === '3d' ? '3D' : v === 'top' ? 'From above' : v === 'front' ? 'From the front' : 'From the side' }}
+              {{ v === '3d' ? '3D' : v === 'top' ? tx('From above') : v === 'front' ? tx('From the front') : tx('From the side') }}
             </button>
           </div>
           <Scene3D
@@ -202,7 +202,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <Displacement3DMath
         :level="level"
         :start="start"
