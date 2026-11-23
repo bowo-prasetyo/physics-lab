@@ -52,7 +52,7 @@ const translations: Record<string, readonly [string, string]> = {
   "per day, net": ["per hari, total", "1 日あたり、合計では"],
   "A clock at rest has": ["Jam yang diam memiliki", "静止した時計では"],
   "so": ["sehingga", "したがって"],
-  "For a circular orbit, the orbital motion adds to this:": ["Untuk orbit melingkar, "円軌道では、軌道運動による効果が加わります："],
+  "For a circular orbit, the orbital motion adds to this:": ["Untuk orbit melingkar, gerak orbit menambahkan kontribusi berikut:", "円軌道では、軌道運動による効果が加わります："],
   "In the ADM 3 + 1 split from Experiment E,": ["Dalam pemisahan ADM 3 + 1 pada Eksperimen E,", "実験 E の ADM 3 + 1 分解では、"],
   "Here the lapse is": ["Di sini fungsi lapse adalah", "ここでラプス関数は"],
   ": the rate of a static clock. It falls to zero at the horizon. Experiment E’s formula is now something you can measure.": [": laju jam yang diam. Nilainya turun hingga nol di horizon. Rumus dari Eksperimen E kini dapat Anda ukur.", "：静止時計の進み方を表します。事象の地平面でゼロになります。実験 E の式を実際に測定できるようになりました。"],
