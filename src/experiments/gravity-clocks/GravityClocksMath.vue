@@ -41,8 +41,6 @@ function toAscii(sup: string): string {
 }
 
 const rs = computed(() => schwarzschildRadius(props.body.mass))
-const rA = computed(() => props.body.radius + props.altitudeA)
-const rB = computed(() => props.body.radius + props.altitudeB)
 
 const workedExample = computed(
   () =>
