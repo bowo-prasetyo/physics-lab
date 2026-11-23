@@ -281,9 +281,9 @@ const dropDifference = computed(() => {
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
       <p>{{ localizeExperimentText('See also: Experiment A for motion in one dimension, and Experiment B for what happens near the speed of light.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>
-        <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>
-        <RouterLink to="/">All modules</RouterLink>
+        <RouterLink to="/space/space-vs-time">{{ tx("Experiment A") }}</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx("Experiment B") }}</RouterLink>
+        <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>
   </article>
