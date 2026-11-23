@@ -23,6 +23,7 @@ import { localizePredictions } from '@/i18n/experiment-content'
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
+const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 
 const isFrame = (value: unknown): value is Frame => value === 'earth' || value === 'ship'
 
@@ -126,8 +127,8 @@ const signed = (value: number, digits = 2) => {
     <ExperimentSupport experiment-id="moving-clocks" :module-number="4" focus="Compare elapsed proper times along worldlines and distinguish them from coordinate-time descriptions." prompt="If two clocks separate and later reunite, must they record the same elapsed time?" action="Change the ship speed and observer frame, then compare the worldlines and simultaneity slices for the same events." reflect="Which events are shared by both observers, and which parts of the description depend on the chosen frame?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
-      <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard
           v-for="(p, i) in predictions"
@@ -141,18 +142,18 @@ const signed = (value: number, digits = 2) => {
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> Experiment</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <fieldset class="frame-switch" :disabled="status === 'running'">
             <legend>{{ localizeExperimentText('Seen from', locale) ?? 'Seen from' }}</legend>
             <label :class="{ active: frame === 'earth' }">
               <input v-model="frame" type="radio" value="earth" class="sr-only" />
-              <span class="dot earth" /> the Earth
+              <span class="dot earth" /> {{ tx('the Earth') }}
             </label>
             <label :class="{ active: frame === 'ship' }">
               <input v-model="frame" type="radio" value="ship" class="sr-only" />
-              <span class="dot ship" /> the ship
+              <span class="dot ship" /> {{ tx('the ship') }}
             </label>
           </fieldset>
           <SpacetimeDiagram :duration="DURATION" :t="t" :worldlines="worldlines" :simultaneity="simultaneity" :frame-name="frameName" />
@@ -161,12 +162,12 @@ const signed = (value: number, digits = 2) => {
         <div class="lab-side card">
           <div class="clocks">
             <div class="clock-card earth">
-              <span class="clock-name">Earth clock</span>
+              <span class="clock-name">{{ tx('Earth clock') }}</span>
               <span class="clock-value num">{{ view.earth.tau.toFixed(2) }}<small> s</small></span>
               <span class="clock-note">{{ frame === 'earth' ? 'at rest in this frame' : 'moving in this frame' }}</span>
             </div>
             <div class="clock-card ship">
-              <span class="clock-name">Ship clock</span>
+              <span class="clock-name">{{ tx('Ship clock') }}</span>
               <span class="clock-value num">{{ view.ship.tau.toFixed(2) }}<small> s</small></span>
               <span class="clock-note">{{ frame === 'ship' ? 'at rest in this frame' : 'moving in this frame' }}</span>
             </div>
@@ -191,16 +192,16 @@ const signed = (value: number, digits = 2) => {
           />
 
           <dl class="readouts">
-            <div><dt>Lorentz factor <MathFormula tex="\gamma" /></dt><dd class="num">{{ lorentz.toFixed(3) }}</dd></div>
-            <div><dt>Moving clock ÷ resting clock</dt><dd class="num">{{ (1 / lorentz).toFixed(3) }}</dd></div>
+            <div><dt>{{ tx('Lorentz factor') }} <MathFormula tex="\gamma" /></dt><dd class="num">{{ lorentz.toFixed(3) }}</dd></div>
+            <div><dt>{{ tx('Moving clock ÷ resting clock') }}</dt><dd class="num">{{ (1 / lorentz).toFixed(3) }}</dd></div>
             <div v-if="simultaneity" class="other-now">
               <dt>The {{ other }}’s “now” meets the {{ home }} clock at</dt>
               <dd class="num">{{ view.otherNowMeetsHomeAt.toFixed(2) }} s</dd>
             </div>
             <template v-if="advanced">
-              <div><dt>Ship event <MathFormula tex="(t, x)" /></dt><dd class="num">({{ view.ship.t.toFixed(2) }}, {{ signed(view.ship.x) }})</dd></div>
-              <div><dt>Interval <MathFormula tex="s^2 = t^2 - x^2" /></dt><dd class="num">{{ shipInterval.toFixed(2) }} s²</dd></div>
-              <div><dt>Ship clock squared <MathFormula tex="\tau^2" /></dt><dd class="num">{{ (view.ship.tau ** 2).toFixed(2) }} s²</dd></div>
+              <div><dt>{{ tx('Ship event') }} <MathFormula tex="(t, x)" /></dt><dd class="num">({{ view.ship.t.toFixed(2) }}, {{ signed(view.ship.x) }})</dd></div>
+              <div><dt>{{ tx('Interval') }} <MathFormula tex="s^2 = t^2 - x^2" /></dt><dd class="num">{{ shipInterval.toFixed(2) }} s²</dd></div>
+              <div><dt>{{ tx('Ship clock squared') }} <MathFormula tex="\tau^2" /></dt><dd class="num">{{ (view.ship.tau ** 2).toFixed(2) }} s²</dd></div>
             </template>
           </dl>
           <p class="units muted">Units: c = 1, so distances are in light-seconds (ls).</p>
