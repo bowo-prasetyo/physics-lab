@@ -147,7 +147,7 @@ function formatClock(seconds: number): string {
 
           <div>
             <ParameterSlider v-model="length" :label="localizeExperimentText('Length', locale) ?? 'Length'" symbol="L" unit="m" v-bind="LENGTH_RANGE" :digits="2" :signed="false" />
-            <button class="btn btn-small" type="button" @click="useSecondsPendulum">{{ tx('Seconds pendulum on') }} {{ tx(planet.name.split(" ")[0]) }} ({{ fmt(secondsLength, 3) }} m)</button>
+            <button class="btn btn-small" type="button" @click="useSecondsPendulum">{{ tx('Seconds pendulum on') }} {{ tx(planet.name.split(" ")[0] ?? planet.name) }} ({{ fmt(secondsLength, 3) }} m)</button>
           </div>
           <ParameterSlider v-model="amplitude" :label="localizeExperimentText('Release angle', locale) ?? 'Release angle'" symbol="\theta_0" unit="°" v-bind="AMPLITUDE_RANGE" :digits="0" :signed="false" />
           <ParameterSlider v-model="mass" :label="localizeExperimentText('Bob mass', locale) ?? 'Bob mass'" symbol="m" unit="kg" v-bind="MASS_RANGE" :digits="1" :signed="false" />
