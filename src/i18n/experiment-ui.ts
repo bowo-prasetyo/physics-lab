@@ -5,6 +5,10 @@ import type { Locale } from './locales'
  * Physics values, units, IDs and calculations are deliberately not transformed.
  */
 const text: Record<string, readonly [string, string]> = {
+  "Phase portrait: one closed loop per swing. The loop does not spiral, because energy is conserved.": ["Potret fase: satu lintasan tertutup untuk setiap ayunan. Lintasan tidak berbentuk spiral karena energi kekal.","位相図：1 回の振動につき 1 つの閉じた軌道を描きます。エネルギーが保存されるため、軌道はらせん状になりません。"],
+  "angular velocity ω": ["kecepatan sudut ω","角速度 ω"],
+  "angle θ": ["sudut θ","角度 θ"],
+  "Phase portrait: angle across, angular velocity up. Each swing traces the same closed loop.": ["Potret fase: sudut pada sumbu horizontal dan kecepatan sudut pada sumbu vertikal. Setiap ayunan menelusuri lintasan tertutup yang sama.","位相図：横軸は角度、縦軸は角速度です。振動するたびに同じ閉じた軌道をたどります。"],
   'light-seconds': ['detik cahaya', '光秒'],
   'Ship': ['Kapal', '宇宙船'],
   "billion years": ["miliar tahun","10 億年"],
