@@ -102,7 +102,7 @@ const graphTime = computed(() => Math.max(end.value?.t ?? 1, dropped.value?.at(-
 
 const heightSeries = computed<LineSeries[]>(() => {
   const list: LineSeries[] = []
-  if (states.value) list.push({ id: 'y', label: 'Thrown ball', colour: 'var(--accent)', points: upTo(states.value).map((s) => ({ x: s.t, y: s.y })) })
+  if (states.value) list.push({ id: 'y', label: tx('Thrown ball'), colour: 'var(--accent)', points: upTo(states.value).map((s) => ({ x: s.t, y: s.y })) })
   if (dropped.value) list.push({ id: 'drop', label: 'Dropped ball', colour: 'var(--observer)', points: upTo(dropped.value).map((s) => ({ x: s.t, y: s.y })) })
   return list
 })
@@ -110,8 +110,8 @@ const velocitySeries = computed<LineSeries[]>(() => {
   if (!states.value) return []
   const pts = upTo(states.value)
   return [
-    { id: 'vx', label: frame.value === 'train' ? 'Sideways speed v′ₓ (seen from the train)' : 'Sideways speed vₓ', colour: 'var(--success)', points: pts.map((s) => ({ x: s.t, y: s.vx - frameVelocity.value })) },
-    { id: 'vy', label: 'Vertical speed v_y', colour: 'var(--warn)', points: pts.map((s) => ({ x: s.t, y: s.vy })) },
+    { id: 'vx', label: tx(frame.value === 'train' ? 'Sideways speed v′ₓ (seen from the train)' : 'Sideways speed vₓ'), colour: 'var(--success)', points: pts.map((s) => ({ x: s.t, y: s.vx - frameVelocity.value })) },
+    { id: 'vy', label: tx('Vertical speed v_y'), colour: 'var(--warn)', points: pts.map((s) => ({ x: s.t, y: s.vy })) },
   ]
 })
 
