@@ -73,6 +73,21 @@ const text: Record<string, readonly [string, string]> = {
   'This model': ['Model ini', 'このモデル'],
   'Our universe, for comparison': ['Alam semesta kita, sebagai pembanding', '比較用の私たちの宇宙'],
   'today': ['hari ini', '現在'],
+  'Spacetime diagram (scrolls sideways on small screens)': ['Diagram ruang-waktu (dapat digulir ke samping pada layar kecil)', '時空図（小さな画面では横スクロールできます）'],
+  'Read the current spacetime measurements as a table': ['Baca pengukuran ruang-waktu saat ini sebagai tabel', '現在の時空測定値を表で読む'],
+  'Read the position–time values as a table': ['Baca nilai posisi–waktu sebagai tabel', '位置–時間の値を表で読む'],
+  'Run / observer': ['Percobaan / pengamat', '試行／観測者'],
+  'Current run': ['Percobaan saat ini', '現在の試行'],
+  'Moving observer': ['Pengamat bergerak', '移動する観測者'],
+  'Earlier run': ['Percobaan sebelumnya', '以前の試行'],
+  'Time': ['Waktu', '時間'],
+  'Position': ['Posisi', '位置'],
+  'Value / y': ['Nilai / y', '値 / y'],
+  'Time / x': ['Waktu / x', '時間 / x'],
+  'clock slowed by (': ['perlambatan jam (', '時計の遅れ（'],
+  'parts per million': ['bagian per juta', '百万分率'],
+  'parts per billion': ['bagian per miliar', '十億分率'],
+  'parts per trillion': ['bagian per triliun', '兆分率'],
   'starts speeding up': ['mulai bertambah cepat', '加速し始める'],
   'home': ['rumah', '基準銀河'],
   '1 billion light-years': ['1 miliar tahun cahaya', '10 億光年'],
@@ -163,7 +178,12 @@ export function localizeExperimentText(value: string | null | undefined, locale:
     ['at the top speed', 'pada kecepatan tertinggi', '最高速度での値'],
     ['Clock A is at', 'Jam A berada pada', '時計 A は'],
     ['and clock B at', 'dan jam B pada', '時計 B は'],
-    ['the lower clock is slowed more.', 'jam yang lebih rendah berjalan lebih lambat.', '低い位置の時計ほど遅く進みます。']
+    ['the lower clock is slowed more.', 'jam yang lebih rendah berjalan lebih lambat.', '低い位置の時計ほど遅く進みます。'],
+    ['against', 'terhadap', 'に対する'],
+    ['Scale factor a', 'Faktor skala a', 'スケール因子 a'],
+    ['Spacetime diagram', 'Diagram ruang-waktu', '時空図'],
+    ['position x (light-seconds)', 'posisi x (detik cahaya)', '位置 x（光秒）'],
+    ['time t (s)', 'waktu t (s)', '時間 t (s)']
   ]
   for (const [en, id, ja] of phrases) translated = translated.replaceAll(en, locale === 'id' ? id : ja)
   return translated
