@@ -102,8 +102,7 @@ const kValue = computed(() => props.params.k)
         tex="\begin{aligned} \mathbf y_{n+1} &= \mathbf y_n + \tfrac{\Delta t}{6}\big(\mathbf k_1 + 2\mathbf k_2 \\ &\qquad + 2\mathbf k_3 + \mathbf k_4\big) \\ \mathbf k_1 &= \mathbf f(\mathbf y_n) \\ \mathbf k_2 &= \mathbf f(\mathbf y_n + \tfrac{\Delta t}{2}\mathbf k_1), \ \dots \end{aligned}"
       />
       <p>
-        {{ tx('The classical Runge–Kutta method has an error that shrinks as') }} <MathFormula tex="\Delta t^4" />: halving the step makes it about 16
-        times smaller. This experiment uses <MathFormula tex="\Delta t = 5\ \text{ms}" />{{ tx(', and finds the landing moment by bisection.') }}
+        {{ tx('The classical Runge–Kutta method has an error that shrinks as') }} <MathFormula tex="\Delta t^4" />{{ tx(': halving the step makes it about 16 times smaller. This experiment uses') }} <MathFormula tex="\Delta t = 5\ \text{ms}" />{{ tx(', and finds the landing moment by bisection.') }}
       </p>
       <h3>{{ tx('Energy') }}</h3>
       <MathFormula display tex="\frac{d}{dt}\left(\tfrac12 v^2 + g y\right) = -k\,|\mathbf v|^3 \le 0" />
@@ -111,8 +110,8 @@ const kValue = computed(() => props.params.k)
         {{ tx('Drag always removes energy. For orbits, where energy should be conserved, a symplectic method such as velocity Verlet would be the better choice, because RK4 slowly drifts.') }}
       </p>
       <p v-if="bestAngle !== null">
-        <strong>{{ tx('Best angle for your settings:') }}</strong> <MathFormula :tex="`${f(bestAngle)}^\\circ`" />, found by searching the simulated
-        range.
+        <strong>{{ tx('Best angle for your settings:') }}</strong> <MathFormula :tex="`${f(bestAngle)}^\\circ`" />{{ tx(', found by searching the simulated') }}
+        {{ tx('range.') }}
       </p>
     </template>
   </div>
