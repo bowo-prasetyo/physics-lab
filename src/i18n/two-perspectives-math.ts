@@ -70,6 +70,7 @@ const translations: Record<string, readonly [string, string]> = {
     '観測者が異なれば、空間と時間の分け方も異なります。空間＋時間による記述は、そのような分割の1つを明示したものです。',
   ],
   'Looking ahead: the 3 + 1 split in general relativity': ['Selanjutnya: pemisahan 3 + 1 dalam relativitas umum', '次の話題：一般相対論における3＋1分解'],
+  'and': ['dan', 'と'],
   'In curved spacetime the ADM formalism splits spacetime into a stack of spatial slices. In the (−, +, +, +) sign convention usual in GR,': [
     'Dalam ruang-waktu melengkung, formalisme ADM membagi ruang-waktu menjadi tumpukan irisan spasial. Dengan konvensi tanda (−, +, +, +) yang umum digunakan dalam relativitas umum,',
     '曲がった時空では、ADM形式によって時空を空間的な切片の積み重ねに分割します。一般相対論で通常用いられる符号規約（−, +, +, +）では、',
