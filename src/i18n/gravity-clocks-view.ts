@@ -62,6 +62,14 @@ const translations: Record<string, readonly [string, string]> = {
   "Experiment D, where space itself evolves in time. See also Experiments B and E.": ["Eksperimen D, yang membahas perubahan ruang terhadap waktu. Lihat juga Eksperimen B dan E.","空間そのものが時間とともに変化する実験Dです。実験BとEも参照してください。"],
   "Experiment D →": ["Eksperimen D →","実験D →"],
   "All modules": ["Semua modul","すべてのモジュール"],
+  "Pause": ["Jeda","一時停止"],
+  "Resume": ["Lanjutkan","再開"],
+  "Run the clocks": ["Jalankan jam","時計を動かす"],
+  "Clock {clock} is ahead by": ["Jam {clock} unggul sebesar","時計{clock}の進み："],
+  "days": ["hari","日"],
+  "per day": ["per hari","日あたり"],
+  "Experiment B": ["Eksperimen B","実験B"],
+  "Experiment E": ["Eksperimen E","実験E"],
 }
 
 export function localizeGravityClocksViewText(value: string, locale: Locale): string {
