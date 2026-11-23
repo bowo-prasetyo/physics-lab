@@ -104,7 +104,7 @@ const description = computed(() => {
 <template>
   <figure class="diagram">
     <!-- On narrow screens the diagram keeps a readable size and scrolls sideways. -->
-    <div ref="scroller" class="scroll" tabindex="0" aria-label="Spacetime diagram (scrolls sideways on small screens)">
+    <div ref="scroller" class="scroll" tabindex="0"  :aria-label="localizeExperimentText('Spacetime diagram (scrolls sideways on small screens)', locale)">
     <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
       <defs>
         <clipPath :id="`${id}-plot`">
@@ -119,8 +119,8 @@ const description = computed(() => {
       </g>
       <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 18" class="tick-label">{{ x }}</text>
       <text v-for="t in tTicks" :key="`lt${t}`" :x="M.left - 8" :y="sy(t) + 4" class="tick-label y">{{ t }}</text>
-      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">position x (light-seconds)</text>
-      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">time t (s)</text>
+      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ localizeExperimentText('position x (light-seconds)', locale) }}</text>
+      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText('time t (s)', locale) }}</text>
 
       <g :clip-path="`url(#${id}-plot)`">
         <!-- Everything below "now" has already happened, in this frame -->
@@ -179,7 +179,7 @@ const description = computed(() => {
     </div>
 
     <details class="diagram-data">
-      <summary>Read the current spacetime measurements as a table</summary>
+      <summary>{{ localizeExperimentText('Read the current spacetime measurements as a table', locale) }}</summary>
       <div class="table-scroll">
         <table><thead><tr><th scope="col">Observer</th><th scope="col">Velocity</th><th scope="col">Current event (t, x)</th><th scope="col">Proper time elapsed</th></tr></thead>
           <tbody><tr v-for="line in lines" :key="line.id"><th scope="row">{{ line.label }}</th><td>{{ line.velocity.toFixed(2) }}c</td><td>({{ line.now.t.toFixed(2) }} s, {{ line.now.x.toFixed(2) }} light-seconds)</td><td>{{ line.tauNow.toFixed(2) }} s</td></tr></tbody>
