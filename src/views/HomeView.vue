@@ -18,7 +18,10 @@ import { LEVELS } from '@/levels'
         <li><strong>Mathematics.</strong> Describe what you saw.</li>
         <li><strong>Meaning.</strong> Separate established physics from interpretation.</li>
       </ol>
-      <RouterLink class="btn btn-primary start" to="/space/space-vs-time">Start with Experiment A: space versus time</RouterLink>
+      <div class="home-actions">
+        <RouterLink class="btn btn-primary start" to="/space/space-vs-time">Start with Experiment A: space versus time</RouterLink>
+        <RouterLink class="btn teacher-cta" to="/teachers">Teaching resources</RouterLink>
+      </div>
     </section>
 
     <section aria-labelledby="levels-title">
@@ -58,137 +61,25 @@ import { LEVELS } from '@/levels'
 </template>
 
 <style scoped>
-.home {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  padding-top: 40px;
-  padding-bottom: 56px;
-}
-
-.hero h1 {
-  max-width: 24ch;
-}
-
-.lead {
-  max-width: 62ch;
-  font-size: 1.15rem;
-  color: var(--text-muted);
-}
-
-.method {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 8px;
-  margin: 20px 0 24px;
-  padding: 0;
-  list-style: none;
-  counter-reset: step;
-}
-
-.method li {
-  counter-increment: step;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  font-size: 0.92rem;
-}
-
-.method li::before {
-  content: counter(step);
-  display: inline-grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  margin-right: 8px;
-  border-radius: 50%;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 0.8rem;
-}
-
-.start {
-  text-decoration: none;
-  min-height: 46px;
-  text-align: center;
-}
-
-.levels,
-.modules {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.level p {
-  margin: 0;
-}
-
-.module-no {
-  margin: 0 0 4px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.scope-title {
-  margin: 12px 0 4px;
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
-.topics {
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-.experiments {
-  list-style: none;
-  margin: 12px 0 0;
-  padding: 0;
-  display: grid;
-  gap: 10px;
-}
-
-.experiments li {
-  display: grid;
-  gap: 2px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border);
-}
-
-.exp-title {
-  font-weight: 650;
-}
-
-.planned .exp-title {
-  color: var(--text-muted);
-}
-
-.exp-summary {
-  font-size: 0.9rem;
-}
-
-.badge {
-  display: inline-block;
-  margin-left: 4px;
-  padding: 0 7px;
-  border-radius: 999px;
-  background: var(--surface-2);
-  font-size: 0.72rem;
-  font-weight: 700;
-  vertical-align: 2px;
-}
-
-@media (max-width: 480px) {
-  .levels,
-  .modules,
-  .method {
-    grid-template-columns: 1fr;
-  }
-}
+.home { display: flex; flex-direction: column; gap: 40px; padding-top: 40px; padding-bottom: 56px; }
+.hero h1 { max-width: 24ch; }
+.lead { max-width: 62ch; font-size: 1.15rem; color: var(--text-muted); }
+.method { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; margin: 20px 0 24px; padding: 0; list-style: none; counter-reset: step; }
+.method li { counter-increment: step; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 0.92rem; }
+.method li::before { content: counter(step); display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: 8px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 0.8rem; }
+.home-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.start { text-decoration: none; min-height: 46px; text-align: center; }
+.teacher-cta { text-decoration: none; min-height: 46px; }
+.levels, .modules { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.level p { margin: 0; }
+.module-no { margin: 0 0 4px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); }
+.scope-title { margin: 12px 0 4px; font-size: 0.82rem; font-weight: 700; }
+.topics { font-size: 0.9rem; margin: 0; }
+.experiments { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+.experiments li { display: grid; gap: 2px; padding-top: 10px; border-top: 1px solid var(--border); }
+.exp-title { font-weight: 650; }
+.planned .exp-title { color: var(--text-muted); }
+.exp-summary { font-size: 0.9rem; }
+.badge { display: inline-block; margin-left: 4px; padding: 0 7px; border-radius: 999px; background: var(--surface-2); font-size: 0.72rem; font-weight: 700; vertical-align: 2px; }
+@media (max-width: 480px) { .levels, .modules, .method { grid-template-columns: 1fr; } }
 </style>
