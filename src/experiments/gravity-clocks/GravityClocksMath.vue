@@ -111,7 +111,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
     <template v-else-if="level === 'intermediate'">
       <h3>{{ tx('Near a surface: the weak-field rule') }}</h3>
       <p>
-        {{ tx('When') }} <MathFormula tex="r_s \ll r" />{{ tx(', the square root can be expanded. For a small height difference') }} <MathFormula tex="h" /> near a
+        {{ tx('When') }} <MathFormula tex="r_s \ll r" />{{ tx(', the square root can be expanded. For a small height difference') }} <MathFormula tex="h" /> {{ tx("near a") }}
         {{ tx('surface where gravity is') }} <MathFormula tex="g" />:
       </p>
       <MathFormula display tex="\frac{\Delta\tau}{\tau} \approx \frac{\Delta\Phi}{c^2} = \frac{g\,h}{c^2}" />
@@ -128,7 +128,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
       />
       <p>
         {{ tx('With') }} <MathFormula tex="v^2 = GM/r" /> {{ tx('for a circular orbit: gravity') }} <strong>+{{ perDay(gps.gravity) }}</strong> {{ tx('per day, speed') }}
-        <strong>−{{ perDay(-gps.velocity) }}</strong> {{ tx('per day, net') }} <strong>+{{ perDay(gps.net) }}</strong> per day.
+        <strong>−{{ perDay(-gps.velocity) }}</strong> {{ tx('per day, net') }} <strong>+{{ perDay(gps.net) }}</strong> {{ tx('per day.') }}
       </p>
     </template>
 
