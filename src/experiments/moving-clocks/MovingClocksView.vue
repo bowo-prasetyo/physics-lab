@@ -84,11 +84,11 @@ const shipInterval = computed(() => intervalSquared(view.value.ship))
 const primaryLabel = computed(() => {
   switch (status.value) {
     case 'running':
-      return 'Pause'
+      return tx('Pause')
     case 'paused':
-      return 'Resume'
+      return tx('Resume')
     case 'finished':
-      return 'Run again'
+      return tx('Run again')
     default:
       return tx('Start clock')
   }
@@ -172,7 +172,7 @@ const signed = (value: number, digits = 2) => {
               <span class="clock-note">{{ tx(frame === 'ship' ? 'at rest in this frame' : 'moving in this frame') }}</span>
             </div>
           </div>
-          <p class="status muted">{{ statusText }} · seen from {{ frameName }}</p>
+          <p class="status muted">{{ statusText }} · {{ tx('seen from') }} {{ tx(frameName) }}</p>
 
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
@@ -204,7 +204,7 @@ const signed = (value: number, digits = 2) => {
               <div><dt>{{ tx('Ship clock squared') }} <MathFormula tex="\tau^2" /></dt><dd class="num">{{ (view.ship.tau ** 2).toFixed(2) }} s²</dd></div>
             </template>
           </dl>
-          <p class="units muted">{{ tx("Units: c = 1, so distances are in light-seconds (ls).") }}</p>
+          <p class="units muted">{{ tx("{{ tx('Units: c = 1, so distances are in light-seconds (ls).') }}") }}</p>
         </div>
       </div>
     </section>
