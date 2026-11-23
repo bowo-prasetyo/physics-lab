@@ -78,12 +78,12 @@ const description = computed(
     </svg>
     <details class="chart-data">
       <summary>{{ localizeExperimentText('View the plotted values as a table', locale) }}</summary>
-      <div class="chart-scroll"><table><thead><tr><th scope="col">{{ localizeExperimentText('Model', locale) }}</th><th scope="col">{{ localizeExperimentText(xLabel, locale) }}</th><th scope="col">{{ yLabel }}</th></tr></thead>
-        <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ item.label }}</th><td>{{ point.x.toFixed(3) }}</td><td>{{ point.y.toFixed(3) }}</td></tr></template>
+      <div class="chart-scroll"><table><thead><tr><th scope="col">{{ localizeExperimentText('Model', locale) }}</th><th scope="col">{{ localizeExperimentText(xLabel, locale) }}</th><th scope="col">{{ localizeExperimentText(yLabel, locale) }}</th></tr></thead>
+        <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ localizeExperimentText(item.label, locale) }}</th><td>{{ point.x.toFixed(3) }}</td><td>{{ point.y.toFixed(3) }}</td></tr></template>
           <tr v-if="measured !== null"><th scope="row">{{ localizeExperimentText('Measured', locale) }}</th><td>{{ marker.toFixed(3) }}</td><td>{{ measured.toFixed(3) }}</td></tr></tbody></table></div>
     </details>
     <figcaption class="legend">
-      <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind, { dashed: line.dashed }]" /> {{ line.label }}</span>
+      <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind, { dashed: line.dashed }]" /> {{ localizeExperimentText(line.label, locale) }}</span>
       <span v-if="measured !== null"><i class="swatch measured-swatch" /> Measured</span>
     </figcaption>
   </figure>
