@@ -59,8 +59,18 @@ const displacement = () => ({
   y: endPoint().y - startPoint().y,
   z: endPoint().z - startPoint().z,
 })
-const description = () =>
-  `Interactive 3D view of a path in Cartesian coordinates. x points east, y north and z up. Start ${formatPoint(startPoint())}; current position ${formatPoint(endPoint())}; displacement ${formatPoint(displacement())} metres. Use the view presets for standard camera angles. A numerical alternative follows.`
+const description = () => {
+  const start = formatPoint(startPoint())
+  const current = formatPoint(endPoint())
+  const delta = formatPoint(displacement())
+  if (locale.value === 'id') {
+    return `Tampilan 3D interaktif lintasan dalam koordinat Kartesius. Sumbu x mengarah ke timur, y ke utara, dan z ke atas. Titik awal ${start}; posisi saat ini ${current}; perpindahan ${delta} meter. Gunakan preset tampilan untuk sudut kamera standar. Alternatif numerik tersedia di bawah.`
+  }
+  if (locale.value === 'ja') {
+    return `デカルト座標での経路を示すインタラクティブな 3D 表示です。x 軸は東、y 軸は北、z 軸は上向きです。始点 ${start}、現在位置 ${current}、変位 ${delta} m。標準的なカメラ角度には表示プリセットを使用してください。数値による表示も利用できます。`
+  }
+  return `Interactive 3D view of a path in Cartesian coordinates. x points east, y north and z up. Start ${start}; current position ${current}; displacement ${delta} metres. Use the view presets for standard camera angles. A numerical alternative follows.`
+}
 
 const AXIS_COLOURS = { x: 0xe5484d, y: 0x30a46c, z: 0x3e63dd }
 
