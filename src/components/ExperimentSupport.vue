@@ -4,12 +4,7 @@ import { useLocale } from '@/composables/useLocale'
 
 const props = defineProps<{ experimentId: string; moduleNumber: number; focus: string; prompt: string; action: string; reflect: string }>()
 const { t } = useLocale()
-const labels = computed(() => [
-  t('app.support.progressLabel').startsWith('Learning') ? 'I made a prediction before revealing the explanation' : t('app.support.progressLabel').startsWith('Daftar') ? 'Saya membuat prediksi sebelum melihat penjelasan' : '説明を見る前に予測を立てた',
-  t('app.support.progressLabel').startsWith('Learning') ? 'I tested the idea by changing a meaningful setting' : t('app.support.progressLabel').startsWith('Daftar') ? 'Saya menguji gagasan dengan mengubah pengaturan yang bermakna' : '意味のある設定を変更して考えを検証した',
-  t('app.support.progressLabel').startsWith('Learning') ? 'I can explain the result using evidence from the experiment' : t('app.support.progressLabel').startsWith('Daftar') ? 'Saya dapat menjelaskan hasil menggunakan bukti eksperimen' : '実験の証拠を使って結果を説明できる',
-  t('app.support.progressLabel').startsWith('Learning') ? 'I can name an assumption or limitation of the model' : t('app.support.progressLabel').startsWith('Daftar') ? 'Saya dapat menyebutkan asumsi atau keterbatasan model' : 'モデルの仮定または限界を挙げられる',
-])
+const labels = computed(() => [t('app.support.check1'), t('app.support.check2'), t('app.support.check3'), t('app.support.check4')])
 const enabled = ref(false)
 const completed = ref<boolean[]>([false, false, false, false])
 const progress = computed(() => completed.value.filter(Boolean).length)
