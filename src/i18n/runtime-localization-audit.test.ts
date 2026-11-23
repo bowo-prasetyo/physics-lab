@@ -20,6 +20,11 @@ const ROUTES = [
   { path: '/mechanics/projectile', name: 'projectile' },
   { path: '/time/pendulum', name: 'pendulum' },
   { path: '/space/displacement-3d', name: 'displacement-3d' },
+  // Shared experiment links restore meaningful control settings. Render these
+  // non-default states too so the audit sees the labels produced by them.
+  { path: '/mechanics/newtonian?force=50&mass=1&time=5&level=advanced', name: 'newtonian-high-force-state' },
+  { path: '/mechanics/projectile?level=advanced&v=30&angle=60&h=10&planet=mars&air=1', name: 'projectile-mars-drag-state' },
+  { path: '/time/pendulum?level=advanced&L=2&amp=35&m=5&planet=mars', name: 'pendulum-mars-large-swing-state' },
 ] as const
 
 const INTENTIONALLY_SHARED_COPY = new Set([
@@ -73,13 +78,13 @@ function collectRenderedCopy(markup: string, route: string, locale: Locale): Cop
   while (walker.nextNode()) {
     const node = walker.currentNode
     const parent = node.parentElement
-    if (!parent || parent.closest('script, style, pre, code, svg, math')) continue
+    if (!parent || parent.closest('script, style, pre, code, math')) continue
     const text = normalize(node.textContent ?? '')
     if (isEnglishLike(text)) records.push({ route, locale, kind: 'visible-text', text })
   }
 
   for (const element of Array.from(container.querySelectorAll<HTMLElement>('*'))) {
-    if (element.closest('script, style, pre, code, svg, math')) continue
+    if (element.closest('script, style, pre, code, math')) continue
     for (const attribute of REVIEWED_ATTRIBUTES) {
       const raw = element.getAttribute(attribute)
       if (!raw) continue
@@ -178,7 +183,7 @@ describe('runtime localization audit', () => {
     const report = {
       schemaVersion: 1,
       generatedAt: new Date().toISOString(),
-      scope: 'Rendered Vue application copy and selected accessibility attributes across all registered routes and supported locales.',
+      scope: 'Rendered Vue application copy, SVG visualization labels, and selected accessibility attributes across default and shared-link experiment states in every supported locale.',
       locales: [...SUPPORTED_LOCALES],
       routes: ROUTES.map(({ path, name }) => ({ path, name })),
       summary: {
@@ -190,9 +195,9 @@ describe('runtime localization audit', () => {
       },
       interpretation: 'Candidates are review leads, not confirmed translation defects. Shared scientific terms, proper nouns, formulas, and intentionally identical labels may appear. Review each item in context.',
       limitations: [
-        'The audit renders the initial route state; it does not exhaustively trigger every control, animation, prediction, or query-string state.',
+        'The audit renders each route’s default state plus representative non-default states restored from supported experiment-link query parameters; it does not exhaustively click every control or advance every animation and prediction.',
         'Text drawn directly into Canvas or WebGL surfaces is not represented in the DOM and requires a separate visual review.',
-        'Only visible text nodes and selected accessibility attributes are compared; remote content and browser-native UI are outside the scan.',
+        'Visible DOM and SVG text plus selected accessibility attributes are compared; text drawn directly into Canvas/WebGL and browser-native UI are outside the scan.',
       ],
       candidates,
     }
@@ -208,7 +213,7 @@ describe('runtime localization audit', () => {
       '',
       '## Summary',
       '',
-      `- Routes rendered: ${report.summary.routeCount}`,
+      `- Route/state scenarios rendered: ${report.summary.routeCount}`,
       `- Locales checked: ${report.summary.localeCount}`,
       `- Route/locale renders: ${report.summary.renderedPages}`,
       `- Unchanged-English candidates: ${report.summary.unchangedEnglishCandidates}`,
