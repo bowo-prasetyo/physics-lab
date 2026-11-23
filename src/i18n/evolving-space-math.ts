@@ -2,6 +2,7 @@ import type { Locale } from './locales'
 
 /** Explanatory prose in the Evolving Space mathematics panel. */
 const translations: Record<string, readonly [string, string]> = {
+  'and': ['dan', '、'],
   'In the standard cosmological model, the scale factor': ['Dalam model kosmologi standar, faktor skala', '標準的な宇宙論モデルでは、スケール因子'],
   'describes how the proper distance between galaxies that follow the general cosmic expansion (and are not gravitationally or otherwise bound) changes with time:': ['menjelaskan bagaimana jarak wajar antara galaksi yang mengikuti ekspansi kosmik umum (dan tidak terikat oleh gravitasi atau ikatan lainnya) berubah seiring waktu:', 'は、宇宙全体の膨張に従い（重力などで束縛されていない）銀河間の固有距離が時間とともにどのように変化するかを表します：'],
   'Here': ['Di sini', 'ここで'],

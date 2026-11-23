@@ -12,11 +12,13 @@ const REVIEWABLE_ATTRIBUTES = new Set([
   'label', 'placeholder', 'summary', 'title',
 ])
 const IGNORED_ELEMENTS = new Set(['code', 'pre', 'script', 'style'])
+const INTENTIONALLY_SHARED_COPY = new Set(['Physica', 'Physica ·', '· MIT License', 'Gly', 'km/s/Mpc.'])
 
 /** Return true for literal Latin-language copy worth a human localization review. */
 export function isReviewableCopy(value) {
   const text = value.replace(/\s+/g, ' ').trim()
   if (text.length < 3 || !/[A-Za-z]{3}/.test(text)) return false
+  if (INTENTIONALLY_SHARED_COPY.has(text)) return false
   if (/^https?:\/\//i.test(text)) return false
   if (/^[\d\W_]+$/.test(text)) return false
   return true

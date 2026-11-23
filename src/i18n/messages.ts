@@ -3,6 +3,7 @@ import type { Locale } from './locales'
 export const messages = {
   en: {
     'app.brand.homeLabel': 'Physica home',
+    'teacherGuide.learningEffectivenessLink': 'learning-effectiveness guidance',
     'app.navigation.main': 'Main navigation',
     'app.navigation.forTeachers': 'For teachers',
     'app.footer.tagline': 'Open-source physics experiments for students',
@@ -90,6 +91,7 @@ export const messages = {
   },
   id: {
     'app.brand.homeLabel': 'Beranda Physica',
+    'teacherGuide.learningEffectivenessLink': 'panduan efektivitas pembelajaran',
     'app.navigation.main': 'Navigasi utama',
     'app.navigation.forTeachers': 'Untuk pengajar',
     'app.footer.tagline': 'Eksperimen fisika sumber terbuka untuk pelajar',
@@ -177,6 +179,7 @@ export const messages = {
   },
   ja: {
     'app.brand.homeLabel': 'Physica ホーム',
+    'teacherGuide.learningEffectivenessLink': '学習効果に関するガイド',
     'app.navigation.main': 'メインナビゲーション',
     'app.navigation.forTeachers': '教員向け',
     'app.footer.tagline': '学生向けのオープンソース物理実験',

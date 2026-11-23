@@ -101,7 +101,7 @@ const hubbleTime = computed(() => 1 / hubbleRateToday(props.cosmology))
       <MathFormula display :tex="friedmannExample" />
       <p>
         {{ tx('Radiation dilutes as') }} <MathFormula tex="a^{-4}" /> {{ tx('(fewer photons per volume, and each one stretched), matter as') }} <MathFormula tex="a^{-3}" />, {{ tx('and dark energy not at all. Each on its own gives') }}
-        <MathFormula tex="a \propto t^{1/2}" />, <MathFormula tex="a \propto t^{2/3}" /> and <MathFormula tex="a \propto e^{Ht}" />.
+        <MathFormula tex="a \propto t^{1/2}" />, <MathFormula tex="a \propto t^{2/3}" /> {{ tx('and') }} <MathFormula tex="a \propto e^{Ht}" />.
       </p>
     </template>
 
