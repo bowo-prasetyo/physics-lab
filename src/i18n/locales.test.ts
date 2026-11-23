@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { DEFAULT_LOCALE, detectLocale, isLocale } from './locales'
-import { translate } from './messages'
+import { DEFAULT_LOCALE, detectLocale, isLocale, SUPPORTED_LOCALES } from './locales'
+import { messages, translate } from './messages'
 
 describe('locale configuration', () => {
   it('recognizes only supported locale identifiers', () => {
@@ -21,7 +21,15 @@ describe('locale configuration', () => {
     expect(detectLocale(['fr-FR', 'de-DE'])).toBe(DEFAULT_LOCALE)
   })
 
-  it('returns the English fallback for an incomplete translation catalog', () => {
+  it('provides shell messages for every supported locale', () => {
+    for (const locale of SUPPORTED_LOCALES) {
+      expect(messages[locale]['app.language.label']).toBeTruthy()
+      expect(messages[locale]['app.navigation.forTeachers']).toBeTruthy()
+    }
+  })
+
+  it('returns the selected locale message', () => {
     expect(translate('id', 'app.navigation.forTeachers')).toBe('Untuk pengajar')
+    expect(translate('ja', 'app.navigation.forTeachers')).toBe('教員向け')
   })
 })
