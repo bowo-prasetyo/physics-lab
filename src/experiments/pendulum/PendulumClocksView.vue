@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
+import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -94,7 +95,7 @@ function formatClock(seconds: number): string {
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">{{ localizeExperimentText('Module 2 · Understanding time · Pendulum clocks', locale) ?? 'Module 2 · Understanding time · Pendulum clocks' }}</p>
+      <p class="eyebrow">{{ getExperimentModuleEyebrow('pendulum', locale) }}</p>
       <h1>{{ localizeExperimentText('Pendulum clocks', locale) ?? 'Pendulum clocks' }}</h1>
       <p class="lead">{{ localizeExperimentText('For three centuries the best clocks were pendulums. Find out what sets the beat of a pendulum, then take a pendulum clock to the Moon and compare it with an atomic clock. What is a clock really measuring?', locale) ?? 'For three centuries the best clocks were pendulums. Find out what sets the beat of a pendulum, then take a pendulum clock to the Moon and compare it with an atomic clock. What is a clock really measuring?' }}</p>
     </header>
@@ -106,7 +107,7 @@ function formatClock(seconds: number): string {
     <ExperimentSupport experiment-id="pendulum" :module-number="2" focus="A pendulum is a physical clock: its period depends on its length, local gravitational acceleration and (beyond the small-angle limit) amplitude." prompt="Would adding mass to the bob make an ideal pendulum swing faster?" action="Vary length, mass and release angle separately; compare the measured period with the small-angle prediction." reflect="When does the small-angle approximation become less accurate, and why might a clock need recalibration in a new environment?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
       <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
@@ -114,7 +115,7 @@ function formatClock(seconds: number): string {
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ experimentSectionLabel('experiment', locale) }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <PendulumView :theta="state.theta" :amplitude-deg="amplitude" :length="length" :mass="mass" />
@@ -173,19 +174,19 @@ function formatClock(seconds: number): string {
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
+      <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
       <PendulumMath :level="level" :length="length" :g="planet.g" :amplitude-deg="amplitude" :small-angle="smallAngle" :exact="exact" />
     </section>
     </details>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
+      <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
+        <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
           <ul>
             <li>
               {{ localizeExperimentText('Galileo noticed that a pendulum keeps a nearly steady beat, and Christiaan Huygens built the first pendulum clock in 1656. Pendulum clocks were the most accurate timekeepers until quartz clocks in the 1930s.', locale) }}
@@ -196,7 +197,7 @@ function formatClock(seconds: number): string {
             <li>{{ localizeExperimentText('Since 1967 the second has been defined by caesium atoms: 9 192 631 770 oscillations. Today’s best clocks would lose less than a second over the age of the universe.', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
+        <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('If every clock is a physical process, what is time?', locale) }}</strong> {{ localizeExperimentText('Aristotle called time “the number of motion”: nothing more than change, counted. Newton held that time flows on its own, whether or not anything changes. Physics uses clocks either way; the question is what they are measuring.', locale) }}
@@ -210,7 +211,7 @@ function formatClock(seconds: number): string {
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
       <p>{{ localizeExperimentText('Next: Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">{{ tx('Experiment B') }}</RouterLink>
