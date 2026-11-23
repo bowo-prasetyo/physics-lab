@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed, ref } from 'vue'
@@ -112,6 +113,8 @@ useQuerySync({
 
     <ShareExperiment />
 
+    <LocalizedExperimentGuide experiment-id="space-vs-time" />
+
     <ExperimentSupport experiment-id="space-vs-time" :module-number="1" focus="Position is described relative to a reference frame; elapsed time continues even when the object is stationary." prompt="When the object stops moving, what happens to its position and to the clock?" action="Run the object at different speeds, stop it part-way through, and compare the motion with the position–time graph." reflect="What does the slope of a position–time graph represent, and how does the graph show the difference between rest and the passage of time?" />
 
     <section aria-labelledby="predict-title">
@@ -206,7 +209,7 @@ useQuerySync({
     </section>
     </details>
 
-    <details class="lesson-disclosure">
+    <details v-if="locale === 'en'" class="lesson-disclosure">
       <summary>4 · Explore the meaning and interpretation</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
