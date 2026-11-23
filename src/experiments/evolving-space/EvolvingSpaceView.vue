@@ -223,38 +223,32 @@ const expansionWord = computed(() => {
     </section>
     </details>
 
-    <details v-if="locale === 'en'" class="lesson-disclosure">
+    <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" title="Established physics">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
-            <li>Distant galaxies recede with speeds proportional to their distance (Lemaître, 1927; Hubble, 1929).</li>
+            <li>{{ localizeExperimentText('Distant galaxies recede with speeds proportional to their distance (Lemaître, 1927; Hubble, 1929).', locale) }}</li>
             <li>
-              The universe was once hot and dense: the cosmic microwave background, discovered in 1965, is light released when it became
-              transparent, now cooled to 2.7 K. The amounts of hydrogen, helium and lithium agree with nuclear reactions in the first minutes.
+              {{ localizeExperimentText('The universe was once hot and dense: the cosmic microwave background, discovered in 1965, is light released when it became transparent, now cooled to 2.7 K. The amounts of hydrogen, helium and lithium agree with nuclear reactions in the first minutes.', locale) }}
             </li>
-            <li>The expansion has been speeding up for about 6 billion years (distant supernovae, 1998; Nobel Prize 2011).</li>
-            <li>Fitting all the data, the standard model gives an age of 13.8 billion years (Planck satellite, 2018).</li>
-            <li>Objects bound by gravity or other forces, such as galaxies, planets and people, do not expand.</li>
+            <li>{{ localizeExperimentText('The expansion has been speeding up for about 6 billion years (distant supernovae, 1998; Nobel Prize 2011).', locale) }}</li>
+            <li>{{ localizeExperimentText('Fitting all the data, the standard model gives an age of 13.8 billion years (Planck satellite, 2018).', locale) }}</li>
+            <li>{{ localizeExperimentText('Objects bound by gravity or other forces, such as galaxies, planets and people, do not expand.', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" title="Interpretation: open to debate">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <ul>
             <li>
-              <strong>Did time begin at the Big Bang?</strong> In classical general relativity the model has an edge at <MathFormula tex="a = 0" />,
-              but the theory is not expected to hold there. Proposals include a quantum “no-boundary” beginning, a bounce from an earlier
-              contracting phase, and eternal inflation. None is confirmed.
+              <strong>{{ localizeExperimentText('Did time begin at the Big Bang?', locale) }}</strong> {{ localizeExperimentText('In classical general relativity the model has an edge at', locale) }} <MathFormula tex="a = 0" />{{ localizeExperimentText(', but the theory is not expected to hold there. Proposals include a quantum “no-boundary” beginning, a bounce from an earlier contracting phase, and eternal inflation. None is confirmed.', locale) }}
             </li>
             <li>
-              <strong>Is time fundamental?</strong> In some approaches to quantum gravity the basic equation has no time in it, and time
-              emerges from how parts of the universe change relative to each other, for example using the size of the universe itself as a
-              clock. This bears directly on whether space and time are separate fundamental things.
+              <strong>{{ localizeExperimentText('Is time fundamental?', locale) }}</strong> {{ localizeExperimentText('In some approaches to quantum gravity the basic equation has no time in it, and time emerges from how parts of the universe change relative to each other, for example using the size of the universe itself as a clock. This bears directly on whether space and time are separate fundamental things.', locale) }}
             </li>
             <li>
-              <strong>Is space really stretching?</strong> “Expanding space” is a natural description in these coordinates. Some physicists
-              prefer to describe the same thing as galaxies moving apart. As in Experiment E, the predictions are the same.
+              <strong>{{ localizeExperimentText('Is space really stretching?', locale) }}</strong> {{ localizeExperimentText('“Expanding space” is a natural description in these coordinates. Some physicists prefer to describe the same thing as galaxies moving apart. As in Experiment E, the predictions are the same.', locale) }}
             </li>
           </ul>
         </InfoCallout>
@@ -263,7 +257,7 @@ const expansionWord = computed(() => {
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>See also:</strong> Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.</p>
+      <p><strong>{{ localizeExperimentText('See also:', locale) }}</strong> {{ localizeExperimentText('Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/gravity/clock-rates">Experiment C</RouterLink>
         <RouterLink to="/relativity/two-perspectives">Experiment E</RouterLink>

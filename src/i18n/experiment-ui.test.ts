@@ -113,4 +113,62 @@ describe('experiment UI localization', () => {
     expect(localizeExperimentText('Make this galaxy home', 'ja')).not.toBe('Make this galaxy home')
   })
 
+
+  it('translates long-form experiment explanations and interpretation in Indonesian and Japanese', () => {
+    const explanations = [
+      'Over everyday distances, space is described extremely well by Euclidean geometry: Pythagoras holds, and triangles have angles adding up to 180°.',
+      'Coordinates are a human choice; distances, lengths and angles are not. Physical laws are written so that they do not depend on the choice.',
+      'Newton treated space as a container that exists even when empty; Leibniz argued that only the distances and directions between objects are real. Their followers debated it in letters in 1715–16, and the question is still discussed.',
+      'Distant galaxies recede with speeds proportional to their distance (Lemaître, 1927; Hubble, 1929).',
+      'The universe was once hot and dense: the cosmic microwave background, discovered in 1965, is light released when it became transparent, now cooled to 2.7 K. The amounts of hydrogen, helium and lithium agree with nuclear reactions in the first minutes.',
+      'In some approaches to quantum gravity the basic equation has no time in it, and time emerges from how parts of the universe change relative to each other, for example using the size of the universe itself as a clock. This bears directly on whether space and time are separate fundamental things.',
+      'The effect is symmetric: each of two inertial observers finds the other’s clock running slow.',
+      'For two clocks that just fly past each other, “which one is really slower” has no frame-independent answer: it depends on which events you call simultaneous. A frame-independent difference only appears when the clocks meet again (the twin paradox).',
+      'The tilted lines of simultaneity show that observers disagree about which distant events are happening now. Some philosophers argue this favours a “block universe”, in which past, present and future events all exist equally. Others defend a privileged present. Physics makes the same predictions either way; the debate is about interpretation.',
+      'The speed of light is the same for every observer, whatever the motion of its source (Michelson and Morley, 1887; CERN, 1964). The Galilean description cannot accommodate this.',
+      'Equivalent predictions cannot settle this. Some physicists and philosophers take the four-dimensional geometry as the basic reality; others see it as a compact way of describing how measurements by different observers relate, with space and time (or the behaviour of rods and clocks) more basic.',
+      'Without air, a projectile’s path is a parabola, and its horizontal and vertical motions are independent (Galileo, Two New Sciences, 1638).',
+      'This is a one-dimensional Newtonian model in an inertial reference frame. The mass is constant, the net force is constant, and friction is omitted. The selected force represents the sum of all forces along the track; it is not simply the applied push if other forces oppose it.',
+      'Galileo noticed that a pendulum keeps a nearly steady beat, and Christiaan Huygens built the first pendulum clock in 1656. Pendulum clocks were the most accurate timekeepers until quartz clocks in the 1930s.',
+      'Atoms, crystals and planets, built on completely different physics, keep step with each other when they are together. Some see that agreement as evidence of a single underlying time; others see time as nothing but that web of agreements. Relativity adds that clocks in different places or states of motion need not agree at all (Experiments B and C).',
+      'Clocks lower in a gravitational field run slower, and observers at both heights agree which clock is slow.',
+      'Measured again and again: gamma rays up a 22.5 m tower (Pound and Rebka, 1959), a hydrogen-maser clock launched on a rocket (Gravity Probe A, 1976, agreeing to about 7 parts in 100 000), and optical clocks that detect a height change of about 33 cm (2010). GPS corrects for it every day.',
+      'Every clock and every process slows by the same factor, so no measurement can separate the two. Whether that means “time itself” runs slower depends on what you think time is: something that exists on its own, or a measure of how physical processes relate.',
+      'General relativity describes it as the curvature of spacetime, and the lapse in the 3 + 1 split is exactly the clock rate you measured. Other formulations, such as the teleparallel equivalent of general relativity, describe gravity differently but make the same predictions. As in Experiment E, equal predictions leave the interpretation open.',
+      'Newton’s second law relates the net force on an object to its acceleration:',
+      'With v = 0, the position stays constant while the clock reading keeps increasing.',
+      'What an astronaut would literally see through a telescope also includes that travel delay (and the Doppler effect), so the images can run faster or slower still. Time dilation is what remains after correcting for it.',
+      'Did time begin at the Big Bang?',
+      'In classical general relativity the model has an edge at',
+      ', but the theory is not expected to hold there. Proposals include a quantum “no-boundary” beginning, a bounce from an earlier contracting phase, and eternal inflation. None is confirmed.',
+      'Is time fundamental?',
+      'Is space really stretching?',
+      '“Expanding space” is a natural description in these coordinates. Some physicists prefer to describe the same thing as galaxies moving apart. As in Experiment E, the predictions are the same.',
+      'Measured from any inertial frame, a clock moving at speed',
+      'runs slow by the factor γ.',
+      'Newton’s time flows equally for everyone, which is the assumption',
+      ' used for the train here. Experiments A, B and E show how relativity changed that, and keep the question of what space and time really are open.',
+      'At speeds close to light, they do not (Module 4).',
+      'Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.',
+      'Experiment E describes the same situations with separate space and time, and with a single spacetime.',
+      'The curve has the shape of the gravity “well”: deeper means slower. Clocks are held at rest at these heights (a real satellite would be moving; see the GPS setup).',
+      '“Received” rates are relative to the receiver’s own clock: negative means the ticks arrive slowed (redshift), positive sped up (blueshift).',
+      'Before launch, each satellite clock is set to tick at 10.22999999543 MHz instead of 10.23 MHz, so that in orbit it runs at the right rate as seen from the ground. Switch the correction off to see what would happen without it.',
+      'Clocks lower in a gravitational field run slower, and observers at both heights agree which clock is slow.',
+      'Measured again and again: gamma rays up a 22.5 m tower (Pound and Rebka, 1959), a hydrogen-maser clock launched on a rocket (Gravity Probe A, 1976, agreeing to about 7 parts in 100 000), and optical clocks that detect a height change of about 33 cm (2010). GPS corrects for it every day.',
+      'A clock falling into a black hole ticks normally by its own measure and crosses the horizon after a finite time on its own dial.',
+      'Does gravity slow time itself, or only clocks?',
+      'Every clock and every process slows by the same factor, so no measurement can separate the two. Whether that means “time itself” runs slower depends on what you think time is: something that exists on its own, or a measure of how physical processes relate.',
+      'Is gravity a force or geometry?',
+      'General relativity describes it as the curvature of spacetime, and the lapse in the 3 + 1 split is exactly the clock rate you measured. Other formulations, such as the teleparallel equivalent of general relativity, describe gravity differently but make the same predictions. As in Experiment E, equal predictions leave the interpretation open.',
+      'With v = 0, the position stays constant while the clock reading keeps increasing.',
+      '. At speeds close to light, they do not (Module 4).',
+      'Next: Experiment C, in which gravity, not motion, changes how fast clocks tick.',
+    ]
+    for (const source of explanations) {
+      expect(localizeExperimentText(source, 'id'), source).not.toBe(source)
+      expect(localizeExperimentText(source, 'ja'), source).not.toBe(source)
+    }
+  })
+
 })

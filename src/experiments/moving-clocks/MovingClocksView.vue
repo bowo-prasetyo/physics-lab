@@ -216,53 +216,42 @@ const signed = (value: number, digits = 2) => {
     </section>
     </details>
 
-    <details v-if="locale === 'en'" class="lesson-disclosure">
+    <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" title="Established physics">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
-            <li>Measured from any inertial frame, a clock moving at speed <MathFormula tex="v" /> runs slow by the factor γ.</li>
-            <li>The effect is symmetric: each of two inertial observers finds the other’s clock running slow.</li>
+            <li>{{ localizeExperimentText('Measured from any inertial frame, a clock moving at speed', locale) }} <MathFormula tex="v" /> {{ localizeExperimentText('runs slow by the factor γ.', locale) }}</li>
+            <li>{{ localizeExperimentText('The effect is symmetric: each of two inertial observers finds the other’s clock running slow.', locale) }}</li>
             <li>
-              It is measured routinely: fast cosmic-ray muons survive long enough to reach the ground, atomic clocks flown on airliners
-              (Hafele and Keating, 1971) came back measurably out of step, and GPS satellite clocks are corrected by about 7 microseconds
-              per day for their speed.
+              {{ localizeExperimentText('It is measured routinely: fast cosmic-ray muons survive long enough to reach the ground, atomic clocks flown on airliners (Hafele and Keating, 1971) came back measurably out of step, and GPS satellite clocks are corrected by about 7 microseconds per day for their speed.', locale) }}
             </li>
-            <li>The proper time along a worldline, what a clock actually shows, is the same in every frame.</li>
+            <li>{{ localizeExperimentText('The proper time along a worldline, what a clock actually shows, is the same in every frame.', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" title="Interpretation: open to debate">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <ul>
             <li>
-              <strong>Does time “really” slow down for the astronaut?</strong> For two clocks that just fly past each other, “which one is
-              really slower” has no frame-independent answer: it depends on which events you call simultaneous. A frame-independent
-              difference only appears when the clocks meet again (the twin paradox).
+              <strong>{{ localizeExperimentText('Does time “really” slow down for the astronaut?', locale) }}</strong> {{ localizeExperimentText('For two clocks that just fly past each other, “which one is really slower” has no frame-independent answer: it depends on which events you call simultaneous. A frame-independent difference only appears when the clocks meet again (the twin paradox).', locale) }}
             </li>
             <li>
-              <strong>Is there a universal “now”?</strong> The tilted lines of simultaneity show that observers disagree about which distant
-              events are happening now. Some philosophers argue this favours a “block universe”, in which past, present and future events
-              all exist equally. Others defend a privileged present. Physics makes the same predictions either way; the debate is about
-              interpretation.
+              <strong>{{ localizeExperimentText('Is there a universal “now”?', locale) }}</strong> {{ localizeExperimentText('The tilted lines of simultaneity show that observers disagree about which distant events are happening now. Some philosophers argue this favours a “block universe”, in which past, present and future events all exist equally. Others defend a privileged present. Physics makes the same predictions either way; the debate is about interpretation.', locale) }}
             </li>
           </ul>
         </InfoCallout>
       </div>
-      <InfoCallout kind="note" title="Seeing versus measuring" class="seeing">
+      <InfoCallout kind="note" :title="localizeExperimentText('Seeing versus measuring', locale) ?? 'Seeing versus measuring'" class="seeing">
         <p>
-          The diagram shows what each observer <em>measures</em> after allowing for the time light takes to travel. What an astronaut would
-          literally <em>see</em> through a telescope also includes that travel delay (and the Doppler effect), so the images can run faster
-          or slower still. Time dilation is what remains after correcting for it.
+          {{ localizeExperimentText('The diagram shows what each observer measures after allowing for the time light takes to travel.', locale) }} {{ localizeExperimentText('What an astronaut would literally see through a telescope also includes that travel delay (and the Doppler effect), so the images can run faster or slower still. Time dilation is what remains after correcting for it.', locale) }}
         </p>
       </InfoCallout>
     </section>
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p>
-        <strong>Next:</strong> Experiment E describes the same situations with separate space and time, and with a single spacetime.
-      </p>
+      <p>{{ localizeExperimentText('Experiment E describes the same situations with separate space and time, and with a single spacetime.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">← Experiment A</RouterLink>
         <RouterLink to="/relativity/two-perspectives">Experiment E →</RouterLink>

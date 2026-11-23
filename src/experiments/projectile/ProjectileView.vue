@@ -248,33 +248,28 @@ const dropDifference = computed(() => {
     </section>
     </details>
 
-    <details v-if="locale === 'en'" class="lesson-disclosure">
+    <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" title="Established physics">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
             <li>
-              Without air, a projectile’s path is a parabola, and its horizontal and vertical motions are independent (Galileo, <em>Two New
-              Sciences</em>, 1638).
+              {{ localizeExperimentText('Without air, a projectile’s path is a parabola, and its horizontal and vertical motions are independent (Galileo, Two New Sciences, 1638).', locale) }}
             </li>
-            <li>Newton’s laws explain why: gravity gives a constant downward acceleration, and nothing acts sideways.</li>
-            <li>Air resistance shortens the flight, lowers the best launch angle and makes the path lopsided.</li>
-            <li>Observers moving at constant velocity see different paths but find the same laws of motion (Galilean relativity).</li>
+            <li>{{ localizeExperimentText('Newton’s laws explain why: gravity gives a constant downward acceleration, and nothing acts sideways.', locale) }}</li>
+            <li>{{ localizeExperimentText('Air resistance shortens the flight, lowers the best launch angle and makes the path lopsided.', locale) }}</li>
+            <li>{{ localizeExperimentText('Observers moving at constant velocity see different paths but find the same laws of motion (Galilean relativity).', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" title="Interpretation: open to debate">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <ul>
             <li>
-              <strong>Is there an absolute space?</strong> Newton believed space is a fixed stage and that there is a true state of rest, even
-              though no experiment with moving trains or ships can detect it. Leibniz, and later Mach, argued that only motion relative to
-              other things is real.
+              <strong>{{ localizeExperimentText('Is there an absolute space?', locale) }}</strong> {{ localizeExperimentText('Newton believed space is a fixed stage and that there is a true state of rest, even though no experiment with moving trains or ships can detect it. Leibniz, and later Mach, argued that only motion relative to other things is real.', locale) }}
             </li>
             <li>
-              <strong>Is time absolute?</strong> Newton’s time flows equally for everyone, which is the assumption <MathFormula tex="t' = t" />
-              used for the train here. Experiments A, B and E show how relativity changed that, and keep the question of what space and time
-              really are open.
+              <strong>{{ localizeExperimentText('Is time absolute?', locale) }}</strong> {{ localizeExperimentText('Newton’s time flows equally for everyone, which is the assumption', locale) }} <MathFormula tex="t' = t" />{{ localizeExperimentText(' used for the train here. Experiments A, B and E show how relativity changed that, and keep the question of what space and time really are open.', locale) }}
             </li>
           </ul>
         </InfoCallout>
@@ -283,7 +278,7 @@ const dropDifference = computed(() => {
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>See also:</strong> Experiment A for motion in one dimension, and Experiment B for what happens near the speed of light.</p>
+      <p>{{ localizeExperimentText('See also: Experiment A for motion in one dimension, and Experiment B for what happens near the speed of light.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">Experiment A</RouterLink>
         <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>

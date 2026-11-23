@@ -177,36 +177,29 @@ function formatClock(seconds: number): string {
     </section>
     </details>
 
-    <details v-if="locale === 'en'" class="lesson-disclosure">
+    <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" title="Established physics">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
           <ul>
             <li>
-              Galileo noticed that a pendulum keeps a nearly steady beat, and Christiaan Huygens built the first pendulum clock in 1656. Pendulum
-              clocks were the most accurate timekeepers until quartz clocks in the 1930s.
+              {{ localizeExperimentText('Galileo noticed that a pendulum keeps a nearly steady beat, and Christiaan Huygens built the first pendulum clock in 1656. Pendulum clocks were the most accurate timekeepers until quartz clocks in the 1930s.', locale) }}
             </li>
             <li>
-              A pendulum’s period depends on its length and on gravity, not on its mass. In 1672 Jean Richer found his pendulum clock ran slow near
-              the equator, showing that gravity varies over the Earth.
+              {{ localizeExperimentText('A pendulum’s period depends on its length and on gravity, not on its mass. In 1672 Jean Richer found his pendulum clock ran slow near the equator, showing that gravity varies over the Earth.', locale) }}
             </li>
-            <li>Since 1967 the second has been defined by caesium atoms: 9 192 631 770 oscillations. Today’s best clocks would lose less than a second over the age of the universe.</li>
+            <li>{{ localizeExperimentText('Since 1967 the second has been defined by caesium atoms: 9 192 631 770 oscillations. Today’s best clocks would lose less than a second over the age of the universe.', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" title="Interpretation: open to debate">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
           <ul>
             <li>
-              <strong>If every clock is a physical process, what is time?</strong> Aristotle called time “the number of motion”: nothing more
-              than change, counted. Newton held that time flows on its own, whether or not anything changes. Physics uses clocks either way;
-              the question is what they are measuring.
+              <strong>{{ localizeExperimentText('If every clock is a physical process, what is time?', locale) }}</strong> {{ localizeExperimentText('Aristotle called time “the number of motion”: nothing more than change, counted. Newton held that time flows on its own, whether or not anything changes. Physics uses clocks either way; the question is what they are measuring.', locale) }}
             </li>
             <li>
-              <strong>Why do good clocks agree?</strong> Atoms, crystals and planets, built on completely different physics, keep step with
-              each other when they are together. Some see that agreement as evidence of a single underlying time; others see time as nothing
-              but that web of agreements. Relativity adds that clocks in different places or states of motion need not agree at all
-              (Experiments B and C).
+              <strong>{{ localizeExperimentText('Why do good clocks agree?', locale) }}</strong> {{ localizeExperimentText('Atoms, crystals and planets, built on completely different physics, keep step with each other when they are together. Some see that agreement as evidence of a single underlying time; others see time as nothing but that web of agreements. Relativity adds that clocks in different places or states of motion need not agree at all (Experiments B and C).', locale) }}
             </li>
           </ul>
         </InfoCallout>
@@ -215,7 +208,7 @@ function formatClock(seconds: number): string {
     </details>
 
     <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
-      <p><strong>Next:</strong> Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.</p>
+      <p>{{ localizeExperimentText('Next: Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">Experiment B</RouterLink>
         <RouterLink to="/gravity/clock-rates">Experiment C</RouterLink>
