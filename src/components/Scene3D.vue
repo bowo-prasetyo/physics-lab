@@ -168,7 +168,7 @@ function buildDynamic() {
   const startMarker = new THREE.Mesh(track(new THREE.SphereGeometry(0.28, 20, 20)), track(new THREE.MeshBasicMaterial({ color: success })))
   startMarker.position.copy(start)
   dynamic.add(startMarker)
-  dynamic.add(label(localizeExperimentText('start', locale.value) ?? 'start', 'point', start.clone().add(new THREE.Vector3(-1.1, -1.1, 0.4))))
+  dynamic.add(label(locale.value === 'id' ? 'awal' : locale.value === 'ja' ? '始点' : 'start', 'point', start.clone().add(new THREE.Vector3(-1.1, -1.1, 0.4))))
 
   const object = new THREE.Mesh(track(new THREE.SphereGeometry(0.42, 24, 24)), track(new THREE.MeshLambertMaterial({ color: accent })))
   object.position.copy(end)
