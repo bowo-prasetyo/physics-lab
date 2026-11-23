@@ -165,7 +165,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
       </p>
       <p class="muted">
         {{ tx('For your clocks (at radii') }} {{ formatLength(rA) }} {{ tx('and') }} {{ formatLength(rB) }}{{ tx('), clock B runs') }} {{ formatSlowdown(Math.abs(rateBvsA)) }}
-        {{ rateBvsA >= 0 ? 'faster' : 'slower' }} than clock A, and both observers agree.
+        {{ tx(rateBvsA >= 0 ? 'faster' : 'slower') }} {{ tx('than clock A, and both observers agree.') }}
       </p>
     </template>
   </div>
