@@ -101,6 +101,8 @@ describe('experiment UI localization', () => {
     expect(translated).toContain('1.00, 2.00, 3.00')
     expect(translated).not.toContain('Interactive 3D view')
     expect(translated).not.toContain('current position')
+    expect(localizeExperimentText('Track from 0 to 10 metres. The object is at x = 2.00 m, started at x₀ = 0.0 m, moving at 1.0 m/s.', 'id')).toContain('Lintasan dari 0 hingga 10 meter')
+    expect(localizeExperimentText('Launcher ready, seen from the ground: 12 m/s at 30 degrees from 2 m.', 'ja')).toContain('地上から見た')
   })
 
 })
