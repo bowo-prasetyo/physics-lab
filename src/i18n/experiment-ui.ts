@@ -5,6 +5,8 @@ import type { Locale } from './locales'
  * Physics values, units, IDs and calculations are deliberately not transformed.
  */
 const text: Record<string, readonly [string, string]> = {
+  'light-seconds': ['detik cahaya', '光秒'],
+  'Ship': ['Kapal', '宇宙船'],
   "billion years": ["miliar tahun","10 億年"],
   "velocity changed during run": ["kecepatan berubah selama percobaan","走行中に速度が変化"],
   "the moving observer’s frame": ["kerangka pengamat bergerak","移動する観測者の基準系"],
@@ -243,11 +245,11 @@ const patterns: Array<{ test: RegExp; render: (match: RegExpMatchArray, locale: 
   { test: /^Set the ship speed to at least ([\d.]+)c and make the measurement again\.$/, render: (m,l) => l === 'id' ? `Atur kecepatan kapal minimal ${m[1]}c dan lakukan pengukuran kembali.` : `宇宙船の速度を少なくとも ${m[1]}c に設定し、もう一度測定してください。` },
   { test: /^That speed is too high to be “everyday”\. Lower it to ([\d.]+)c or less \(but above 0\), e\.g\. 0\.01c\.$/, render: (m,l) => l === 'id' ? `Kecepatan itu terlalu tinggi untuk disebut “sehari-hari”. Turunkan menjadi ${m[1]}c atau kurang (tetapi di atas 0), misalnya 0,01c.` : `その速度は「日常的」と呼ぶには高すぎます。${m[1]}c 以下（ただし 0 より大きく）、たとえば 0.01c に下げてください。` },
   { test: /^Still to measure at ([\d.]+)c or more: (.+)\.$/, render: (m,l) => l === 'id' ? `Masih perlu diukur pada ${m[1]}c atau lebih: ${m[2]}.` : `${m[1]}c 以上で未測定です：${m[2]}。` },
-  { test: /^Track from ([-\\d.]+) to ([-\\d.]+) metres\\. The object is at x = ([-\\d.]+) m, started at x₀ = ([-\\d.]+) m, moving at ([-\\d.]+) m\\/s\\.$/, render: (m,l) => l === 'id' ? `Lintasan dari ${m[1]} hingga ${m[2]} meter. Posisi benda x = ${m[3]} m, berawal dari x₀ = ${m[4]} m, dengan kecepatan ${m[5]} m/s.` : `トラックの範囲は ${m[1]}～${m[2]} m です。物体の位置は x = ${m[3]} m、開始位置は x₀ = ${m[4]} m、速度は ${m[5]} m/s です。` },
-  { test: /^Launcher ready, seen from the ground: ([-\\d.]+) m\\/s at ([-\\d.]+) degrees from ([-\\d.]+) m\\.$/, render: (m,l) => l === 'id' ? `Peluncur siap, dilihat dari kerangka tanah: ${m[1]} m/s pada sudut ${m[2]} derajat dari ketinggian ${m[3]} m.` : `地上から見た発射準備完了状態です。速度は ${m[1]} m/s、角度は ${m[2]} 度、高さは ${m[3]} m です。` },
-  { test: /^Launcher ready, seen from a train moving at ([-\\d.]+) m\\/s: ([-\\d.]+) m\\/s at ([-\\d.]+) degrees from ([-\\d.]+) m\\.$/, render: (m,l) => l === 'id' ? `Peluncur siap, dilihat dari kereta yang bergerak dengan kecepatan ${m[1]} m/s: kecepatan peluncuran ${m[2]} m/s pada sudut ${m[3]} derajat dari ketinggian ${m[4]} m.` : `速度 ${m[1]} m/s で走る列車から見た発射準備完了状態です。発射速度は ${m[2]} m/s、角度は ${m[3]} 度、高さは ${m[4]} m です。` },
-  { test: /^Ball seen from the ground, at ([-\\d.]+) m across and ([-\\d.]+) m up, after ([-\\d.]+) s\\.$/, render: (m,l) => l === 'id' ? `Dilihat dari kerangka tanah, bola berada pada jarak horizontal ${m[1]} m dan ketinggian ${m[2]} m setelah ${m[3]} s.` : `地上から見ると、ボールは ${m[3]} 秒後に水平位置 ${m[1]} m、高さ ${m[2]} m にあります。` },
-  { test: /^Ball seen from a train moving at ([-\\d.]+) m\\/s, at ([-\\d.]+) m across and ([-\\d.]+) m up, after ([-\\d.]+) s\\.$/, render: (m,l) => l === 'id' ? `速度 ${m[1]} m/s で動く列車から見ると、ボールは ${m[4]} s 後に水平位置 ${m[2]} m、高さ ${m[3]} m にあります。` : `速度 ${m[1]} m/s で走る列車から見ると、ボールは ${m[4]} 秒後に水平位置 ${m[2]} m、高さ ${m[3]} m にあります。` },
+  { test: /^Track from ([-\d.]+) to ([-\d.]+) metres\. The object is at x = ([-\d.]+) m, started at x₀ = ([-\d.]+) m, moving at ([-\d.]+) m\/s\.$/, render: (m,l) => l === 'id' ? `Lintasan dari ${m[1]} hingga ${m[2]} meter. Posisi benda x = ${m[3]} m, berawal dari x₀ = ${m[4]} m, dengan kecepatan ${m[5]} m/s.` : `トラックの範囲は ${m[1]}～${m[2]} m です。物体の位置は x = ${m[3]} m、開始位置は x₀ = ${m[4]} m、速度は ${m[5]} m/s です。` },
+  { test: /^Launcher ready, seen from the ground: ([-\d.]+) m\/s at ([-\d.]+) degrees from ([-\d.]+) m\.$/, render: (m,l) => l === 'id' ? `Peluncur siap, dilihat dari kerangka tanah: ${m[1]} m/s pada sudut ${m[2]} derajat dari ketinggian ${m[3]} m.` : `地上から見た発射準備完了状態です。速度は ${m[1]} m/s、角度は ${m[2]} 度、高さは ${m[3]} m です。` },
+  { test: /^Launcher ready, seen from a train moving at ([-\d.]+) m\/s: ([-\d.]+) m\/s at ([-\d.]+) degrees from ([-\d.]+) m\.$/, render: (m,l) => l === 'id' ? `Peluncur siap, dilihat dari kereta yang bergerak dengan kecepatan ${m[1]} m/s: kecepatan peluncuran ${m[2]} m/s pada sudut ${m[3]} derajat dari ketinggian ${m[4]} m.` : `速度 ${m[1]} m/s で走る列車から見た発射準備完了状態です。発射速度は ${m[2]} m/s、角度は ${m[3]} 度、高さは ${m[4]} m です。` },
+  { test: /^Ball seen from the ground, at ([-\d.]+) m across and ([-\d.]+) m up, after ([-\d.]+) s\.$/, render: (m,l) => l === 'id' ? `Dilihat dari kerangka tanah, bola berada pada jarak horizontal ${m[1]} m dan ketinggian ${m[2]} m setelah ${m[3]} s.` : `地上から見ると、ボールは ${m[3]} 秒後に水平位置 ${m[1]} m、高さ ${m[2]} m にあります。` },
+  { test: /^Ball seen from a train moving at ([-\d.]+) m\/s, at ([-\d.]+) m across and ([-\d.]+) m up, after ([-\d.]+) s\.$/, render: (m,l) => l === 'id' ? `速度 ${m[1]} m/s で動く列車から見ると、ボールは ${m[4]} s 後に水平位置 ${m[2]} m、高さ ${m[3]} m にあります。` : `速度 ${m[1]} m/s で走る列車から見ると、ボールは ${m[4]} 秒後に水平位置 ${m[2]} m、高さ ${m[3]} m にあります。` },
 ]
 
 export function localizeExperimentText(value: string | null | undefined, locale: Locale): string | undefined {
