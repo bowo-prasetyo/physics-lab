@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
+
 const { locale } = useLocale()
-import { computed } from 'vue'
 
 export interface FieldGalaxy {
   readonly id: number
