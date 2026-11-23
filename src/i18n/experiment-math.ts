@@ -106,6 +106,16 @@ const copy: Record<string, readonly [string, string] | string> = {
   'Huygens showed in 1673 that a bob guided along a': ['Huygens menunjukkan pada tahun 1673 bahwa bandul yang dipandu sepanjang lintasan', 'ホイヘンスは 1673 年に、おもりを'],
   'instead of a circle has a period that does not depend on the': ['alih-alih lingkaran memiliki periode yang tidak bergantung pada', '円ではなくこの曲線に沿って動かすと、周期は'],
   'amplitude at all.': ['amplitudo sama sekali.', '振幅にまったく依存しないことを示しました。'],
+  "A second system with origin": ["Sistem kedua dengan titik asal","原点を持つ第 2 の座標系"],
+  "and axes turned by a rotation": ["dan sumbu yang diputar dengan rotasi","軸を回転させた座標系"],
+  "gives every point new coordinates:": ["memberikan koordinat baru untuk setiap titik:","では、すべての点の座標が次のように変わります："],
+  "Turning the axes by": ["Memutar sumbu sebesar","軸を次の角度だけ回転させると"],
+  "about z (here": ["terhadap sumbu z (di sini","z 軸の周りに回転させると（ここでは"],
+  ", and with it all lengths and angles. Rotations and shifts of the origin together make up the": ["; dengan demikian semua panjang dan sudut juga tetap. Rotasi dan pergeseran titik asal secara bersama-sama membentuk","。これにより、すべての長さと角度が保たれます。回転と原点の移動を合わせた変換は"],
+  "Euclidean group": ["grup Euclidean","ユークリッド群"],
+  ": the symmetries of space.": [": yaitu simetri ruang.","：空間の対称性です。"],
+  "The unit vector": ["Vektor satuan","単位ベクトル"],
+  "has components equal to the cosines of the angles it makes with the three axes. Here those angles are": ["memiliki komponen yang sama dengan kosinus sudutnya terhadap ketiga sumbu. Sudut-sudutnya di sini adalah","の各成分は、3 本の軸となす角の余弦に等しくなります。今回の角度は"],
 }
 
 export function localizeExperimentMathText(value: string, locale: Locale): string {
