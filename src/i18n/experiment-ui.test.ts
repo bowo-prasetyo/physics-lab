@@ -243,7 +243,7 @@ describe('experiment UI localization', () => {
         expect(translated).not.toContain('Track from')
         expect(translated).not.toContain('Pendulum ')
         expect(translated).not.toContain('Cooling gas')
-        expect(translated).toContain('3.00')
+        for (const number of source.matchAll(/\\d+(?:\\.\\d+)?/g)) expect(translated).toContain(number[0])
       }
     }
   })
