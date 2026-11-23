@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 const props = defineProps<{
   x: number
@@ -41,7 +45,7 @@ const description = computed(
 </script>
 
 <template>
-  <svg :viewBox="`0 0 ${W} ${H}`" class="track" role="img" :aria-label="description">
+  <svg :viewBox="`0 0 ${W} ${H}`" class="track" role="img" :aria-label="localizeExperimentText(description, locale)">
     <defs>
       <marker :id="`${id}-arrow-v`" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
         <path d="M0,0 L10,5 L0,10 z" class="head-velocity" />
@@ -62,7 +66,7 @@ const description = computed(
       <line :x1="px(tick.x)" :x2="px(tick.x)" :y1="TRACK_Y + 16" :y2="TRACK_Y + (tick.major ? 24 : 20)" class="tick" />
       <text v-if="tick.major" :x="px(tick.x)" :y="TRACK_Y + 40" class="tick-label">{{ tick.x }}</text>
     </g>
-    <text :x="W / 2" :y="H - 6" class="tick-label axis-name">position x (m)</text>
+    <text :x="W / 2" :y="H - 6" class="tick-label axis-name">{{ localizeExperimentText('position x (m)', locale) }}</text>
 
     <!-- Starting position -->
     <line :x1="startX" :x2="startX" :y1="TRACK_Y - 46" :y2="TRACK_Y + 16" class="start-line" />
@@ -85,7 +89,7 @@ const description = computed(
     <g v-if="observerX !== null" :clip-path="`url(#${id}-clip)`">
       <g :transform="`translate(${px(observerX)}, ${TRACK_Y + 52})`" class="observer">
         <path d="M0,-12 L9,6 L-9,6 z" />
-        <text x="14" y="5">observer</text>
+        <text x="14" y="5">{{ localizeExperimentText('observer', locale) }}</text>
       </g>
     </g>
 
