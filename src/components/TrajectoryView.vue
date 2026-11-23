@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 import { stateAtTime, type ProjectileState } from '@/physics'
 
 const props = defineProps<{
@@ -117,7 +121,7 @@ const description = computed(() => {
 
 <template>
   <figure class="trajectory">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="description">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(description, locale)">
       <defs>
         <clipPath :id="`${id}-plot`"><rect :x="M.left" :y="0" :width="plotW" :height="H - 18" /></clipPath>
         <marker :id="`${id}-vx`" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="head-x" /></marker>
@@ -152,20 +156,20 @@ const description = computed(() => {
 
       <text v-for="h in heightTicks" :key="`lh${h}`" :x="M.left - 6" :y="sy(h) + 4" class="tick y">{{ h }}</text>
       <text :x="M.left + plotW / 2" :y="H - 4" class="axis-title">
-        distance along the ground (m){{ frameVelocity !== 0 ? ' — the ground slides backwards past the train' : '' }}
+        {{ localizeExperimentText('distance along the ground (m)', locale) }}{{ frameVelocity !== 0 ? ` — ${localizeExperimentText('the ground slides backwards past the train', locale)}` : '' }}
       </text>
-      <text :x="12" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 12 ${M.top + plotH / 2})`">height (m)</text>
+      <text :x="12" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 12 ${M.top + plotH / 2})`">{{ localizeExperimentText('height (m)', locale) }}</text>
     </svg>
     <details class="trajectory-data">
-      <summary>Read the current projectile measurements as a table</summary>
-      <table><thead><tr><th scope="col">Object</th><th scope="col">Horizontal position</th><th scope="col">Height</th><th scope="col">Horizontal velocity</th><th scope="col">Vertical velocity</th></tr></thead>
+      <summary>{{ localizeExperimentText('Read the current projectile measurements as a table', locale) }}</summary>
+      <table><thead><tr><th scope="col">{{ localizeExperimentText('Object', locale) }}</th><th scope="col">{{ localizeExperimentText('Horizontal position', locale) }}</th><th scope="col">{{ localizeExperimentText('Height', locale) }}</th><th scope="col">{{ localizeExperimentText('Horizontal velocity', locale) }}</th><th scope="col">{{ localizeExperimentText('Vertical velocity', locale) }}</th></tr></thead>
         <tbody>
-          <tr v-if="ball"><th scope="row">Launched ball</th><td>{{ view(ball).x.toFixed(2) }} m</td><td>{{ ball.y.toFixed(2) }} m</td><td>{{ (ball.vx - u).toFixed(2) }} m/s</td><td>{{ ball.vy.toFixed(2) }} m/s</td></tr>
-          <tr v-if="droppedBall"><th scope="row">Dropped ball</th><td>{{ view(droppedBall).x.toFixed(2) }} m</td><td>{{ droppedBall.y.toFixed(2) }} m</td><td>{{ (droppedBall.vx - u).toFixed(2) }} m/s</td><td>{{ droppedBall.vy.toFixed(2) }} m/s</td></tr>
-          <tr v-if="!ball && !droppedBall"><th scope="row">Before launch</th><td>0.00 m</td><td>{{ height.toFixed(2) }} m</td><td>Not moving</td><td>Not moving</td></tr>
+          <tr v-if="ball"><th scope="row">{{ localizeExperimentText('Launched ball', locale) }}</th><td>{{ view(ball).x.toFixed(2) }} m</td><td>{{ ball.y.toFixed(2) }} m</td><td>{{ (ball.vx - u).toFixed(2) }} m/s</td><td>{{ ball.vy.toFixed(2) }} m/s</td></tr>
+          <tr v-if="droppedBall"><th scope="row">{{ localizeExperimentText('Dropped ball', locale) }}</th><td>{{ view(droppedBall).x.toFixed(2) }} m</td><td>{{ droppedBall.y.toFixed(2) }} m</td><td>{{ (droppedBall.vx - u).toFixed(2) }} m/s</td><td>{{ droppedBall.vy.toFixed(2) }} m/s</td></tr>
+          <tr v-if="!ball && !droppedBall"><th scope="row">{{ localizeExperimentText('Before launch', locale) }}</th><td>0.00 m</td><td>{{ height.toFixed(2) }} m</td><td>{{ localizeExperimentText('Not moving', locale) }}</td><td>{{ localizeExperimentText('Not moving', locale) }}</td></tr>
         </tbody>
       </table>
-      <p class="muted small">Positions and velocities are measured in {{ frameVelocity === 0 ? 'the ground frame' : 'the moving observer’s frame' }} at t = {{ t.toFixed(2) }} s.</p>
+      <p class="muted small">{{ localizeExperimentText('Positions and velocities are measured in', locale) }} {{ localizeExperimentText(frameVelocity === 0 ? 'the ground frame' : 'the moving observer’s frame', locale) }} at t = {{ t.toFixed(2) }} s.</p>
     </details>
   </figure>
 </template>
