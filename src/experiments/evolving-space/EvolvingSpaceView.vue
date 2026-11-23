@@ -163,10 +163,10 @@ const expansionWord = computed(() => {
           </div>
           <div class="buttons">
             <button class="btn" type="button" :disabled="t <= expansion.tMin" @click="running && direction === -1 ? stop() : run(-1)">
-              {{ running && direction === -1 ? 'Pause' : '◀ Backwards' }}
+              {{ running && direction === -1 ? tx('Pause') : tx('◀ Backwards') }}
             </button>
             <button class="btn btn-primary" type="button" :disabled="t >= expansion.tMax" @click="running && direction === 1 ? stop() : run(1)">
-              {{ running && direction === 1 ? 'Pause' : 'Forwards ▶' }}
+              {{ running && direction === 1 ? tx('Pause') : tx('Forwards ▶') }}
             </button>
           </div>
           <div class="time-slider">
@@ -218,7 +218,7 @@ const expansionWord = computed(() => {
     <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
       <EvolvingSpaceMath :level="level" :cosmology="cosmology" :expansion="expansion" :a="readings.a" :hubble="hubblePerGyr" :target="target" />
     </section>
     </details>
