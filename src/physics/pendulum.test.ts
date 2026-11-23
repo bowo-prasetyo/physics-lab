@@ -59,9 +59,10 @@ describe('simulation', () => {
     }
   })
 
-  it('Störmer–Verlet keeps its energy error bounded; RK4’s grows steadily', () => {
-    // With h = 10 ms, RK4 starts far more accurate, but its error keeps growing,
-    // while Verlet's oscillates at a fixed size for ever. Over long runs that is what matters for a clock.
+  it('at this step size, Verlet energy error stays bounded over the tested run while RK4 accumulates error', () => {
+    // This is a finite, setup-specific comparison (L = 1 m, 60° release, h = 10 ms),
+    // not a proof of bounded error for arbitrary step sizes or infinite time.
+    // RK4 starts more accurate here, but accumulates substantially more error over this run.
     const L = 1
     const h = 0.01
     let v = release(60)
@@ -78,8 +79,8 @@ describe('simulation', () => {
       else verletLate = Math.max(verletLate, err(v))
       if (i === 2000) rk4Early = err(r)
     }
-    expect(verletLate / verletEarly).toBeLessThan(1.01) // bounded: no growth over 100× longer
-    expect(err(r) / rk4Early).toBeGreaterThan(50) // drifts: roughly proportional to time
+    expect(verletLate / verletEarly).toBeLessThan(1.01) // no material increase in the sampled maximum over the later 99% of this run
+    expect(err(r) / rk4Early).toBeGreaterThan(50) // RK4 accumulates error substantially in this particular run
   })
 
   it('advances by exactly the requested time', () => {
