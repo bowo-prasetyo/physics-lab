@@ -13,8 +13,6 @@ type ExperimentId =
   | 'gravity-clocks'
   | 'evolving-space'
 
-defineProps<{ experimentId: ExperimentId }>()
-
 const { locale } = useLocale()
 const props = defineProps<{ experimentId: ExperimentId }>()
 
