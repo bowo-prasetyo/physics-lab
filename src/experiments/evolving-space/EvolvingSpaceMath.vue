@@ -33,9 +33,11 @@ const hubbleExample = computed(() => {
 const friedmannExample = computed(() => {
   const c = props.cosmology
   const e = props.a > 1e-6 ? expansionFactor(c, props.a) : null
+  const omegaK = 1 - c.omegaR - c.omegaM - c.omegaL
   const terms = [
     c.omegaR ? `${f(c.omegaR, 2)}\\,a^{-4}` : '',
     c.omegaM ? `${f(c.omegaM, 3)}\\,a^{-3}` : '',
+    Math.abs(omegaK) > 1e-10 ? `${f(omegaK, 3)}\\,a^{-2}` : '',
     c.omegaL ? `${f(c.omegaL, 3)}` : '',
   ].filter(Boolean)
   // One term per line so it fits on a phone.
