@@ -73,12 +73,24 @@ describe('our universe', () => {
     expect(deceleration(our, 0.3)).toBeGreaterThan(0)
   })
 
-  it('switched from slowing to speeding up at a ≈ 0.61 (z ≈ 0.64), about 6 billion years ago', () => {
+  it('solves the acceleration transition with radiation included', () => {
     const a = accelerationOnset(our) as number
-    expect(a).toBeCloseTo(0.61, 2)
-    expect(redshift(a)).toBeCloseTo(0.64, 1)
-    expect(Math.abs(deceleration(our, a))).toBeLessThan(1e-3) // radiation makes it not exactly 0
-    expect(e.tToday - e.timeAt(a)).toBeCloseTo(6.1, 0)
+    expect(a).toBeCloseTo(0.60916, 5)
+    expect(redshift(a)).toBeCloseTo(0.6416, 3)
+    expect(deceleration(our, a)).toBeCloseTo(0, 10)
+    expect(e.tToday - e.timeAt(a)).toBeCloseTo(6.144, 2)
+  })
+
+  it('matches the analytic matter + Λ transition when radiation is zero', () => {
+    const c: Cosmology = { id: 'our', name: 'matter + Λ', h0: 67.66, omegaR: 0, omegaM: 0.3, omegaL: 0.7 }
+    expect(accelerationOnset(c)).toBeCloseTo((0.3 / (2 * 0.7)) ** (1 / 3), 12)
+  })
+
+  it('includes radiation in a radiation + Λ universe with no matter', () => {
+    const c: Cosmology = { id: 'our', name: 'radiation + Λ', h0: 67.66, omegaR: 0.2, omegaM: 0, omegaL: 0.8 }
+    const a = accelerationOnset(c) as number
+    expect(a).toBeCloseTo((0.2 / 0.8) ** 0.25, 12)
+    expect(deceleration(c, a)).toBeCloseTo(0, 12)
   })
 
   it('galaxies beyond the Hubble distance c/H₀ ≈ 14.5 Gly recede faster than light today', () => {
@@ -90,7 +102,9 @@ describe('our universe', () => {
     expect(cmbTemperature(1 / 1100)).toBeCloseTo(3000, -2)
   })
 
-  it('models without matter or Λ have no acceleration onset', () => {
+  it('models without a positive Λ, or without radiation and matter, have no transition', () => {
     expect(accelerationOnset(model('matter'))).toBeNull()
+    expect(accelerationOnset(model('radiation'))).toBeNull()
+    expect(accelerationOnset(model('lambda'))).toBeNull()
   })
 })

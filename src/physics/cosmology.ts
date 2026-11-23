@@ -68,10 +68,37 @@ export function deceleration(c: Cosmology, a: number): number {
   return (c.omegaR / a ** 4 + c.omegaM / (2 * a ** 3) - c.omegaL) / e2
 }
 
-/** Scale factor at which a flat matter + Λ universe switches from slowing to speeding up. */
+/**
+ * Scale factor at which the expansion switches from deceleration to acceleration.
+ *
+ * For radiation, pressureless matter, curvature and a cosmological constant,
+ * q = 0 when Ωᵣ + (Ωₘ / 2) a − ΩΛ a⁴ = 0. Curvature does not appear because
+ * it affects H² but not ä/a. For non-negative radiation/matter densities and
+ * ΩΛ > 0 this equation has one positive root whenever radiation or matter is
+ * present. Bisection avoids assuming radiation is negligible.
+ */
 export function accelerationOnset(c: Cosmology): number | null {
-  if (c.omegaL <= 0 || c.omegaM <= 0) return null
-  return (c.omegaM / (2 * c.omegaL)) ** (1 / 3)
+  if (c.omegaL <= 0 || (c.omegaR <= 0 && c.omegaM <= 0)) return null
+
+  const numerator = (a: number) =>
+    c.omegaR + 0.5 * c.omegaM * a - c.omegaL * a ** 4
+
+  let low = 0
+  let high = 1
+  // The transition can lie in the future when Λ is small.
+  while (numerator(high) > 0) {
+    high *= 2
+    if (!Number.isFinite(high)) return null
+  }
+
+  // The numerator is positive at a = 0 and eventually negative. Its unique
+  // positive zero is the deceleration-to-acceleration transition.
+  for (let i = 0; i < 100; i++) {
+    const mid = (low + high) / 2
+    if (numerator(mid) > 0) low = mid
+    else high = mid
+  }
+  return (low + high) / 2
 }
 
 /** Cosmological redshift of light emitted when the scale factor was a and received today. */
