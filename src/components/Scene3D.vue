@@ -47,6 +47,17 @@ let dynamicResources: Disposable[] = []
 let collecting: Disposable[] = staticResources
 const colourQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
+const formatPoint = (p: Vec3) => `(${p.x.toFixed(2)}, ${p.y.toFixed(2)}, ${p.z.toFixed(2)})`
+const startPoint = () => props.points[0] ?? { x: 0, y: 0, z: 0 }
+const endPoint = () => props.points[props.points.length - 1] ?? startPoint()
+const displacement = () => ({
+  x: endPoint().x - startPoint().x,
+  y: endPoint().y - startPoint().y,
+  z: endPoint().z - startPoint().z,
+})
+const description = () =>
+  `Interactive 3D view of a path in Cartesian coordinates. x points east, y north and z up. Start ${formatPoint(startPoint())}; current position ${formatPoint(endPoint())}; displacement ${formatPoint(displacement())} metres. Use the view presets for standard camera angles. A numerical alternative follows.`
+
 const AXIS_COLOURS = { x: 0xe5484d, y: 0x30a46c, z: 0x3e63dd }
 
 function cssColour(name: string, fallback: string): THREE.Color {
@@ -265,6 +276,7 @@ onMounted(() => {
   renderer.domElement.setAttribute('aria-hidden', 'true')
   labels = new CSS2DRenderer()
   labels.domElement.className = 'scene-labels'
+  labels.domElement.setAttribute('aria-hidden', 'true')
   el.appendChild(labels.domElement)
 
   camera = new THREE.PerspectiveCamera(40, 1.5, 0.1, 500)
@@ -312,7 +324,18 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="scene-wrap">
-    <div ref="container" class="scene" />
+    <div ref="container" class="scene" role="img" :aria-label="description()" />
+    <details class="scene-data">
+      <summary>Read the 3D coordinates as text</summary>
+      <dl>
+        <div><dt>Starting point (x, y, z)</dt><dd>{{ formatPoint(startPoint()) }} m</dd></div>
+        <div><dt>Current point (x, y, z)</dt><dd>{{ formatPoint(endPoint()) }} m</dd></div>
+        <div><dt>Displacement (Δx, Δy, Δz)</dt><dd>{{ formatPoint(displacement()) }} m</dd></div>
+        <div><dt>Distance between start and current point</dt><dd>{{ Math.hypot(displacement().x, displacement().y, displacement().z).toFixed(2) }} m</dd></div>
+        <div><dt>Path points recorded</dt><dd>{{ points.length }}</dd></div>
+      </dl>
+      <p class="muted small">Coordinates use the standard axes: x east, y north, z up. The displacement is the straight-line change from the starting point, not the total path length.</p>
+    </details>
     <p v-if="failed" class="no-webgl">The 3D view needs WebGL, which this browser does not offer. The readouts and controls still work.</p>
   </div>
 </template>
@@ -330,7 +353,7 @@ onBeforeUnmount(() => {
   border-radius: var(--radius-sm);
   background: var(--surface-2);
   overflow: hidden;
-  touch-action: none;
+  touch-action: pan-y pinch-zoom;
 }
 
 .scene :deep(canvas) {
@@ -391,6 +414,19 @@ onBeforeUnmount(() => {
   color: var(--text-muted);
 }
 
+.scene-data {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.scene-data summary { cursor: pointer; color: var(--accent); font-weight: 650; }
+.scene-data dl { display: grid; gap: 6px; margin: 10px 0; }
+.scene-data dl div { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; }
+.scene-data dt { color: var(--text-muted); }
+.scene-data dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.scene-data .small { font-size: .82rem; margin: 0; }
 .no-webgl {
   padding: 16px;
   margin: 0;

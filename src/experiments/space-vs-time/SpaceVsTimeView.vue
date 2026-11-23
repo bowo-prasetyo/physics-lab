@@ -194,7 +194,6 @@ async function copyLink() {
 
           <div class="side-footer">
             <button class="btn btn-small" type="button" :disabled="history.length === 0" @click="clearHistory">Clear earlier runs</button>
-            <button class="btn btn-small" type="button" @click="copyLink">{{ copied ? 'Link copied' : 'Copy link to this setup' }}</button>
           </div>
         </div>
       </div>

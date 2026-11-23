@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ShareExperiment from '@/components/ShareExperiment.vue'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import ParameterSlider from '@/components/ParameterSlider.vue'
@@ -54,6 +55,8 @@ function runExperiment() {
       <p class="lead">Push a cart with a constant net force. Change the force or the cart’s mass, predict what will happen, and test Newton’s second law.</p>
     </header>
 
+    <ShareExperiment />
+
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Choose an answer before running the model. Each explanation unlocks only after you have compared the relevant cases.</p>
@@ -98,7 +101,11 @@ function runExperiment() {
       </div>
     </section>
 
-    <section class="card prose" aria-labelledby="maths-title">
+    <details class="lesson-disclosure">
+      <summary>3 · Explore the mathematics</summary>
+      <details class="lesson-disclosure">
+      <summary>4 · Explore the meaning and interpretation</summary>
+      <section class="card prose" aria-labelledby="maths-title">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <p>Newton’s second law relates the net force on an object to its acceleration:</p>
       <MathFormula tex="\sum F = ma" :display="true" />
@@ -108,7 +115,9 @@ function runExperiment() {
       <p v-if="atLeast(level, 'advanced')">In vector form, <MathFormula tex="\sum \vec{F} = m\vec{a}" />. Acceleration is determined by the vector sum of all external forces, not by a single force considered in isolation.</p>
     </section>
 
-    <section class="card prose">
+    <sec
+    </details>
+    </details>tion class="card prose">
       <h2><span class="step-no">4</span> What does it tell us?</h2>
       <h3>Established physics</h3>
       <ul>

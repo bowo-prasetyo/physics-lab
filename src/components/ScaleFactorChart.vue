@@ -80,6 +80,15 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
         <circle :cx="current.x" :cy="current.y" r="7" class="now" />
       </g>
     </svg>
+    <details class="chart-data">
+      <summary>Read the current model values</summary>
+      <table><tbody>
+        <tr><th scope="row">Selected time</th><td>{{ t.toFixed(3) }} billion years</td></tr>
+        <tr><th scope="row">Scale factor at selected time</th><td>{{ expansion.scaleFactorAt(t).toPrecision(5) }}</td></tr>
+        <tr><th scope="row">Scale factor today</th><td>1</td></tr>
+        <tr v-if="accelerationTime !== null"><th scope="row">Acceleration begins</th><td>{{ accelerationTime.toFixed(3) }} billion years</td></tr>
+      </tbody></table>
+    </details>
     <figcaption class="legend">
       <span><i class="swatch main" /> This model</span>
       <span v-if="other"><i class="swatch compare" /> Our universe, for comparison</span>
@@ -88,9 +97,12 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
 </template>
 
 <style scoped>
-.chart {
-  margin: 0;
-}
+.chart { margin: 0; }
+.chart-data { margin-top: 8px; font-size: .84rem; }
+.chart-data summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.chart-data table { width: 100%; border-collapse: collapse; }
+.chart-data th, .chart-data td { padding: 6px 9px; border-bottom: 1px solid var(--border); text-align: left; }
+.chart-data th { color: var(--text-muted); }
 
 svg {
   display: block;

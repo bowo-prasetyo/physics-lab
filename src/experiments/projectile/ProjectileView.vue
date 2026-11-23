@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ShareExperiment from '@/components/ShareExperiment.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import MathFormula from '@/components/MathFormula.vue'
@@ -135,6 +136,8 @@ const dropDifference = computed(() => {
       </p>
     </header>
 
+    <ShareExperiment />
+
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> Predict</h2>
       <p class="muted">Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.</p>
@@ -230,12 +233,18 @@ const dropDifference = computed(() => {
       </div>
     </section>
 
-    <section aria-labelledby="maths-title" class="card prose">
+    <details class="lesson-disclosure">
+      <summary>3 · Explore the mathematics</summary>
+      <details class="lesson-disclosure">
+      <summary>4 · Explore the meaning and interpretation</summary>
+      <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <ProjectileMath :level="level" :params="params" :planet="planet" :drag-applies="dragApplies" :best-angle="bestAngle" />
     </section>
 
-    <section aria-labelledby="meaning-title" class="card prose">
+    <sec
+    </details>
+    </details>tion aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
         <InfoCallout kind="physics" title="Established physics">

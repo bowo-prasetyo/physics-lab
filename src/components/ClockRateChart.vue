@@ -100,13 +100,25 @@ const description = computed(
         </g>
       </g>
     </svg>
+    <details class="chart-data">
+      <summary>Read the clock comparisons as a table</summary>
+      <table><thead><tr><th scope="col">Clock</th><th scope="col">Altitude</th><th scope="col">Clock-rate deficit</th></tr></thead>
+        <tbody><tr><th scope="row">A</th><td>{{ formatLength(altitudeA) }}</td><td>{{ (deficitAt(altitudeA) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr>
+          <tr><th scope="row">B</th><td>{{ formatLength(altitudeB) }}</td><td>{{ (deficitAt(altitudeB) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr></tbody>
+      </table>
+      <p class="muted small">A positive deficit means the clock runs slower than a clock infinitely far from this body, under the static Schwarzschild model.</p>
+    </details>
   </figure>
 </template>
 
 <style scoped>
-.chart {
-  margin: 0;
-}
+.chart { margin: 0; }
+.chart-data { margin-top: 8px; font-size: .84rem; }
+.chart-data summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.chart-data table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.chart-data th, .chart-data td { padding: 6px 9px; border-bottom: 1px solid var(--border); text-align: left; }
+.chart-data th { color: var(--text-muted); }
+.chart-data .small { margin: 8px 0 0; }
 
 svg {
   display: block;

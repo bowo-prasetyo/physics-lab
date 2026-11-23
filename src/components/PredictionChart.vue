@@ -72,6 +72,12 @@ const description = computed(
         <circle v-if="measured !== null" :cx="sx(marker)" :cy="sy(measured)" r="7" class="measured" />
       </g>
     </svg>
+    <details class="chart-data">
+      <summary>View the plotted values as a table</summary>
+      <div class="chart-scroll"><table><thead><tr><th scope="col">Model</th><th scope="col">{{ xLabel }}</th><th scope="col">{{ yLabel }}</th></tr></thead>
+        <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ item.label }}</th><td>{{ point.x.toFixed(3) }}</td><td>{{ point.y.toFixed(3) }}</td></tr></template>
+          <tr v-if="measured !== null"><th scope="row">Measured</th><td>{{ marker.toFixed(3) }}</td><td>{{ measured.toFixed(3) }}</td></tr></tbody></table></div>
+    </details>
     <figcaption class="legend">
       <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind, { dashed: line.dashed }]" /> {{ line.label }}</span>
       <span v-if="measured !== null"><i class="swatch measured-swatch" /> Measured</span>
@@ -80,9 +86,13 @@ const description = computed(
 </template>
 
 <style scoped>
-.chart {
-  margin: 0;
-}
+.chart { margin: 0; }
+.chart-data { margin-top: 8px; font-size: .84rem; }
+.chart-data summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.chart-scroll { max-width: 100%; overflow-x: auto; }
+.chart-data table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.chart-data th, .chart-data td { padding: 6px 9px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+.chart-data th { color: var(--text-muted); }
 
 svg {
   display: block;

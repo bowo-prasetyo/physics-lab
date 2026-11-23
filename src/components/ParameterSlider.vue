@@ -60,7 +60,9 @@ output {
 input[type='range'] {
   width: 100%;
   margin: 6px 0 0;
+  min-height: 44px;
   accent-color: var(--accent);
+  touch-action: pan-y;
 }
 
 .disabled {
