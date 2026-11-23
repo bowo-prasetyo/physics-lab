@@ -19,12 +19,14 @@ import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
+import { formatNumber } from '@/i18n/formatters'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
 const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
+const fmtGravity = (value: number) => formatNumber(value, { maximumFractionDigits: 2 })
 
 // A setup can be shared as a link, e.g. #/time/pendulum?level=beginner&L=1&amp=10&m=1&planet=earth
 if (isLevel(route.query.level)) level.value = route.query.level
@@ -154,7 +156,7 @@ function formatClock(seconds: number): string {
           <label class="field">
             <span>{{ tx('World') }}</span>
             <select v-model="planetId">
-              <option v-for="p in PLANETS" :key="p.id" :value="p.id">{{ tx(p.name) }} (g = {{ p.g }} m/s²)</option>
+              <option v-for="p in PLANETS" :key="p.id" :value="p.id">{{ tx(p.name) }} (g = {{ fmtGravity(p.g) }} m/s²)</option>
             </select>
           </label>
 
