@@ -55,10 +55,10 @@ const format = (value: number) => `${value.toFixed(info.value.digits)} ${info.va
 /** How a description's prediction compares with the measurement. */
 function verdict(d: Description): { ok: boolean; text: string } {
   const diff = predictions.value[d] - measurement.value
-  if (Math.abs(diff) < 1e-9) return { ok: true, text: 'Matches the measurement' }
+  if (Math.abs(diff) < 1e-9) return { ok: true, text: tx('Matches the measurement') }
   const pct = Math.abs((100 * diff) / measurement.value)
   const percent = measurement.value !== 0 ? ` (${pct >= 10 ? pct.toFixed(0) : pct.toPrecision(2)}%)` : ''
-  return { ok: false, text: `Off by ${Math.abs(diff).toFixed(info.value.digits)} ${info.value.unit}${percent}` }
+  return { ok: false, text: tx(`Off by ${Math.abs(diff).toFixed(info.value.digits)} ${info.value.unit}${percent}`) }
 }
 
 const SAMPLES = Array.from({ length: 100 }, (_, i) => i / 100)
