@@ -201,22 +201,22 @@ const dropDifference = computed(() => {
           </label>
           <label class="toggle">
             <input v-model="drag" type="checkbox" :disabled="flying" />
-            Air resistance (a baseball)
+            {{ tx('Air resistance (a baseball)') }}
           </label>
-          <p v-if="drag && planet.airDensity === 0" class="small muted">The Moon has no air, so there is no air resistance there.</p>
+          <p v-if="drag && planet.airDensity === 0" class="small muted">{{ tx('The Moon has no air, so there is no air resistance there.') }}</p>
           <label class="toggle">
             <input v-model="companion" type="checkbox" :disabled="flying" />
-            Also drop a ball from the same height at the same moment
+            {{ tx('Also drop a ball from the same height at the same moment') }}
           </label>
 
           <fieldset class="frame" :disabled="flying">
             <legend>{{ localizeExperimentText('Seen from', locale) ?? 'Seen from' }}</legend>
-            <label><input v-model="frame" type="radio" value="ground" /> the ground</label>
-            <label><input v-model="frame" type="radio" value="train" /> a moving train</label>
+            <label><input v-model="frame" type="radio" value="ground" /> {{ tx('the ground') }}</label>
+            <label><input v-model="frame" type="radio" value="train" /> {{ tx('a moving train') }}</label>
           </fieldset>
           <template v-if="frame === 'train'">
             <ParameterSlider v-model="trainSpeed" :label="localizeExperimentText('Train speed', locale) ?? 'Train speed'" symbol="u" unit="m/s" v-bind="TRAIN_RANGE" :disabled="flying" />
-            <button class="btn btn-small" type="button" :disabled="flying" @click="matchBall">Match the ball ({{ fmt(horizontalSpeed) }} m/s)</button>
+            <button class="btn btn-small" type="button" :disabled="flying" @click="matchBall">{{ tx('Match the ball') }} ({{ fmt(horizontalSpeed) }} m/s)</button>
           </template>
 
           <dl class="readouts">
@@ -226,15 +226,15 @@ const dropDifference = computed(() => {
               <div><dt>{{ tx("Height y") }}</dt><dd class="num">{{ fmt(ball.y) }} m</dd></div>
             </template>
             <template v-if="end && status === 'landed'">
-              <div><dt>Range (along the ground)</dt><dd class="num">{{ fmt(end.x) }} m</dd></div>
+              <div><dt>{{ tx('Range (along the ground)') }}</dt><dd class="num">{{ fmt(end.x) }} m</dd></div>
               <div><dt>{{ tx("Highest point") }}</dt><dd class="num">{{ fmt(maxHeight ?? 0) }} m</dd></div>
-              <div><dt>Time in the air</dt><dd class="num">{{ fmt(end.t) }} s</dd></div>
+              <div><dt>{{ tx('Time in the air') }}</dt><dd class="num">{{ fmt(end.t) }} s</dd></div>
             </template>
             <template v-if="advanced && energy">
               <div><dt>{{ tx("Energy per kg") }}</dt><dd class="num">{{ fmt(energy.e) }} J/kg</dd></div>
-              <div><dt>Lost to air so far</dt><dd class="num">{{ fmt(energy.lost) }} J/kg</dd></div>
+              <div><dt>{{ tx('Lost to air so far') }}</dt><dd class="num">{{ fmt(energy.lost) }} J/kg</dd></div>
             </template>
-            <div v-if="bestAngle !== null"><dt>Best angle for these settings</dt><dd class="num">{{ fmt(bestAngle) }}°</dd></div>
+            <div v-if="bestAngle !== null"><dt>{{ tx('Best angle for these settings') }}</dt><dd class="num">{{ fmt(bestAngle) }}°</dd></div>
           </dl>
           <button class="btn btn-small" type="button" :disabled="history.length === 0 || flying" @click="clearHistory">{{ localizeExperimentText('Clear earlier throws', locale) ?? 'Clear earlier throws' }}</button>
         </div>
