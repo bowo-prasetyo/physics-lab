@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+const { locale } = useLocale()
 import { computed } from 'vue'
 
 export interface FieldGalaxy {
@@ -107,7 +110,7 @@ function onKey(event: KeyboardEvent, id: number) {
 
 <template>
   <figure class="field">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="group" :aria-label="description">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="group" :aria-label="localizeExperimentText(description, locale)">
       <defs>
         <radialGradient id="plasma-glow">
           <stop offset="0%" stop-color="#ffd27a" />
