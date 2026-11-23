@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useLocale } from '@/composables/useLocale'
-import { localizeExperimentText } from '@/i18n/experiment-ui'
-const { locale } = useLocale()
 import { computed, onMounted, ref, useId } from 'vue'
 import { properTimeTicks, simultaneousTimeAt, type Event1D } from '@/physics'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 export interface DiagramWorldline {
   readonly id: string
