@@ -109,9 +109,15 @@ async function settle(): Promise<void> {
 }
 
 /** Exercise each user-editable control and safe in-page action, recording each resulting state. */
-async function exercisePage(root: HTMLElement, route: string, locale: Locale, snapshots: Map<string, Map<string, CopyRecord[]>>, stats: { controls: number; buttons: number; disclosures: number }): Promise<void> {
+async function exercisePage(root: HTMLElement, route: string, locale: Locale, snapshots: Map<string, CopyRecord[]>, stats: { controls: number; buttons: number; disclosures: number; states: number }, accessibilityIssues: Array<{ route: string; locale: Locale; state: string; element: string }>, languageIssues: Array<{ route: string; locale: Locale; state: string; actual: string }>): Promise<void> {
   const save = (state: string) => {
     snapshots.set([route, locale, state].join('::'), collectCopy(root))
+    const selectors = 'button, input:not([type="hidden"]), select, textarea, a[href], summary, [role="button"], [role="img"], svg[role="group"]'
+    for (const element of Array.from(root.querySelectorAll(selectors))) {
+      if (!accessibleName(element, root)) accessibilityIssues.push({ route, locale, state, element: element.tagName.toLowerCase() })
+    }
+    if (document.documentElement.lang !== locale) languageIssues.push({ route, locale, state, actual: document.documentElement.lang })
+    stats.states += 1
   }
   save('default')
 
@@ -201,11 +207,10 @@ describe('interactive runtime localization audit', () => {
       addEventListener: () => undefined, removeEventListener: () => undefined,
       dispatchEvent: () => false,
     })) as typeof window.matchMedia
-    const snapshots = new Map<string, Map<string, CopyRecord[]>>()
+    const snapshots = new Map<string, CopyRecord[]>()
     const accessibilityIssues: Array<{ route: string; locale: Locale; state: string; element: string }> = []
     const languageIssues: Array<{ route: string; locale: Locale; state: string; actual: string }> = []
-    const stats = { controls: 0, buttons: 0, disclosures: 0 }
-    let renderedStates = 0
+    const stats = { controls: 0, buttons: 0, disclosures: 0, states: 0 }
 
     const originalResizeObserver = globalThis.ResizeObserver
     globalThis.ResizeObserver = class {
@@ -228,22 +233,7 @@ describe('interactive runtime localization audit', () => {
           await settle()
 
           try {
-            const routeSnapshots = new Map<string, CopyRecord[]>()
-            await exercisePage(root, route.name, locale, routeSnapshots, stats)
-            for (const [state, records] of routeSnapshots) {
-              const stateName = state.split('::').slice(2).join('::')
-              snapshots.set([route.name, locale, stateName].join('::'), records)
-              const selectors = 'button, input:not([type="hidden"]), select, textarea, a[href], summary, [role="button"], [role="img"], svg[role="group"]'
-              for (const element of Array.from(root.querySelectorAll(selectors))) {
-                if (!accessibleName(element, root)) {
-                  accessibilityIssues.push({ route: route.name, locale, state: stateName, element: element.tagName.toLowerCase() })
-                }
-              }
-              if (document.documentElement.lang !== locale) {
-                languageIssues.push({ route: route.name, locale, state: stateName, actual: document.documentElement.lang })
-              }
-              renderedStates += 1
-            }
+            await exercisePage(root, route.name, locale, snapshots, stats, accessibilityIssues, languageIssues)
           } finally {
             app.unmount()
             root.remove()
@@ -285,7 +275,7 @@ describe('interactive runtime localization audit', () => {
       summary: {
         routeCount: ROUTES.length,
         localeCount: SUPPORTED_LOCALES.length,
-        renderedStates,
+        renderedStates: stats.states,
         exercisedControlChanges: stats.controls,
         activatedWorkflowButtons: stats.buttons,
         openedDisclosures: stats.disclosures,
@@ -328,7 +318,7 @@ describe('interactive runtime localization audit', () => {
 
     expect(languageIssues, 'The document language must follow the selected locale in every exercised state').toEqual([])
     expect(accessibilityIssues, 'Interactive elements must retain accessible names after state changes').toEqual([])
-    expect(renderedStates).toBeGreaterThan(ROUTES.length * SUPPORTED_LOCALES.length)
-    console.info('Interactive localization audit: ' + renderedStates + ' states; ' + stats.controls + ' control changes; ' + stats.buttons + ' button activations; ' + candidates.length + ' unchanged-English candidates.')
+    expect(stats.states).toBeGreaterThan(ROUTES.length * SUPPORTED_LOCALES.length)
+    console.info('Interactive localization audit: ' + stats.states + ' states; ' + stats.controls + ' control changes; ' + stats.buttons + ' button activations; ' + candidates.length + ' unchanged-English candidates.')
   }, 180_000)
 })
