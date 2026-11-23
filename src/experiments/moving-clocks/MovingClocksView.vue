@@ -19,7 +19,12 @@ import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
 import { localizePredictions } from '@/i18n/experiment-content'
-import { localizeMovingClocksSimultaneityLabel } from '@/i18n/moving-clocks-view'
+import {
+  localizeMovingClocksFrameName,
+  localizeMovingClocksMeetingLabel,
+  localizeMovingClocksNowLabel,
+  localizeMovingClocksSimultaneityLabel,
+} from '@/i18n/moving-clocks-view'
 
 const route = useRoute()
 const level = useLevel()
@@ -52,7 +57,7 @@ const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, lo
 const intermediate = computed(() => atLeast(level.value, 'intermediate'))
 const advanced = computed(() => atLeast(level.value, 'advanced'))
 
-const frameName = computed(() => (frame.value === 'earth' ? 'the Earth' : 'the ship'))
+const frameName = computed(() => localizeMovingClocksFrameName(frame.value, locale.value))
 // Names as used mid-sentence ("the ship clock", "the Earth clock").
 const home = computed(() => (frame.value === 'earth' ? 'Earth' : 'ship'))
 const other = computed(() => (frame.value === 'earth' ? 'ship' : 'Earth'))
@@ -61,7 +66,6 @@ const simultaneityLabel = computed(() => localizeMovingClocksSimultaneityLabel(
   localizeExperimentText(home.value, locale.value) ?? home.value,
   locale.value,
 ))
-const capitalise = (word: string) => word.charAt(0).toUpperCase() + word.slice(1)
 
 // The resting clock's tick labels go on the same side as the moving clock,
 // so the "now" marker on the resting worldline can be labelled on the other.
@@ -80,8 +84,8 @@ const simultaneity = computed<DiagramSimultaneity | null>(() => {
   return {
     velocity,
     through: moving,
-    label: `The ${other.value}’s “now”`,
-    meets: { t: view.value.otherNowMeetsHomeAt, label: `${capitalise(home.value)} clock ${view.value.otherNowMeetsHomeAt.toFixed(2)} s` },
+    label: localizeMovingClocksNowLabel(other.value, locale.value),
+    meets: { t: view.value.otherNowMeetsHomeAt, label: localizeMovingClocksMeetingLabel(home.value, view.value.otherNowMeetsHomeAt, locale.value) },
   }
 })
 
