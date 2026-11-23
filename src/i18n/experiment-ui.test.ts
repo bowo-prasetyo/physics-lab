@@ -10,6 +10,18 @@ describe('experiment UI localization', () => {
     }
   })
 
+  it('localizes dynamic cosmology and track-boundary states', () => {
+    expect(localizeExperimentText('model fails', 'id')).toBe('model tidak berlaku')
+    expect(localizeExperimentText('model fails', 'ja')).toBe('モデルの適用限界')
+    expect(localizeExperimentText('coasting', 'id')).toBe('laju ekspansi konstan')
+    expect(localizeExperimentText('coasting', 'ja')).toBe('等速膨張')
+    expect(localizeExperimentText('slowing down', 'id')).toBe('melambat')
+    expect(localizeExperimentText('slowing down', 'ja')).toBe('減速中')
+    const boundary = 'Held at the end of the track: the object cannot move further, but the clock keeps running.'
+    expect(localizeExperimentText(boundary, 'id')).toContain('Benda tertahan')
+    expect(localizeExperimentText(boundary, 'ja')).toContain('トラックの端')
+  })
+
   it('keeps English hints unchanged', () => {
     const hint = 'Make at least three moves and come back to where you started (or load “Round trip”).'
     expect(localizeExperimentText(hint, 'en')).toBe(hint)
