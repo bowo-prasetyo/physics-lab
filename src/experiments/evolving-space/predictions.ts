@@ -172,8 +172,9 @@ export const PREDICTIONS: readonly Prediction<SpaceRecord>[] = [
     ],
     correct: 'six',
     explanation:
-      'Matter’s density falls as a⁻³ while dark energy’s stays constant. The switch comes when ρ_matter = 2 ρ_Λ, at a = (Ω_m / 2Ω_Λ)^⅓ ≈ 0.61, ' +
-      'redshift z ≈ 0.64, about 6 billion years ago. The acceleration was discovered in 1998 from distant supernovae, and earned the 2011 ' +
+      'Radiation, matter and dark energy determine the switch. For this model, q = 0 gives Ωᵣ + (Ωₘ/2)a − ΩΛa⁴ = 0; including radiation, ' +
+      'a ≈ 0.609, redshift z ≈ 0.642, about 6.14 billion years ago. If radiation is neglected, this reduces to ρ_matter = 2ρ_Λ. ' +
+      'The acceleration was discovered in 1998 from distant supernovae, and earned the 2011 '
       'Nobel Prize in Physics.',
     observed: (r) => observedAccelerationOnset(merged(r)),
     hint: (r) => accelerationHint(merged(r)),
