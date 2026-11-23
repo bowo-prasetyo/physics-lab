@@ -167,39 +167,32 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </section>
     </details>
 
-    <details v-if="locale === 'en'" class="lesson-disclosure">
+    <details class="lesson-disclosure">
       <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" title="Established physics">
+        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale)">
           <ul>
             <li>
-              The speed of light is the same for every observer, whatever the motion of its source (Michelson and Morley, 1887; CERN, 1964).
-              The Galilean description cannot accommodate this.
+              {{ localizeExperimentText('The speed of light is the same for every observer, whatever the motion of its source (Michelson and Morley, 1887; CERN, 1964). The Galilean description cannot accommodate this.', locale) }}
             </li>
-            <li>The Galilean description is the low-speed limit of relativity: for objects much slower than light its errors are tiny.</li>
+            <li>{{ localizeExperimentText('The Galilean description is the low-speed limit of relativity: for objects much slower than light its errors are tiny.', locale) }}</li>
             <li>
-              The space + time (Lorentz) description and the spacetime description are mathematically equivalent formulations of special
-              relativity. They make identical predictions for every measurement.
+              {{ localizeExperimentText('The space + time (Lorentz) description and the spacetime description are mathematically equivalent formulations of special relativity. They make identical predictions for every measurement.', locale) }}
             </li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" title="Interpretation: open to debate">
+        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale)">
           <ul>
             <li>
-              <strong>Is spacetime real, or a convenient bookkeeping?</strong> Equivalent predictions cannot settle this. Some physicists and
-              philosophers take the four-dimensional geometry as the basic reality; others see it as a compact way of describing how
-              measurements by different observers relate, with space and time (or the behaviour of rods and clocks) more basic.
+              <strong>{{ localizeExperimentText('Is spacetime real, or a convenient bookkeeping?', locale) }}</strong> {{ localizeExperimentText('Equivalent predictions cannot settle this. Some physicists and philosophers take the four-dimensional geometry as the basic reality; others see it as a compact way of describing how measurements by different observers relate, with space and time (or the behaviour of rods and clocks) more basic.', locale) }}
             </li>
             <li>
-              <strong>An instructive historical case:</strong> Lorentz’s own interpretation kept an absolute space and time, with a hidden
-              “true” rest frame, and explained time dilation as an effect on moving clocks. It predicts exactly the same measurements as
-              Einstein’s relativity, yet most physicists set it aside because its special frame can never be detected.
+              <strong>{{ localizeExperimentText('An instructive historical case:', locale) }}</strong> {{ localizeExperimentText('Lorentz’s own interpretation kept an absolute space and time, with a hidden “true” rest frame, and explained time dilation as an effect on moving clocks. It predicts exactly the same measurements as Einstein’s relativity, yet most physicists set it aside because its special frame can never be detected.', locale) }}
             </li>
             <li>
-              <strong>Choosing a description</strong> is often a matter of convenience: 3 + 1 splits are standard in computer simulations of
-              colliding black holes, while four-dimensional geometry makes invariants obvious.
+              <strong>{{ localizeExperimentText('Choosing a description', locale) }}</strong> {{ localizeExperimentText('is often a matter of convenience: 3 + 1 splits are standard in computer simulations of colliding black holes, while four-dimensional geometry makes invariants obvious.', locale) }}
             </li>
           </ul>
         </InfoCallout>
