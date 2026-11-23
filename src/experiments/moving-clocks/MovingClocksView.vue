@@ -137,7 +137,7 @@ const signed = (value: number, digits = 2) => {
           :key="p.id"
           :prediction="p"
           :observed="observed[p.id] ?? false"
-          :hint="hints[p.id]"
+          ::hint="localizeExperimentText("hints[p.id]", locale) ?? "hints[p.id]""
           :index="i + 1"
         />
       </div>
@@ -148,7 +148,7 @@ const signed = (value: number, digits = 2) => {
       <div class="lab">
         <div class="lab-main card">
           <fieldset class="frame-switch" :disabled="status === 'running'">
-            <legend>Seen from</legend>
+            <legend>{{ localizeExperimentText("Seen from", locale) ?? "Seen from" }}</legend>
             <label :class="{ active: frame === 'earth' }">
               <input v-model="frame" type="radio" value="earth" class="sr-only" />
               <span class="dot earth" /> the Earth
@@ -178,19 +178,19 @@ const signed = (value: number, digits = 2) => {
 
           <div class="buttons">
             <button class="btn btn-primary" type="button" @click="primaryAction">{{ primaryLabel }}</button>
-            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">Reset</button>
+            <button class="btn" type="button" :disabled="status === 'ready'" @click="reset">{{ localizeExperimentText("Reset", locale) ?? "Reset" }}</button>
           </div>
 
           <ParameterSlider
             v-model="beta"
-            label="Ship speed"
+            :label="localizeExperimentText("Ship speed", locale) ?? "Ship speed""
             symbol="v/c"
             unit="c"
             v-bind="BETA_RANGE"
             :digits="2"
             :signed="false"
             :disabled="status === 'running'"
-            :hint="localizeExperimentText(status === 'running' ? 'Pause to change the speed (this starts a new run).' : 'Relative to the Earth. 0.80c is 80% of light speed.', locale)"
+            ::hint="localizeExperimentText("localizeExperimentText(status === 'running' ? 'Pause to change the speed (this starts a new run).' : 'Relative to the Earth. 0.80c is 80% of light speed.', locale)", locale) ?? "localizeExperimentText(status === 'running' ? 'Pause to change the speed (this starts a new run).' : 'Relative to the Earth. 0.80c is 80% of light speed.', locale)""
           />
 
           <dl class="readouts">
@@ -212,7 +212,7 @@ const signed = (value: number, digits = 2) => {
     </section>
 
     <details class="lesson-disclosure">
-      <summary>3 · Explore the mathematics</summary>
+      <summary>{{ localizeExperimentText("3 · Explore the mathematics", locale) ?? "3 · Explore the mathematics" }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
       <h2 id="maths-title"><span class="step-no">3</span> The mathematics</h2>
       <MovingClocksMath :level="level" :beta="beta" :frame="frame" :t="t" :view="view" />
@@ -220,7 +220,7 @@ const signed = (value: number, digits = 2) => {
     </details>
 
     <details v-if="locale === 'en'" class="lesson-disclosure">
-      <summary>4 · Explore the meaning and interpretation</summary>
+      <summary>{{ localizeExperimentText("4 · Explore the meaning and interpretation", locale) ?? "4 · Explore the meaning and interpretation" }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> What does it tell us?</h2>
       <div class="meaning">
@@ -262,7 +262,7 @@ const signed = (value: number, digits = 2) => {
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-:label="localizeExperimentText("localizeExperimentText('Next steps', locale)", locale) ?? "localizeExperimentText('Next steps', locale)"">
       <p>
         <strong>Next:</strong> Experiment E describes the same situations with separate space and time, and with a single spacetime.
       </p>
