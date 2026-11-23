@@ -166,7 +166,7 @@ useQuerySync({
             :hint="localizeExperimentText(status !== 'ready' ? 'Reset the clock to choose a new starting position.' : '', locale)"
           />
           <div>
-            <ParameterSlider v-model="v" :label="localizeExperimentText('Velocity', locale) ?? 'Velocity'" symbol="v" unit="m/s" v-bind="V_RANGE" :disabled="status === 'finished'" :hint="localizeExperimentText(velocityNote, locale)" />
+            <ParameterSlider v-model="v" :label="localizeExperimentText('Velocity', locale) ?? 'Velocity'" symbol="v" unit="m/s" v-bind="V_RANGE" :disabled="status === 'finished'" :hint="velocityNote" />
             <button class="btn btn-small" type="button" :disabled="v === 0 || status === 'finished'" @click="v = 0">{{ localizeExperimentText('Set v = 0', locale) ?? 'Set v = 0' }}</button>
           </div>
           <ParameterSlider
@@ -177,12 +177,11 @@ useQuerySync({
             unit="m/s"
             v-bind="U_RANGE"
             :disabled="status !== 'ready'"
-            :hint="localizeExperimentText(
+            :hint="
               status === 'ready'
                 ? 'A second observer moving along the track, passing x = 0 at t = 0. Fixed for the whole run.'
-                : 'Reset the clock to change the observer’s velocity.',
-              locale,
-            )"
+                : 'Reset the clock to change the observer’s velocity.'
+            "
           />
 
           <dl class="readouts">
