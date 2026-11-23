@@ -142,7 +142,7 @@ function onKey(event: KeyboardEvent, id: number) {
               :class="{ home: g.isHome }"
               role="button"
               tabindex="0"
-              :aria-label="g.isHome ? 'Home galaxy' : 'Make this galaxy home'"
+              :aria-label="g.isHome ? localizeExperimentText('Home galaxy', locale) : localizeExperimentText('Make this galaxy home', locale)"
               @click="emit('select', g.id)"
               @keydown="onKey($event, g.id)"
             >
@@ -154,7 +154,7 @@ function onKey(event: KeyboardEvent, id: number) {
             <circle v-else :cx="g.px" :cy="g.py" r="5" class="gas" />
           </template>
         </g>
-        <text v-if="stage === 'galaxies'" :x="CX" :y="CY + 30" class="home-label">home</text>
+        <text v-if="stage === 'galaxies'" :x="CX" :y="CY + 30" class="home-label">{{ localizeExperimentText('home', locale) }}</text>
       </template>
 
       <!-- Scale bar: a fixed physical length -->
@@ -162,7 +162,7 @@ function onKey(event: KeyboardEvent, id: number) {
         <line :x1="20" :x2="20 + PX_PER_GLY" :y1="H - 20" :y2="H - 20" />
         <line :x1="20" :x2="20" :y1="H - 25" :y2="H - 15" />
         <line :x1="20 + PX_PER_GLY" :x2="20 + PX_PER_GLY" :y1="H - 25" :y2="H - 15" />
-        <text :x="20" :y="H - 30">1 billion light-years</text>
+        <text :x="20" :y="H - 30">{{ localizeExperimentText('1 billion light-years', locale) }}</text>
       </g>
       <text v-if="stageLines" :x="CX" :y="34" class="stage-text">
         <tspan :x="CX" dy="0">{{ stageLines[0] }}</tspan>
