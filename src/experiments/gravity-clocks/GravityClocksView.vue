@@ -136,7 +136,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">{{ tx('Module 5 · General relativity · Experiment C') }}</p>
+      <p class="eyebrow">{{ getExperimentModuleEyebrow('gravity-clocks', locale) }}</p>
       <h1>{{ tx('Gravity and clock rates') }}</h1>
       <p class="lead">
         {{ tx('Two identical clocks at different heights above a mass. Does gravity change how fast they tick, and what does that mean for the GPS in your phone?') }}
