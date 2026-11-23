@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useLocale } from '@/composables/useLocale'
-import { localizeExperimentText } from '@/i18n/experiment-ui'
-const { locale } = useLocale()
 import { computed, useId } from 'vue'
 import type { Expansion } from '@/physics'
 import { niceCeil } from './chartScale'
+import { useLocale } from '@/composables/useLocale'
+import { localizeExperimentText } from '@/i18n/experiment-ui'
+
+const { locale } = useLocale()
 
 const props = defineProps<{
   expansion: Expansion
@@ -57,7 +58,7 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
 
 <template>
   <figure class="chart">
-    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="`Scale factor a against time. ${xLabel}. Today a = 1.`">
+    <svg :viewBox="`0 0 ${W} ${H}`" role="img" :aria-label="localizeExperimentText(`Scale factor a against time. ${xLabel}. Today a = 1.`, locale)">
       <defs>
         <clipPath :id="`${id}-plot`"><rect :x="M.left" :y="M.top - 6" :width="plotW + 6" :height="plotH + 6" /></clipPath>
       </defs>
