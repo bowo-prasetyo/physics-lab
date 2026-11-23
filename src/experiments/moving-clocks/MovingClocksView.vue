@@ -195,7 +195,7 @@ const signed = (value: number, digits = 2) => {
             <div><dt>{{ tx('Lorentz factor') }} <MathFormula tex="\gamma" /></dt><dd class="num">{{ lorentz.toFixed(3) }}</dd></div>
             <div><dt>{{ tx('Moving clock ÷ resting clock') }}</dt><dd class="num">{{ (1 / lorentz).toFixed(3) }}</dd></div>
             <div v-if="simultaneity" class="other-now">
-              <dt>The {{ other }}’s “now” meets the {{ home }} clock at</dt>
+              <dt>{{ locale === 'id' ? `Waktu “sekarang” ${tx(other)} bertepatan dengan jam ${tx(home)} pada` : locale === 'ja' ? `${tx(other)} の「現在」と同時刻になる ${tx(home)} の時計の時刻` : `The ${other}’s “now” meets the ${home} clock at` }}</dt>
               <dd class="num">{{ view.otherNowMeetsHomeAt.toFixed(2) }} s</dd>
             </div>
             <template v-if="advanced">
