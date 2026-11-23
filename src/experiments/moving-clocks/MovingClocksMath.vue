@@ -151,7 +151,7 @@ const phi = computed(() => (props.beta < 1 ? rapidity(props.beta) : 0))
       <MathFormula display tex="\tau = \int \sqrt{1 - \frac{v(t)^2}{c^2}}\;dt = \int \frac{ds}{c}" />
       <p>
         {{ tx('Every observer computes the same') }} <MathFormula tex="\tau" /> {{ tx('for a given worldline. Because of the minus sign in') }}
-        <MathFormula tex="s^2" />{{ tx(', a straight (inertial) worldline between two events has the') }} <em>longest</em>{{ tx('proper time. This resolves the twin paradox, which a later experiment explores.') }}
+        <MathFormula tex="s^2" />{{ tx(', a straight (inertial) worldline between two events has the') }} <em>{{ tx('longest') }}</em>{{ tx('proper time. This resolves the twin paradox, which a later experiment explores.') }}
       </p>
 
       <h3>{{ tx('Four-vectors and the metric') }}</h3>
