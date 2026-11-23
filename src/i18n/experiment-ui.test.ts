@@ -58,4 +58,49 @@ describe('experiment UI localization', () => {
     }
   })
 
+
+  it('localizes visualization labels, tables, and accessibility descriptions', () => {
+    const labels = [
+      'Starting point (x, y, z)',
+      'Current point (x, y, z)',
+      'Displacement (Δx, Δy, Δz)',
+      'Distance between start and current point',
+      'Path points recorded',
+      'observer',
+      'Horizontal position',
+      'Horizontal velocity',
+      'Vertical velocity',
+      'Launched ball',
+      'Dropped ball',
+      'Before launch',
+      'Not moving',
+      'Read the current projectile measurements as a table',
+      'Observer',
+      'Current event (t, x)',
+      'Proper time elapsed',
+      'Position at each whole second of the current run',
+      'Start the clock to fill in the table.',
+      'Light (45°)',
+      'Measured',
+      'parts per million',
+      'parts per billion',
+      'parts per trillion',
+    ]
+    for (const source of labels) {
+      expect(localizeExperimentText(source, 'id')).not.toBe(source)
+      expect(localizeExperimentText(source, 'ja')).not.toBe(source)
+    }
+    expect(localizeExperimentText('position x (m)', 'id')).toBe('posisi x (m)')
+    expect(localizeExperimentText('height (m)', 'ja')).toBe('高さ (m)')
+  })
+
+  it('localizes dynamic descriptions without changing scientific values', () => {
+    const description = 'Interactive 3D view of a path in Cartesian coordinates. x points east, y north and z up. Start (0.00, 0.00, 0.00); current position (1.00, 2.00, 3.00); displacement (1.00, 2.00, 3.00) metres. Use the view presets for standard camera angles. A numerical alternative follows.'
+    const translated = localizeExperimentText(description, 'id') ?? ''
+    expect(translated).toContain('(0.00, 0.00, 0.00)')
+    expect(translated).toContain('1.00, 2.00, 3.00')
+    expect(translated).not.toContain('Interactive 3D view')
+    expect(translated).not.toContain('current position')
+  })
+
 })
