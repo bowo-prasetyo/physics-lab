@@ -35,11 +35,15 @@ import { LEVELS } from '@/levels'
 
     <section aria-labelledby="modules-title">
       <h2 id="modules-title">Modules</h2>
+      <p class="muted">Each module distinguishes what current experiments cover from important topics still planned. A topic appearing in the roadmap is not a claim that it is already taught.</p>
       <div class="modules">
         <article v-for="module in MODULES" :key="module.number" class="card module">
           <p class="module-no">Module {{ module.number }} · {{ module.audience }}</p>
           <h3>{{ module.title }}</h3>
-          <p class="topics muted">{{ module.topics.join(' · ') }}</p>
+          <h4 class="scope-title">Explored now</h4>
+          <p class="topics muted">{{ module.coverage.join(' · ') }}</p>
+          <h4 class="scope-title">Planned coverage</h4>
+          <p class="topics muted">{{ module.plannedTopics.join(' · ') }}</p>
           <ul class="experiments">
             <li v-for="exp in module.experiments" :key="exp.title" :class="{ planned: !exp.path }">
               <RouterLink v-if="exp.path" :to="exp.path" class="exp-title">{{ exp.title }}</RouterLink>
@@ -131,8 +135,15 @@ import { LEVELS } from '@/levels'
   color: var(--accent);
 }
 
+.scope-title {
+  margin: 12px 0 4px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
 .topics {
   font-size: 0.9rem;
+  margin: 0;
 }
 
 .experiments {

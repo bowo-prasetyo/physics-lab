@@ -182,6 +182,11 @@ After completing this module, learners should be able to:
 
 **Current foundation:** numerical FLRW/Friedmann evolution, scale factor, redshift, Hubble quantities, model comparisons, acceleration, and stated limits as the scale factor approaches zero. The experiment is an educational model, not a complete treatment of observational cosmology or the quantum-gravity regime.
 
+## Related product documents
+
+- [Curriculum coverage and prioritized roadmap](CURRICULUM_ROADMAP.md) maps outcomes to current experiments and future work.
+- [Learning effectiveness metrics](LEARNING_EFFECTIVENESS.md) defines how to evaluate understanding, transfer, and retention.
+
 ## How to use these outcomes
 
 - Use outcomes to decide what belongs in a module and what an experiment must help learners understand.
