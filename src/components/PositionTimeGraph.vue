@@ -86,8 +86,8 @@ const description = computed(() => {
       <line class="axis" :x1="M.left" :x2="M.left" :y1="M.top" :y2="M.top + plotH" />
       <text v-for="t in timeTicks" :key="`lt${t}`" :x="sx(t)" :y="M.top + plotH + 18" class="tick-label">{{ t }}</text>
       <text v-for="x in positionTicks" :key="`lx${x}`" :x="M.left - 8" :y="sy(x) + 4" class="tick-label y">{{ x }}</text>
-      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">time t (s)</text>
-      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">position x (m)</text>
+      <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ localizeExperimentText('time t (s)', locale) }}</text>
+      <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText('position x (m)', locale) }}</text>
 
       <g :clip-path="`url(#${id}-plot)`">
         <!-- Earlier runs -->
