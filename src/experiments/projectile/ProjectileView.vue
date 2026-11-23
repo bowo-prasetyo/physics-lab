@@ -175,8 +175,8 @@ const dropDifference = computed(() => {
           </p>
           <p v-if="dropDifference" class="drop-result">{{ dropDifference }}</p>
           <div class="charts">
-            <LineChart :series="heightSeries" :x-max="graphTime" :x-label="tx('time (s) )".replace(" )",")")} :y-label="tx('height (m) )".replace(" )",")")} :marker="states ? t : null" />
-            <LineChart :series="velocitySeries" :x-max="graphTime" :x-label="tx('time (s) )".replace(" )",")")} :y-label="tx('velocity (m/s) )".replace(" )",")")} :marker="states ? t : null" />
+            <LineChart :series="heightSeries" :x-max="graphTime" :x-label="tx('time (s) )".replace("')"",")")} :y-label="tx('height (m) )".replace("')"",")")} :marker="states ? t : null" />
+            <LineChart :series="velocitySeries" :x-max="graphTime" :x-label="tx('time (s) )".replace("')"",")")} :y-label="tx('velocity (m/s) )".replace("')"",")")} :marker="states ? t : null" />
           </div>
         </div>
 
