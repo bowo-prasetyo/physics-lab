@@ -88,6 +88,16 @@ function candidateKey(record: Pick<CopyRecord, 'kind' | 'attribute' | 'text'>): 
 describe('runtime localization audit', () => {
   it('renders every application route in every supported locale and reports unchanged English copy', async () => {
     document.body.innerHTML = ''
+    window.matchMedia ??= ((media: string) => ({
+      matches: false,
+      media,
+      onchange: null,
+      addListener: () => undefined,
+      removeListener: () => undefined,
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+      dispatchEvent: () => false,
+    })) as typeof window.matchMedia
     const root = document.createElement('div')
     document.body.append(root)
 
