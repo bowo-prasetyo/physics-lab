@@ -144,8 +144,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
             :directions="DIRECTIONS"
           />
           <p class="muted small">
-            {{ tx(`Drag to turn the view, scroll or pinch to zoom. x points east, y north and z up. The orange arrow is the displacement Δr from the green start to the blue
-            object.`) }}
+            {{ locale === 'id' ? 'Seret untuk memutar tampilan, gulir atau cubit untuk memperbesar. Sumbu x mengarah ke timur, y ke utara, dan z ke atas. Panah oranye menunjukkan perpindahan Δr dari titik awal hijau ke benda biru.' : locale === 'ja' ? 'ドラッグで視点を回転し、スクロールまたはピンチで拡大します。x 軸は東、y 軸は北、z 軸は上向きです。オレンジ色の矢印は、緑の始点から青い物体への変位 Δr を示します。' : 'Drag to turn the view, scroll or pinch to zoom. x points east, y north and z up. The orange arrow is the displacement Δr from the green start to the blue object.' }}
             <template v-if="intermediate"> {{ tx('Dashed lines show its x, y and z components.') }}</template>
           </p>
         </div>
