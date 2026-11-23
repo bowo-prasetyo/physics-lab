@@ -94,8 +94,8 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
       </tbody></table>
     </details>
     <figcaption class="legend">
-      <span><i class="swatch main" /> This model</span>
-      <span v-if="other"><i class="swatch compare" /> Our universe, for comparison</span>
+      <span><i class="swatch main" /> {{ localizeExperimentText('This model', locale) }}</span>
+      <span v-if="other"><i class="swatch compare" /> {{ localizeExperimentText('Our universe, for comparison', locale) }}</span>
     </figcaption>
   </figure>
 </template>
