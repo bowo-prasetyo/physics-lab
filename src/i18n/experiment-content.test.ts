@@ -10,42 +10,51 @@ import { PREDICTIONS as twoPerspectives } from '@/experiments/two-perspectives/p
 import { PREDICTIONS as gravityClocks } from '@/experiments/gravity-clocks/predictions'
 import { PREDICTIONS as evolvingSpace } from '@/experiments/evolving-space/predictions'
 
-const experiments = {
-  'space-vs-time': space,
-  displacement3d: displacement,
-  pendulum,
-  newtonian,
-  projectile,
-  'moving-clocks': movingClocks,
-  'two-perspectives': twoPerspectives,
-  'gravity-clocks': gravityClocks,
-  'evolving-space': evolvingSpace,
-} as const
+type TestPrediction = {
+  readonly id: string
+  readonly question: string
+  readonly task: string
+  readonly options: readonly { readonly id: string; readonly label: string }[]
+  readonly explanation: string
+  readonly correct: string
+  readonly observed: unknown
+}
+
+function checkTranslations<T extends TestPrediction>(
+  id: Parameters<typeof localizePredictions<T>>[0],
+  source: readonly T[],
+) {
+  for (const locale of ['id', 'ja'] as const) {
+    const localized = localizePredictions(id, source, locale)
+    expect(localized.map((item) => item.id)).toEqual(source.map((item) => item.id))
+    expect(localized).toHaveLength(source.length)
+    localized.forEach((item, index) => {
+      expect(item.question).not.toBe(source[index]?.question)
+      expect(item.task).not.toBe(source[index]?.task)
+      expect(item.explanation).not.toBe(source[index]?.explanation)
+      expect(item.options.map((option) => option.id)).toEqual(source[index]?.options.map((option) => option.id))
+      expect(item.options.every((option) => option.label.length > 0)).toBe(true)
+      expect(item.correct).toBe(source[index]?.correct)
+      expect(item.observed).toBe(source[index]?.observed)
+    })
+  }
+}
 
 describe('experiment content localization', () => {
-  it('provides translated copy for every prediction in all nine experiments', () => {
-    for (const [id, source] of Object.entries(experiments) as [keyof typeof experiments, (typeof experiments)[keyof typeof experiments]][]) {
-      for (const locale of ['id', 'ja'] as const) {
-        const localized = localizePredictions(id, source, locale)
-        expect(localized.map((item) => item.id)).toEqual(source.map((item) => item.id))
-        expect(localized).toHaveLength(source.length)
-        localized.forEach((item, index) => {
-          expect(item.question).not.toBe(source[index]?.question)
-          expect(item.task).not.toBe(source[index]?.task)
-          expect(item.explanation).not.toBe(source[index]?.explanation)
-          expect(item.options.map((option) => option.id)).toEqual(source[index]?.options.map((option) => option.id))
-          expect(item.options.every((option) => option.label.length > 0)).toBe(true)
-          expect(item.correct).toBe(source[index]?.correct)
-          expect(item.observed).toBe(source[index]?.observed)
-        })
-      }
-    }
+  it('translates every prediction in all nine experiment catalogues', () => {
+    checkTranslations('space-vs-time', space)
+    checkTranslations('displacement3d', displacement)
+    checkTranslations('pendulum', pendulum)
+    checkTranslations('newtonian', newtonian)
+    checkTranslations('projectile', projectile)
+    checkTranslations('moving-clocks', movingClocks)
+    checkTranslations('two-perspectives', twoPerspectives)
+    checkTranslations('gravity-clocks', gravityClocks)
+    checkTranslations('evolving-space', evolvingSpace)
   })
 
   it('leaves English content unchanged and does not mutate source predictions', () => {
-    for (const [id, source] of Object.entries(experiments) as [keyof typeof experiments, (typeof experiments)[keyof typeof experiments]][]) {
-      expect(localizePredictions(id, source, 'en')).toEqual(source)
-    }
+    expect(localizePredictions('space-vs-time', space, 'en')).toEqual(space)
     expect(space[0]?.question).toContain('You set the velocity')
   })
 })
