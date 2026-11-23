@@ -59,14 +59,17 @@ The UI text helper deliberately preserves numeric values, scientific symbols, un
 
 ### P3 — Localization quality assurance
 
-Run `npm test` and `npm run build` for every localization change. The automated suite checks:
+Run `npm test`, `npm run audit:localization`, and `npm run build` for every localization change. The automated suite checks:
 
 - Message-key parity across all supported locales, non-empty values, and matching interpolation placeholders.
+- Static text and selected accessibility attributes in every Vue template under `src/`; the audit writes JSON and Markdown reports to `artifacts/localization-audit.*`.
 - Locale selector metadata and browser-language fallback behavior.
 - Stable experiment routes and catalogue structure across languages.
 - Complete teacher-guide lesson structure and experiment-support copy.
 - Prediction question, task, option, and explanation coverage, including preservation of stable prediction and option IDs.
 - Locale-aware number and date formatting.
+
+The source audit is a review aid, not an automatic missing-translation verdict: it flags literal Latin-language text in Vue templates, including SVG text and static accessibility attributes. Some candidates may be intentional English fallback or shared technical labels. It does not inspect TypeScript-generated labels, Canvas/WebGL drawing text, remote content, or runtime-only props. CI uploads the generated JSON and Markdown reports as the `localization-audit` artifact.
 
 Automated checks cannot judge translation naturalness, register, terminology consistency, or scientific nuance. Before release, review each locale in the running application and complete the following checklist:
 
