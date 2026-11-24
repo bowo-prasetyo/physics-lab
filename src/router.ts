@@ -5,6 +5,7 @@ import { locale } from '@/i18n'
 import { getForceLabDocumentTitle } from '@/experiments/force-lab/copy'
 import { getLengthContractionDocumentTitle } from '@/experiments/length-contraction/copy'
 import { getMomentumCollisionsDocumentTitle } from '@/experiments/momentum-collisions/copy'
+import { getGeodesicMotionDocumentTitle } from '@/experiments/geodesic-motion/copy'
 
 export const router = createRouter({
   history: createWebHashHistory(),
@@ -116,6 +117,8 @@ function updateDocumentTitle(): void {
     document.title = getLengthContractionDocumentTitle(locale.value)
   } else if (currentRoute.name === 'momentum-collisions') {
     document.title = getMomentumCollisionsDocumentTitle(locale.value)
+  } else if (currentRoute.name === 'geodesic-motion') {
+    document.title = getGeodesicMotionDocumentTitle(locale.value)
   } else if (typeof currentRoute.meta.title === 'string') {
     document.title = currentRoute.meta.title
   }
@@ -125,5 +128,5 @@ router.afterEach(updateDocumentTitle)
 
 // Keep the Force Lab title in sync when the language changes without navigation.
 watch(locale, () => {
-  if (['force-lab', 'length-contraction', 'momentum-collisions'].includes(String(router.currentRoute.value.name))) updateDocumentTitle()
+  if (['force-lab', 'length-contraction', 'momentum-collisions', 'geodesic-motion'].includes(String(router.currentRoute.value.name))) updateDocumentTitle()
 })
