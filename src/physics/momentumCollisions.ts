@@ -6,7 +6,7 @@ export interface MomentumCollisionResult {
  readonly kineticEnergyBefore:number; readonly kineticEnergyAfter:number; readonly kineticEnergyChange:number; readonly kineticEnergyLost:number
  readonly impulseOn1:number; readonly impulseOn2:number; readonly centerOfMassVelocity:number
  readonly relativeSpeedBefore:number; readonly relativeSpeedAfter:number
- readonly collisionType:'elastic'|'inelastic'|'perfectly-inelastic'
+ readonly collisionType:'elastic'|'inelastic'|'perfectly-inelastic'|'no-collision'
 }
 export function calculateMomentumCollision(input:MomentumCollisionInput):MomentumCollisionResult {
  const {mass1:m1,mass2:m2,velocity1:u1,velocity2:u2,restitution:e}=input
@@ -14,6 +14,12 @@ export function calculateMomentumCollision(input:MomentumCollisionInput):Momentu
  if(m1<=0||m2<=0) throw new RangeError('Masses must be greater than zero')
  if(e<0||e>1) throw new RangeError('Restitution must be between zero and one')
  const total=m1+m2
+ // Cart 1 is positioned behind cart 2. A collision occurs only while it approaches faster.
+ if(u1<=u2) return {momentumBefore:m1*u1+m2*u2,momentumAfter:m1*u1+m2*u2,momentumChange:0,
+ velocity1After:u1,velocity2After:u2,kineticEnergyBefore:.5*m1*u1**2+.5*m2*u2**2,
+ kineticEnergyAfter:.5*m1*u1**2+.5*m2*u2**2,kineticEnergyChange:0,kineticEnergyLost:0,
+ impulseOn1:0,impulseOn2:0,centerOfMassVelocity:(m1*u1+m2*u2)/total,
+ relativeSpeedBefore:Math.abs(u1-u2),relativeSpeedAfter:Math.abs(u1-u2),collisionType:'no-collision'}
  const v1=((m1-e*m2)*u1+(1+e)*m2*u2)/total
  const v2=((m2-e*m1)*u2+(1+e)*m1*u1)/total
  const p0=m1*u1+m2*u2,p1=m1*v1+m2*v2
