@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
+import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed, ref } from 'vue'
@@ -105,7 +106,7 @@ useQuerySync({
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">{{ localizeExperimentText('Module 1 · Understanding space · Experiment A', locale) ?? 'Module 1 · Understanding space · Experiment A' }}</p>
+      <p class="eyebrow">{{ getExperimentModuleEyebrow('space-vs-time', locale) }}</p>
       <h1>{{ localizeExperimentText('Space versus time', locale) ?? 'Space versus time' }}</h1>
       <p class="lead">{{ localizeExperimentText('An object sits on a straight track while a clock runs. You control where it starts and how fast it moves. What happens to its position, and what happens to time, when you stop it?', locale) ?? 'An object sits on a straight track while a clock runs. You control where it starts and how fast it moves. What happens to its position, and what happens to time, when you stop it?' }}</p>
     </header>
@@ -117,7 +118,7 @@ useQuerySync({
     <ExperimentSupport experiment-id="space-vs-time" :module-number="1" focus="Position is described relative to a reference frame; elapsed time continues even when the object is stationary." prompt="When the object stops moving, what happens to its position and to the clock?" action="Run the object at different speeds, stop it part-way through, and compare the motion with the position–time graph." reflect="What does the slope of a position–time graph represent, and how does the graph show the difference between rest and the passage of time?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
       <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
@@ -125,7 +126,7 @@ useQuerySync({
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ experimentSectionLabel('experiment', locale) }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <TrackView :x="snapshot.x" :x0="x0" :v="snapshot.v" :t="snapshot.t" :bounds="BOUNDS" :observer-velocity="observerVelocity" />
@@ -201,19 +202,19 @@ useQuerySync({
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
+      <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
       <SpaceVsTimeMath :level="level" :snapshot="snapshot" :u="u" />
     </section>
     </details>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
+      <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
+        <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
           <ul>
             <li>{{ localizeExperimentText('With v = 0, the position stays constant while the clock reading keeps increasing.', locale) }}</li>
             <li>
@@ -221,7 +222,7 @@ useQuerySync({
             </li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
+        <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
           <p>
             {{ localizeExperimentText('We can stop moving through space, but never through time, so space and time must be fundamentally different things.', locale) }} {{ localizeExperimentText('This is a philosophical claim. The experiment is consistent with it, but does not prove it. Points to weigh:', locale) }}
           </p>
@@ -243,7 +244,7 @@ useQuerySync({
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
       <p><strong>{{ tx("Next:") }}</strong> {{ tx('Experiment B compares two clocks moving relative to each other near the speed of light.') }}</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">{{ tx("Experiment B →") }}</RouterLink>

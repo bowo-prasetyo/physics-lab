@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
+import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -135,7 +136,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">{{ tx('Module 5 · General relativity · Experiment C') }}</p>
+      <p class="eyebrow">{{ getExperimentModuleEyebrow('gravity-clocks', locale) }}</p>
       <h1>{{ tx('Gravity and clock rates') }}</h1>
       <p class="lead">
         {{ tx('Two identical clocks at different heights above a mass. Does gravity change how fast they tick, and what does that mean for the GPS in your phone?') }}
@@ -149,7 +150,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     <ExperimentSupport experiment-id="gravity-clock-rates" :module-number="5"  :focus="tx('Compare clock rates in the stated static Schwarzschild setting; keep the model assumptions visible.')" :prompt="tx('Which clock should accumulate more time when two stationary clocks are held at different heights?')" :action="tx('Change the two clock heights, compare the predicted rates, then inspect the separate gravitational and kinematic GPS corrections.')" :reflect="tx('What is held fixed in this comparison, and why is the GPS correction not purely gravitational?')" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
       <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
@@ -157,7 +158,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ experimentSectionLabel('experiment', locale) }}</h2>
       <fieldset class="tabs" :disabled="locked">
         <legend>{{ localizeExperimentText('Setup', locale) ?? 'Setup' }}</legend>
         <label :class="{ active: mode === 'clocks' }"><input v-model="mode" type="radio" value="clocks" class="sr-only" /> {{ tx('Two clocks') }}</label>
@@ -292,9 +293,9 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
+      <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
       <GravityClocksMath
         :level="level"
         :body="body"
@@ -310,9 +311,9 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </details>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
+      <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> {{ tx('What does it tell us?') }}</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
       <div class="meaning">
         <InfoCallout kind="physics" :title="tx('Established physics')">
           <ul>
@@ -339,7 +340,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
       <p><strong>{{ tx('Next:') }}</strong> {{ tx('Experiment D, where space itself evolves in time. See also Experiments B and E.') }}</p>
       <span class="nav-links">
         <RouterLink to="/cosmology/evolving-space">{{ tx('Experiment D →') }}</RouterLink>

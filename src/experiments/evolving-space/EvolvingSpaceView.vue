@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
+import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -111,7 +112,7 @@ const expansionWord = computed(() => {
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">{{ localizeExperimentText('Module 6 · Cosmology · Experiment D', locale) ?? 'Module 6 · Cosmology · Experiment D' }}</p>
+      <p class="eyebrow">{{ getExperimentModuleEyebrow('evolving-space', locale) }}</p>
       <h1>{{ localizeExperimentText('Evolving space', locale) ?? 'Evolving space' }}</h1>
       <p class="lead">{{ localizeExperimentText('A model universe filled with galaxies. Run it forwards and backwards in time. What grows, what stays the same, and where does the model stop making sense?', locale) ?? 'A model universe filled with galaxies. Run it forwards and backwards in time. What grows, what stays the same, and where does the model stop making sense?' }}</p>
     </header>
@@ -123,7 +124,7 @@ const expansionWord = computed(() => {
     <ExperimentSupport experiment-id="evolving-space" :module-number="6" focus="Distinguish the expansion of distances between comoving locations from motion through static space." prompt="If the scale factor doubles, what happens to the separation of two comoving galaxies?" action="Run at least two cosmological models and compare their scale-factor and Hubble histories at the same epoch." reflect="Which conclusions follow from the chosen model, and what observational evidence would be needed to test it?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
       <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
@@ -131,7 +132,7 @@ const expansionWord = computed(() => {
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ experimentSectionLabel('experiment', locale) }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <label class="model-select">
@@ -217,19 +218,19 @@ const expansionWord = computed(() => {
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
+      <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
       <EvolvingSpaceMath :level="level" :cosmology="cosmology" :expansion="expansion" :a="readings.a" :hubble="hubblePerGyr" :target="target" />
     </section>
     </details>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
+      <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
+        <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
           <ul>
             <li>{{ localizeExperimentText('Distant galaxies recede with speeds proportional to their distance (Lemaître, 1927; Hubble, 1929).', locale) }}</li>
             <li>
@@ -240,7 +241,7 @@ const expansionWord = computed(() => {
             <li>{{ localizeExperimentText('Objects bound by gravity or other forces, such as galaxies, planets and people, do not expand.', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
+        <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('Did time begin at the Big Bang?', locale) }}</strong> {{ localizeExperimentText('In classical general relativity the model has an edge at', locale) }} <MathFormula tex="a = 0" />{{ localizeExperimentText(', but the theory is not expected to hold there. Proposals include a quantum “no-boundary” beginning, a bounce from an earlier contracting phase, and eternal inflation. None is confirmed.', locale) }}
@@ -257,7 +258,7 @@ const expansionWord = computed(() => {
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
       <p><strong>{{ localizeExperimentText('See also:', locale) }}</strong> {{ localizeExperimentText('Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/gravity/clock-rates">{{ tx("Experiment C") }}</RouterLink>

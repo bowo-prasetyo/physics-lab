@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
+import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -125,7 +126,7 @@ const signed = (value: number, digits = 2) => {
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">{{ localizeExperimentText('Module 4 · Special relativity · Experiment B', locale) ?? 'Module 4 · Special relativity · Experiment B' }}</p>
+      <p class="eyebrow">{{ getExperimentModuleEyebrow('moving-clocks', locale) }}</p>
       <h1>{{ localizeExperimentText('Different clocks, different elapsed times', locale) ?? 'Different clocks, different elapsed times' }}</h1>
       <p class="lead">{{ localizeExperimentText('A spaceship flies past the Earth. At the moment they pass, both clocks read zero. How much time has passed on each clock a little later, and does the answer depend on who you ask?', locale) ?? 'A spaceship flies past the Earth. At the moment they pass, both clocks read zero. How much time has passed on each clock a little later, and does the answer depend on who you ask?' }}</p>
     </header>
@@ -137,7 +138,7 @@ const signed = (value: number, digits = 2) => {
     <ExperimentSupport experiment-id="moving-clocks" :module-number="4" focus="Compare elapsed proper times along worldlines and distinguish them from coordinate-time descriptions." prompt="If two clocks separate and later reunite, must they record the same elapsed time?" action="Change the ship speed and observer frame, then compare the worldlines and simultaneity slices for the same events." reflect="Which events are shared by both observers, and which parts of the description depend on the chosen frame?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
       <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard
@@ -152,7 +153,7 @@ const signed = (value: number, digits = 2) => {
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ experimentSectionLabel('experiment', locale) }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <fieldset class="frame-switch" :disabled="status === 'running'">
@@ -220,19 +221,19 @@ const signed = (value: number, digits = 2) => {
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
+      <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
       <MovingClocksMath :level="level" :beta="beta" :frame="frame" :t="t" :view="view" />
     </section>
     </details>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
+      <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
+        <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
           <ul>
             <li>{{ localizeExperimentText('Measured from any inertial frame, a clock moving at speed', locale) }} <MathFormula tex="v" /> {{ localizeExperimentText('runs slow by the factor γ.', locale) }}</li>
             <li>{{ localizeExperimentText('The effect is symmetric: each of two inertial observers finds the other’s clock running slow.', locale) }}</li>
@@ -242,7 +243,7 @@ const signed = (value: number, digits = 2) => {
             <li>{{ localizeExperimentText('The proper time along a worldline, what a clock actually shows, is the same in every frame.', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
+        <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('Does time “really” slow down for the astronaut?', locale) }}</strong> {{ localizeExperimentText('For two clocks that just fly past each other, “which one is really slower” has no frame-independent answer: it depends on which events you call simultaneous. A frame-independent difference only appears when the clocks meet again (the twin paradox).', locale) }}
@@ -261,7 +262,7 @@ const signed = (value: number, digits = 2) => {
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
       <p>{{ localizeExperimentText('Experiment E describes the same situations with separate space and time, and with a single spacetime.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">{{ tx("← Experiment A") }}</RouterLink>

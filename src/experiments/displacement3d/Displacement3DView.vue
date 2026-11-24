@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
+import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
@@ -104,7 +105,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">{{ localizeExperimentText('Module 1 · Understanding space · Displacement in 3D', locale) ?? 'Module 1 · Understanding space · Displacement in 3D' }}</p>
+      <p class="eyebrow">{{ getExperimentModuleEyebrow('displacement3d', locale) }}</p>
       <h1>{{ localizeExperimentText('Displacement in 3D', locale) ?? 'Displacement in 3D' }}</h1>
       <p class="lead">{{ localizeExperimentText('Move an object through three-dimensional space and measure where it ends up. Then change the coordinate system and find out which numbers change, and which belong to space itself.', locale) ?? 'Move an object through three-dimensional space and measure where it ends up. Then change the coordinate system and find out which numbers change, and which belong to space itself.' }}</p>
     </header>
@@ -116,7 +117,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     <ExperimentSupport experiment-id="displacement-3d" :module-number="1" focus="Position, path length and displacement are different descriptions of a journey." prompt="If an object takes two different routes to the same destination, what should stay the same?" action="Move the object through a few points, note the distance travelled and displacement, then rotate or move the coordinate frame." reflect="Which coordinates changed when you changed the frame, and which geometric quantity stayed invariant?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
       <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
@@ -124,7 +125,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ experimentSectionLabel('experiment', locale) }}</h2>
       <div class="lab">
         <div class="lab-main card">
           <div class="views" role="group" :aria-label="localizeExperimentText('Camera', locale)">
@@ -206,9 +207,9 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
+      <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
       <Displacement3DMath
         :level="level"
         :start="start"
@@ -223,18 +224,18 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </details>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
+      <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
+        <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
           <ul>
             <li>{{ localizeExperimentText('Over everyday distances, space is described extremely well by Euclidean geometry: Pythagoras holds, and triangles have angles adding up to 180°.', locale) }}</li>
             <li>{{ localizeExperimentText('Coordinates are a human choice; distances, lengths and angles are not. Physical laws are written so that they do not depend on the choice.', locale) }}</li>
             <li>{{ localizeExperimentText('Near massive bodies space is very slightly curved, and Euclidean geometry is only an approximation (Experiment C).', locale) }}</li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
+        <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('Is space a thing, or only relations between things?', locale) }}</strong> {{ localizeExperimentText('Newton treated space as a container that exists even when empty; Leibniz argued that only the distances and directions between objects are real. Their followers debated it in letters in 1715–16, and the question is still discussed.', locale) }}
@@ -248,7 +249,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
       <p><strong>{{ localizeExperimentText('Next:', locale) }}</strong> {{ localizeExperimentText('Experiment A adds time to position, and Experiment E compares space and time with spacetime.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/space/space-vs-time">{{ tx("Experiment A") }}</RouterLink>

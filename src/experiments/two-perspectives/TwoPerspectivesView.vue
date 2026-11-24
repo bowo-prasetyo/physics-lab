@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
+import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import { computed } from 'vue'
@@ -76,7 +77,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
 <template>
   <article class="lesson container">
     <header class="lesson-head">
-      <p class="eyebrow">{{ localizeExperimentText('Module 4 · Special relativity · Experiment E · Two perspectives', locale) ?? 'Module 4 · Special relativity · Experiment E · Two perspectives' }}</p>
+      <p class="eyebrow">{{ getExperimentModuleEyebrow('two-perspectives', locale) }}</p>
       <h1>{{ localizeExperimentText('Space and time versus spacetime', locale) ?? 'Space and time versus spacetime' }}</h1>
       <p class="lead">{{ localizeExperimentText('Three mathematical descriptions of the same situations. Which ones match what we measure, and do the ones that match disagree about anything at all?', locale) ?? 'Three mathematical descriptions of the same situations. Which ones match what we measure, and do the ones that match disagree about anything at all?' }}</p>
     </header>
@@ -88,7 +89,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
     <ExperimentSupport experiment-id="two-perspectives" :module-number="4" focus="Compare predictions from Galilean, Lorentzian space-and-time, and spacetime descriptions without confusing mathematical language with experimental differences." prompt="Can two mathematical descriptions disagree about their interpretation yet make the same measurable predictions?" action="Choose each scenario, compare all three descriptions at several speeds, then reveal the measurement evidence." reflect="Which predictions agree with observation, and which disagreements are about interpretation rather than measured outcomes?" />
 
     <section aria-labelledby="predict-title">
-      <h2 id="predict-title"><span class="step-no">1</span> {{ tx('Predict') }}</h2>
+      <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
       <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have tested it in the experiment below.') }}</p>
       <div class="prediction-grid">
         <PredictionCard
@@ -103,7 +104,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </section>
 
     <section aria-labelledby="experiment-title">
-      <h2 id="experiment-title"><span class="step-no">2</span> {{ tx('Experiment') }}</h2>
+      <h2 id="experiment-title"><span class="step-no">2</span> {{ experimentSectionLabel('experiment', locale) }}</h2>
 
       <div class="card setup">
         <fieldset class="tabs">
@@ -161,19 +162,19 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </section>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('3 · Explore the mathematics', locale) ?? '3 · Explore the mathematics' }}</summary>
+      <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
       <section aria-labelledby="maths-title" class="card prose">
-      <h2 id="maths-title"><span class="step-no">3</span> {{ tx('The mathematics') }}</h2>
+      <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
       <TwoPerspectivesMath :level="level" :beta="beta" />
     </section>
     </details>
 
     <details class="lesson-disclosure">
-      <summary>{{ localizeExperimentText('4 · Explore the meaning and interpretation', locale) ?? '4 · Explore the meaning and interpretation' }}</summary>
+      <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
-      <h2 id="meaning-title"><span class="step-no">4</span> {{ localizeExperimentText('What does it tell us?', locale) }}</h2>
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
       <div class="meaning">
-        <InfoCallout kind="physics" :title="localizeExperimentText('Established physics', locale) ?? 'Established physics'">
+        <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
           <ul>
             <li>
               {{ localizeExperimentText('The speed of light is the same for every observer, whatever the motion of its source (Michelson and Morley, 1887; CERN, 1964). The Galilean description cannot accommodate this.', locale) }}
@@ -184,7 +185,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
             </li>
           </ul>
         </InfoCallout>
-        <InfoCallout kind="interpretation" :title="localizeExperimentText('Interpretation: open to debate', locale) ?? 'Interpretation: open to debate'">
+        <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
           <ul>
             <li>
               <strong>{{ localizeExperimentText('Is spacetime real, or a convenient bookkeeping?', locale) }}</strong> {{ localizeExperimentText('Equivalent predictions cannot settle this. Some physicists and philosophers take the four-dimensional geometry as the basic reality; others see it as a compact way of describing how measurements by different observers relate, with space and time (or the behaviour of rods and clocks) more basic.', locale) }}
@@ -201,7 +202,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </section>
     </details>
 
-    <nav class="next card" :aria-label="localizeExperimentText('Next steps', locale)">
+    <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
       <p>{{ localizeExperimentText('Next: Experiment C, in which gravity, not motion, changes how fast clocks tick.', locale) }}</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">{{ tx("← Experiment B") }}</RouterLink>
