@@ -89,7 +89,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
     <header class="lesson-head">
       <p class="eyebrow">{{ getExperimentModuleEyebrow('force-lab', locale) }}</p>
       <h1>{{ tx('Force Lab: free-body diagrams and multiple forces') }}</h1>
-      <p class="lead">{{ tx('A push is only one part of the story. Draw every force on a sliding block, find their vector sum, and predict how its motion changes.') }}</p>
+      <p class="lead">{{ tx('A push is only one part of the story. Draw every force on a block, find their vector sum, and predict how its motion changes.') }}</p>
     </header>
 
     <section aria-labelledby="predict-title">
