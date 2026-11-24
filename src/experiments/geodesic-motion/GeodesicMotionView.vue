@@ -119,7 +119,7 @@ watch(locale, () => { if (route.name === 'geodesic-motion') document.title = get
           <input v-model.number="radius" type="range" v-bind="RADIUS" :aria-label="tx('Initial orbital radius')" />
           <label class="control-label"><span>{{ tx('Angular momentum') }}</span><strong>{{ angular.toFixed(3) }} × L circular</strong></label>
           <input v-model.number="angular" type="range" v-bind="ANGULAR" :aria-label="tx('Angular momentum')" />
-          <label class="control-label"><span>{{ tx('Initial radial velocity') }}</span><strong>{{ radial.toFixed(3) }} c</strong></label>
+          <label class="control-label"><span>{{ tx('Initial radial velocity') }}</span><strong>dr/dτ = {{ radial.toFixed(3) }}</strong></label>
           <input v-model.number="radial" type="range" v-bind="RADIAL" :aria-label="tx('Initial radial velocity')" />
           <button class="btn btn-primary" type="button" :disabled="!prediction" @click="tested = true">{{ tx('Run the experiment') }}</button>
           <p class="small muted">{{ tx('Schwarzschild radii') }}: rₛ = 2GM/c²</p>
