@@ -20,7 +20,7 @@ describe('Momentum and Collisions Lab interaction', () => {
     else delete (globalThis as { ResizeObserver?: typeof ResizeObserver }).ResizeObserver
   })
 
-  it('keeps results hidden until a predicted collision completes and resets when inputs change', async () => {
+  it('explains every disabled state and gates the collision until a prediction is made', async () => {
     document.body.innerHTML = ''
     window.matchMedia ??= ((media: string) => ({
       matches: false, media, onchange: null,
@@ -45,10 +45,12 @@ describe('Momentum and Collisions Lab interaction', () => {
     await router.isReady()
     await nextTick()
 
-    expect(root.querySelector('.results')).toBeNull()
     const runButton = root.querySelector<HTMLButtonElement>('.run-button')
     expect(runButton).not.toBeNull()
     expect(runButton?.disabled).toBe(true)
+    expect(root.querySelector('#collision-run-guidance')?.textContent).toContain('Select a prediction')
+    expect(runButton?.getAttribute('aria-describedby')).toBe('collision-run-guidance')
+    expect(root.querySelector('.results')).toBeNull()
 
     const prediction = root.querySelector<HTMLInputElement>('input[name="collision-prediction"][value="cart2"]')
     expect(prediction).not.toBeNull()
@@ -57,10 +59,15 @@ describe('Momentum and Collisions Lab interaction', () => {
     prediction.dispatchEvent(new Event('change', { bubbles: true }))
     await nextTick()
     expect(runButton?.disabled).toBe(false)
+    expect(root.querySelector('#collision-run-guidance')).toBeNull()
+    expect(runButton?.hasAttribute('aria-describedby')).toBe(false)
 
     runButton?.click()
     await nextTick()
     expect(root.querySelector('.simulation')?.classList.contains('phase-approaching')).toBe(true)
+    expect(runButton?.disabled).toBe(true)
+    expect(root.querySelector('#collision-run-guidance')?.textContent).toContain('animation is running')
+    expect(runButton?.getAttribute('aria-describedby')).toBe('collision-run-guidance')
     expect(root.querySelector('.results')).toBeNull()
 
     await new Promise(resolve => setTimeout(resolve, 1050))
@@ -68,6 +75,7 @@ describe('Momentum and Collisions Lab interaction', () => {
     expect(root.querySelector('.simulation')?.classList.contains('phase-complete')).toBe(true)
     expect(root.querySelector('.results')).not.toBeNull()
     expect(root.querySelector('.results')?.textContent).toContain('Momentum before')
+    expect(runButton?.disabled).toBe(false)
 
     const cart1Velocity = root.querySelectorAll<HTMLInputElement>('input[type="range"]')[2]
     expect(cart1Velocity).toBeDefined()
@@ -80,5 +88,7 @@ describe('Momentum and Collisions Lab interaction', () => {
     expect(root.querySelector('.results')).toBeNull()
     expect(root.textContent).toContain('No collision')
     expect(runButton?.disabled).toBe(true)
+    expect(root.querySelector('#collision-run-guidance')?.textContent).toContain('v₁ > v₂')
+    expect(runButton?.getAttribute('aria-describedby')).toBe('collision-run-guidance')
   }, 10_000)
 })
