@@ -2,6 +2,7 @@
 import {computed,ref,watch} from 'vue'
 import {useRoute} from 'vue-router'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
+import ShareExperiment from '@/components/ShareExperiment.vue'
 import MathFormula from '@/components/MathFormula.vue'
 import {useLevel} from '@/composables/useLevel'
 import {snapToRange,useQuerySync} from '@/composables/useQuerySync'
@@ -26,6 +27,7 @@ watch(locale,()=>{if(route.name==='momentum-collisions')document.title=getMoment
 </script>
 <template><article class="lesson container momentum-collisions">
 <header class="lesson-head"><p class="eyebrow">{{getExperimentModuleEyebrow('momentum-collisions',locale)}}</p><h1>{{tx('Momentum and collisions')}}</h1><p class="lead">{{tx('Two carts approach, collide and move apart. Predict their motion first, then investigate what momentum conservation tells us—and what it does not tell us about kinetic energy.')}}</p></header>
+<ShareExperiment />
 <section><h2><span class="step-no">1</span> {{experimentSectionLabel('predict',locale)}}</h2><div class="card prediction"><p>{{tx('Before the collision, which cart will move faster afterward?')}}</p><fieldset><legend>{{tx('Your prediction')}}</legend><label><input v-model="prediction" type="radio" name="collision-prediction" value="cart1">{{tx('Cart 1 moves faster')}}</label><label><input v-model="prediction" type="radio" name="collision-prediction" value="cart2">{{tx('Cart 2 moves faster')}}</label><label><input v-model="prediction" type="radio" name="collision-prediction" value="together">{{tx('They move together')}}</label></fieldset><p v-if="tested" class="verdict" role="status">{{matches?tx('Your prediction matches the model.'):tx('Compare the final velocities with your prediction.')}}</p></div></section>
 <section><h2><span class="step-no">2</span> {{experimentSectionLabel('experiment',locale)}}</h2><div class="card controls"><div class="control-grid">
 <label>{{tx('Cart 1 mass')}} <output>{{fmt(mass1)}} kg</output><input v-model.number="mass1" type="range" min="1" max="10" step=".5"></label><label>{{tx('Cart 2 mass')}} <output>{{fmt(mass2)}} kg</output><input v-model.number="mass2" type="range" min="1" max="10" step=".5"></label>
