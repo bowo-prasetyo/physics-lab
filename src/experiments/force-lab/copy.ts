@@ -2,7 +2,7 @@ import type { Locale } from '@/i18n/locales'
 
 const copy: Record<string, readonly [string, string]> = {
   'Force Lab: free-body diagrams and multiple forces': ['Laboratorium Gaya: diagram benda bebas dan beberapa gaya', '力の実験室：自由物体図と複数の力'],
-  'A push is only one part of the story. Draw every force on a sliding block, find their vector sum, and predict how its motion changes.': ['Dorongan hanyalah sebagian dari cerita. Gambarkan setiap gaya pada balok, hitung jumlah vektornya, lalu prediksi perubahan geraknya.', '押す力だけがすべてではありません。滑るブロックに働くすべての力を図示し、ベクトル和を求め、運動の変化を予測しましょう。'],
+  'A push is only one part of the story. Draw every force on a block, find their vector sum, and predict how its motion changes.': ['Dorongan hanyalah sebagian dari cerita. Gambarkan setiap gaya pada balok, hitung jumlah vektornya, lalu prediksi perubahan geraknya.', '押す力だけがすべてではありません。ブロックに働くすべての力を図示し、ベクトル和を求め、運動の変化を予測しましょう。'],
   'Before running the model, predict the direction of the block’s acceleration along the surface.': ['Sebelum menjalankan model, prediksikan arah percepatan balok sepanjang permukaan.', 'モデルを実行する前に、面に沿ったブロックの加速度の向きを予測してください。'],
   'Your prediction': ['Prediksi Anda', 'あなたの予測'],
   'Up the slope / to the right': ['Ke atas bidang miring / ke kanan', '斜面を上る方向／右向き'],
