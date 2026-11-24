@@ -44,7 +44,6 @@ const copy: Record<string, readonly [string, string]> = {
   'Length contraction is not an ordinary optical shrinking effect.': ['Kontraksi panjang bukan efek penyusutan optik biasa.', '長さの収縮は通常の光学的な縮小効果ではありません。'],
   'Established physics': ['Fisika yang telah mapan', '確立された物理学'],
   'Interpretation and observation': ['Interpretasi dan pengamatan', '解釈と観測'],
-  'The proper length is the object’s rest-frame length; other frames measure a different length.': ['Panjang wajar adalah panjang benda dalam kerangka diamnya; kerangka lain mengukur panjang yang berbeda.', '固有長は物体の静止基準系での長さであり、他の基準系では異なる長さが測定されます。'],
   'Length contraction and time dilation are two consequences of the same Lorentz transformations.': ['Kontraksi panjang dan dilatasi waktu merupakan dua konsekuensi dari transformasi Lorentz yang sama.', '長さの収縮と時間の遅れは、同じローレンツ変換から導かれる二つの帰結です。'],
   '← Different clocks, different elapsed times': ['← Jam berbeda, waktu berlalu berbeda', '← 異なる時計、異なる経過時間'],
   'Space and time versus spacetime →': ['Ruang dan waktu versus ruang-waktu →', '空間と時間、それとも時空 →'],
