@@ -188,8 +188,8 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
         <h2><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
         <p>{{ tx('Beginner: balanced forces cancel. If the net force is not zero, the block accelerates in the direction of the net force.') }}</p>
         <p v-if="atLeast(level, 'intermediate')">{{ tx('Intermediate: resolve each force into components parallel and perpendicular to the surface, then add the components.') }}</p>
-        <MathFormula tex="\sum F_x = F_{app} - f - mg\sin\theta = ma_x" :display="true" />
-        <MathFormula tex="\sum F_y = N - mg\cos\theta = 0" :display="true" />
+        <MathFormula v-if="atLeast(level, 'intermediate')" tex="\sum F_x = F_{app} - f - mg\sin\theta = ma_x" :display="true" />
+        <MathFormula v-if="atLeast(level, 'intermediate')" tex="\sum F_y = N - mg\cos\theta = 0" :display="true" />
         <p v-if="atLeast(level, 'advanced')">{{ tx('Advanced: in a local orthonormal basis, the constraint fixes the normal acceleration to zero. The tangential equation determines the acceleration; the normal equation determines the constraint force.') }}</p>
         <MathFormula v-if="atLeast(level, 'advanced')" tex="\vec F_{net}=\sum_i\vec F_i,\qquad \vec a=\frac{1}{m}\sum_i\vec F_i" :display="true" />
       </section>
