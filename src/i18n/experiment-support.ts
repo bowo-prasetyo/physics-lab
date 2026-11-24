@@ -106,6 +106,10 @@ const supportCopy: Record<string, LocalizedSupportCopy> = {
       reflect: 'どの予測が観測と一致しますか。また、測定結果ではなく解釈に関する違いはどれでしょうか。'
     }
   },
+  'momentum-collisions': {
+    id: { focus: 'Momentum is conserved in an isolated collision, but kinetic energy depends on the collision’s elasticity.', prompt: 'Before running the collision, predict the final directions and speeds of both carts.', action: 'Change one mass, initial velocity or restitution value at a time; compare momentum and kinetic energy before and after.', reflect: 'If momentum is unchanged but kinetic energy decreases, where might the energy have gone?' },
+    ja: { focus: '外部から孤立した衝突では運動量が保存されますが、運動エネルギーは衝突の弾性によって変わります。', prompt: '衝突を実行する前に、2台の台車の衝突後の向きと速さを予測してください。', action: '質量、初速度、反発係数のいずれか一つずつを変え、衝突前後の運動量と運動エネルギーを比較してください。', reflect: '運動量が変わらず運動エネルギーが減少した場合、そのエネルギーはどこへ移ったのでしょうか。' }
+  },
   'length-contraction': {
     id: {
       focus: 'Panjang diukur dari posisi kedua ujung yang dicatat serentak dalam suatu kerangka inersial yang dipilih.',
