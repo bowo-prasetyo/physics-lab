@@ -138,6 +138,20 @@ const supportCopy: Record<string, LocalizedSupportCopy> = {
       reflect: 'この比較では何を一定に保っていますか。また、GPS の補正が重力だけによるものではないのはなぜでしょうか。'
     }
   },
+  'geodesic-motion': {
+    id: {
+      focus: 'Benda yang jatuh bebas mengikuti geodesik timelike dalam geometri ruang-waktu yang dipilih; lintasan orbit bukan diagram gaya.',
+      prompt: 'Mengapa benda yang jatuh bebas dapat mengikuti orbit melengkung tanpa gaya gravitasi lokal yang mendorongnya ke samping?',
+      action: 'Prediksikan orbit, ubah momentum sudut dan kecepatan radial awal, lalu bandingkan lintasan Schwarzschild dengan acuan Newton.',
+      reflect: 'Apa yang berubah ketika kondisi awal yang sama dihitung dalam ruang-waktu melengkung, bukan dalam gravitasi Newton?'
+    },
+    ja: {
+      focus: '自由落下する物体は、選択した時空幾何における時間的測地線に沿います。軌道は力の図ではありません。',
+      prompt: '自由落下する物体は、横向きに押す局所的な重力がなくても、なぜ曲がった軌道を進めるのでしょうか。',
+      action: '軌道を予測し、角運動量と初期動径速度を変え、シュワルツシルト軌道をニュートン力学の基準と比較してください。',
+      reflect: '同じ初期条件をニュートン重力ではなく曲がった時空で計算すると、何が変わりますか。'
+    }
+  },
   'evolving-space': {
     id: {
       focus: 'Bedakan ekspansi jarak antara lokasi komoving dari gerak benda melalui ruang statis.',
