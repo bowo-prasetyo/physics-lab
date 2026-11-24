@@ -833,6 +833,11 @@ export function localizeExperimentText(value: string | null | undefined, locale:
     ["Before the first galaxies.", "Sebelum galaksi pertama terbentuk.", "最初の銀河が生まれる前。"],
     ["Cooling gas, slowly clumping under gravity.", "Gas mendingin dan perlahan menggumpal akibat gravitasi.", "ガスが冷え、重力によってゆっくり集まっていきます。"],
   ]
-  for (const [en, id, ja] of phrases) translated = translated.replaceAll(en, locale === 'id' ? id : ja)
+  // Replace complete phrases before their shorter component words. Otherwise a
+  // generic entry such as "Force" can rewrite a longer title before its exact
+  // Japanese translation gets a chance to match ("力, mass and acceleration").
+  for (const [en, id, ja] of [...phrases].sort((a, b) => b[0].length - a[0].length)) {
+    translated = translated.replaceAll(en, locale === 'id' ? id : ja)
+  }
   return translated
 }

@@ -57,6 +57,11 @@ describe('experiment UI localization', () => {
     expect(localizeExperimentText(null, 'id')).toBeUndefined()
   })
 
+  it('translates composite experiment titles before matching shorter words', () => {
+    expect(localizeExperimentText('Force, mass and acceleration', 'ja')).toBe('力・質量・加速度')
+    expect(localizeExperimentText('Force, mass and acceleration', 'id')).toBe('Gaya, massa, dan percepatan')
+  })
+
   it('translates the introductory copy for all priority experiment views', () => {
     const introductions = [
       'Evolving space',
