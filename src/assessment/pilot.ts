@@ -131,8 +131,8 @@ const translations: Record<Exclude<PilotLocale, 'en'>, Record<string, { prompt: 
 
 const metadata: Record<PilotLocale, Record<PilotExperimentId, { title: string; module: string; outcome: string; explanationPrompt: string }>> = {
   en: {
-    'force-lab': { title: english[0].title, module: english[0].module, outcome: english[0].outcome, explanationPrompt: english[0].explanationPrompt },
-    'length-contraction': { title: english[1].title, module: english[1].module, outcome: english[1].outcome, explanationPrompt: english[1].explanationPrompt },
+    'force-lab': { title: english[0]!.title, module: english[0]!.module, outcome: english[0]!.outcome, explanationPrompt: english[0]!.explanationPrompt },
+    'length-contraction': { title: english[1]!.title, module: english[1]!.module, outcome: english[1]!.outcome, explanationPrompt: english[1]!.explanationPrompt },
   },
   id: {
     'force-lab': { title: 'Laboratorium Gaya: diagram benda bebas', module: 'Modul 3 · Mekanika klasik', outcome: 'Menghubungkan jumlah vektor gaya dengan percepatan benda serta membedakan gesekan statis dan kinetis.', explanationPrompt: 'Jelaskan mengapa troli bermuatan memiliki percepatan berbeda. Hubungkan gaya netto, massa, dan hubungan fisika di antara keduanya.' },
@@ -187,12 +187,12 @@ export function addParticipantResult(cohort: PilotCohort, result: ParticipantRes
     aggregate.preTotal += result.preCorrect
     aggregate.postTotal += result.postCorrect
     aggregate.transferTotal += result.transferCorrect
-    aggregate.immediateRubricCounts[result.explanationScore] += 1
+    aggregate.immediateRubricCounts[result.explanationScore] = (aggregate.immediateRubricCounts[result.explanationScore] ?? 0) + 1
   } else {
     aggregate.delayedCount += 1
     aggregate.delayedPostTotal += result.postCorrect
     aggregate.delayedTransferTotal += result.transferCorrect
-    aggregate.delayedRubricCounts[result.explanationScore] += 1
+    aggregate.delayedRubricCounts[result.explanationScore] = (aggregate.delayedRubricCounts[result.explanationScore] ?? 0) + 1
   }
   return cohort
 }

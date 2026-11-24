@@ -101,7 +101,7 @@ const questions = computed(() => stage.value === 'pre' ? experiment.value.pre : 
 const allAnswered = computed(() => questions.value.every(item => answers[item.id] !== undefined))
 const totals = computed(() => cohort.value[experimentId.value])
 const hasResults = computed(() => Object.values(cohort.value).some(item => item.immediateCount > 0 || item.delayedCount > 0))
-const rubricCounts = computed(() => totals.value.immediateRubricCounts.map((count, index) => count + totals.value.delayedRubricCounts[index]))
+const rubricCounts = computed(() => totals.value.immediateRubricCounts.map((count, index) => count + (totals.value.delayedRubricCounts[index] ?? 0)))
 const rubricTotal = computed(() => rubricCounts.value.reduce((sum, count) => sum + count, 0))
 
 function clearAnswers(): void {
