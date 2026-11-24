@@ -6,7 +6,7 @@ import ParameterSlider from '@/components/ParameterSlider.vue'
 import { useLevel } from '@/composables/useLevel'
 import { useLocale } from '@/composables/useLocale'
 import { isLevel, atLeast } from '@/levels'
-import { localizeExperimentText } from '@/i18n/experiment-ui'
+import { localizeForceLabText } from './copy'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import { calculateForceLab, type ForceLabScenario, type ForceLabResult } from '@/physics/forceLab'
 
@@ -14,7 +14,7 @@ const route = useRoute()
 const level = useLevel()
 const { locale } = useLocale()
 if (isLevel(route.query.level)) level.value = route.query.level
-const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
+const tx = (value: string) => localizeForceLabText(value, locale.value)
 
 const scenario = ref<ForceLabScenario>('horizontal')
 const mass = ref(5)
@@ -48,7 +48,7 @@ const vectorEnd = (x: number, y: number) => ({
 })
 const vectorLabel = (id: string) => ({
   applied: tx('Applied force'),
-  friction: tx('Kinetic friction'),
+  friction: tx('Friction'),
   normal: tx('Normal force'),
   'weight-parallel': tx('Weight along slope'),
   'weight-normal': tx('Weight into surface'),
@@ -173,7 +173,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
         <h2><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
         <p>{{ tx('Beginner: balanced forces cancel. If the net force is not zero, the block accelerates in the direction of the net force.') }}</p>
         <p v-if="atLeast(level, 'intermediate')">{{ tx('Intermediate: resolve each force into components parallel and perpendicular to the surface, then add the components.') }}</p>
-        <MathFormula tex="\sum F_x = F_{app} - f_k - mg\sin\theta = ma_x" :display="true" />
+        <MathFormula tex="\sum F_x = F_{app} - f - mg\sin\theta = ma_x" :display="true" />
         <MathFormula tex="\sum F_y = N - mg\cos\theta = 0" :display="true" />
         <p v-if="atLeast(level, 'advanced')">{{ tx('Advanced: in a local orthonormal basis, the constraint fixes the normal acceleration to zero. The tangential equation determines the acceleration; the normal equation determines the constraint force.') }}</p>
         <MathFormula v-if="atLeast(level, 'advanced')" tex="\vec F_{net}=\sum_i\vec F_i,\qquad \vec a=\frac{1}{m}\sum_i\vec F_i" :display="true" />
@@ -192,7 +192,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
           <li>{{ tx('An object can move while its acceleration is zero, or accelerate while moving in the opposite direction.') }}</li>
         </ul>
         <h3>{{ tx('Model assumptions and limits') }}</h3>
-        <p>{{ tx('This is a point-mass translational model in an inertial frame. The block is already sliding, friction is kinetic and constant, the applied force is parallel to the surface, and the incline angle is fixed. Static friction, rotation, ropes, pulleys, air resistance and changing contact are not modelled.') }}</p>
+        <p>{{ tx('This is a point-mass translational model in an inertial frame. The block starts from rest; one simplified friction coefficient sets the maximum friction force, which balances the tendency to slide below that limit. The applied force is parallel to the surface and the incline angle is fixed. Static friction, rotation, ropes, pulleys, air resistance and changing contact are not modelled.') }}</p>
         <p>{{ tx('The block starts from rest and the net force is constant during each trial. The displayed velocity and displacement therefore follow constant-acceleration kinematics.') }}</p>
       </section>
     </details>
