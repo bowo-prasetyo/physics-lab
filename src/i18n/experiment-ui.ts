@@ -751,6 +751,7 @@ export function localizeExperimentText(value: string | null | undefined, locale:
     ['Galilean: space + absolute time', 'Galilea: ruang + waktu absolut', 'ガリレイ：空間と絶対時間'],
     ['Space + time, Lorentz-related', 'Ruang + waktu, terkait Lorentz', '空間と時間、ローレンツ変換で関連'],
     ['Spacetime', 'Ruang-waktu', '時空'],
+    ['dashed: lies on the Lorentz line', 'garis putus-putus: berada pada garis Lorentz', '破線：ローレンツの予測線上に重なる'],
     ['Scale factor a', 'Faktor skala a', 'スケール因子 a'],
     ['Spacetime diagram', 'Diagram ruang-waktu', '時空図'],
     ['position x (light-seconds)', 'posisi x (detik cahaya)', '位置 x（光秒）'],

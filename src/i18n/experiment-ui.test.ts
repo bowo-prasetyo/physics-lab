@@ -39,6 +39,12 @@ describe('experiment UI localization', () => {
     expect(localizeExperimentText(hint, 'ja')).toContain('宇宙船')
   })
 
+  it('localizes the spacetime chart series legend and data-table label', () => {
+    const label = 'Spacetime (dashed: lies on the Lorentz line)'
+    expect(localizeExperimentText(label, 'ja')).toBe('時空 (破線：ローレンツの予測線上に重なる)')
+    expect(localizeExperimentText(label, 'id')).toBe('Ruang-waktu (garis putus-putus: berada pada garis Lorentz)')
+  })
+
   it('translates visualization controls and axis labels', () => {
     expect(localizeExperimentText('Playback speed', 'id')).toBe('Kecepatan pemutaran')
     expect(localizeExperimentText('time t (s)', 'ja')).toBe('時間 t (s)')
