@@ -13,6 +13,10 @@ describe('calculateMomentumCollision',()=>{
   const r=calculateMomentumCollision({mass1:1,mass2:4,velocity1:6,velocity2:-2,restitution:.35})
   expect(r.momentumAfter).toBeCloseTo(r.momentumBefore);expect(r.impulseOn1).toBeCloseTo(-r.impulseOn2);expect(r.relativeSpeedAfter).toBeCloseTo(.35*r.relativeSpeedBefore);expect(r.kineticEnergyAfter).toBeLessThan(r.kineticEnergyBefore)
  })
+ it('does not apply an impulse when the carts are already separating',()=>{
+  const r=calculateMomentumCollision({mass1:2,mass2:3,velocity1:-2,velocity2:1,restitution:.5})
+  expect(r.velocity1After).toBe(-2);expect(r.velocity2After).toBe(1);expect(r.impulseOn1).toBe(0);expect(r.impulseOn2).toBe(0);expect(r.collisionType).toBe('no-collision')
+ })
  it('returns no impulse for equal initial velocities',()=>{
   const r=calculateMomentumCollision({mass1:1,mass2:3,velocity1:-2,velocity2:-2,restitution:.2})
   expect(r.velocity1After).toBeCloseTo(-2);expect(r.velocity2After).toBeCloseTo(-2);expect(r.impulseOn1).toBeCloseTo(0);expect(r.impulseOn2).toBeCloseTo(0)
