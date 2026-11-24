@@ -19,13 +19,14 @@ const tx = (value: string) => localizeForceLabText(value, locale.value)
 const scenario = ref<ForceLabScenario>('horizontal')
 const mass = ref(5)
 const appliedForce = ref(30)
-const frictionCoefficient = ref(0.2)
+const staticFrictionCoefficient = ref(0.4)
+const kineticFrictionCoefficient = ref(0.2)
 const inclineAngle = ref(20)
 const duration = ref(2)
 const prediction = ref<'up' | 'down' | 'none' | null>(null)
 const lastRun = ref<ForceLabResult | null>(null)
 const trialCount = ref(0)
-const trials = ref<Array<{ scenario: ForceLabScenario; mass: number; netForce: number; acceleration: number }>>([])
+const trials = ref<Array<{ scenario: ForceLabScenario; mass: number; netForce: number; acceleration: number; frictionRegime: string }>>([])
 const predictionOptions = [
   { id: 'up' as const, label: 'Up the slope / to the right' },
   { id: 'down' as const, label: 'Down the slope / to the left' },
@@ -36,7 +37,8 @@ const result = computed(() => calculateForceLab({
   scenario: scenario.value,
   mass: mass.value,
   appliedForce: appliedForce.value,
-  frictionCoefficient: frictionCoefficient.value,
+  staticFrictionCoefficient: staticFrictionCoefficient.value,
+  kineticFrictionCoefficient: kineticFrictionCoefficient.value,
   inclineAngle: scenario.value === 'incline' ? inclineAngle.value : 0,
   duration: duration.value,
 }))
@@ -71,7 +73,13 @@ const vectorId = (id: string) => `arrow-${id}`
 function runTrial() {
   lastRun.value = result.value
   trialCount.value += 1
-  trials.value = [...trials.value, { scenario: scenario.value, mass: mass.value, netForce: result.value.netForce, acceleration: result.value.acceleration }]
+  trials.value = [...trials.value, {
+    scenario: scenario.value,
+    mass: mass.value,
+    netForce: result.value.netForce,
+    acceleration: result.value.acceleration,
+    frictionRegime: result.value.frictionRegime,
+  }]
 }
 function resetPrediction() {
   prediction.value = null
@@ -81,7 +89,7 @@ function clearTrials() {
   trials.value = []
   trialCount.value = 0
 }
-watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration], resetPrediction)
+watch([scenario, mass, appliedForce, staticFrictionCoefficient, kineticFrictionCoefficient, inclineAngle, duration], resetPrediction)
 </script>
 
 <template>
@@ -98,7 +106,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
         <p>{{ tx('Before running the model, predict the direction of the block’s acceleration along the surface.') }}</p>
         <fieldset>
           <legend>{{ tx('Your prediction') }}</legend>
-          <label v-for="option in predictionOptions" :key="option.id">
+          <label v-for="option in predictionOptions" :key="option.id>
             <input v-model="prediction" type="radio" name="force-prediction" :value="option.id" />
             {{ tx(option.label) }}
           </label>
@@ -151,6 +159,9 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
             </div>
           </div>
           <div class="readout-grid">
+            <div><span>{{ tx('Friction regime') }}</span><strong>{{ tx(result.frictionRegime === 'static' ? 'Static friction · at rest' : 'Kinetic friction · sliding') }}</strong></div>
+            <div><span>{{ tx('Maximum static friction') }}</span><strong>{{ fmt(result.maximumStaticFriction) }} N</strong></div>
+            <div><span>{{ tx('Friction force') }}</span><strong>{{ fmt(result.frictionForce) }} N</strong></div>
             <div><span>{{ tx('Net force along surface') }}</span><strong>{{ fmt(result.netForce) }} N</strong></div>
             <div><span>{{ tx('Acceleration') }}</span><strong>{{ fmt(result.acceleration) }} m/s²</strong></div>
             <div><span>{{ tx('Velocity after') }} {{ duration }} s</span><strong>{{ fmt(result.velocity) }} m/s</strong></div>
@@ -160,7 +171,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
           <p v-if="lastRun" class="trial-note" aria-live="polite">{{ tx('Trial recorded') }} · {{ trialCount }} · {{ tx('Net force') }}: {{ fmt(lastRun.netForce) }} N</p>
           <section v-if="trials.length" class="trials">
             <div class="trials-heading"><h3>{{ tx('Recorded trials') }}</h3><button class="btn btn-small" type="button" @click="clearTrials">{{ tx('Clear trials') }}</button></div>
-            <div class="table-scroll"><table><thead><tr><th>{{ tx('Trial') }}</th><th>{{ tx('Surface') }}</th><th>{{ tx('Mass') }}</th><th>{{ tx('Net force') }}</th><th>{{ tx('Acceleration') }}</th></tr></thead><tbody><tr v-for="(trial, index) in trials" :key="index"><td>{{ index + 1 }}</td><td>{{ tx(trial.scenario === 'horizontal' ? 'Horizontal surface' : 'Inclined plane') }}</td><td>{{ trial.mass }} kg</td><td>{{ fmt(trial.netForce) }} N</td><td>{{ fmt(trial.acceleration) }} m/s²</td></tr></tbody></table></div>
+            <div class="table-scroll"><table><thead><tr><th>{{ tx('Trial') }}</th><th>{{ tx('Surface') }}</th><th>{{ tx('Mass') }}</th><th>{{ tx('Friction regime') }}</th><th>{{ tx('Net force') }}</th><th>{{ tx('Acceleration') }}</th></tr></thead><tbody><tr v-for="(trial, index) in trials" :key="index"><td>{{ index + 1 }}</td><td>{{ tx(trial.scenario === 'horizontal' ? 'Horizontal surface' : 'Inclined plane') }}</td><td>{{ trial.mass }} kg</td><td>{{ tx(trial.frictionRegime === 'static' ? 'Static' : 'Kinetic') }}</td><td>{{ fmt(trial.netForce) }} N</td><td>{{ fmt(trial.acceleration) }} m/s²</td></tr></tbody></table></div>
           </section>
         </div>
 
@@ -172,12 +183,13 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
           </select>
           <ParameterSlider v-model="mass" :label="tx('Block mass')" symbol="m" unit="kg" :min="1" :max="20" :step="1" :digits="0" :signed="false" />
           <ParameterSlider v-model="appliedForce" :label="tx('Applied force')" symbol="F_{app}" unit="N" :min="0" :max="100" :step="1" :digits="0" :signed="false" />
-          <ParameterSlider v-model="frictionCoefficient" :label="tx('Friction coefficient')" symbol="\mu" unit="" :min="0" :max="0.8" :step="0.05" :digits="2" :signed="false" />
+          <ParameterSlider v-model="staticFrictionCoefficient" :label="tx('Static friction coefficient')" symbol="\mu_s" unit="" :min="0" :max="0.8" :step="0.05" :digits="2" :signed="false" />
+          <ParameterSlider v-model="kineticFrictionCoefficient" :label="tx('Kinetic friction coefficient')" symbol="\mu_k" unit="" :min="0" :max="0.8" :step="0.05" :digits="2" :signed="false" />
           <ParameterSlider v-if="scenario === 'incline'" v-model="inclineAngle" :label="tx('Incline angle')" symbol="\theta" unit="°" :min="0" :max="60" :step="1" :digits="0" :signed="false" />
           <ParameterSlider v-model="duration" :label="tx('Elapsed time')" symbol="t" unit="s" :min="1" :max="5" :step="0.5" :digits="1" :signed="false" />
           <button class="btn btn-primary" type="button" @click="runTrial">{{ tx('Run this trial') }}</button>
           <button class="btn" type="button" @click="resetPrediction">{{ tx('Reset prediction') }}</button>
-          <p class="small muted">{{ tx('Change one setting at a time to see which force changes and how the net force responds.') }}</p>
+          <p class="small muted">{{ tx('Change one setting at a time to see when static friction reaches its limit and sliding begins.') }}</p>
         </aside>
       </div>
     </section>
@@ -186,12 +198,14 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
       <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
       <section class="card prose">
         <h2><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
-        <p>{{ tx('Beginner: balanced forces cancel. If the net force is not zero, the block accelerates in the direction of the net force.') }}</p>
-        <p v-if="atLeast(level, 'intermediate')">{{ tx('Intermediate: resolve each force into components parallel and perpendicular to the surface, then add the components.') }}</p>
-        <MathFormula v-if="atLeast(level, 'intermediate')" tex="\sum F_x = F_{app} - f - mg\sin\theta = ma_x" :display="true" />
-        <MathFormula v-if="atLeast(level, 'intermediate')" tex="\sum F_y = N - mg\cos\theta = 0" :display="true" />
-        <p v-if="atLeast(level, 'advanced')">{{ tx('Advanced: in a local orthonormal basis, the constraint fixes the normal acceleration to zero. The tangential equation determines the acceleration; the normal equation determines the constraint force.') }}</p>
-        <MathFormula v-if="atLeast(level, 'advanced')" tex="\vec F_{net}=\sum_i\vec F_i,\qquad \vec a=\frac{1}{m}\sum_i\vec F_i" :display="true" />
+        <p>{{ tx('Beginner: balanced forces cancel. Static friction can take any value needed for rest, up to its maximum. If the tendency to slide exceeds that maximum, kinetic friction acts while the block slides.') }}</p>
+        <p v-if="atLeast(level, 'intermediate')">{{ tx('Intermediate: resolve each force into components parallel and perpendicular to the surface, then compare the tangential tendency with the maximum static friction.') }}</p>
+        <MathFormula v-if="atLeast(level, 'intermediate')" tex="f_s\leq\mu_s N,\qquad f_{s,\max}=\mu_s N" :display="true" />
+        <MathFormula v-if="atLeast(level, 'intermediate')" tex="f_k=\mu_k N,\qquad \sum F_x=F_{app}-mg\sin\theta-f_k=ma_x" :display="true" />
+        <MathFormula v-if="atLeast(level, 'intermediate')" tex="\sum F_y=N-mg\cos\theta=0" :display="true" />
+        <p v-if="atLeast(level, 'advanced')">{{ tx('Advanced: at rest, friction is a constraint force that takes the value required by tangential equilibrium, provided that value does not exceed the Coulomb limit. Beyond the threshold, the model switches to kinetic friction opposite the impending motion.') }}</p>
+        <MathFormula v-if="atLeast(level, 'advanced')" tex="|F_{app}-mg\sin\theta|\leq\mu_s N\;\Rightarrow\;a_x=0" :display="true" />
+        <MathFormula v-if="atLeast(level, 'advanced')" tex="|F_{app}-mg\sin\theta|>\mu_s N\;\Rightarrow\;f_k=\mu_kN" :display="true" />
       </section>
     </details>
 
@@ -203,12 +217,13 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
         <ul>
           <li>{{ tx('A free-body diagram includes every external force acting on the selected object.') }}</li>
           <li>{{ tx('The normal force is perpendicular to the surface; it is not automatically equal to the weight.') }}</li>
-          <li>{{ tx('Friction opposes sliding, while the net force determines acceleration.') }}</li>
+          <li>{{ tx('Static friction adjusts to the force needed for rest; it is not always at its maximum.') }}</li>
+          <li>{{ tx('When the static limit is exceeded, kinetic friction acts opposite the sliding direction.') }}</li>
           <li>{{ tx('An object can move while its acceleration is zero, or accelerate while moving in the opposite direction.') }}</li>
         </ul>
         <h3>{{ tx('Model assumptions and limits') }}</h3>
-        <p>{{ tx('This is a point-mass translational model in an inertial frame. The block starts from rest; one simplified friction coefficient sets the maximum friction force, which balances the tendency to slide below that limit. The applied force is parallel to the surface and the incline angle is fixed. Distinct static and kinetic friction coefficients, rotation, ropes, pulleys, air resistance and changing contact are not modelled.') }}</p>
-        <p>{{ tx('The block starts from rest and the net force is constant during each trial. The displayed velocity and displacement therefore follow constant-acceleration kinematics.') }}</p>
+        <p>{{ tx('This is a point-mass translational model in an inertial frame. The block starts from rest. Static friction adjusts up to μsN; after the threshold is exceeded, kinetic friction has magnitude μkN and opposes the impending direction of motion. The applied force is parallel to the surface and the incline angle is fixed. The model switches regimes at breakaway without simulating the short transition, and assumes constant kinetic friction. Rotation, ropes, pulleys, air resistance and changing contact are not modelled.') }}</p>
+        <p>{{ tx('The net force is constant during each trial after the friction regime is selected. The displayed velocity and displacement therefore follow constant-acceleration kinematics.') }}</p>
       </section>
     </details>
   </article>
