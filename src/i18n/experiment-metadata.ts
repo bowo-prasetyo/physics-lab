@@ -10,6 +10,7 @@ export type ExperimentMetadataId =
   | 'projectile'
   | 'moving-clocks'
   | 'two-perspectives'
+  | 'length-contraction'
   | 'gravity-clocks'
   | 'evolving-space'
 
@@ -22,6 +23,7 @@ const experimentPaths: Record<ExperimentMetadataId, string> = {
   projectile: '/mechanics/projectile',
   'moving-clocks': '/relativity/moving-clocks',
   'two-perspectives': '/relativity/two-perspectives',
+  'length-contraction': '/relativity/length-contraction',
   'gravity-clocks': '/gravity/clock-rates',
   'evolving-space': '/cosmology/evolving-space',
 }
@@ -35,6 +37,7 @@ const moduleLabels: Record<ExperimentMetadataId, readonly [string, string, strin
   projectile: ['Projectile motion', 'Gerak proyektil', '放物運動'],
   'moving-clocks': ['Experiment B', 'Eksperimen B', '実験 B'],
   'two-perspectives': ['Experiment E · Two perspectives', 'Eksperimen E · Dua perspektif', '実験 E · 二つの視点'],
+  'length-contraction': ['Experiment F · Length contraction', 'Eksperimen F · Kontraksi panjang', '実験 F · 長さの収縮'],
   'gravity-clocks': ['Experiment C', 'Eksperimen C', '実験 C'],
   'evolving-space': ['Experiment D', 'Eksperimen D', '実験 D'],
 }
