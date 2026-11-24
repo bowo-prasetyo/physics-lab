@@ -83,7 +83,7 @@ export function calculateForceLab(input: ForceLabInput): ForceLabResult {
     { id: 'applied', x: input.appliedForce, y: 0 },
     { id: 'friction', x: -frictionForce, y: 0 },
     { id: 'normal', x: 0, y: normalForce },
-    { id: 'weight-parallel', x: 0, y: -weightParallel },
+    { id: 'weight-parallel', x: -weightParallel, y: 0 },
     { id: 'weight-normal', x: 0, y: -normalForce },
   ]
 
