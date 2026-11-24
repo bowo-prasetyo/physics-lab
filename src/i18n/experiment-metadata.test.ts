@@ -11,6 +11,7 @@ const experiments: readonly ExperimentMetadataId[] = [
   'two-perspectives',
   'length-contraction',
   'gravity-clocks',
+  'geodesic-motion',
   'evolving-space',
 ]
 
@@ -27,6 +28,7 @@ describe('experiment metadata and section localization', () => {
       'モジュール 4 · 特殊相対性理論 · 実験 E · 二つの視点',
       'モジュール 4 · 特殊相対性理論 · 実験 F · 長さの収縮',
       'モジュール 5 · 一般相対性理論 · 実験 C',
+      'モジュール 5 · 一般相対性理論 · 実験 G · 測地線運動',
       'モジュール 6 · 宇宙論 · 実験 D',
     ])
     expect(japanese.every((label) => !/Module|Understanding|Experiment/.test(label))).toBe(true)
