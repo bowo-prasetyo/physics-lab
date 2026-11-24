@@ -16,6 +16,8 @@ const ROUTES = [
   { path: '/relativity/moving-clocks', name: 'moving-clocks' },
   { path: '/relativity/two-perspectives', name: 'two-perspectives' },
   { path: '/gravity/clock-rates', name: 'gravity-clocks' },
+  { path: '/gravity/geodesic-motion', name: 'geodesic-motion' },
+  { path: '/gravity/geodesic-motion?level=advanced', name: 'geodesic-motion-advanced' },
   { path: '/cosmology/evolving-space', name: 'evolving-space' },
   { path: '/mechanics/projectile', name: 'projectile' },
   { path: '/time/pendulum', name: 'pendulum' },
