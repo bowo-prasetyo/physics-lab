@@ -2,10 +2,10 @@
 
 ## Learning sequence
 
-1. Predict the direction of acceleration before running the model.
+1. Commit to predictions on the shared prediction cards: static friction holding a pushed block, breakaway to kinetic friction (Beginner), the normal force on an incline (Intermediate), and the mass-independent sliding angle tan θ = μs (Advanced). Each explanation unlocks only after the trials that test it (`predictions.ts`).
 2. Choose a horizontal surface or a fixed inclined plane.
 3. Vary mass, an applied force parallel to the surface, the static and kinetic friction coefficients and (on an incline) the angle.
-4. Inspect the free-body diagram, friction regime and force magnitudes.
+4. Run the trial. Until the current setup has been run, only the push is drawn; then the free-body diagram, friction regime and force magnitudes appear.
 5. Compare the tangential force tendency with the maximum static friction to identify when sliding begins.
 6. Relate the vector sum to acceleration, then to velocity and displacement from rest.
 7. Open the mathematics and meaning sections for the level-appropriate explanation and model limits.

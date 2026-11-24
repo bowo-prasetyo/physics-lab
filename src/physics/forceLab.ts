@@ -65,6 +65,11 @@ export function calculateForceLab(input: ForceLabInput): ForceLabResult {
   if (input.staticFrictionCoefficient < 0 || input.kineticFrictionCoefficient < 0) {
     throw new RangeError('Friction coefficients cannot be negative.')
   }
+  if (input.kineticFrictionCoefficient > input.staticFrictionCoefficient + 1e-12) {
+    // Otherwise kinetic friction could exceed the force that broke static
+    // friction and drive a block that starts from rest backwards.
+    throw new RangeError('The kinetic friction coefficient cannot exceed the static coefficient.')
+  }
   if (input.duration < 0) throw new RangeError('Duration cannot be negative.')
   if (gravity <= 0) throw new RangeError('Gravitational acceleration must be greater than zero.')
   if (input.scenario !== 'horizontal' && input.scenario !== 'incline') {

@@ -102,8 +102,6 @@ function formatClock(seconds: number): string {
 
     <ShareExperiment />
 
-    <LocalizedExperimentGuide experiment-id="pendulum" />
-
     <ExperimentSupport experiment-id="pendulum" :module-number="2" focus="A pendulum is a physical clock: its period depends on its length, local gravitational acceleration and (beyond the small-angle limit) amplitude." prompt="Would adding mass to the bob make an ideal pendulum swing faster?" action="Vary length, mass and release angle separately; compare the measured period with the small-angle prediction." reflect="When does the small-angle approximation become less accurate, and why might a clock need recalibration in a new environment?" />
 
     <section aria-labelledby="predict-title">
@@ -208,6 +206,7 @@ function formatClock(seconds: number): string {
           </ul>
         </InfoCallout>
       </div>
+      <LocalizedExperimentGuide experiment-id="pendulum" />
     </section>
     </details>
 

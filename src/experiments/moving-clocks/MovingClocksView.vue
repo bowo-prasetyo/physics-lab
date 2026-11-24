@@ -133,8 +133,6 @@ const signed = (value: number, digits = 2) => {
 
     <ShareExperiment />
 
-    <LocalizedExperimentGuide experiment-id="moving-clocks" />
-
     <ExperimentSupport experiment-id="moving-clocks" :module-number="4" focus="Compare elapsed proper times along worldlines and distinguish them from coordinate-time descriptions." prompt="If two clocks separate and later reunite, must they record the same elapsed time?" action="Change the ship speed and observer frame, then compare the worldlines and simultaneity slices for the same events." reflect="Which events are shared by both observers, and which parts of the description depend on the chosen frame?" />
 
     <section aria-labelledby="predict-title">
@@ -259,6 +257,7 @@ const signed = (value: number, digits = 2) => {
           {{ localizeExperimentText('The diagram shows what each observer measures after allowing for the time light takes to travel.', locale) }} {{ localizeExperimentText('What an astronaut would literally see through a telescope also includes that travel delay (and the Doppler effect), so the images can run faster or slower still. Time dilation is what remains after correcting for it.', locale) }}
         </p>
       </InfoCallout>
+      <LocalizedExperimentGuide experiment-id="moving-clocks" />
     </section>
     </details>
 

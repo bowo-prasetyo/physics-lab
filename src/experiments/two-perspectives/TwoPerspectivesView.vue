@@ -84,8 +84,6 @@ const chartSeries = computed<ChartSeries[]>(() =>
 
     <ShareExperiment />
 
-    <LocalizedExperimentGuide experiment-id="two-perspectives" />
-
     <ExperimentSupport experiment-id="two-perspectives" :module-number="4" focus="Compare predictions from Galilean, Lorentzian space-and-time, and spacetime descriptions without confusing mathematical language with experimental differences." prompt="Can two mathematical descriptions disagree about their interpretation yet make the same measurable predictions?" action="Choose each scenario, compare all three descriptions at several speeds, then reveal the measurement evidence." reflect="Which predictions agree with observation, and which disagreements are about interpretation rather than measured outcomes?" />
 
     <section aria-labelledby="predict-title">
@@ -199,6 +197,7 @@ const chartSeries = computed<ChartSeries[]>(() =>
           </ul>
         </InfoCallout>
       </div>
+      <LocalizedExperimentGuide experiment-id="two-perspectives" />
     </section>
     </details>
 

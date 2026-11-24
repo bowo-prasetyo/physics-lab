@@ -8,6 +8,7 @@ import { useRoute } from 'vue-router'
 import ParameterSlider from '@/components/ParameterSlider.vue'
 import PredictionCard from '@/components/PredictionCard.vue'
 import MathFormula from '@/components/MathFormula.vue'
+import InfoCallout from '@/components/InfoCallout.vue'
 import { useLevel } from '@/composables/useLevel'
 import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { atLeast, isLevel } from '@/levels'
@@ -50,8 +51,14 @@ const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id,
 const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, localizeExperimentText(p.hint?.(runs.value) ?? null, locale.value)])))
 const fmt = (n: number) => Number(n.toFixed(3)).toString()
 
+// The readouts show the model's answer, so they appear only once the current setup has been run.
+const setupKey = computed(() => `${force.value}|${mass.value}|${time.value}`)
+const lastRunKey = ref<string | null>(null)
+const shown = computed(() => lastRunKey.value === setupKey.value)
+
 function runExperiment() {
   runs.value = [...runs.value, { force: force.value, mass: mass.value, acceleration: acceleration.value }]
+  lastRunKey.value = setupKey.value
 }
 </script>
 
@@ -64,8 +71,6 @@ function runExperiment() {
     </header>
 
     <ShareExperiment />
-
-    <LocalizedExperimentGuide experiment-id="newtonian" />
 
     <ExperimentSupport experiment-id="newtonian" :module-number="3" focus="Acceleration depends on net force and mass, not simply on whether an object is moving." prompt="At fixed mass, what happens to acceleration if the net force doubles? What if mass doubles instead?" action="Change one variable at a time, record the acceleration, then compare trials with equal force-to-mass ratios." reflect="Why must you use the net force rather than the applied push alone? Which idealisations does this model make?" />
 
@@ -86,11 +91,12 @@ function runExperiment() {
             <div class="cart"><span>{{ mass }} kg</span><i></i><i></i></div>
             <p class="muted small">{{ localizeExperimentText('Idealised horizontal track · the cart starts from rest', locale) }}</p>
           </div>
-          <div class="readout-grid">
+          <div v-if="shown" class="readout-grid" aria-live="polite">
             <div><span class="muted">{{ tx('Acceleration') }}</span><strong class="num">{{ fmt(acceleration) }} m/s²</strong></div>
             <div><span class="muted">{{ tx('Speed after') }} {{ time }} s</span><strong class="num">{{ fmt(velocity) }} m/s</strong></div>
             <div><span class="muted">{{ tx('Displacement after') }} {{ time }} s</span><strong class="num">{{ fmt(displacement) }} m</strong></div>
           </div>
+          <p v-else class="pending">{{ tx('Run this trial to see the acceleration, speed and displacement.') }}</p>
           <h3>{{ tx('Recorded trials') }}</h3>
           <p v-if="runs.length === 0" class="muted">{{ localizeExperimentText('Run at least two carefully chosen cases to reveal a relationship.', locale) }}</p>
           <div v-else class="table-scroll">
@@ -101,7 +107,7 @@ function runExperiment() {
               </tbody>
             </table>
           </div>
-          <button class="btn btn-small" type="button" :disabled="runs.length === 0" @click="runs = []">{{ localizeExperimentText('Clear recorded trials', locale) ?? 'Clear recorded trials' }}</button>
+          <button class="btn btn-small" type="button" :disabled="runs.length === 0" @click="runs = []; lastRunKey = null">{{ localizeExperimentText('Clear recorded trials', locale) ?? 'Clear recorded trials' }}</button>
         </div>
         <aside class="lab-side card">
           <ParameterSlider v-model="force" :label="localizeExperimentText('Net force', locale) ?? 'Net force'" symbol="F_{net}" unit="N" v-bind="FORCE" :digits="0" :signed="false" />
@@ -128,16 +134,32 @@ function runExperiment() {
 
     <details class="lesson-disclosure">
       <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
-      <section class="card prose">
-      <h2><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
-      <h3>{{ localizeExperimentText('Established physics', locale) }}</h3>
-      <ul>
-        <li>{{ localizeExperimentText('Acceleration is caused by the net force, not necessarily by the largest individual force.', locale) }}</li>
-        <li>{{ localizeExperimentText('For the same net force, a more massive object accelerates less.', locale) }}</li>
-        <li>{{ localizeExperimentText('For the same mass, a larger net force produces a proportionally larger acceleration.', locale) }}</li>
-      </ul>
+      <section aria-labelledby="meaning-title" class="card prose">
+      <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
+      <div class="meaning">
+        <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
+          <ul>
+            <li>{{ localizeExperimentText('Acceleration is caused by the net force, not necessarily by the largest individual force.', locale) }}</li>
+            <li>{{ localizeExperimentText('For the same net force, a more massive object accelerates less.', locale) }}</li>
+            <li>{{ localizeExperimentText('For the same mass, a larger net force produces a proportionally larger acceleration.', locale) }}</li>
+          </ul>
+        </InfoCallout>
+        <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
+          <ul>
+            <li>
+              <strong>{{ tx('Is F = ma a law or a definition?') }}</strong>
+              {{ tx('Mach and Poincaré argued that it partly defines force and mass rather than discovering a fact about them. It becomes a testable law once forces are identified independently, for example by springs or by gravity.') }}
+            </li>
+            <li>
+              <strong>{{ tx('Why do two kinds of mass agree?') }}</strong>
+              {{ tx('The mass that resists acceleration and the mass that gravity pulls on are equal to better than one part in 10¹⁴. Newton took this as a fact without explanation; Einstein built general relativity on it (Module 5).') }}
+            </li>
+          </ul>
+        </InfoCallout>
+      </div>
       <h3>{{ localizeExperimentText('Assumptions and limits', locale) }}</h3>
       <p>{{ localizeExperimentText('This is a one-dimensional Newtonian model in an inertial reference frame. The mass is constant, the net force is constant, and friction is omitted. The selected force represents the sum of all forces along the track; it is not simply the applied push if other forces oppose it.', locale) }}</p>
+      <LocalizedExperimentGuide experiment-id="newtonian" />
     </section>
     </details>
 
@@ -166,6 +188,7 @@ function runExperiment() {
 table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 th, td { padding: 8px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
 th { color: var(--text-muted); font-size: .85rem; }
+.pending { margin: 0; padding: 12px 14px; border-left: 3px solid var(--accent); border-radius: var(--radius-sm); background: var(--surface-2); }
 .btn-small { align-self: flex-start; min-height: 32px; padding: 0 10px; font-size: .85rem; }
 .nav-links { display: inline-flex; flex-wrap: wrap; gap: 16px; }
 @media (max-width: 900px) { .lab { grid-template-columns: 1fr; } }

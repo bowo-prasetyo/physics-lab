@@ -87,6 +87,8 @@ describe('calculateForceLab friction regimes', () => {
     expect(() => calculateForceLab({ ...base, mass: 0 })).toThrow(RangeError)
     expect(() => calculateForceLab({ ...base, staticFrictionCoefficient: -0.1 })).toThrow(RangeError)
     expect(() => calculateForceLab({ ...base, kineticFrictionCoefficient: -0.1 })).toThrow(RangeError)
+    // mu_k > mu_s would let kinetic friction push a block from rest backwards.
+    expect(() => calculateForceLab({ ...base, staticFrictionCoefficient: 0.4, kineticFrictionCoefficient: 0.8 })).toThrow(RangeError)
     expect(() => calculateForceLab({ ...base, duration: -1 })).toThrow(RangeError)
     expect(() => calculateForceLab({ ...base, inclineAngle: 90, scenario: 'incline' })).toThrow(RangeError)
   })

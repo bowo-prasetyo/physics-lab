@@ -106,6 +106,20 @@ const supportCopy: Record<string, LocalizedSupportCopy> = {
       reflect: 'どの予測が観測と一致しますか。また、測定結果ではなく解釈に関する違いはどれでしょうか。'
     }
   },
+  'force-lab': {
+    id: {
+      focus: 'Percepatan ditentukan oleh jumlah vektor semua gaya pada balok. Gesekan statis hanya sebesar yang diperlukan, hingga suatu batas.',
+      prompt: 'Jika sebuah dorongan tidak menggerakkan balok, seberapa besar gaya geseknya? Apa yang berubah setelah balok mulai bergeser?',
+      action: 'Ubah satu pengaturan setiap kali, jalankan setiap percobaan, lalu bandingkan jenis gesekan, gaya resultan, dan percepatannya.',
+      reflect: 'Gaya mana dalam diagram yang bergantung pada massa, dan mana yang tidak? Mengapa hal itu membuat sudut saat balok mulai bergeser tidak bergantung pada massa?'
+    },
+    ja: {
+      focus: '加速度は、ブロックに働くすべての力のベクトル和で決まります。静止摩擦力は、上限までの範囲で必要な分だけ働きます。',
+      prompt: '押してもブロックが動かないとき、摩擦力の大きさはいくらでしょうか。ブロックが滑り始めると何が変わりますか。',
+      action: '設定を一つずつ変えて各試行を実行し、摩擦の状態、合力、加速度を比べてください。',
+      reflect: '図の中の力のうち、質量に依存するのはどれで、依存しないのはどれですか。そのことから、滑り始める角度が質量によらない理由を説明できますか。'
+    }
+  },
   'momentum-collisions': {
     id: { focus: 'Momentum kekal dalam tumbukan terisolasi, tetapi energi kinetik bergantung pada sifat kelentingan tumbukan.', prompt: 'Sebelum menjalankan tumbukan, prediksikan arah dan kecepatan akhir kedua kereta.', action: 'Ubah satu massa, kecepatan awal, atau koefisien restitusi setiap kali; bandingkan momentum dan energi kinetik sebelum dan sesudah tumbukan.', reflect: 'Jika momentum tidak berubah tetapi energi kinetik berkurang, ke mana energi tersebut berpindah?' },
     ja: { focus: '外部から孤立した衝突では運動量が保存されますが、運動エネルギーは衝突の弾性によって変わります。', prompt: '衝突を実行する前に、2台の台車の衝突後の向きと速さを予測してください。', action: '質量、初速度、反発係数のいずれか一つずつを変え、衝突前後の運動量と運動エネルギーを比較してください。', reflect: '運動量が変わらず運動エネルギーが減少した場合、そのエネルギーはどこへ移ったのでしょうか。' }

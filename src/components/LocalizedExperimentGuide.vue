@@ -418,12 +418,12 @@ const guide = computed(() => locale.value === 'en' ? null : copy[props.experimen
 
 <template>
   <section v-if="guide" class="localized-guide prose" aria-labelledby="localized-guide-title">
-    <h2 id="localized-guide-title">{{ guide.establishedTitle }}</h2>
+    <h3 id="localized-guide-title">{{ guide.establishedTitle }}</h3>
     <p v-for="(paragraph, index) in guide.established" :key="'established-' + index">{{ paragraph }}</p>
-    <h2>{{ guide.interpretationTitle }}</h2>
+    <h3>{{ guide.interpretationTitle }}</h3>
     <p v-for="(paragraph, index) in guide.interpretation" :key="'interpretation-' + index">{{ paragraph }}</p>
     <div class="visual-description" role="note" :aria-label="guide.visualTitle">
-      <h3>{{ guide.visualTitle }}</h3>
+      <h4>{{ guide.visualTitle }}</h4>
       <p v-for="(paragraph, index) in guide.visual" :key="'visual-' + index">{{ paragraph }}</p>
     </div>
   </section>
@@ -437,11 +437,11 @@ const guide = computed(() => locale.value === 'en' ? null : copy[props.experimen
   border-radius: var(--radius-md, 12px);
   background: var(--surface);
 }
-.localized-guide h2 {
+.localized-guide h3 {
   margin: 0.25rem 0 0.65rem;
   font-size: 1.15rem;
 }
-.localized-guide h2:not(:first-child) {
+.localized-guide h3:not(:first-child) {
   margin-top: 1.25rem;
 }
 .localized-guide p {
@@ -454,7 +454,7 @@ const guide = computed(() => locale.value === 'en' ? null : copy[props.experimen
   background: var(--surface-2);
   border-radius: var(--radius-sm, 6px);
 }
-.visual-description h3 {
+.visual-description h4 {
   margin: 0 0 0.5rem;
   font-size: 1rem;
 }

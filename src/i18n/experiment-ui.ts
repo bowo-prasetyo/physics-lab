@@ -5,6 +5,11 @@ import type { Locale } from './locales'
  * Physics values, units, IDs and calculations are deliberately not transformed.
  */
 const text: Record<string, readonly [string, string]> = {
+  "Run this trial to see the acceleration, speed and displacement.": ["Jalankan percobaan ini untuk melihat percepatan, kelajuan, dan perpindahannya.", "この試行を実行すると、加速度、速さ、変位が表示されます。"],
+  "Is F = ma a law or a definition?": ["Apakah F = ma hukum atau definisi?", "F = ma は法則でしょうか、それとも定義でしょうか。"],
+  "Mach and Poincaré argued that it partly defines force and mass rather than discovering a fact about them. It becomes a testable law once forces are identified independently, for example by springs or by gravity.": ["Mach dan Poincaré berpendapat bahwa persamaan ini sebagian mendefinisikan gaya dan massa, bukan menemukan fakta tentang keduanya. Persamaan ini menjadi hukum yang dapat diuji setelah gaya ditentukan secara terpisah, misalnya dengan pegas atau gravitasi.", "マッハやポアンカレは、この式は力と質量についての事実を発見したものではなく、部分的にはそれらを定義するものだと論じました。ばねや重力などで力を独立に定めれば、検証可能な法則になります。"],
+  "Why do two kinds of mass agree?": ["Mengapa dua jenis massa sama besar?", "なぜ 2 種類の質量は一致するのでしょうか。"],
+  "The mass that resists acceleration and the mass that gravity pulls on are equal to better than one part in 10¹⁴. Newton took this as a fact without explanation; Einstein built general relativity on it (Module 5).": ["Massa yang melawan percepatan dan massa yang ditarik gravitasi sama besar dengan ketelitian lebih baik dari satu per 10¹⁴. Newton menerimanya sebagai fakta tanpa penjelasan; Einstein membangun relativitas umum di atasnya (Modul 5).", "加速に抵抗する質量と、重力に引かれる質量は、10¹⁴ 分の 1 より高い精度で等しいことがわかっています。ニュートンはこれを説明のない事実として受け入れ、アインシュタインはこれを土台に一般相対性理論を築きました（モジュール 5）。"],
   "Phase portrait: one closed loop per swing. The loop does not spiral, because energy is conserved.": ["Potret fase: satu lintasan tertutup untuk setiap ayunan. Lintasan tidak berbentuk spiral karena energi kekal.","位相図：1 回の振動につき 1 つの閉じた軌道を描きます。エネルギーが保存されるため、軌道はらせん状になりません。"],
   "angular velocity ω": ["kecepatan sudut ω","角速度 ω"],
   "angle θ": ["sudut θ","角度 θ"],

@@ -10,6 +10,8 @@ export interface GeodesicPoint { x: number; y: number; radius: number }
 export interface GeodesicRun {
   points: GeodesicPoint[]
   periapses: number
+  /** Orbital angle φ (radians, accumulated) at each periapsis, interpolated to dr/dτ = 0. */
+  periapsisAngles: number[]
   escaped: boolean
   captured: boolean
 }
@@ -64,20 +66,50 @@ export function calculateGeodesic(settings: GeodesicSettings, relativistic = tru
   let state: State = { r: initialRadius, vr: radialVelocity, phi: 0 }
   const points: GeodesicPoint[] = []
   let periapses = 0
-  let previousVr = state.vr
+  const periapsisAngles: number[] = []
+  let previous = state
   let escaped = false
   let captured = false
   for (let i = 0; i <= steps; i++) {
     if (!Number.isFinite(state.r) || state.r <= 1.0005) { captured = true; break }
     if (state.r > 80) { escaped = true; break }
     points.push({ x: state.r * Math.cos(state.phi), y: state.r * Math.sin(state.phi), radius: state.r })
-    if (i > 0 && previousVr < 0 && state.vr >= 0) periapses++
-    previousVr = state.vr
+    if (i > 0 && previous.vr < 0 && state.vr >= 0) {
+      periapses++
+      const fraction = -previous.vr / (state.vr - previous.vr)
+      periapsisAngles.push(previous.phi + fraction * (state.phi - previous.phi))
+    }
+    previous = state
     state = rk4(state, l, h, relativistic)
   }
-  return { points, periapses, escaped, captured }
+  return { points, periapses, periapsisAngles, escaped, captured }
 }
 
 export function newtonianReference(settings: GeodesicSettings): GeodesicRun {
   return calculateGeodesic(settings, false)
+}
+
+/**
+ * Integration settings that cover about `orbits` radial periods: the step grows
+ * with the orbit size, so wide orbits still complete several revolutions.
+ */
+export function integrationFor(initialRadius: number, orbits = 3.5): { steps: number; stepSize: number } {
+  const stepSize = 0.025 * Math.max(1, initialRadius / 8)
+  // Newtonian period for a circular orbit of this radius (r_s = 1, so GM = 1/2).
+  const period = 2 * Math.PI * Math.sqrt(2 * initialRadius ** 3)
+  return { steps: Math.min(30000, Math.ceil(orbits * period / stepSize)), stepSize }
+}
+
+/** Mean advance of the periapsis per radial period, in degrees (0 when fewer than two periapses). */
+export function periapsisShiftPerOrbit(run: GeodesicRun): number | null {
+  const angles = run.periapsisAngles
+  if (angles.length < 2) return null
+  const first = angles[0] as number
+  const last = angles[angles.length - 1] as number
+  return ((last - first) / (angles.length - 1) - 2 * Math.PI) * 180 / Math.PI
+}
+
+/** Near-circular Schwarzschild estimate of the periapsis shift per orbit, in degrees (r in r_s). */
+export function nearCircularShift(radius: number): number {
+  return 360 * (1 / Math.sqrt(1 - 3 / radius) - 1)
 }
