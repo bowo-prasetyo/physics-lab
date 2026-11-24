@@ -62,11 +62,11 @@ export function getLocalizedModules(locale: Locale): readonly ModuleEntry[] {
     return {
       ...module,
       plannedTopics: module.plannedTopics.filter((topic) => topic !== 'Diagram benda bebas dengan beberapa gaya' && topic !== '複数の力を扱う力の図'),
-      experiments: module.experiments.flatMap((experiment) =>
-        experiment.path === '/mechanics/newtonian'
-          ? [experiment, forceLab]
-          : [experiment],
-      ),
+      experiments: module.experiments.some((experiment) => experiment.path === '/mechanics/force-lab')
+        ? module.experiments
+        : module.experiments.flatMap((experiment) =>
+          experiment.path === '/mechanics/newtonian' ? [experiment, forceLab] : [experiment],
+        ),
     }
   })
 }
