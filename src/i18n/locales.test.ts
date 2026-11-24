@@ -39,7 +39,7 @@ describe('locale configuration', () => {
   it('provides a localized catalogue for all six modules and thirteen experiments', () => {
     for (const locale of SUPPORTED_LOCALES) {
       const modules = getLocalizedModules(locale)
-      expect(modules).toHaveLength(7)
+      expect(modules).toHaveLength(6)
       expect(modules.reduce((count, module) => count + module.experiments.length, 0)).toBe(13)
       expect(modules.every(module => module.title.length > 0 && module.audience.length > 0)).toBe(true)
     }
@@ -48,7 +48,7 @@ describe('locale configuration', () => {
   it('provides seven complete teacher lessons in every supported locale', () => {
     for (const locale of SUPPORTED_LOCALES) {
       const guide = getTeacherGuide(locale)
-      expect(guide.lessons).toHaveLength(6)
+      expect(guide.lessons).toHaveLength(7)
       expect(guide.beforeItems).toHaveLength(4)
       expect(guide.assessmentItems).toHaveLength(4)
       for (const lesson of guide.lessons) {
