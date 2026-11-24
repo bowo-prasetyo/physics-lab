@@ -53,6 +53,12 @@ const isApproaching = computed(() => velocity1.value > velocity2.value)
 const intermediate = computed(() => atLeast(level.value, 'intermediate'))
 const advanced = computed(() => atLeast(level.value, 'advanced'))
 const isRunning = computed(() => phase.value === 'approaching' || phase.value === 'impact')
+const runDisabledReason = computed(() => {
+  if (!prediction.value) return 'Select a prediction above to enable the collision run.'
+  if (!isApproaching.value) return 'No collision is possible with the current velocities: cart 1 must move faster than cart 2 (v₁ > v₂).'
+  if (isRunning.value) return 'The collision animation is running. Wait until it finishes.'
+  return ''
+})
 const fmt = (value: number, digits = 2) => Number(value.toFixed(digits)).toString()
 const lossPct = computed(() => result.value.kineticEnergyBefore > 0 ? 100 * result.value.kineticEnergyLost / result.value.kineticEnergyBefore : 0)
 const separation = computed(() => Math.min(34, result.value.relativeSpeedAfter * 2.5))
@@ -159,7 +165,12 @@ onBeforeUnmount(clearAnimationTimer)
           <p class="small muted">{{ tx('Schematic view: cart positions illustrate contact and separation; velocity values are shown with their signs.') }}</p>
         </div>
 
-        <button class="button button-primary run-button" type="button" :disabled="!prediction || !isApproaching || isRunning" @click="runCollision">
+        <p v-if="runDisabledReason" id="collision-run-guidance" class="run-guidance muted small">
+          {{ tx(runDisabledReason) }}
+        </p>
+        <button class="button button-primary run-button" type="button"
+          :disabled="Boolean(runDisabledReason)" :aria-describedby="runDisabledReason ? 'collision-run-guidance' : undefined"
+          @click="runCollision">
           {{ isRunning ? tx('Collision in progress…') : phase === 'complete' ? tx('Run again') : tx('Run collision') }}
         </button>
         <p v-if="phase === 'complete'" class="muted" role="status">{{ tx('Momentum is conserved in this model; kinetic energy is conserved only when the collision is elastic.') }}</p>
@@ -247,7 +258,9 @@ onBeforeUnmount(clearAnimationTimer)
 .result-grid span { color:var(--text-muted); font-size:.86rem; }
 .result-grid strong { font-variant-numeric:tabular-nums; }
 .verdict { font-weight:650; color:var(--accent); }
-.run-button:disabled { cursor:not-allowed; opacity:.6; }
+.run-guidance { margin:0; padding:10px 12px; border-left:3px solid var(--text-muted); border-radius:6px; background:var(--surface-2); }
+.run-button:disabled { cursor:not-allowed; opacity:.58; filter:saturate(.55); }
+.run-button:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
 .experiment-footer { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 @media(prefers-reduced-motion:reduce) { .cart { transition:none; } }
 @media(max-width:520px) { .simulation-heading { align-items:flex-start; flex-direction:column; } }
