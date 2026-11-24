@@ -69,10 +69,11 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 5,
     title: 'General relativity',
     audience: 'Advanced undergraduate',
-    coverage: ['Gravitational time dilation in the Schwarzschild exterior', 'GPS gravitational and kinematic clock corrections', 'Static spherical geometry and proper radial distance', 'Light signals and clock rates near a Schwarzschild horizon'],
-    plannedTopics: ['Geodesic motion and free fall', 'Einstein field equations and the role of stress-energy', 'A careful bridge from the equivalence principle to curved spacetime', 'Beyond the static, spherical Schwarzschild setting'],
+    coverage: ['Gravitational time dilation in the Schwarzschild exterior', 'GPS gravitational and kinematic clock corrections', 'Static spherical geometry and proper radial distance', 'Light signals and clock rates near a Schwarzschild horizon', 'Timelike geodesics and free-fall orbits in Schwarzschild spacetime', 'Periapsis precession and the Newtonian limit'],
+    plannedTopics: ['Einstein field equations and the role of stress-energy', 'A careful bridge from the equivalence principle to curved spacetime', 'Beyond the static, spherical Schwarzschild setting'],
     experiments: [
       { title: 'C · Gravity and clock rates', summary: 'Two clocks at different heights, from the Earth to a black hole, and why GPS needs relativity.', path: '/gravity/clock-rates' },
+      { title: 'G · Geodesic Motion Lab', summary: 'Compare Newtonian orbits with free-fall paths through Schwarzschild spacetime; investigate periapsis precession.', path: '/gravity/geodesic-motion' },
     ],
   },
   {
