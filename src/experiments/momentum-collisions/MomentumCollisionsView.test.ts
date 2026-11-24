@@ -85,6 +85,15 @@ describe('Momentum and Collisions Lab interaction', () => {
     cart1Velocity.dispatchEvent(new Event('change', { bubbles: true }))
     await nextTick()
 
+    // Changing simulation inputs clears the previous prediction. Select one
+    // again so this assertion isolates the velocity-based disabled reason.
+    const noCollisionPrediction = root.querySelector<HTMLInputElement>('input[name="collision-prediction"][value="cart2"]')
+    expect(noCollisionPrediction).not.toBeNull()
+    if (!noCollisionPrediction) throw new Error('Prediction control was not rendered after changing velocity')
+    noCollisionPrediction.checked = true
+    noCollisionPrediction.dispatchEvent(new Event('change', { bubbles: true }))
+    await nextTick()
+
     expect(root.querySelector('.results')).toBeNull()
     expect(root.textContent).toContain('No collision')
     expect(runButton?.disabled).toBe(true)
