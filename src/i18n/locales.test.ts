@@ -40,7 +40,7 @@ describe('locale configuration', () => {
     for (const locale of SUPPORTED_LOCALES) {
       const modules = getLocalizedModules(locale)
       expect(modules).toHaveLength(6)
-      expect(modules.reduce((count, module) => count + module.experiments.length, 0)).toBe(11)
+      expect(modules.reduce((count, module) => count + module.experiments.length, 0)).toBe(12)
       expect(modules.every(module => module.title.length > 0 && module.audience.length > 0)).toBe(true)
     }
   })
