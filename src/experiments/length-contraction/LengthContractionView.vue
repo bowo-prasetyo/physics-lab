@@ -153,10 +153,10 @@ watch(locale, () => {
               <line class="worldline rear" :x1="diagram.rearStart.x" :y1="diagram.rearStart.y" :x2="diagram.rearEnd.x" :y2="diagram.rearEnd.y" />
               <line class="worldline front" :x1="diagram.frontStart.x" :y1="diagram.frontStart.y" :x2="diagram.frontEnd.x" :y2="diagram.frontEnd.y" />
               <line class="earth-slice" :x1="diagram.earthRear.x" :y1="diagram.earthRear.y" :x2="diagram.earthFront.x" :y2="diagram.earthFront.y" />
-              <line v-if="intermediate" class="ship-slice" :x1="diagram.earthRear.x" :y1="diagram.earthRear.y" :x2="diagram.shipFront.x" :y2="diagram.shipFront.y" />
+              <line class="ship-slice" :x1="diagram.earthRear.x" :y1="diagram.earthRear.y" :x2="diagram.shipFront.x" :y2="diagram.shipFront.y" />
               <circle class="event rear-event" :cx="diagram.earthRear.x" :cy="diagram.earthRear.y" r="5" />
               <circle class="event front-event" :cx="diagram.earthFront.x" :cy="diagram.earthFront.y" r="5" />
-              <circle v-if="intermediate" class="event ship-event" :cx="diagram.shipFront.x" :cy="diagram.shipFront.y" r="5" />
+              <circle class="event ship-event" :cx="diagram.shipFront.x" :cy="diagram.shipFront.y" r="5" />
             </g>
             <g class="diagram-legend">
               <line class="worldline rear" x1="66" y1="20" x2="90" y2="20" />
