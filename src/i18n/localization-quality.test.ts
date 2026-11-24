@@ -53,7 +53,7 @@ describe('localization quality assurance', () => {
       expect(localized.map((module) => module.number)).toEqual(MODULES.map((module) => module.number))
       expect(localized.flatMap((module) => module.experiments.map((experiment) => experiment.path)))
         .toEqual(MODULES.flatMap((module) => module.experiments.map((experiment) => experiment.path)))
-      expect(localized.flatMap((module) => module.experiments)).toHaveLength(12)
+      expect(localized.flatMap((module) => module.experiments)).toHaveLength(13)
     }
   })
 
@@ -91,6 +91,7 @@ describe('localization quality assurance', () => {
       'two-perspectives',
       'length-contraction',
       'gravity-clock-rates',
+      'geodesic-motion',
       'evolving-space',
     ]
 
