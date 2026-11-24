@@ -22,7 +22,7 @@ The home page distinguishes topics explored by implemented experiments from plan
 
 ## Status
 
-Eleven experiments are currently implemented across the six modules. Further experiments are listed in the app as planned.
+Twelve experiments are currently implemented across the six modules. Further experiments are listed in the app as planned.
 
 **Force Lab: free-body diagrams and multiple forces** (Module 3):
 - Compare horizontal and inclined surfaces; vary mass, applied force, friction and incline angle.
