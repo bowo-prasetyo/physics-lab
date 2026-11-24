@@ -20,6 +20,10 @@ const ROUTES = [
   { path: '/mechanics/projectile', name: 'projectile' },
   { path: '/time/pendulum', name: 'pendulum' },
   { path: '/space/displacement-3d', name: 'displacement-3d' },
+  // Force Lab is audited at each instructional depth in every supported locale.
+  { path: '/mechanics/force-lab?level=beginner', name: 'force-lab-beginner' },
+  { path: '/mechanics/force-lab?level=intermediate', name: 'force-lab-intermediate' },
+  { path: '/mechanics/force-lab?level=advanced', name: 'force-lab-advanced' },
   // Shared experiment links restore meaningful control settings. Render these
   // non-default states too so the audit sees the labels produced by them.
   { path: '/mechanics/newtonian?force=50&mass=1&time=5&level=advanced', name: 'newtonian-high-force-state' },
