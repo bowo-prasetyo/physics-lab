@@ -1,7 +1,7 @@
 # Momentum and collisions
 
 ## Learning sequence
-1. Predict the final motion of two carts before impact.
+1. Commit to predictions on the shared prediction cards: equal carts swapping velocities and sticking together (Beginner), which quantities are conserved when 0 < e < 1 (Intermediate), and a heavy cart hitting a light one (Advanced). Each explanation unlocks only after the collision that tests it (`predictions.ts`). Results stay hidden until the carts have collided.
 2. Vary masses, signed initial velocities and coefficient of restitution.
 3. Compare velocity, total momentum, impulse and translational kinetic energy.
 4. Identify elastic, inelastic and perfectly inelastic limits.

@@ -49,6 +49,21 @@ const copy: Record<string, readonly [string, string]> = {
   'Space and time versus spacetime →': ['Ruang dan waktu versus ruang-waktu →', '空間と時間、それとも時空 →'],
   'All modules': ['Semua modul', 'すべてのモジュール'],
   'The result depends on speed: at zero speed the measured length equals the proper length; at nonzero speed it is shorter.': ['Hasilnya bergantung pada kecepatan: saat diam, panjang terukur sama dengan panjang wajar; pada kecepatan bukan nol, panjang terukur lebih pendek.', '結果は速度によって変わります。速度がゼロなら測定長は固有長と等しく、ゼロでなければ短くなります。'],
+  "Commit to an answer first. Each explanation unlocks only after you have made the measurement that tests it.": ["Pilih jawaban terlebih dahulu. Setiap penjelasan baru terbuka setelah Anda melakukan pengukuran yang mengujinya.", "まず答えを決めてください。各説明は、それを確かめる測定を行った後にだけ表示されます。"],
+  "Run the measurement to record the endpoint events.": ["Jalankan pengukuran untuk mencatat peristiwa ujung.", "測定を実行すると、両端の事象が記録されます。"],
+  "Run the measurement to see the length Earth observers record.": ["Jalankan pengukuran untuk melihat panjang yang dicatat pengamat Bumi.", "測定を実行すると、地球の観測者が記録する長さが表示されます。"],
+  "Recorded measurements": ["Pengukuran yang tercatat", "記録した測定"],
+  "Clear measurements": ["Hapus pengukuran", "測定を消去"],
+  "Fast muons created high in the atmosphere reach the ground in large numbers. In the muons’ frame, the atmosphere they cross is contracted; in the Earth frame, their clocks run slow. Both descriptions predict the same count.": ["Muon cepat yang tercipta tinggi di atmosfer mencapai permukaan tanah dalam jumlah besar. Dalam kerangka muon, atmosfer yang dilaluinya mengalami kontraksi; dalam kerangka Bumi, jam muon berjalan lambat. Kedua deskripsi memprediksi jumlah yang sama.", "大気の上層で生まれた高速のミューオンは、地表に大量に到達します。ミューオンの基準系では通過する大気が縮み、地球の基準系ではミューオンの時計が遅れます。どちらの記述も同じ個数を予測します。"],
+  "Is the contraction “real”? Every frame’s measurement is correct for that frame. Some prefer to say the object is four-dimensional and each frame measures a different slice of it.": ["Apakah kontraksi itu “nyata”? Pengukuran setiap kerangka benar untuk kerangka tersebut. Sebagian orang lebih suka mengatakan bahwa benda itu empat dimensi dan setiap kerangka mengukur irisan yang berbeda darinya.", "収縮は「本物」でしょうか。どの基準系の測定も、その基準系にとっては正しいのです。物体は 4 次元的な存在で、基準系ごとに異なる切り口を測っているのだと考える人もいます。"],
+  "Compare both, and the descriptions behind them, in Experiments B and E.": ["Bandingkan keduanya, beserta deskripsi di baliknya, dalam Eksperimen B dan E.", "実験 B と E で、両者とその背後にある記述を比べてみましょう。"],
+  "Different clocks, different elapsed times": ["Jam berbeda, selang waktu berbeda", "異なる時計、異なる経過時間"],
+  "Space and time versus spacetime": ["Ruang dan waktu versus ruang-waktu", "空間と時間と時空"],
+  "At low speeds the difference is tiny. Raise the speed to 0.5c or more and measure again.": ["Pada kecepatan rendah, perbedaannya sangat kecil. Naikkan kecepatan ke 0,5c atau lebih, lalu ukur lagi.", "低速では差はごくわずかです。速さを 0.5c 以上にして、もう一度測定してください。"],
+  "Move the speed slider all the way to 0 and measure again.": ["Geser pengatur kecepatan sampai 0, lalu ukur lagi.", "速さのスライダーを 0 まで動かして、もう一度測定してください。"],
+  "Now measure the same ship at 0.80c.": ["Sekarang ukur pesawat yang sama pada 0,80c.", "次は同じ宇宙船を 0.80c で測定してください。"],
+  "Now measure the same ship at 0.40c.": ["Sekarang ukur pesawat yang sama pada 0,40c.", "次は同じ宇宙船を 0.40c で測定してください。"],
+  "At zero speed both frames agree. Choose a non-zero speed and measure again.": ["Pada kecepatan nol, kedua kerangka sepakat. Pilih kecepatan bukan nol, lalu ukur lagi.", "速さがゼロなら二つの基準系は一致します。0 でない速さを選んで、もう一度測定してください。"],
 }
 
 export function localizeLengthContractionText(value: string, locale: Locale): string {

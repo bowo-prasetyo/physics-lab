@@ -119,8 +119,6 @@ const expansionWord = computed(() => {
 
     <ShareExperiment />
 
-    <LocalizedExperimentGuide experiment-id="evolving-space" />
-
     <ExperimentSupport experiment-id="evolving-space" :module-number="6" focus="Distinguish the expansion of distances between comoving locations from motion through static space." prompt="If the scale factor doubles, what happens to the separation of two comoving galaxies?" action="Run at least two cosmological models and compare their scale-factor and Hubble histories at the same epoch." reflect="Which conclusions follow from the chosen model, and what observational evidence would be needed to test it?" />
 
     <section aria-labelledby="predict-title">
@@ -255,6 +253,7 @@ const expansionWord = computed(() => {
           </ul>
         </InfoCallout>
       </div>
+      <LocalizedExperimentGuide experiment-id="evolving-space" />
     </section>
     </details>
 

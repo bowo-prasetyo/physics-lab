@@ -112,8 +112,6 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
 
     <ShareExperiment />
 
-    <LocalizedExperimentGuide experiment-id="displacement3d" />
-
     <ExperimentSupport experiment-id="displacement-3d" :module-number="1" focus="Position, path length and displacement are different descriptions of a journey." prompt="If an object takes two different routes to the same destination, what should stay the same?" action="Move the object through a few points, note the distance travelled and displacement, then rotate or move the coordinate frame." reflect="Which coordinates changed when you changed the frame, and which geometric quantity stayed invariant?" />
 
     <section aria-labelledby="predict-title">
@@ -246,6 +244,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
           </ul>
         </InfoCallout>
       </div>
+      <LocalizedExperimentGuide experiment-id="displacement3d" />
     </section>
     </details>
 

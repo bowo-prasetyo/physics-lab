@@ -2,9 +2,9 @@
 
 ## Learning sequence
 
-1. Predict whether Earth observers measure the spaceship shorter, longer or unchanged compared with its rest length.
+1. Commit to predictions on the shared prediction cards: the length measured at 0.8c and at rest (Beginner), how the shortening grows when the speed doubles (Intermediate), and the ship-frame order of the two measurement events (Advanced). Each explanation unlocks only after the measurements that test it (`predictions.ts`).
 2. Choose the spaceship's relative speed and proper length.
-3. Record both endpoint positions at the same Earth-frame time.
+3. Run the measurement: both endpoint positions are recorded at the same Earth-frame time. The diagram and readouts stay hidden until the current setup has been measured, and each measurement is kept in a table.
 4. Compare the measured length with the proper length and inspect the two simultaneity slices in the spacetime diagram.
 5. Explore the mathematics at three levels, from operational measurement to the inverse Lorentz transformation.
 

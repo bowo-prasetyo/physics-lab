@@ -145,8 +145,6 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
 
     <ShareExperiment />
 
-    <LocalizedExperimentGuide experiment-id="gravity-clocks" />
-
     <ExperimentSupport experiment-id="gravity-clock-rates" :module-number="5"  :focus="tx('Compare clock rates in the stated static Schwarzschild setting; keep the model assumptions visible.')" :prompt="tx('Which clock should accumulate more time when two stationary clocks are held at different heights?')" :action="tx('Change the two clock heights, compare the predicted rates, then inspect the separate gravitational and kinematic GPS corrections.')" :reflect="tx('What is held fixed in this comparison, and why is the GPS correction not purely gravitational?')" />
 
     <section aria-labelledby="predict-title">
@@ -337,6 +335,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           </ul>
         </InfoCallout>
       </div>
+      <LocalizedExperimentGuide experiment-id="gravity-clocks" />
     </section>
     </details>
 

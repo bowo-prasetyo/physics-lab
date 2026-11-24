@@ -4,6 +4,8 @@ import { useRoute } from 'vue-router'
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
+import InfoCallout from '@/components/InfoCallout.vue'
+import PredictionCard from '@/components/PredictionCard.vue'
 import MathFormula from '@/components/MathFormula.vue'
 import ParameterSlider from '@/components/ParameterSlider.vue'
 import { useLevel } from '@/composables/useLevel'
@@ -11,9 +13,11 @@ import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLocale } from '@/composables/useLocale'
 import { formatNumber } from '@/i18n/formatters'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
+import { localizePredictions } from '@/i18n/experiment-content'
 import { atLeast, isLevel } from '@/levels'
 import { calculateLengthContraction } from '@/physics'
 import { getLengthContractionDocumentTitle, localizeLengthContractionText } from './copy'
+import { PREDICTIONS, type LengthMeasurement } from './predictions'
 
 const route = useRoute()
 const level = useLevel()
@@ -36,11 +40,18 @@ useQuerySync({
   },
 })
 
-const prediction = ref<'same' | 'shorter' | 'longer' | null>(null)
-const tested = ref(false)
 const result = computed(() => calculateLengthContraction(properLength.value, beta.value))
-const correctPrediction = computed(() => beta.value === 0 ? 'same' : 'shorter')
-const predictionMatches = computed(() => prediction.value === correctPrediction.value)
+const runs = ref<LengthMeasurement[]>([])
+// Results stay hidden until the current setup has been measured.
+const setupKey = computed(() => `${beta.value}|${properLength.value}`)
+const lastRunKey = ref<string | null>(null)
+const shown = computed(() => lastRunKey.value === setupKey.value)
+const predictions = computed(() => localizePredictions('length-contraction', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
+const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(runs.value)])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => {
+  const hint = p.hint?.(runs.value) ?? null
+  return [p.id, hint === null ? null : tx(hint)]
+})))
 const intermediate = computed(() => atLeast(level.value, 'intermediate'))
 const advanced = computed(() => atLeast(level.value, 'advanced'))
 const fmt = (value: number, digits = 2) => formatNumber(Number(value.toFixed(digits)))
@@ -73,12 +84,13 @@ const diagram = computed(() => {
 })
 
 function runMeasurement() {
-  tested.value = true
+  runs.value = [...runs.value, { beta: beta.value, properLength: properLength.value, measuredLength: result.value.measuredLength }]
+  lastRunKey.value = setupKey.value
 }
-watch([beta, properLength], () => {
-  prediction.value = null
-  tested.value = false
-})
+function clearRuns() {
+  runs.value = []
+  lastRunKey.value = null
+}
 
 watch(locale, () => {
   if (route.name === 'length-contraction') document.title = getLengthContractionDocumentTitle(locale.value)
@@ -94,7 +106,7 @@ watch(locale, () => {
     </header>
 
     <ShareExperiment />
-    <LocalizedExperimentGuide experiment-id="length-contraction" />
+
     <ExperimentSupport
       experiment-id="length-contraction"
       :module-number="4"
@@ -106,18 +118,9 @@ watch(locale, () => {
 
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
-      <div class="card prediction">
-        <p>{{ tx('A spaceship passes Earth at a constant speed. Earth observers record the positions of its front and rear at the same Earth-frame time. What length do they measure?') }}</p>
-        <fieldset>
-          <legend>{{ tx('Predict how the measured length changes as the relative speed increases.') }}</legend>
-          <label><input v-model="prediction" type="radio" name="length-prediction" value="same" /> {{ tx('The same as its rest length') }}</label>
-          <label><input v-model="prediction" type="radio" name="length-prediction" value="shorter" /> {{ tx('Shorter than its rest length') }}</label>
-          <label><input v-model="prediction" type="radio" name="length-prediction" value="longer" /> {{ tx('Longer than its rest length') }}</label>
-        </fieldset>
-        <p v-if="tested && prediction" class="verdict" role="status">
-          {{ predictionMatches ? tx('Your prediction matches the measured-frame result.') : tx('The measured length is shorter. Compare the two endpoint events and their simultaneity.') }}
-        </p>
-        <p v-else class="muted small">{{ tx('Run the experiment to test your prediction.') }}</p>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have made the measurement that tests it.') }}</p>
+      <div class="prediction-grid">
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
@@ -149,7 +152,8 @@ watch(locale, () => {
               <text :x="(plot.left+W-plot.right)/2" :y="H-7" text-anchor="middle">{{ tx('position x / proper length') }}</text>
               <text x="12" :y="(plot.top+H-plot.bottom)/2" text-anchor="middle" :transform="`rotate(-90 12 ${(plot.top+H-plot.bottom)/2})`">{{ tx('time ct / proper length') }}</text>
             </g>
-            <g clip-path="url(#length-contraction-plot)">
+            <text v-if="!shown" class="pending-text" :x="(plot.left + W - plot.right) / 2" :y="plot.top + 40" text-anchor="middle">{{ tx('Run the measurement to record the endpoint events.') }}</text>
+            <g v-if="shown" clip-path="url(#length-contraction-plot)">
               <line class="worldline rear" :x1="diagram.rearStart.x" :y1="diagram.rearStart.y" :x2="diagram.rearEnd.x" :y2="diagram.rearEnd.y" />
               <line class="worldline front" :x1="diagram.frontStart.x" :y1="diagram.frontStart.y" :x2="diagram.frontEnd.x" :y2="diagram.frontEnd.y" />
               <line class="earth-slice" :x1="diagram.earthRear.x" :y1="diagram.earthRear.y" :x2="diagram.earthFront.x" :y2="diagram.earthFront.y" />
@@ -158,18 +162,18 @@ watch(locale, () => {
               <circle class="event front-event" :cx="diagram.earthFront.x" :cy="diagram.earthFront.y" r="5" />
               <circle class="event ship-event" :cx="diagram.shipFront.x" :cy="diagram.shipFront.y" r="5" />
             </g>
-            <g class="diagram-legend">
+            <g v-if="shown" class="diagram-legend">
               <line class="worldline rear" x1="66" y1="20" x2="90" y2="20" />
               <text x="96" y="24">{{ tx('Rear endpoint worldline') }}</text>
               <line class="worldline front" x1="290" y1="20" x2="314" y2="20" />
               <text x="320" y="24">{{ tx('Front endpoint worldline') }}</text>
             </g>
           </svg>
-          <div class="slice-legend">
+          <div v-if="shown" class="slice-legend">
             <p><span class="slice-key earth"></span>{{ tx('Earth-frame simultaneity (t = 0)') }}</p>
             <p v-if="intermediate"><span class="slice-key ship"></span>{{ tx('Ship-frame simultaneity (t′ = 0)') }}</p>
           </div>
-          <p class="small muted">{{ tx('The horizontal Earth slice intersects both ends at the same Earth time, giving the contracted length. The tilted ship slice is simultaneous in the ship frame instead; it is a different pair of endpoint events.') }}</p>
+          <p v-if="shown" class="small muted">{{ tx('The horizontal Earth slice intersects both ends at the same Earth time, giving the contracted length. The tilted ship slice is simultaneous in the ship frame instead; it is a different pair of endpoint events.') }}</p>
         </div>
 
         <aside class="card controls">
@@ -180,8 +184,8 @@ watch(locale, () => {
           </div>
           <ParameterSlider v-model="beta" :label="tx('Relative speed')" symbol="v/c" unit="c" v-bind="SPEED_RANGE" :digits="2" :signed="false" />
           <ParameterSlider v-model="properLength" :label="tx('Proper length')" symbol="L_0" unit="m" v-bind="LENGTH_RANGE" :digits="0" :signed="false" />
-          <button class="btn btn-primary" type="button" :disabled="!prediction" @click="runMeasurement">{{ tx('Run the experiment') }}</button>
-          <div class="readouts" aria-live="polite">
+          <button class="btn btn-primary" type="button" @click="runMeasurement">{{ tx('Run the experiment') }}</button>
+          <div v-if="shown" class="readouts" aria-live="polite">
             <div><span>{{ tx('Proper length') }} L₀</span><strong>{{ fmt(result.properLength) }} m</strong></div>
             <div class="measured"><span>{{ tx('Measured length') }} L</span><strong>{{ fmt(result.measuredLength) }} m</strong></div>
             <div><span>{{ tx('Length difference') }}</span><strong>{{ fmt(result.contraction) }} m</strong></div>
@@ -189,15 +193,27 @@ watch(locale, () => {
             <div v-if="intermediate"><span>{{ tx('Relative speed') }}</span><strong>{{ fmt(speedPercent, 0) }}% c</strong></div>
             <div v-if="advanced" class="wide"><span>{{ tx('Endpoint timing difference in the ship frame') }}</span><strong>{{ fmt(timeDifferenceNs, 3) }} ns</strong></div>
           </div>
-          <p v-if="advanced" class="small muted">{{ tx('The front-end event occurs earlier in the ship frame for this pair of Earth-simultaneous measurements.') }}</p>
+          <p v-else class="pending">{{ tx('Run the measurement to see the length Earth observers record.') }}</p>
+          <p v-if="advanced && shown && beta > 0" class="small muted">{{ tx('The front-end event occurs earlier in the ship frame for this pair of Earth-simultaneous measurements.') }}</p>
         </aside>
+      </div>
+      <div v-if="runs.length" class="card runs">
+        <div class="runs-heading"><h3>{{ tx('Recorded measurements') }}</h3><button class="btn btn-small" type="button" @click="clearRuns">{{ tx('Clear measurements') }}</button></div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>#</th><th>{{ tx('Relative speed') }}</th><th>{{ tx('Proper length') }} L₀</th><th>{{ tx('Measured length') }} L</th><th>{{ tx('Length difference') }}</th></tr></thead>
+            <tbody>
+              <tr v-for="(run, i) in runs" :key="i"><td>{{ i + 1 }}</td><td>{{ fmt(run.beta) }} c</td><td>{{ fmt(run.properLength) }} m</td><td>{{ fmt(run.measuredLength) }} m</td><td>{{ fmt(run.properLength - run.measuredLength) }} m</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
     <details class="lesson-disclosure">
       <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
-      <section class="card prose">
-        <h2><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
+      <section aria-labelledby="maths-title" class="card prose">
+        <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
         <p>{{ tx('Beginner: the object is not squeezed in its own rest frame. A moving observer measures its length by recording both endpoint positions at one shared time in that observer’s frame.') }}</p>
         <p v-if="intermediate">{{ tx('Intermediate: the Lorentz factor is γ = 1/√(1 − v²/c²). The moving-frame length is L = L₀/γ, where L₀ is the proper length measured in the object’s rest frame.') }}</p>
         <MathFormula v-if="intermediate" tex="\gamma=\frac{1}{\sqrt{1-v^2/c^2}},\qquad L=\frac{L_0}{\gamma}=L_0\sqrt{1-\frac{v^2}{c^2}}" :display="true" />
@@ -209,27 +225,35 @@ watch(locale, () => {
 
     <details class="lesson-disclosure">
       <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
-      <section class="card prose">
-        <h2><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
-        <h3>{{ tx('Established physics') }}</h3>
-        <ul>
-          <li>{{ tx('The object’s own rest frame measures its proper length L₀.') }}</li>
-          <li>{{ tx('In the Earth frame, the two endpoint positions must be recorded simultaneously using synchronized Earth clocks.') }}</li>
-          <li>{{ tx('The contraction is along the direction of relative motion; dimensions perpendicular to the motion are unchanged.') }}</li>
-        </ul>
-        <h3>{{ tx('Interpretation and observation') }}</h3>
-        <p>{{ tx('This is a measurement of endpoint positions, not a photograph. The visual appearance of a fast-moving object also depends on light-travel time and can involve a different optical effect.') }}</p>
-        <p>{{ tx('The proper length is the object’s rest-frame length; other frames measure a different length.') }}</p>
+      <section aria-labelledby="meaning-title" class="card prose">
+        <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
+        <div class="meaning">
+          <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
+            <ul>
+              <li>{{ tx('The object’s own rest frame measures its proper length L₀.') }}</li>
+              <li>{{ tx('In the Earth frame, the two endpoint positions must be recorded simultaneously using synchronized Earth clocks.') }}</li>
+              <li>{{ tx('The contraction is along the direction of relative motion; dimensions perpendicular to the motion are unchanged.') }}</li>
+              <li>{{ tx('Fast muons created high in the atmosphere reach the ground in large numbers. In the muons’ frame, the atmosphere they cross is contracted; in the Earth frame, their clocks run slow. Both descriptions predict the same count.') }}</li>
+            </ul>
+          </InfoCallout>
+          <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
+            <ul>
+              <li>{{ tx('This is a measurement of endpoint positions, not a photograph. The visual appearance of a fast-moving object also depends on light-travel time and can involve a different optical effect.') }}</li>
+              <li>{{ tx('The proper length is the object’s rest-frame length; other frames measure a different length.') }} {{ tx('Is the contraction “real”? Every frame’s measurement is correct for that frame. Some prefer to say the object is four-dimensional and each frame measures a different slice of it.') }}</li>
+            </ul>
+          </InfoCallout>
+        </div>
         <h3>{{ tx('Model assumptions and limits') }}</h3>
         <p>{{ tx('The rod is idealized as having a constant proper length and moving inertially at constant speed. The model treats one-dimensional endpoint positions, synchronized clocks in each inertial frame, and ignores acceleration, rotation, deformation, thickness effects and optical appearance. A perfectly rigid body cannot be accelerated as a whole in special relativity; this experiment considers uniform motion after any acceleration has ended.') }}</p>
+        <LocalizedExperimentGuide experiment-id="length-contraction" />
       </section>
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p>{{ tx('Length contraction and time dilation are two consequences of the same Lorentz transformations.') }}</p>
+      <p>{{ tx('Length contraction and time dilation are two consequences of the same Lorentz transformations.') }} {{ tx('Compare both, and the descriptions behind them, in Experiments B and E.') }}</p>
       <span class="nav-links">
-        <RouterLink to="/relativity/moving-clocks">{{ tx('← Different clocks, different elapsed times') }}</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">{{ tx('Space and time versus spacetime →') }}</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx('Different clocks, different elapsed times') }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx('Space and time versus spacetime') }}</RouterLink>
         <RouterLink to="/">{{ tx('All modules') }}</RouterLink>
       </span>
     </nav>
@@ -237,11 +261,15 @@ watch(locale, () => {
 </template>
 
 <style scoped>
-.prediction { display:grid; gap:12px; }
-.prediction fieldset { display:grid; gap:9px; border:0; padding:0; margin:0; }
-.prediction legend { font-weight:650; margin-bottom:4px; }
-.prediction label { display:flex; align-items:center; gap:9px; }
-.verdict { padding:10px 12px; margin:0; border-left:3px solid var(--accent); background:var(--surface-2); }
+.pending { margin:0; padding:12px 14px; border-left:3px solid var(--accent); border-radius:var(--radius-sm); background:var(--surface-2); }
+.pending-text { fill:var(--text-muted); font-size:14px; }
+.runs { margin-top:16px; }
+.runs-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.runs-heading h3 { margin:0; }
+.table-scroll { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+th, td { white-space:nowrap; }
+.btn-small { min-height:32px; padding:0 10px; font-size:.85rem; }
 .experiment-grid { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr); gap:16px; align-items:start; }
 .diagram-card,.controls { min-width:0; }
 .diagram-heading { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; }

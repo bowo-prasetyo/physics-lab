@@ -2,6 +2,8 @@
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
+import InfoCallout from '@/components/InfoCallout.vue'
+import PredictionCard from '@/components/PredictionCard.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import MathFormula from '@/components/MathFormula.vue'
 import { useLevel } from '@/composables/useLevel'
@@ -10,7 +12,9 @@ import { useLocale } from '@/composables/useLocale'
 import { atLeast, isLevel } from '@/levels'
 import { calculateMomentumCollision } from '@/physics'
 import { experimentSectionLabel, getExperimentModuleEyebrow } from '@/i18n/experiment-metadata'
+import { localizePredictions } from '@/i18n/experiment-content'
 import { getMomentumCollisionsDocumentTitle, localizeMomentumCollisionsText } from './copy'
+import { PREDICTIONS, type CollisionRun } from './predictions'
 
 const route = useRoute()
 const level = useLevel()
@@ -36,25 +40,25 @@ useQuerySync({
   },
 })
 
-type Prediction = 'cart1' | 'cart2' | 'together'
 type Phase = 'idle' | 'approaching' | 'impact' | 'complete'
-const prediction = ref<Prediction | null>(null)
 const phase = ref<Phase>('idle')
+const runs = ref<CollisionRun[]>([])
 let animationTimer: ReturnType<typeof setTimeout> | undefined
 const result = computed(() => calculateMomentumCollision({
   mass1: mass1.value, mass2: mass2.value, velocity1: velocity1.value,
   velocity2: velocity2.value, restitution: restitution.value,
 }))
-const expected = computed<Prediction>(() => Math.abs(result.value.velocity1After - result.value.velocity2After) < 1e-8
-  ? 'together'
-  : Math.abs(result.value.velocity1After) >= Math.abs(result.value.velocity2After) ? 'cart1' : 'cart2')
-const matches = computed(() => prediction.value === expected.value)
+const predictions = computed(() => localizePredictions('momentum-collisions', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
+const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(runs.value)])))
+const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => {
+  const hint = p.hint?.(runs.value) ?? null
+  return [p.id, hint === null ? null : tx(hint)]
+})))
 const isApproaching = computed(() => velocity1.value > velocity2.value)
 const intermediate = computed(() => atLeast(level.value, 'intermediate'))
 const advanced = computed(() => atLeast(level.value, 'advanced'))
 const isRunning = computed(() => phase.value === 'approaching' || phase.value === 'impact')
 const runDisabledReason = computed(() => {
-  if (!prediction.value) return 'Select a prediction above to enable the collision run.'
   if (!isApproaching.value) return 'No collision is possible with the current velocities: cart 1 must move faster than cart 2 (v₁ > v₂).'
   if (isRunning.value) return 'The collision animation is running. Wait until it finishes.'
   return ''
@@ -73,7 +77,7 @@ function clearAnimationTimer() {
   animationTimer = undefined
 }
 function runCollision() {
-  if (!prediction.value || !isApproaching.value || isRunning.value) return
+  if (!isApproaching.value || isRunning.value) return
   clearAnimationTimer()
   if (phase.value === 'complete') {
     phase.value = 'idle'
@@ -89,12 +93,17 @@ function startApproach() {
     animationTimer = setTimeout(() => {
       phase.value = 'complete'
       animationTimer = undefined
+      const r = result.value
+      runs.value = [...runs.value, {
+        mass1: mass1.value, mass2: mass2.value, velocity1: velocity1.value, velocity2: velocity2.value,
+        restitution: restitution.value, velocity1After: r.velocity1After, velocity2After: r.velocity2After,
+      }]
     }, 240)
   }, 700)
 }
+// Results belong to one setup: changing it hides them until the next run.
 watch([mass1, mass2, velocity1, velocity2, restitution], () => {
   clearAnimationTimer()
-  prediction.value = null
   phase.value = 'idle'
 })
 watch(locale, () => {
@@ -112,20 +121,17 @@ onBeforeUnmount(clearAnimationTimer)
     </header>
     <ShareExperiment />
 
+    <ExperimentSupport experiment-id="momentum-collisions" :module-number="3"
+      focus="Momentum is conserved in an isolated collision, but kinetic energy depends on the collision's elasticity."
+      prompt="Before running the collision, predict the final directions and speeds of both carts."
+      action="Change one mass, initial velocity or restitution value at a time; compare momentum and kinetic energy before and after."
+      reflect="If momentum is unchanged but kinetic energy decreases, where might the energy have gone?" />
+
     <section aria-labelledby="predict-title">
       <h2 id="predict-title"><span class="step-no">1</span> {{ experimentSectionLabel('predict', locale) }}</h2>
-      <div class="card prediction">
-        <p>{{ tx('Before the collision, which cart will move faster afterward?') }}</p>
-        <fieldset>
-          <legend>{{ tx('Your prediction') }}</legend>
-          <label><input v-model="prediction" type="radio" name="collision-prediction" value="cart1"> {{ tx('Cart 1 moves faster') }}</label>
-          <label><input v-model="prediction" type="radio" name="collision-prediction" value="cart2"> {{ tx('Cart 2 moves faster') }}</label>
-          <label><input v-model="prediction" type="radio" name="collision-prediction" value="together"> {{ tx('They move together') }}</label>
-        </fieldset>
-        <p v-if="phase === 'complete'" class="verdict" role="status">
-          {{ matches ? tx('Your prediction matches the model.') : tx('Compare the final velocities with your prediction.') }}
-        </p>
-        <p v-else class="muted small">{{ tx('Choose a prediction before running the collision. The final results stay hidden until the carts have collided.') }}</p>
+      <p class="muted">{{ tx('Commit to an answer first. Each explanation unlocks only after you have run the collision that tests it.') }}</p>
+      <div class="prediction-grid">
+        <PredictionCard v-for="(p, i) in predictions" :key="p.id" :prediction="p" :observed="observed[p.id] ?? false" :hint="hints[p.id]" :index="i + 1" />
       </div>
     </section>
 
@@ -145,7 +151,7 @@ onBeforeUnmount(clearAnimationTimer)
           <strong>{{ tx('Direction convention') }}</strong>
           <span>{{ tx('Cart 1 starts behind cart 2. Right is positive; a collision occurs only when cart 1 approaches faster than cart 2.') }}</span>
         </div>
-        <p v-if="!isApproaching" class="verdict" role="status">{{ tx('No collision: cart 1 is not catching up with cart 2. Increase cart 1 velocity or reduce cart 2 velocity.') }}</p>
+        <p v-if="!isApproaching" class="no-collision" role="status">{{ tx('No collision: cart 1 is not catching up with cart 2. Increase cart 1 velocity or reduce cart 2 velocity.') }}</p>
 
         <div class="simulation" :class="'phase-' + phase" role="img" :aria-label="tx('Two-cart collision animation showing the carts approach, make contact and separate.')">
           <div class="simulation-heading">
@@ -173,7 +179,7 @@ onBeforeUnmount(clearAnimationTimer)
           @click="runCollision">
           {{ isRunning ? tx('Collision in progress…') : phase === 'complete' ? tx('Run again') : tx('Run collision') }}
         </button>
-        <p v-if="phase === 'complete'" class="muted" role="status">{{ tx('Momentum is conserved in this model; kinetic energy is conserved only when the collision is elastic.') }}</p>
+        <p v-if="phase !== 'complete' && !isRunning" class="muted small">{{ tx('The results appear once the carts have collided.') }}</p>
       </div>
 
       <div v-if="phase === 'complete'" class="card results" aria-live="polite">
@@ -193,47 +199,70 @@ onBeforeUnmount(clearAnimationTimer)
       </div>
     </section>
 
-    <section aria-labelledby="mathematics-title">
-      <h2 id="mathematics-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
-      <div class="card math-content">
+    <details class="lesson-disclosure">
+      <summary>{{ experimentSectionLabel('mathematicsDisclosure', locale) }}</summary>
+      <section aria-labelledby="maths-title" class="card prose">
+        <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
         <p>{{ tx('Beginner: momentum is mass multiplied by velocity. In an isolated collision, the total momentum before and after is the same. Kinetic energy may decrease in an inelastic collision.') }}</p>
         <template v-if="intermediate">
           <p>{{ tx('Intermediate: use conservation of momentum together with the coefficient of restitution e, the ratio of relative separation speed to relative approach speed. e = 1 is elastic; e = 0 is perfectly inelastic.') }}</p>
-          <MathFormula tex="m_1u_1+m_2u_2=m_1v_1+m_2v_2" />
-          <MathFormula tex="v_2-v_1=e(u_1-u_2)" />
+          <MathFormula display tex="m_1u_1+m_2u_2=m_1v_1+m_2v_2" />
+          <MathFormula display tex="v_2-v_1=e(u_1-u_2)" />
         </template>
         <template v-if="advanced">
           <p>{{ tx('Advanced: the center-of-mass velocity is constant. The impulse on one cart is equal and opposite to the impulse on the other. For this isolated two-body model, kinetic-energy loss is one half of the reduced mass times (1 − e²) times the squared initial relative speed.') }}</p>
-          <MathFormula tex="V_{CM}=\frac{m_1u_1+m_2u_2}{m_1+m_2}" />
-          <MathFormula tex="\Delta K=-\frac12\mu(1-e^2)(u_1-u_2)^2,\quad \mu=\frac{m_1m_2}{m_1+m_2}" />
+          <MathFormula display tex="V_{CM}=\frac{m_1u_1+m_2u_2}{m_1+m_2}" />
+          <MathFormula display tex="\Delta K=-\frac12\mu(1-e^2)(u_1-u_2)^2,\quad \mu=\frac{m_1m_2}{m_1+m_2}" />
         </template>
-        <p>{{ tx('Momentum is conserved in this model; kinetic energy is conserved only when the collision is elastic.') }}</p>
-      </div>
-    </section>
+        <MathFormula display tex="p = mv, \qquad p_{\text{before}} = p_{\text{after}}" />
+      </section>
+    </details>
 
-    <section class="card">
-      <h2>{{ tx('Model assumptions and limits') }}</h2>
-      <p>{{ tx('This is a one-dimensional, isolated, two-body collision. External impulse during impact is neglected; masses remain constant; the coefficient of restitution is constant and lies between zero and one. Rotation, deformation details, sound, heat, fragmentation and multidimensional contact are not simulated. Kinetic energy not retained as translational kinetic energy is transferred to internal energy, sound or deformation; it is not destroyed.') }}</p>
-    </section>
+    <details class="lesson-disclosure">
+      <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
+      <section aria-labelledby="meaning-title" class="card prose">
+        <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
+        <div class="meaning">
+          <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
+            <ul>
+              <li>{{ tx('Momentum is conserved in this model; kinetic energy is conserved only when the collision is elastic.') }}</li>
+              <li>{{ tx('During the impact each cart pushes on the other with an equal and opposite force for the same time, so their impulses cancel (Newton’s third law).') }}</li>
+              <li>{{ tx('Momentum conservation has been confirmed from billiard balls to particle collisions, where it is used to discover particles that cannot be seen directly.') }}</li>
+            </ul>
+          </InfoCallout>
+          <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
+            <ul>
+              <li>
+                <strong>{{ tx('Why is momentum conserved at all?') }}</strong>
+                {{ tx('Emmy Noether showed in 1918 that it follows from a symmetry: the laws of physics are the same everywhere in space. Shifting an experiment to another place changes nothing, the idea behind moving the origin in Displacement in 3D. Whether symmetries or conservation laws are the more fundamental description is a question of perspective.') }}
+              </li>
+              <li>
+                <strong>{{ tx('Is energy “lost”?') }}</strong>
+                {{ tx('Not in total: the missing kinetic energy becomes internal energy, sound and deformation. “Lost” only means it has left the quantities this model keeps track of.') }}
+              </li>
+            </ul>
+          </InfoCallout>
+        </div>
+        <h3>{{ tx('Model assumptions and limits') }}</h3>
+        <p>{{ tx('This is a one-dimensional, isolated, two-body collision. External impulse during impact is neglected; masses remain constant; the coefficient of restitution is constant and lies between zero and one. Rotation, deformation details, sound, heat, fragmentation and multidimensional contact are not simulated. Kinetic energy not retained as translational kinetic energy is transferred to internal energy, sound or deformation; it is not destroyed.') }}</p>
+      </section>
+    </details>
 
-    <ExperimentSupport experiment-id="momentum-collisions" :module-number="3"
-      focus="Momentum is conserved in an isolated collision, but kinetic energy depends on the collision's elasticity."
-      prompt="Before running the collision, predict the final directions and speeds of both carts."
-      action="Change one mass, initial velocity or restitution value at a time; compare momentum and kinetic energy before and after."
-      reflect="If momentum is unchanged but kinetic energy decreases, where might the energy have gone?" />
-    <nav class="experiment-footer">
-      <RouterLink to="/mechanics/force-lab">{{ tx('← Force Lab') }}</RouterLink>
-      <RouterLink to="/">{{ tx('All modules') }}</RouterLink>
+    <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
+      <p>{{ tx('Next: the projectile launcher, where gravity is the only force and the horizontal and vertical motions separate.') }}</p>
+      <span class="nav-links">
+        <RouterLink to="/mechanics/projectile">{{ tx('Projectile launcher') }}</RouterLink>
+        <RouterLink to="/teachers">{{ tx('Teacher guide') }}</RouterLink>
+        <RouterLink to="/">{{ tx('All modules') }}</RouterLink>
+      </span>
     </nav>
   </article>
 </template>
 
 <style scoped>
-.momentum-collisions { display:grid; gap:28px; }
-.momentum-collisions section { display:grid; gap:14px; }
-.prediction,.controls,.results,.math-content { display:grid; gap:16px; }
-.prediction fieldset { display:flex; flex-wrap:wrap; gap:14px; border:0; padding:0; }
-.prediction label { display:flex; align-items:center; gap:8px; }
+section[aria-labelledby="experiment-title"] { display:grid; gap:14px; }
+.no-collision { margin:0; font-weight:650; color:var(--warn); }
+.controls,.results { display:grid; gap:16px; }
 .control-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr)); gap:18px; }
 .control-grid label { display:grid; gap:8px; font-weight:600; }
 .control-grid output { font-weight:500; color:var(--accent); }
@@ -257,11 +286,11 @@ onBeforeUnmount(clearAnimationTimer)
 .result-grid>div { display:grid; gap:4px; padding:12px; border:1px solid var(--border); border-radius:10px; }
 .result-grid span { color:var(--text-muted); font-size:.86rem; }
 .result-grid strong { font-variant-numeric:tabular-nums; }
-.verdict { font-weight:650; color:var(--accent); }
 .run-guidance { margin:0; padding:10px 12px; border-left:3px solid var(--text-muted); border-radius:6px; background:var(--surface-2); }
 .run-button:disabled { cursor:not-allowed; opacity:.58; filter:saturate(.55); }
 .run-button:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
-.experiment-footer { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.nav-links { display:inline-flex; flex-wrap:wrap; gap:16px; }
+.small { font-size:.85rem; margin:0; }
 @media(prefers-reduced-motion:reduce) { .cart { transition:none; } }
 @media(max-width:520px) { .simulation-heading { align-items:flex-start; flex-direction:column; } }
 </style>

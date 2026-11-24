@@ -9,6 +9,10 @@ import { PREDICTIONS as movingClocks } from '@/experiments/moving-clocks/predict
 import { PREDICTIONS as twoPerspectives } from '@/experiments/two-perspectives/predictions'
 import { PREDICTIONS as gravityClocks } from '@/experiments/gravity-clocks/predictions'
 import { PREDICTIONS as evolvingSpace } from '@/experiments/evolving-space/predictions'
+import { PREDICTIONS as forceLab } from '@/experiments/force-lab/predictions'
+import { PREDICTIONS as momentum } from '@/experiments/momentum-collisions/predictions'
+import { PREDICTIONS as lengthContraction } from '@/experiments/length-contraction/predictions'
+import { PREDICTIONS as geodesic } from '@/experiments/geodesic-motion/predictions'
 
 type TestPrediction = {
   readonly id: string
@@ -52,7 +56,7 @@ function checkTranslations<T extends TestPrediction>(
 }
 
 describe('experiment content localization', () => {
-  it('translates every prediction in all nine experiment catalogues', () => {
+  it('translates every prediction in every experiment catalogue', () => {
     checkTranslations('space-vs-time', space)
     checkTranslations('displacement3d', displacement)
     checkTranslations('pendulum', pendulum)
@@ -62,6 +66,10 @@ describe('experiment content localization', () => {
     checkTranslations('two-perspectives', twoPerspectives)
     checkTranslations('gravity-clocks', gravityClocks)
     checkTranslations('evolving-space', evolvingSpace)
+    checkTranslations('force-lab', forceLab)
+    checkTranslations('momentum-collisions', momentum)
+    checkTranslations('length-contraction', lengthContraction)
+    checkTranslations('geodesic-motion', geodesic)
   })
 
   it('leaves English content unchanged and does not mutate source predictions', () => {
