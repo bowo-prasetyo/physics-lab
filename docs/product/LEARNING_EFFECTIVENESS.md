@@ -4,7 +4,7 @@
 
 Physica exists to improve learners' understanding of physics, not simply to maximise time spent interacting with simulations. This document defines a practical measurement framework for testing whether the product's phenomenon → predict → experiment → mathematics → meaning cycle supports learning.
 
-These are **proposed measures**, not a statement that analytics or assessment instrumentation already exists. Begin with small, low-risk pilots. Establish baselines before setting numerical targets.
+The in-app assessment pilot now provides a deliberately small, voluntary workflow. It is a measurement aid, not evidence that Physica has already improved learning. Establish baselines before setting numerical targets.
 
 ## Measurement principles
 
@@ -15,6 +15,27 @@ These are **proposed measures**, not a statement that analytics or assessment in
 5. **Keep assessment aligned with outcomes.** Each question must map to one or more published module outcomes.
 6. **Prefer useful evidence over vanity dashboards.** Collect only data that can inform a product or teaching decision.
 7. **Protect learners.** Do not collect names, precise location, or unnecessary personal data. Any future telemetry should be transparent, minimised, access-controlled, and subject to appropriate consent and retention rules, especially for minors.
+
+## Pilot implementation
+
+Open **For teachers → Run the learning assessment pilot** (route `/assessment-pilot`). The first pilot covers two contrasting experiments:
+
+- **Force Lab (Module 3):** an introductory mechanics assessment about static friction and the relationship between net force, mass, and acceleration.
+- **Length Contraction Lab (Module 4):** a mathematically advanced assessment about proper length, frame-dependent measurement, and simultaneity.
+
+Each immediate session uses two pre-check concept questions, two parallel post-check questions, and one changed-context transfer question. The facilitator also scores a short learner explanation using the 0–3 rubric below. The delayed option uses the post and transfer items after a delay (suggested: 1–2 weeks); it is explicitly an unmatched follow-up sample, not an individual retention measure.
+
+### Privacy and operating procedure
+
+- Participation is voluntary and requires an explicit acknowledgement. It is not a grade. This acknowledgement does not replace any school, guardian, or research-ethics approval required for the setting.
+- Do not ask for or enter names, email addresses, school identifiers, or other personal information.
+- Responses and the written explanation exist only in the current page session. No answer-level record is stored in local storage, cookies, a database, or a server.
+- The written explanation is used for the facilitator's rubric judgment and is discarded; only the 0–3 score enters the aggregate.
+- The page retains cohort totals in memory only. A facilitator can export an aggregate CSV before closing or refreshing the tab. Refreshing clears the in-memory cohort.
+- Delayed checks are reported separately and are not linked to immediate participants. Record the elapsed delay in the facilitator's study notes, not in a learner identifier.
+- Keep cohort reporting aggregated. For small groups, consider suppressing breakdowns that could identify a learner.
+
+The pilot intentionally does not create learner accounts, persistent identifiers, class rosters, individual progress records, remote analytics, or a teacher dashboard. It also does not verify whether the learner actually completed the experiment; the facilitator should guide the normal prediction → experiment → explanation sequence.
 
 ## North-star learning measure
 
@@ -30,7 +51,7 @@ Normalised gain may be calculated as:
 
 `g = (post - pre) / (1 - pre)`
 
-Do not use normalised gain alone: it behaves poorly for learners who begin near the maximum and can obscure differences in starting knowledge. Always report sample size, score distribution, and assessment conditions. A matched delayed assessment should be used where feasible to test retention.
+Do not use normalised gain alone: it behaves poorly for learners who begin near the maximum and can obscure differences in starting knowledge. Always report sample size, score distribution, and assessment conditions. A matched delayed assessment should be used where feasible to test retention; the current pilot's delayed option is intentionally unmatched.
 
 ## Core learning measures
 
@@ -54,7 +75,7 @@ Use topic-specific rubrics where needed. The rubric should reward sound reasonin
 
 ## Experience and diagnostic measures
 
-These measures help identify friction in the learning journey. They are **diagnostic**, not substitutes for learning outcomes.
+These measures help identify friction in the learning journey. They are diagnostic, not substitutes for learning outcomes.
 
 | Measure | Definition | What it can diagnose |
 |---|---|---|
@@ -68,19 +89,6 @@ These measures help identify friction in the learning journey. They are **diagno
 
 Define denominators consistently. For example, an explanation reach rate should use learners who actually reached the prerequisite evidence step, not all page views.
 
-## Recommended pilot
-
-1. Select one experiment from each of two different modules (one relatively introductory and one mathematically advanced).
-2. Create a brief pre-check with 3–5 conceptual questions mapped to the experiment's outcomes.
-3. Use the normal predict–experiment–explain sequence.
-4. Give a post-check containing parallel concept questions and at least one changed-context transfer question.
-5. Score one short explanation with the 0–3 rubric.
-6. Invite a delayed follow-up with a small subset of questions after an appropriate interval.
-7. Review completion and hint data alongside learner comments to locate friction.
-8. Revise prompts or explanations, then repeat the pilot before generalising results.
-
-Keep assessments short enough not to overwhelm the learning experience. Where possible, compare equivalent questions rather than repeating identical wording that encourages recall.
-
 ## Reporting and decision rules
 
 A useful learning report should include:
@@ -90,22 +98,14 @@ A useful learning report should include:
 - pre/post score distributions and absolute gains;
 - transfer-question performance;
 - explanation-rubric distribution;
-- delayed retention results, if available;
+- delayed retention results and elapsed delay, if available;
 - relevant experience diagnostics;
-- known limitations, missing data, and any selection bias.
+- known limitations, missing data, and selection bias.
 
-Do not claim causal impact from a simple before/after comparison. Learners who complete an optional follow-up may differ from those who do not. Use controlled comparisons only when feasible and ethically appropriate.
+Do not claim causal impact from a simple before/after comparison. The current delayed sample is unpaired and cannot establish individual retention.
 
-Use results to decide whether to:
-- clarify a prediction prompt;
-- change the experiment interaction so evidence is easier to observe;
-- improve the explanation or worked example;
-- add prerequisite teaching;
-- revise an outcome that is too broad;
-- prioritise a new experiment.
+Use results to decide whether to clarify a prediction prompt, change an interaction so evidence is easier to observe, improve an explanation or worked example, add prerequisite teaching, revise an outcome, or prioritise a new experiment. Do not optimise for completion rate at the expense of challenge, or for correct predictions at the expense of meaningful reasoning.
 
-Do not optimise for completion rate at the expense of challenge, or for correct predictions at the expense of meaningful reasoning.
+## Future measurement boundary
 
-## Privacy and implementation boundary
-
-This document defines what would be useful to learn about the product; it does not authorise tracking by itself. Start with voluntary, anonymous assessment pilots and aggregated results. Before adding product analytics, define the purpose of each event, data minimisation, consent, retention, access, and deletion practices. Do not collect personally identifying information or sensitive learner profiles to calculate these measures.
+This pilot is a local, voluntary assessment workflow, not an analytics system. Any future telemetry or matched delayed assessment requires a separate purpose, data-minimisation, consent, retention, access, and deletion design. Do not collect personally identifying information or sensitive learner profiles to calculate these measures.

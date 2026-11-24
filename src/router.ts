@@ -16,6 +16,12 @@ export const router = createRouter({
       meta: { title: 'Teacher guide · Physica' },
     },
     {
+      path: '/assessment-pilot',
+      name: 'assessment-pilot',
+      component: () => import('@/assessment/AssessmentPilotView.vue'),
+      meta: { title: 'Learning assessment pilot · Physica' },
+    },
+    {
       path: '/mechanics/newtonian',
       name: 'newtonian',
       component: () => import('@/experiments/newtonian/NewtonianView.vue'),
