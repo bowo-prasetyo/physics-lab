@@ -24,6 +24,9 @@ const ROUTES = [
   { path: '/time/pendulum', name: 'pendulum' },
   { path: '/space/displacement-3d', name: 'displacement-3d' },
   // Each Force Lab difficulty is mounted independently so conditional lessons are checked.
+  { path: '/mechanics/momentum-collisions?level=beginner', name: 'momentum-collisions-beginner' },
+  { path: '/mechanics/momentum-collisions?level=intermediate', name: 'momentum-collisions-intermediate' },
+  { path: '/mechanics/momentum-collisions?level=advanced', name: 'momentum-collisions-advanced' },
   { path: '/mechanics/force-lab?level=beginner', name: 'force-lab-beginner', difficultyLevel: 'beginner' },
   { path: '/mechanics/force-lab?level=intermediate', name: 'force-lab-intermediate', difficultyLevel: 'intermediate' },
   { path: '/mechanics/force-lab?level=advanced', name: 'force-lab-advanced', difficultyLevel: 'advanced' },

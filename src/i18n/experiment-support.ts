@@ -106,6 +106,10 @@ const supportCopy: Record<string, LocalizedSupportCopy> = {
       reflect: 'どの予測が観測と一致しますか。また、測定結果ではなく解釈に関する違いはどれでしょうか。'
     }
   },
+  'momentum-collisions': {
+    id: { focus: 'Momentum kekal dalam tumbukan terisolasi, tetapi energi kinetik bergantung pada sifat kelentingan tumbukan.', prompt: 'Sebelum menjalankan tumbukan, prediksikan arah dan kecepatan akhir kedua kereta.', action: 'Ubah satu massa, kecepatan awal, atau koefisien restitusi setiap kali; bandingkan momentum dan energi kinetik sebelum dan sesudah tumbukan.', reflect: 'Jika momentum tidak berubah tetapi energi kinetik berkurang, ke mana energi tersebut berpindah?' },
+    ja: { focus: '外部から孤立した衝突では運動量が保存されますが、運動エネルギーは衝突の弾性によって変わります。', prompt: '衝突を実行する前に、2台の台車の衝突後の向きと速さを予測してください。', action: '質量、初速度、反発係数のいずれか一つずつを変え、衝突前後の運動量と運動エネルギーを比較してください。', reflect: '運動量が変わらず運動エネルギーが減少した場合、そのエネルギーはどこへ移ったのでしょうか。' }
+  },
   'length-contraction': {
     id: {
       focus: 'Panjang diukur dari posisi kedua ujung yang dicatat serentak dalam suatu kerangka inersial yang dipilih.',

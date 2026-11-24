@@ -4,6 +4,7 @@ import HomeView from '@/views/HomeView.vue'
 import { locale } from '@/i18n'
 import { getForceLabDocumentTitle } from '@/experiments/force-lab/copy'
 import { getLengthContractionDocumentTitle } from '@/experiments/length-contraction/copy'
+import { getMomentumCollisionsDocumentTitle } from '@/experiments/momentum-collisions/copy'
 
 export const router = createRouter({
   history: createWebHashHistory(),
@@ -26,6 +27,12 @@ export const router = createRouter({
       name: 'newtonian',
       component: () => import('@/experiments/newtonian/NewtonianView.vue'),
       meta: { title: 'Force, mass and acceleration · Physica' },
+    },
+    {
+      path: '/mechanics/momentum-collisions',
+      name: 'momentum-collisions',
+      component: () => import('@/experiments/momentum-collisions/MomentumCollisionsView.vue'),
+      meta: { title: 'Momentum and collisions · Physica' },
     },
     {
       path: '/mechanics/force-lab',
@@ -101,6 +108,8 @@ function updateDocumentTitle(): void {
     document.title = getForceLabDocumentTitle(locale.value)
   } else if (currentRoute.name === 'length-contraction') {
     document.title = getLengthContractionDocumentTitle(locale.value)
+  } else if (currentRoute.name === 'momentum-collisions') {
+    document.title = getMomentumCollisionsDocumentTitle(locale.value)
   } else if (typeof currentRoute.meta.title === 'string') {
     document.title = currentRoute.meta.title
   }
@@ -110,5 +119,5 @@ router.afterEach(updateDocumentTitle)
 
 // Keep the Force Lab title in sync when the language changes without navigation.
 watch(locale, () => {
-  if (router.currentRoute.value.name === 'force-lab' || router.currentRoute.value.name === 'length-contraction') updateDocumentTitle()
+  if (['force-lab', 'length-contraction', 'momentum-collisions'].includes(String(router.currentRoute.value.name))) updateDocumentTitle()
 })

@@ -7,6 +7,7 @@ export type ExperimentMetadataId =
   | 'pendulum'
   | 'newtonian'
   | 'force-lab'
+  | 'momentum-collisions'
   | 'projectile'
   | 'moving-clocks'
   | 'two-perspectives'
@@ -20,6 +21,7 @@ const experimentPaths: Record<ExperimentMetadataId, string> = {
   pendulum: '/time/pendulum',
   newtonian: '/mechanics/newtonian',
   'force-lab': '/mechanics/force-lab',
+  'momentum-collisions': '/mechanics/momentum-collisions',
   projectile: '/mechanics/projectile',
   'moving-clocks': '/relativity/moving-clocks',
   'two-perspectives': '/relativity/two-perspectives',
@@ -34,6 +36,7 @@ const moduleLabels: Record<ExperimentMetadataId, readonly [string, string, strin
   pendulum: ['Pendulum clocks', 'Jam bandul', '振り子時計'],
   newtonian: ['Newtonian foundations', 'Dasar-dasar Newton', 'ニュートン力学の基礎'],
   'force-lab': ['Force Lab', 'Laboratorium Gaya', '力の実験室'],
+  'momentum-collisions': ['Momentum and collisions', 'Momentum dan tumbukan', '運動量と衝突'],
   projectile: ['Projectile motion', 'Gerak proyektil', '放物運動'],
   'moving-clocks': ['Experiment B', 'Eksperimen B', '実験 B'],
   'two-perspectives': ['Experiment E · Two perspectives', 'Eksperimen E · Dua perspektif', '実験 E · 二つの視点'],

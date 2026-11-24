@@ -53,7 +53,7 @@ describe('localization quality assurance', () => {
       expect(localized.map((module) => module.number)).toEqual(MODULES.map((module) => module.number))
       expect(localized.flatMap((module) => module.experiments.map((experiment) => experiment.path)))
         .toEqual(MODULES.flatMap((module) => module.experiments.map((experiment) => experiment.path)))
-      expect(localized.flatMap((module) => module.experiments)).toHaveLength(11)
+      expect(localized.flatMap((module) => module.experiments)).toHaveLength(12)
     }
   })
 
@@ -85,6 +85,7 @@ describe('localization quality assurance', () => {
       'displacement-3d',
       'pendulum',
       'newtonian',
+      'momentum-collisions',
       'projectile',
       'moving-clocks',
       'two-perspectives',
