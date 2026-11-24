@@ -14,9 +14,10 @@ const translated: Record<Exclude<Locale, 'en'>, readonly ModuleEntry[]> = {
       { title: 'Gaya, massa, dan percepatan', summary: 'Ubah gaya resultan dan massa kereta untuk menyelidiki hukum kedua Newton.', path: '/mechanics/newtonian' },
       { title: 'Peluncur proyektil', summary: 'Luncurkan bola di Bumi, Bulan, Mars, atau Jupiter, dengan atau tanpa hambatan udara, dan amati dari tanah atau kereta bergerak.', path: '/mechanics/projectile' },
     ] },
-    { number: 4, title: 'Relativitas khusus', audience: 'Sarjana', coverage: [], plannedTopics: ['Kontraksi panjang sebagai pelajaran prediksi–eksperimen–penjelasan tersendiri', 'Penjumlahan kecepatan dan momentum relativistik', 'Hubungan yang lebih jelas antara pengukuran kerangka inersial dan bukti eksperimen'], experiments: [
+    { number: 4, title: 'Relativitas khusus', audience: 'Sarjana', coverage: [], plannedTopics: ['Penjumlahan kecepatan dan momentum relativistik', 'Hubungan yang lebih jelas antara pengukuran kerangka inersial dan bukti eksperimen'], experiments: [
       { title: 'B · Jam berbeda, waktu berlalu berbeda', summary: 'Pesawat ruang angkasa melintasi Bumi. Bandingkan jam mereka pada diagram ruang-waktu dari kedua sudut pandang.', path: '/relativity/moving-clocks' },
       { title: 'E · Ruang dan waktu versus ruang-waktu', summary: 'Bandingkan prediksi Galilea, ruang + waktu (Lorentz), dan ruang-waktu dengan hasil eksperimen.', path: '/relativity/two-perspectives' },
+      { title: 'F · Kontraksi panjang', summary: 'Ukur panjang pesawat yang bergerak dengan mencatat kedua ujung pada waktu yang sama. Bandingkan panjang terukur dengan panjang wajarnya.', path: '/relativity/length-contraction' },
     ] },
     { number: 5, title: 'Relativitas umum', audience: 'Sarjana tingkat lanjut', coverage: [], plannedTopics: ['Gerak geodesik dan jatuh bebas', 'Persamaan medan Einstein dan peran energi-momentum', 'Penghubung yang cermat dari prinsip ekuivalensi menuju ruang-waktu melengkung', 'Di luar kondisi Schwarzschild yang statis dan simetris bola'], experiments: [
       { title: 'C · Gravitasi dan laju jam', summary: 'Dua jam pada ketinggian berbeda, dari Bumi hingga lubang hitam, dan alasan GPS memerlukan relativitas.', path: '/gravity/clock-rates' },
@@ -37,9 +38,10 @@ const translated: Record<Exclude<Locale, 'en'>, readonly ModuleEntry[]> = {
       { title: '力・質量・加速度', summary: '合力と台車の質量を変えて、ニュートンの運動方程式を調べます。', path: '/mechanics/newtonian' },
       { title: '投射装置', summary: '地球、月、火星、木星で空気抵抗の有無を切り替えてボールを発射し、地上や移動する列車から観察します。', path: '/mechanics/projectile' },
     ] },
-    { number: 4, title: '特殊相対性理論', audience: '学部', coverage: [], plannedTopics: ['予測・実験・説明による長さの収縮の独立した学習', '速度の合成と相対論的運動量', '慣性系での測定と実験的証拠の明確な関連付け'], experiments: [
+    { number: 4, title: '特殊相対性理論', audience: '学部', coverage: [], plannedTopics: ['速度の合成と相対論的運動量', '慣性系での測定と実験的証拠の明確な関連付け'], experiments: [
       { title: 'B · 異なる時計、異なる経過時間', summary: '宇宙船が地球のそばを通過します。時空図を使い、両方の視点から時計を比較します。', path: '/relativity/moving-clocks' },
       { title: 'E · 空間と時間、それとも時空', summary: 'ガリレイ変換、空間と時間（ローレンツ変換）、時空の予測を実験結果と比較します。', path: '/relativity/two-perspectives' },
+      { title: 'F · 長さの収縮', summary: '両端を同じ時刻に記録して、運動する宇宙船の長さを測定します。測定された長さと固有長を比較します。', path: '/relativity/length-contraction' },
     ] },
     { number: 5, title: '一般相対性理論', audience: '学部上級', coverage: [], plannedTopics: ['測地線運動と自由落下', 'アインシュタイン方程式とエネルギー運動量の役割', '等価原理から曲がった時空への慎重な橋渡し', '静的・球対称なシュワルツシルト時空を超えて'], experiments: [
       { title: 'C · 重力と時計の進み方', summary: '地球からブラックホールまで、高さの異なる2つの時計とGPSに相対論が必要な理由を調べます。', path: '/gravity/clock-rates' },

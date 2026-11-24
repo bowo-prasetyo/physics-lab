@@ -7,3 +7,10 @@ describe('Force Lab catalogue entry', () => {
     expect(mechanics?.experiments.filter((experiment) => experiment.path === '/mechanics/force-lab')).toHaveLength(1)
   })
 })
+
+describe('Length Contraction Lab catalogue entry', () => {
+  it.each(['en', 'id', 'ja'] as const)('appears once in the %s Module 4 catalogue', (locale) => {
+    const relativity = getLocalizedModules(locale).find((module) => module.number === 4)
+    expect(relativity?.experiments.filter((experiment) => experiment.path === '/relativity/length-contraction')).toHaveLength(1)
+  })
+})

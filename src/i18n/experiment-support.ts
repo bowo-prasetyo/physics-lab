@@ -106,6 +106,20 @@ const supportCopy: Record<string, LocalizedSupportCopy> = {
       reflect: 'どの予測が観測と一致しますか。また、測定結果ではなく解釈に関する違いはどれでしょうか。'
     }
   },
+  'length-contraction': {
+    id: {
+      focus: 'Panjang diukur dari posisi kedua ujung yang dicatat serentak dalam suatu kerangka inersial yang dipilih.',
+      prompt: 'Jika pesawat ruang angkasa bergerak lebih cepat, apakah pengamat di Bumi mengukur panjang yang lebih panjang, lebih pendek, atau tetap?',
+      action: 'Buat prediksi terlebih dahulu, lalu ubah kecepatan dan panjang wajar. Bandingkan pengukuran dalam kerangka Bumi dengan panjang wajar pesawat dan periksa peristiwa ujung pada diagram.',
+      reflect: 'Mengapa posisi kedua ujung harus dicatat pada waktu yang sama, dan mengapa pasangan peristiwa itu berbeda antar kerangka?'
+    },
+    ja: {
+      focus: '長さは、選んだ慣性系で同時刻に記録した両端の位置から測定します。',
+      prompt: '宇宙船の速度が上がると、地球の観測者が測る長さは長くなるでしょうか、短くなるでしょうか、それとも変わらないでしょうか。',
+      action: 'まず予測し、速度と固有長を変えてください。地球基準系での測定値を宇宙船の固有長と比較し、図で両端の事象を確認してください。',
+      reflect: 'なぜ両端の位置を同時刻に記録する必要があるのでしょうか。また、その事象の組が基準系によって異なるのはなぜでしょうか。'
+    }
+  },
   'gravity-clock-rates': {
     id: {
       focus: 'Bandingkan laju jam dalam kondisi Schwarzschild statis yang dinyatakan, dan perhatikan selalu asumsi modelnya.',

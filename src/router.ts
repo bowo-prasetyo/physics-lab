@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import { locale } from '@/i18n'
 import { getForceLabDocumentTitle } from '@/experiments/force-lab/copy'
+import { getLengthContractionDocumentTitle } from '@/experiments/length-contraction/copy'
 
 export const router = createRouter({
   history: createWebHashHistory(),
@@ -37,6 +38,12 @@ export const router = createRouter({
       name: 'moving-clocks',
       component: () => import('@/experiments/moving-clocks/MovingClocksView.vue'),
       meta: { title: 'Different clocks, different elapsed times · Physica' },
+    },
+    {
+      path: '/relativity/length-contraction',
+      name: 'length-contraction',
+      component: () => import('@/experiments/length-contraction/LengthContractionView.vue'),
+      meta: { title: 'Length Contraction Lab · Physica' },
     },
     {
       path: '/relativity/two-perspectives',
@@ -86,6 +93,8 @@ function updateDocumentTitle(): void {
   const currentRoute = router.currentRoute.value
   if (currentRoute.name === 'force-lab') {
     document.title = getForceLabDocumentTitle(locale.value)
+  } else if (currentRoute.name === 'length-contraction') {
+    document.title = getLengthContractionDocumentTitle(locale.value)
   } else if (typeof currentRoute.meta.title === 'string') {
     document.title = currentRoute.meta.title
   }
@@ -95,5 +104,5 @@ router.afterEach(updateDocumentTitle)
 
 // Keep the Force Lab title in sync when the language changes without navigation.
 watch(locale, () => {
-  if (router.currentRoute.value.name === 'force-lab') updateDocumentTitle()
+  if (router.currentRoute.value.name === 'force-lab' || router.currentRoute.value.name === 'length-contraction') updateDocumentTitle()
 })

@@ -9,6 +9,7 @@ const experimentIds = [
   'projectile',
   'moving-clocks',
   'two-perspectives',
+  'length-contraction',
   'gravity-clock-rates',
   'evolving-space',
 ] as const
@@ -16,7 +17,7 @@ const experimentIds = [
 const fields = ['focus', 'prompt', 'action', 'reflect'] as const
 
 describe('experiment support localization', () => {
-  it('provides complete Indonesian and Japanese guidance for all nine experiments', () => {
+  it('provides complete Indonesian and Japanese guidance for all ten experiments', () => {
     for (const experimentId of experimentIds) {
       for (const locale of ['id', 'ja'] as const) {
         const copy = getExperimentSupportCopy(experimentId, locale)
