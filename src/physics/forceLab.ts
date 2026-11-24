@@ -71,9 +71,10 @@ export function calculateForceLab(input: ForceLabInput): ForceLabResult {
   // The positive direction is up the surface. Kinetic friction opposes the
   // direction in which the applied force and gravity would move the body.
   const tendency = input.appliedForce - weightParallel
-  const frictionForce = Math.abs(tendency) < 1e-12
-    ? 0
-    : Math.sign(tendency) * input.frictionCoefficient * normalForce
+  const frictionLimit = input.frictionCoefficient * normalForce
+  // A single coefficient is used as a simple friction limit: below the limit
+  // friction balances the tendency to slide; above it the block slides.
+  const frictionForce = Math.sign(tendency) * Math.min(Math.abs(tendency), frictionLimit)
   const netForce = tendency - frictionForce
   const acceleration = netForce / input.mass
   const velocity = acceleration * input.duration
