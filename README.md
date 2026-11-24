@@ -22,7 +22,12 @@ The home page distinguishes topics explored by implemented experiments from plan
 
 ## Status
 
-Nine experiments are currently implemented across the six modules. Further experiments are listed in the app as planned.
+Ten experiments are currently implemented across the six modules. Further experiments are listed in the app as planned.
+
+**Force Lab: free-body diagrams and multiple forces** (Module 3):
+- Compare horizontal and inclined surfaces; vary mass, applied force, friction and incline angle.
+- Build a live free-body diagram with applied, friction, normal and resolved weight components; compare the net force with acceleration, velocity and displacement.
+- Includes Beginner, Intermediate and Advanced mathematics, plus explicit assumptions and model limits.
 
 **Force, mass and acceleration** (Module 3):
 - Investigate Newton’s second law by varying net force and cart mass independently.

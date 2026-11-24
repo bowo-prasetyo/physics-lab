@@ -18,6 +18,12 @@ export const router = createRouter({
       meta: { title: 'Force, mass and acceleration · Physica' },
     },
     {
+      path: '/mechanics/force-lab',
+      name: 'force-lab',
+      component: () => import('@/experiments/force-lab/ForceLabView.vue'),
+      meta: { title: 'Force Lab · Physica' },
+    },
+    {
       path: '/space/space-vs-time',
       name: 'space-vs-time',
       component: () => import('@/experiments/space-vs-time/SpaceVsTimeView.vue'),
