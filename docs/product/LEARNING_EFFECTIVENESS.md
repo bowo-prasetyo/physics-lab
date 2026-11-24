@@ -27,7 +27,7 @@ Each immediate session uses two pre-check concept questions, two parallel post-c
 
 ### Privacy and operating procedure
 
-- Participation is voluntary and requires an explicit acknowledgement. It is not a grade.
+- Participation is voluntary and requires an explicit acknowledgement. It is not a grade. This acknowledgement does not replace any school, guardian, or research-ethics approval required for the setting.
 - Do not ask for or enter names, email addresses, school identifiers, or other personal information.
 - Responses and the written explanation exist only in the current page session. No answer-level record is stored in local storage, cookies, a database, or a server.
 - The written explanation is used for the facilitator's rubric judgment and is discarded; only the 0–3 score enters the aggregate.
@@ -73,9 +73,36 @@ Do not use normalised gain alone: it behaves poorly for learners who begin near 
 
 Use topic-specific rubrics where needed. The rubric should reward sound reasoning, not verbosity or advanced vocabulary.
 
+## Experience and diagnostic measures
+
+These measures help identify friction in the learning journey. They are diagnostic, not substitutes for learning outcomes.
+
+| Measure | Definition | What it can diagnose |
+|---|---|---|
+| Experiment start-to-finish rate | Share of experiment starters who reach the final learning step | Navigation, task length, or interaction friction |
+| Prediction participation | Share of starters who submit a prediction before experimenting | Whether the inquiry cycle is being used as intended |
+| Evidence encounter rate | Share who perform the action needed to test the prediction | Whether the experiment makes the relevant evidence discoverable |
+| Explanation reach rate | Share who reach the explanation after testing the relevant prediction | Whether the transition from experiment to explanation works |
+| Hint use and recovery | How often hints are used and whether learners subsequently complete the relevant test | Prompt clarity and misconception patterns; hint use is not inherently negative |
+| Level progression | Learners choosing a deeper mathematical level after completing a foundation | Possible readiness or interest signal, not proof of mastery |
+| Return to an experiment | Learners revisiting a saved/shared experiment or repeating a setup | Possible value or unresolved confusion; interpret with qualitative feedback |
+
+Define denominators consistently. For example, an explanation reach rate should use learners who actually reached the prerequisite evidence step, not all page views.
+
 ## Reporting and decision rules
 
-A useful learning report should include module and experiment, learning outcomes assessed, participant counts by phase, pre/post score distributions and absolute gains, transfer performance, rubric distribution, delay for any follow-up, missing data, and selection bias. Do not claim causal impact from a simple before/after comparison. The current delayed sample is unpaired and cannot establish individual retention.
+A useful learning report should include:
+- module and experiment;
+- learning outcomes assessed;
+- number of learners invited and number completing each assessment;
+- pre/post score distributions and absolute gains;
+- transfer-question performance;
+- explanation-rubric distribution;
+- delayed retention results and elapsed delay, if available;
+- relevant experience diagnostics;
+- known limitations, missing data, and selection bias.
+
+Do not claim causal impact from a simple before/after comparison. The current delayed sample is unpaired and cannot establish individual retention.
 
 Use results to decide whether to clarify a prediction prompt, change an interaction so evidence is easier to observe, improve an explanation or worked example, add prerequisite teaching, revise an outcome, or prioritise a new experiment. Do not optimise for completion rate at the expense of challenge, or for correct predictions at the expense of meaningful reasoning.
 

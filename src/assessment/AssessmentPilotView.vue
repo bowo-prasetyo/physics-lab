@@ -9,7 +9,7 @@ const copy = {
   en: {
     eyebrow: 'VOLUNTARY CLASSROOM PILOT', title: 'Learning assessment pilot',
     lead: 'A short, anonymous check of conceptual understanding and transfer. This is an improvement activity, not a grade.',
-    privacyTitle: 'Before you begin', privacy: 'Participation is optional. Do not enter your name, email, school, or other identifying details. Answers stay in this browser tab; Physica does not send them to a server or save them to browser storage. Only cohort totals can be exported.',
+    privacyTitle: 'Before you begin', privacy: 'Participation is optional. Do not enter your name, email, school, or other identifying details. Answers stay in this browser tab; Physica does not send them to a server or save them to browser storage. Only cohort totals can be exported. This acknowledgement does not replace any school, guardian, or research approval required in your setting.',
     consent: 'I understand the purpose and privacy notes, and I choose to participate.',
     experiment: 'Choose an experiment', immediate: 'Immediate assessment', delayed: 'Optional delayed check (unmatched)',
     immediateHelp: 'Complete the pre-check, explore the experiment, then answer parallel and transfer questions.',
@@ -34,7 +34,7 @@ const copy = {
   id: {
     eyebrow: 'UJI COBA KELAS SUKARELA', title: 'Uji coba asesmen pembelajaran',
     lead: 'Pemeriksaan singkat dan anonim tentang pemahaman konsep dan penerapan. Ini kegiatan perbaikan, bukan penilaian.',
-    privacyTitle: 'Sebelum memulai', privacy: 'Keikutsertaan bersifat sukarela. Jangan masukkan nama, email, sekolah, atau informasi identitas lainnya. Jawaban hanya berada di tab peramban ini; Physica tidak mengirimkannya ke server atau menyimpannya di penyimpanan peramban. Hanya jumlah agregat yang dapat diekspor.',
+    privacyTitle: 'Sebelum memulai', privacy: 'Keikutsertaan bersifat sukarela. Jangan masukkan nama, email, sekolah, atau informasi identitas lainnya. Jawaban hanya berada di tab peramban ini; Physica tidak mengirimkannya ke server atau menyimpannya di penyimpanan peramban. Hanya jumlah agregat yang dapat diekspor. Pernyataan ini tidak menggantikan persetujuan sekolah, wali, atau etik penelitian yang diwajibkan di lingkungan Anda.',
     consent: 'Saya memahami tujuan dan catatan privasi ini, serta memilih untuk berpartisipasi.',
     experiment: 'Pilih eksperimen', immediate: 'Asesmen langsung', delayed: 'Pemeriksaan tertunda opsional (tidak berpasangan)',
     immediateHelp: 'Selesaikan pemeriksaan awal, jelajahi eksperimen, lalu jawab pertanyaan paralel dan penerapan.',
@@ -59,7 +59,7 @@ const copy = {
   ja: {
     eyebrow: '任意参加の授業パイロット', title: '学習評価パイロット',
     lead: '概念理解と応用を確認する、短時間・匿名のチェックです。成績評価ではなく、学習体験の改善を目的とします。',
-    privacyTitle: '開始する前に', privacy: '参加は任意です。氏名、メールアドレス、学校名など、個人を特定できる情報を入力しないでください。回答はこのブラウザータブ内だけで扱われ、Physica のサーバーへ送信されたり、ブラウザーの保存領域に保存されたりしません。エクスポートできるのは集計値のみです。',
+    privacyTitle: '開始する前に', privacy: '参加は任意です。氏名、メールアドレス、学校名など、個人を特定できる情報を入力しないでください。回答はこのブラウザータブ内だけで扱われ、Physica のサーバーへ送信されたり、ブラウザーの保存領域に保存されたりしません。エクスポートできるのは集計値のみです。この確認は、学校・保護者・研究倫理上必要な承認に代わるものではありません。',
     consent: '目的とプライバシーに関する説明を理解し、参加を希望します。',
     experiment: '実験を選択', immediate: '実験直後の評価', delayed: '任意の遅延チェック（個人照合なし）',
     immediateHelp: '事前チェックを行い、実験を体験してから、対応する事後問題と応用問題に答えます。',
@@ -131,6 +131,7 @@ function finish(): void {
     explanationScore: Number(rubricScore.value),
   })
   clearAnswers()
+  preScore.value = 0
   stage.value = 'done'
 }
 function nextParticipant(): void {

@@ -10,67 +10,80 @@ export const router = createRouter({
   routes: [
     { path: '/', name: 'home', component: HomeView, meta: { title: 'Physica' } },
     {
-      path: '/teachers', name: 'teachers',
+      path: '/teachers',
+      name: 'teachers',
       component: () => import('@/views/TeacherGuideView.vue'),
       meta: { title: 'Teacher guide · Physica' },
     },
     {
-      path: '/assessment-pilot', name: 'assessment-pilot',
+      path: '/assessment-pilot',
+      name: 'assessment-pilot',
       component: () => import('@/assessment/AssessmentPilotView.vue'),
       meta: { title: 'Learning assessment pilot · Physica' },
     },
     {
-      path: '/mechanics/newtonian', name: 'newtonian',
+      path: '/mechanics/newtonian',
+      name: 'newtonian',
       component: () => import('@/experiments/newtonian/NewtonianView.vue'),
       meta: { title: 'Force, mass and acceleration · Physica' },
     },
     {
-      path: '/mechanics/force-lab', name: 'force-lab',
+      path: '/mechanics/force-lab',
+      name: 'force-lab',
       component: () => import('@/experiments/force-lab/ForceLabView.vue'),
       meta: { title: 'Force Lab · Physica' },
     },
     {
-      path: '/space/space-vs-time', name: 'space-vs-time',
+      path: '/space/space-vs-time',
+      name: 'space-vs-time',
       component: () => import('@/experiments/space-vs-time/SpaceVsTimeView.vue'),
       meta: { title: 'Space versus time · Physica' },
     },
     {
-      path: '/relativity/moving-clocks', name: 'moving-clocks',
+      path: '/relativity/moving-clocks',
+      name: 'moving-clocks',
       component: () => import('@/experiments/moving-clocks/MovingClocksView.vue'),
       meta: { title: 'Different clocks, different elapsed times · Physica' },
     },
     {
-      path: '/relativity/length-contraction', name: 'length-contraction',
+      path: '/relativity/length-contraction',
+      name: 'length-contraction',
       component: () => import('@/experiments/length-contraction/LengthContractionView.vue'),
       meta: { title: 'Length Contraction Lab · Physica' },
     },
     {
-      path: '/relativity/two-perspectives', name: 'two-perspectives',
+      path: '/relativity/two-perspectives',
+      name: 'two-perspectives',
       component: () => import('@/experiments/two-perspectives/TwoPerspectivesView.vue'),
       meta: { title: 'Space and time versus spacetime · Physica' },
     },
     {
-      path: '/gravity/clock-rates', name: 'gravity-clocks',
+      path: '/gravity/clock-rates',
+      name: 'gravity-clocks',
       component: () => import('@/experiments/gravity-clocks/GravityClocksView.vue'),
       meta: { title: 'Gravity and clock rates · Physica' },
     },
     {
-      path: '/cosmology/evolving-space', name: 'evolving-space',
+      path: '/cosmology/evolving-space',
+      name: 'evolving-space',
       component: () => import('@/experiments/evolving-space/EvolvingSpaceView.vue'),
       meta: { title: 'Evolving space · Physica' },
     },
     {
-      path: '/mechanics/projectile', name: 'projectile',
+      path: '/mechanics/projectile',
+      name: 'projectile',
       component: () => import('@/experiments/projectile/ProjectileView.vue'),
       meta: { title: 'Projectile launcher · Physica' },
     },
     {
-      path: '/time/pendulum', name: 'pendulum',
+      path: '/time/pendulum',
+      name: 'pendulum',
       component: () => import('@/experiments/pendulum/PendulumClocksView.vue'),
       meta: { title: 'Pendulum clocks · Physica' },
     },
     {
-      path: '/space/displacement-3d', name: 'displacement-3d',
+      path: '/space/displacement-3d',
+      name: 'displacement-3d',
       component: () => import('@/experiments/displacement3d/Displacement3DView.vue'),
       meta: { title: 'Displacement in 3D · Physica' },
     },
@@ -84,12 +97,18 @@ export const router = createRouter({
 
 function updateDocumentTitle(): void {
   const currentRoute = router.currentRoute.value
-  if (currentRoute.name === 'force-lab') document.title = getForceLabDocumentTitle(locale.value)
-  else if (currentRoute.name === 'length-contraction') document.title = getLengthContractionDocumentTitle(locale.value)
-  else if (typeof currentRoute.meta.title === 'string') document.title = currentRoute.meta.title
+  if (currentRoute.name === 'force-lab') {
+    document.title = getForceLabDocumentTitle(locale.value)
+  } else if (currentRoute.name === 'length-contraction') {
+    document.title = getLengthContractionDocumentTitle(locale.value)
+  } else if (typeof currentRoute.meta.title === 'string') {
+    document.title = currentRoute.meta.title
+  }
 }
 
 router.afterEach(updateDocumentTitle)
+
+// Keep the Force Lab title in sync when the language changes without navigation.
 watch(locale, () => {
   if (router.currentRoute.value.name === 'force-lab' || router.currentRoute.value.name === 'length-contraction') updateDocumentTitle()
 })

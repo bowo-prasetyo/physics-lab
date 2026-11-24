@@ -22,25 +22,47 @@ const lessonLinks = [
 <template>
   <article class="teacher container">
     <header class="teacher-head">
-      <p class="eyebrow">{{ guide.eyebrow }}</p><h1>{{ guide.title }}</h1><p class="lead">{{ guide.lead }}</p>
-      <div class="teacher-actions"><a class="btn btn-primary" href="#lesson-plans">{{ guide.browse }}</a><RouterLink class="btn" to="/">{{ guide.learner }}</RouterLink></div>
+      <p class="eyebrow">{{ guide.eyebrow }}</p>
+      <h1>{{ guide.title }}</h1>
+      <p class="lead">{{ guide.lead }}</p>
+      <div class="teacher-actions">
+        <a class="btn btn-primary" href="#lesson-plans">{{ guide.browse }}</a>
+        <RouterLink class="btn" to="/">{{ guide.learner }}</RouterLink>
+      </div>
     </header>
-    <section class="card teacher-note"><h2>{{ guide.before }}</h2><ul><li v-for="item in guide.beforeItems" :key="item">{{ item }}</li></ul><p class="muted small">{{ guide.privacy }}</p></section>
+
+    <section class="card teacher-note">
+      <h2>{{ guide.before }}</h2>
+      <ul><li v-for="item in guide.beforeItems" :key="item">{{ item }}</li></ul>
+      <p class="muted small">{{ guide.privacy }}</p>
+    </section>
+
     <section id="lesson-plans" aria-labelledby="plans-title">
-      <h2 id="plans-title">{{ guide.plans }}</h2><p class="muted">{{ guide.timing }}</p>
+      <h2 id="plans-title">{{ guide.plans }}</h2>
+      <p class="muted">{{ guide.timing }}</p>
       <div class="lesson-grid">
         <article v-for="(lesson, index) in guide.lessons" :key="lesson.module" :id="`module-${index + 1}`" class="card lesson-card">
-          <p class="eyebrow">{{ lesson.module }}</p><h3>{{ lesson.title }}</h3><p class="time">{{ lesson.time }}</p>
-          <h4>{{ guide.intentions }}</h4><ul><li v-for="outcome in lesson.outcomes" :key="outcome">{{ outcome }}</li></ul>
-          <h4>{{ guide.sequence }}</h4><ol><li v-for="step in lesson.sequence" :key="step">{{ step }}</li></ol>
-          <h4>{{ guide.prompts }}</h4><ul><li v-for="prompt in lesson.prompts" :key="prompt">{{ prompt }}</li></ul>
-          <h4>{{ guide.check }}</h4><p>{{ lesson.check }}</p>
-          <div class="lesson-links"><RouterLink v-for="link in lessonLinks[index]" :key="link.to" :to="link.to">{{ tx(link.label) }}</RouterLink></div>
+          <p class="eyebrow">{{ lesson.module }}</p>
+          <h3>{{ lesson.title }}</h3>
+          <p class="time">{{ lesson.time }}</p>
+          <h4>{{ guide.intentions }}</h4>
+          <ul><li v-for="outcome in lesson.outcomes" :key="outcome">{{ outcome }}</li></ul>
+          <h4>{{ guide.sequence }}</h4>
+          <ol><li v-for="step in lesson.sequence" :key="step">{{ step }}</li></ol>
+          <h4>{{ guide.prompts }}</h4>
+          <ul><li v-for="prompt in lesson.prompts" :key="prompt">{{ prompt }}</li></ul>
+          <h4>{{ guide.check }}</h4>
+          <p>{{ lesson.check }}</p>
+          <div class="lesson-links">
+            <RouterLink v-for="link in lessonLinks[index]" :key="link.to" :to="link.to">{{ tx(link.label) }}</RouterLink>
+          </div>
         </article>
       </div>
     </section>
+
     <section class="card teacher-note">
-      <h2>{{ guide.assessment }}</h2><ul><li v-for="item in guide.assessmentItems" :key="item">{{ item }}</li></ul>
+      <h2>{{ guide.assessment }}</h2>
+      <ul><li v-for="item in guide.assessmentItems" :key="item">{{ item }}</li></ul>
       <p><RouterLink class="btn btn-primary" to="/assessment-pilot">{{ assessmentLink }}</RouterLink></p>
       <p>{{ guide.footer }} <RouterLink to="/">Physica</RouterLink> · <a href="https://github.com/bowo-prasetyo/physics-lab/blob/main/docs/product/LEARNING_EFFECTIVENESS.md">{{ t('teacherGuide.learningEffectivenessLink') }}</a>.</p>
     </section>
@@ -64,5 +86,10 @@ const lessonLinks = [
 .lesson-card li { margin: 3px 0; }
 .time { color: var(--text-muted); font-size: .9rem; }
 .lesson-links { margin-top: auto; padding-top: 16px; }
-@media print { .teacher { max-width: none; padding: 0; } .teacher-actions { display: none; } .lesson-grid { display: block; } .lesson-card, .teacher-note { break-inside: avoid; box-shadow: none; margin-bottom: 14px; } }
+@media print {
+  .teacher { max-width: none; padding: 0; }
+  .teacher-actions { display: none; }
+  .lesson-grid { display: block; }
+  .lesson-card, .teacher-note { break-inside: avoid; box-shadow: none; margin-bottom: 14px; }
+}
 </style>
