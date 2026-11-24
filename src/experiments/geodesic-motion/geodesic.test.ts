@@ -14,7 +14,7 @@ describe('Schwarzschild geodesic model', () => {
     expect(Math.max(...run.points.map(p => p.radius)) - Math.min(...run.points.map(p => p.radius))).toBeLessThan(1e-8)
   })
   it('shows relativistic perihelion precession for a perturbed bound orbit', () => {
-    const settings = { initialRadius: 8, angularMomentumFactor: 0.985, radialVelocity: 0, steps: 6000 }
+    const settings = { initialRadius: 8, angularMomentumFactor: 0.985, radialVelocity: 0, steps: 24000 }
     const relativistic = calculateGeodesic(settings)
     const newtonian = newtonianReference(settings)
     expect(relativistic.points.length).toBeGreaterThan(100)
