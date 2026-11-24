@@ -25,6 +25,7 @@ const duration = ref(2)
 const prediction = ref<'up' | 'down' | 'none' | null>(null)
 const lastRun = ref<ForceLabResult | null>(null)
 const trialCount = ref(0)
+const trials = ref<Array<{ scenario: ForceLabScenario; mass: number; netForce: number; acceleration: number }>>([])
 const predictionOptions = [
   { id: 'up' as const, label: 'Up the slope / to the right' },
   { id: 'down' as const, label: 'Down the slope / to the left' },
@@ -70,6 +71,7 @@ const vectorId = (id: string) => `arrow-${id}`
 function runTrial() {
   lastRun.value = result.value
   trialCount.value += 1
+  trials.value = [...trials.value, { scenario: scenario.value, mass: mass.value, netForce: result.value.netForce, acceleration: result.value.acceleration }]
 }
 function resetPrediction() {
   prediction.value = null
@@ -152,6 +154,10 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
           </div>
           <p class="small muted">{{ tx('Positive values point up the slope or to the right. Negative values point down the slope or to the left.') }}</p>
           <p v-if="lastRun" class="trial-note" aria-live="polite">{{ tx('Trial recorded') }} · {{ trialCount }} · {{ tx('Net force') }}: {{ fmt(lastRun.netForce) }} N</p>
+          <section v-if="trials.length" class="trials">
+            <div class="trials-heading"><h3>{{ tx('Recorded trials') }}</h3><button class="btn btn-small" type="button" @click="trials = []; trialCount = 0">{{ tx('Clear trials') }}</button></div>
+            <div class="table-scroll"><table><thead><tr><th>{{ tx('Trial') }}</th><th>{{ tx('Surface') }}</th><th>{{ tx('Mass') }}</th><th>{{ tx('Net force') }}</th><th>{{ tx('Acceleration') }}</th></tr></thead><tbody><tr v-for="(trial, index) in trials" :key="index"><td>{{ index + 1 }}</td><td>{{ tx(trial.scenario === 'horizontal' ? 'Horizontal surface' : 'Inclined plane') }}</td><td>{{ trial.mass }} kg</td><td>{{ fmt(trial.netForce) }} N</td><td>{{ fmt(trial.acceleration) }} m/s²</td></tr></tbody></table></div>
+          </section>
         </div>
 
         <aside class="lab-side card">
@@ -162,7 +168,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
           </select>
           <ParameterSlider v-model="mass" :label="tx('Block mass')" symbol="m" unit="kg" :min="1" :max="20" :step="1" :digits="0" :signed="false" />
           <ParameterSlider v-model="appliedForce" :label="tx('Applied force')" symbol="F_{app}" unit="N" :min="0" :max="100" :step="1" :digits="0" :signed="false" />
-          <ParameterSlider v-model="frictionCoefficient" :label="tx('Kinetic friction coefficient')" symbol="\mu_k" unit="" :min="0" :max="0.8" :step="0.05" :digits="2" :signed="false" />
+          <ParameterSlider v-model="frictionCoefficient" :label="tx('Friction coefficient')" symbol="\mu_k" unit="" :min="0" :max="0.8" :step="0.05" :digits="2" :signed="false" />
           <ParameterSlider v-if="scenario === 'incline'" v-model="inclineAngle" :label="tx('Incline angle')" symbol="\theta" unit="°" :min="0" :max="60" :step="1" :digits="0" :signed="false" />
           <ParameterSlider v-model="duration" :label="tx('Elapsed time')" symbol="t" unit="s" :min="1" :max="5" :step="0.5" :digits="1" :signed="false" />
           <button class="btn btn-primary" type="button" @click="runTrial">{{ tx('Run this trial') }}</button>
@@ -212,6 +218,9 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
 .verdict,.trial-note { padding:10px 12px; border-left:3px solid var(--accent); background:var(--surface-2); }
 .scene-heading { display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px; }
 .force-diagram { display:block; width:100%; max-height:340px; margin:8px auto; overflow:visible; }
+.trials { margin-top:18px; }
+.trials-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.trials-heading h3 { margin:0; }
 .force-key { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:7px 14px; }
 .force-key > div { display:grid; grid-template-columns:10px 1fr auto; align-items:center; gap:7px; font-size:.84rem; }
 .key-dot { width:9px; height:9px; border-radius:50%; }
