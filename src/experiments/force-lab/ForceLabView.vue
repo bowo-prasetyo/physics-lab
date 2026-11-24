@@ -172,7 +172,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
           </select>
           <ParameterSlider v-model="mass" :label="tx('Block mass')" symbol="m" unit="kg" :min="1" :max="20" :step="1" :digits="0" :signed="false" />
           <ParameterSlider v-model="appliedForce" :label="tx('Applied force')" symbol="F_{app}" unit="N" :min="0" :max="100" :step="1" :digits="0" :signed="false" />
-          <ParameterSlider v-model="frictionCoefficient" :label="tx('Friction coefficient')" symbol="\mu_k" unit="" :min="0" :max="0.8" :step="0.05" :digits="2" :signed="false" />
+          <ParameterSlider v-model="frictionCoefficient" :label="tx('Friction coefficient')" symbol="\mu" unit="" :min="0" :max="0.8" :step="0.05" :digits="2" :signed="false" />
           <ParameterSlider v-if="scenario === 'incline'" v-model="inclineAngle" :label="tx('Incline angle')" symbol="\theta" unit="°" :min="0" :max="60" :step="1" :digits="0" :signed="false" />
           <ParameterSlider v-model="duration" :label="tx('Elapsed time')" symbol="t" unit="s" :min="1" :max="5" :step="0.5" :digits="1" :signed="false" />
           <button class="btn btn-primary" type="button" @click="runTrial">{{ tx('Run this trial') }}</button>
@@ -207,7 +207,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
           <li>{{ tx('An object can move while its acceleration is zero, or accelerate while moving in the opposite direction.') }}</li>
         </ul>
         <h3>{{ tx('Model assumptions and limits') }}</h3>
-        <p>{{ tx('This is a point-mass translational model in an inertial frame. The block starts from rest; one simplified friction coefficient sets the maximum friction force, which balances the tendency to slide below that limit. The applied force is parallel to the surface and the incline angle is fixed. Static friction, rotation, ropes, pulleys, air resistance and changing contact are not modelled.') }}</p>
+        <p>{{ tx('This is a point-mass translational model in an inertial frame. The block starts from rest; one simplified friction coefficient sets the maximum friction force, which balances the tendency to slide below that limit. The applied force is parallel to the surface and the incline angle is fixed. Distinct static and kinetic friction coefficients, rotation, ropes, pulleys, air resistance and changing contact are not modelled.') }}</p>
         <p>{{ tx('The block starts from rest and the net force is constant during each trial. The displayed velocity and displacement therefore follow constant-acceleration kinematics.') }}</p>
       </section>
     </details>
