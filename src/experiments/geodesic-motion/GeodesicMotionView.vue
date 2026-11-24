@@ -34,7 +34,7 @@ useQuerySync({
     radial.value = snapToRange(query.vr, RADIAL, radial.value)
   },
 })
-const settings = computed(() => ({ initialRadius: radius.value, angularMomentumFactor: angular.value, radialVelocity: radial.value, steps: 3600, stepSize: 0.025 }))
+const settings = computed(() => ({ initialRadius: radius.value, angularMomentumFactor: angular.value, radialVelocity: radial.value, steps: 24000, stepSize: 0.025 }))
 const relativistic = computed(() => calculateGeodesic(settings.value))
 const newtonian = computed(() => newtonianReference(settings.value))
 const tested = ref(false)
