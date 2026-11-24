@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import MathFormula from '@/components/MathFormula.vue'
@@ -62,7 +61,6 @@ watch([radius, angular, radial], () => { prediction.value = null; tested.value =
       <p class="lead">{{ tx('An orbiting spacecraft is in free fall. Change its orbit and compare the path predicted by Newtonian gravity with the path of a freely moving object in Schwarzschild spacetime.') }}</p>
     </header>
     <ShareExperiment />
-    <LocalizedExperimentGuide experiment-id="geodesic-motion" />
     <ExperimentSupport
       experiment-id="geodesic-motion"
       :module-number="5"
