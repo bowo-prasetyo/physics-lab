@@ -201,7 +201,7 @@ watch([scenario, mass, appliedForce, staticFrictionCoefficient, kineticFrictionC
         <p>{{ tx('Beginner: balanced forces cancel. Static friction can take any value needed for rest, up to its maximum. If the tendency to slide exceeds that maximum, kinetic friction acts while the block slides.') }}</p>
         <p v-if="atLeast(level, 'intermediate')">{{ tx('Intermediate: resolve each force into components parallel and perpendicular to the surface, then compare the tangential tendency with the maximum static friction.') }}</p>
         <MathFormula v-if="atLeast(level, 'intermediate')" tex="f_s\leq\mu_s N,\qquad f_{s,\max}=\mu_s N" :display="true" />
-        <MathFormula v-if="atLeast(level, 'intermediate')" tex="f_k=\mu_k N,\qquad \sum F_x=F_{app}-mg\sin\theta-f_k=ma_x" :display="true" />
+        <MathFormula v-if="atLeast(level, 'intermediate')" tex="f_k=\mu_k N,\qquad \sum F_x=F_{app}-mg\sin\theta+F_{fr,x}=ma_x" :display="true" />
         <MathFormula v-if="atLeast(level, 'intermediate')" tex="\sum F_y=N-mg\cos\theta=0" :display="true" />
         <p v-if="atLeast(level, 'advanced')">{{ tx('Advanced: at rest, friction is a constraint force that takes the value required by tangential equilibrium, provided that value does not exceed the Coulomb limit. Beyond the threshold, the model switches to kinetic friction opposite the impending motion.') }}</p>
         <MathFormula v-if="atLeast(level, 'advanced')" tex="|F_{app}-mg\sin\theta|\leq\mu_s N\;\Rightarrow\;a_x=0" :display="true" />
