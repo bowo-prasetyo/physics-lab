@@ -106,7 +106,7 @@ watch([scenario, mass, appliedForce, staticFrictionCoefficient, kineticFrictionC
         <p>{{ tx('Before running the model, predict the direction of the block’s acceleration along the surface.') }}</p>
         <fieldset>
           <legend>{{ tx('Your prediction') }}</legend>
-          <label v-for="option in predictionOptions" :key="option.id>
+          <label v-for="option in predictionOptions" :key="option.id">
             <input v-model="prediction" type="radio" name="force-prediction" :value="option.id" />
             {{ tx(option.label) }}
           </label>
