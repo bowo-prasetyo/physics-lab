@@ -127,7 +127,7 @@ export const PREDICTIONS: readonly Prediction<JourneySnapshot>[] = [
     correct: 'length',
     explanation:
       'Turning the axes reshuffles the components (Δx′, Δy′, Δz′ all change), but the arrow itself is untouched, so its length is the same: ' +
-      'Δx′² + Δy′² + Δz′² = Δx² + Δy² + Δz². Quantities that every coordinate system agrees on are called invariants. Experiments B and E ' +
+      'Δx′² + Δy′² + Δz′² = Δx² + Δy² + Δz². Quantities that every coordinate system agrees on are called invariants. “Different clocks” and “Space and time versus spacetime” ' +
       'meet a spacetime version of the same idea: the interval.',
     observed: observedRotation,
     hint: rotationHint,

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { DEFAULT_LOCALE, detectLocale, isLocale, SUPPORTED_LOCALES } from './locales'
 import { messages, translate } from './messages'
 import { getLocalizedModules } from './home-catalog'
-import { getTeacherGuide } from './teacher-guide'
+import { LESSON_EXPERIMENTS, getTeacherGuide } from './teacher-guide'
 
 describe('locale configuration', () => {
   it('recognizes only supported locale identifiers', () => {
@@ -41,14 +41,14 @@ describe('locale configuration', () => {
       const modules = getLocalizedModules(locale)
       expect(modules).toHaveLength(6)
       expect(modules.reduce((count, module) => count + module.experiments.length, 0)).toBe(13)
-      expect(modules.every(module => module.title.length > 0 && module.audience.length > 0)).toBe(true)
+      expect(modules.every(module => module.title.length > 0 && module.role.length > 0)).toBe(true)
     }
   })
 
-  it('provides seven complete teacher lessons in every supported locale', () => {
+  it('provides a complete teacher lesson for every lesson slot in every supported locale', () => {
     for (const locale of SUPPORTED_LOCALES) {
       const guide = getTeacherGuide(locale)
-      expect(guide.lessons).toHaveLength(7)
+      expect(guide.lessons).toHaveLength(LESSON_EXPERIMENTS.length)
       expect(guide.beforeItems).toHaveLength(4)
       expect(guide.assessmentItems).toHaveLength(4)
       for (const lesson of guide.lessons) {
@@ -65,6 +65,7 @@ describe('locale configuration', () => {
   it('localizes curriculum content rather than reusing English copy', () => {
     expect(getTeacherGuide('id').title).toBe('Panduan pengajar')
     expect(getTeacherGuide('ja').title).toBe('教員向けガイド')
-    expect(getTeacherGuide('id').lessons.at(0)?.title).toBe('Posisi, jarak, dan perpindahan')
+    expect(getTeacherGuide('id').lessons.at(1)?.title).toBe('Posisi, jarak, dan perpindahan')
+    expect(getTeacherGuide('ja').lessons.at(0)?.title).not.toBe(getTeacherGuide('en').lessons.at(0)?.title)
   })
 })

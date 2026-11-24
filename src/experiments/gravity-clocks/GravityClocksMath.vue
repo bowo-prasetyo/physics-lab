@@ -146,8 +146,8 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
 
       <h3>{{ tx('The lapse is the clock rate') }}</h3>
       <p>
-        {{ tx('In the ADM 3 + 1 split from Experiment E,') }} <MathFormula tex="ds^2 = -N^2 dt^2 + (\text{spatial part})" />. {{ tx('Here the lapse is') }}
-        <MathFormula tex="N = \sqrt{1 - r_s/r}" />{{ tx(': the rate of a static clock. It falls to zero at the horizon. Experiment E’s formula is now something you can measure.') }}
+        {{ tx('In the ADM 3 + 1 split from “Space and time versus spacetime”,') }} <MathFormula tex="ds^2 = -N^2 dt^2 + (\text{spatial part})" />. {{ tx('Here the lapse is') }}
+        <MathFormula tex="N = \sqrt{1 - r_s/r}" />{{ tx(': the rate of a static clock. It falls to zero at the horizon. the formula from “Space and time versus spacetime” is now something you can measure.') }}
       </p>
 
       <h3>{{ tx('Space is curved too') }}</h3>
@@ -161,7 +161,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
       <p>{{ tx('Light sent from a static emitter to a static receiver arrives with frequency ratio') }}</p>
       <MathFormula display tex="\frac{f_{\text{received}}}{f_{\text{emitted}}} = \sqrt{\frac{1 - r_s/r_{\text{emit}}}{1 - r_s/r_{\text{receive}}}}" />
       <p>
-        {{ tx('which is a property of the two clocks’ positions in a static spacetime, not of anyone’s frame. The upward and downward ratios are exact inverses, so both observers agree that the lower clock is slow. This is unlike Experiment B, where the clocks were in symmetric relative motion.') }}
+        {{ tx('which is a property of the two clocks’ positions in a static spacetime, not of anyone’s frame. The upward and downward ratios are exact inverses, so both observers agree that the lower clock is slow. This is unlike “Different clocks”, where the clocks were in symmetric relative motion.') }}
       </p>
       <p class="muted">{{ comparison }}</p>
     </template>

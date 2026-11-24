@@ -1,4 +1,4 @@
-/** Predict–observe–explain prompts for Experiment A (see experiments/prediction.ts). */
+/** Predict–observe–explain prompts for “Space versus time” (see experiments/prediction.ts). */
 
 import { positionAtTime, type RunRecord } from '@/physics'
 import type { Prediction as GenericPrediction } from '@/experiments/prediction'

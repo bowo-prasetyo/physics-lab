@@ -1,4 +1,4 @@
-/** Predict–observe–explain prompts for Experiment B (see experiments/prediction.ts). */
+/** Predict–observe–explain prompts for “Different clocks” (see experiments/prediction.ts). */
 
 import type { Prediction } from '@/experiments/prediction'
 import { DURATION, type ClockRun } from './useMovingClocks'

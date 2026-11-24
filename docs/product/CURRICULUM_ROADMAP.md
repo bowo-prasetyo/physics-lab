@@ -4,7 +4,7 @@
 
 This document connects the six-module curriculum to the experiments that exist today, makes the gaps explicit, and sets a priority order for future work. It is a direction-setting roadmap, not a release-date commitment.
 
-The product vision and module learning outcomes live in [Product vision, principles, audiences and learning outcomes](PRODUCT_VISION.md). The learner-facing catalogue in `src/modules.ts` is the source for the home-page distinction between current and planned coverage. Classroom lesson outlines are available in the in-app [Teacher guide](#/teachers).
+The product vision and module learning outcomes live in [Product vision, principles, audiences and learning outcomes](PRODUCT_VISION.md). The learner-facing catalogue in `src/modules.ts` is the source for the home-page distinction between current and planned coverage. Classroom lesson outlines are available in the in-app [teacher guide](https://bowo-prasetyo.github.io/physics-lab/#/teachers).
 
 ## Coverage principles
 
@@ -20,8 +20,8 @@ The product vision and module learning outcomes live in [Product vision, princip
 |---|---|---|---|
 | 1. Understanding space | Space versus time; Displacement in 3D | Position, reference points, path length versus displacement, 3D vectors, coordinate-system changes, Euclidean spatial measurements | Broader 2D coordinate geometry and spatial measurement beyond the current examples |
 | 2. Understanding time | Pendulum clocks | Periodic motion, period and frequency, pendulum dynamics, small-angle versus exact period, clocks as physical processes | Other clock mechanisms, measurement uncertainty, and a broader treatment of time standards |
-| 3. Classical mechanics | Force, mass and acceleration; Force Lab; Momentum and collisions; Projectile launcher | Newton’s second law; free-body diagrams and vector addition of multiple forces; normal forces and weight components; static-friction limits and kinetic friction on horizontal/inclined surfaces; one-dimensional momentum and impulse; elastic and inelastic collisions; momentum conservation and kinetic-energy change; ideal projectile motion, initial-condition dependence, gravitational acceleration, Galilean observers, optional quadratic drag and energy loss | Circular motion, work and energy beyond projectile examples, orbital gravitation |
-| 4. Special relativity | Different clocks, different elapsed times; Length Contraction Lab; Space and time versus spacetime | Lorentz transformations, time dilation, proper time, proper length and length contraction, frame-dependent simultaneity, spacetime diagrams, interval invariance, comparison of equivalent relativistic descriptions | Velocity addition and relativistic momentum, deeper experimental evidence connections |
+| 3. Understanding motion | Force, mass and acceleration; Force Lab; Momentum and collisions; Projectile launcher | Newton’s second law; free-body diagrams and vector addition of multiple forces; normal forces and weight components; static-friction limits and kinetic friction on horizontal/inclined surfaces; one-dimensional momentum and impulse; elastic and inelastic collisions; momentum conservation and kinetic-energy change; ideal projectile motion, initial-condition dependence, gravitational acceleration, Galilean observers, optional quadratic drag and energy loss | Circular motion, work and energy beyond projectile examples, orbital gravitation |
+| 4. Special relativity | Different clocks, different elapsed times; Space and time versus spacetime; Length contraction | Lorentz transformations, time dilation, proper time, proper length and length contraction, frame-dependent simultaneity, spacetime diagrams, interval invariance, comparison of equivalent relativistic descriptions | Velocity addition and relativistic momentum, deeper experimental evidence connections |
 | 5. General relativity | Gravity and clock rates; Geodesic Motion Lab | Schwarzschild exterior clock rates, GPS clock corrections, static spherical geometry, timelike geodesics, free-fall orbits, periapsis precession and the Newtonian limit | Einstein field equations and stress-energy, equivalence-principle bridge, non-Schwarzschild settings |
 | 6. Cosmology | Evolving space | Homogeneous/isotropic FLRW models, scale factor, redshift, Hubble expansion, simple matter/radiation/dark-energy histories, acceleration and classical-model limits | Observational parameter inference, distance measures and horizons, inflation/early-universe physics, limits of extrapolation toward the initial singularity |
 
@@ -36,46 +36,38 @@ The product vision and module learning outcomes live in [Product vision, princip
 
 ## Prioritized roadmap
 
-Priorities are based on educational value, curriculum coherence, scientific prerequisites, and how much each item improves the existing learning journey. Horizons describe sequence, not calendar dates.
+Priorities are based on educational value, curriculum coherence, scientific prerequisites, and how much each item improves the existing learning journey. Horizons describe sequence, not calendar dates. Physica's thread is space, time and motion (see the [product vision](PRODUCT_VISION.md)); work that strengthens that thread comes before new threads.
 
-### P1 — Make the existing curriculum honest and measurable (completed foundation)
+### Delivered
 
-1. **Keep current and planned coverage distinct.** The home-page catalogue shows what implemented experiments explore and what remains planned.
-2. **Align module outcomes with actual experiments.** Do not mark an outcome as covered until an experiment and an assessment task support it.
-3. **Establish learning-effectiveness measures.** Pilot short pre/post concept checks, transfer questions, explanation rubrics, and delayed retention checks before selecting numerical targets.
-4. **Improve the learning loop before adding breadth.** Review prediction prompts, evidence, hints, explanations, and worked examples for the existing experiments.
+- **Honest coverage.** The home page separates what implemented experiments explore from planned topics. `src/modules.ts` is the single catalogue; the translated catalogues, the teacher guide's lesson coverage and the README are checked against it, so they cannot drift.
+- **One learning loop.** Every experiment uses the shared predict–observe–explain cards. Each level adds its own question, each explanation unlocks only after the run that tests it, and results stay hidden until the learner has run the current setup.
+- **One page layout.** Every experiment page has the same sections in the same order (header, share, investigation guide, Predict, Experiment, Mathematics, Meaning, next steps), enforced by a test.
+- **Experiments:** Module 3 Force Lab and Momentum and collisions; Module 4 length contraction; Module 5 geodesic motion.
+- **Teaching support.** A lesson outline for every experiment, in all three languages, and an anonymous assessment pilot with pre/post, transfer and explanation items for Force Lab and length contraction.
+- **Identity.** Module 3 renamed "Understanding motion"; experiment letters and audience labels on levels and modules removed.
 
-**Exit condition:** learners and educators can tell what each module currently teaches, what it does not yet teach, and how learning will be evaluated.
+### Now — gather evidence before adding breadth
 
-### P1 — Complete the core special-relativity measurement pair (in progress)
+1. **Run the assessment pilot** with real learners, following the [pilot plan](ASSESSMENT_PILOT_PLAN.md): Force Lab (introductory) and length contraction (advanced), immediate and delayed.
+2. **Act on what it shows** before choosing the next experiment: clarify prompts, change interactions so evidence is easier to see, or add prerequisite teaching where learners struggle.
+3. **Extend the pilot** to one experiment per module once the first two items have been used in a real setting.
 
-1. **Length contraction (delivered in this branch).** Add a prediction-first measurement lab that connects proper length, Lorentz contraction and frame-dependent simultaneity using endpoint events and a spacetime diagram.
-2. **Velocity addition and relativistic momentum.** Develop the next dedicated investigations after the measurement pair is established.
+**Exit condition:** at least one cohort's anonymous results per pilot experiment, and a written decision about what to change.
 
-**Exit condition:** learners can distinguish proper length from a length measured in a moving frame, explain why endpoint simultaneity matters, and connect the result to the Lorentz transformation.
+### Next — close gaps on the thread
 
-### P2 — Support teaching and close the highest-value curriculum gaps (in progress)
+Choose using the pilot's results and the decision rules below. Candidates, each tied to an outcome in the vision:
 
-1. **Teacher-oriented workflows (delivered foundation).** Provide a persistent teacher entry point and practical lesson outlines with learning intentions, timings, facilitation sequences, discussion prompts, and checks for understanding. Reuse shareable experiment setups; do not add class rosters, learner accounts or analytics until a genuine need and privacy model are established.
-2. **Module 3: Newtonian foundations (first investigation delivered).** The force-and-acceleration lesson tests proportionality to net force and inverse proportionality to mass under explicit ideal assumptions. **Delivered:** Force Lab adds free-body diagrams, multiple forces, distinct static and kinetic friction coefficients, the breakaway threshold, and force components on horizontal and inclined surfaces. The Momentum and collisions lab now adds one-dimensional two-body impacts, impulse, momentum conservation, and the distinction between elastic kinetic-energy conservation and inelastic energy transfer.
-3. **Module 4: Length contraction.** Add a dedicated operational measurement experiment, carefully distinguishing object length measured at simultaneous endpoints in a frame from visual appearance.
-4. **Module 5: Geodesic motion (delivered).** The Geodesic Motion Lab compares equatorial timelike Schwarzschild geodesics with a Newtonian reference, exposing periapsis precession and the weak-field limit while stating the test-particle and exterior-geometry assumptions.
-5. **Module 6: Observational connection.** Connect model parameters and expansion history to a small number of measured cosmological quantities, with uncertainty and model dependence made explicit.
-6. **Modules 1–2: Consolidation.** Add only the spatial geometry or clock-measurement lessons that solve observed learning gaps; avoid expanding these modules merely to equalise experiment counts.
+1. **Module 4: velocity addition and relativistic momentum.** Completes the special-relativity measurement set; connects to Momentum and collisions in Module 3.
+2. **Module 3: circular motion and orbits as a force problem.** The Newtonian counterpart to Module 5's geodesic orbits.
+3. **Module 5: the equivalence principle.** A careful bridge from free fall to curved spacetime.
+4. **Module 6: observational connection.** Link model parameters to a few measured cosmological quantities, with uncertainty and model dependence explicit.
+5. **Modules 1–2: consolidation.** Add only spatial-geometry or clock-measurement lessons that solve observed learning gaps; do not add experiments merely to equalise module sizes.
 
-**Exit condition:** module titles and outcomes are supported by a coherent sequence rather than isolated demonstrations, and teachers can prepare and facilitate lessons without a separate class-management system.
+### Later — new threads, selectively
 
-### P3 — Extend the lab selectively
-
-Potential directions, only after the core six modules have demonstrated learning value:
-
-- Waves, oscillations beyond the pendulum, and optics.
-- Electromagnetism.
-- Thermodynamics and statistical physics.
-- Quantum physics.
-- Deeper general relativity and cosmology.
-
-These are options, not commitments. Each proposal should be evaluated against learner needs, prerequisite structure, scientific validation cost, and the product's phenomenon-first method.
+Potential directions, only after the space, time and motion thread has demonstrated learning value: waves and oscillations beyond the pendulum, optics, electromagnetism, thermodynamics and statistical physics, quantum physics. These are options, not commitments. Each would be a new thread and should be evaluated against learner needs, prerequisite structure, scientific validation cost and the phenomenon-first method.
 
 ## Roadmap decision rules
 

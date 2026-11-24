@@ -4,7 +4,7 @@
 
 Physica exists to improve learners' understanding of physics, not simply to maximise time spent interacting with simulations. This document defines a practical measurement framework for testing whether the product's phenomenon → predict → experiment → mathematics → meaning cycle supports learning.
 
-The in-app assessment pilot now provides a deliberately small, voluntary workflow. It is a measurement aid, not evidence that Physica has already improved learning. Establish baselines before setting numerical targets.
+The in-app assessment pilot now provides a deliberately small, voluntary workflow. It is a measurement aid, not evidence that Physica has already improved learning. Establish baselines before setting numerical targets. The [assessment pilot plan](ASSESSMENT_PILOT_PLAN.md) describes how to run the first cohorts and record the results.
 
 ## Measurement principles
 
@@ -23,7 +23,7 @@ Open **For teachers → Run the learning assessment pilot** (route `/assessment-
 - **Force Lab (Module 3):** an introductory mechanics assessment about static friction and the relationship between net force, mass, and acceleration.
 - **Length Contraction Lab (Module 4):** a mathematically advanced assessment about proper length, frame-dependent measurement, and simultaneity.
 
-Each immediate session uses two pre-check concept questions, two parallel post-check questions, and one changed-context transfer question. The facilitator also scores a short learner explanation using the 0–3 rubric below. The delayed option uses the post and transfer items after a delay (suggested: 1–2 weeks); it is explicitly an unmatched follow-up sample, not an individual retention measure.
+Each immediate session uses two pre-check concept questions, two parallel post-check questions, and one changed-context transfer question. Answer options appear in a different order for each participant, so a fixed answer position cannot score full marks; scoring uses the option, not its position. The facilitator also scores a short learner explanation using the 0–3 rubric below. The delayed option uses the post and transfer items after a delay (suggested: 1–2 weeks); it is explicitly an unmatched follow-up sample, not an individual retention measure.
 
 ### Privacy and operating procedure
 

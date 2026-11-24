@@ -1,4 +1,4 @@
-/** Predict–observe–explain prompts for Experiment D (see experiments/prediction.ts). */
+/** Predict–observe–explain prompts for “Evolving space” (see experiments/prediction.ts). */
 
 import type { Prediction } from '@/experiments/prediction'
 import { accelerationOnset, recessionSpeed, solveExpansion } from '@/physics'
@@ -19,7 +19,7 @@ export const OUR_ACCELERATION_TIME = ourExpansion.timeAt(accelerationOnset(our) 
 
 const span = (r: { tStart: number; tEnd: number }) => Math.abs(r.tEnd - r.tStart)
 
-/** The shared prediction type passes a list; Experiment D keeps one combined record. */
+/** The shared prediction type passes a list; “Evolving space” keeps one combined record. */
 const merged = (records: readonly SpaceRecord[]): SpaceRecord => ({
   runs: records.flatMap((r) => r.runs),
   snapshots: records.flatMap((r) => r.snapshots),

@@ -16,6 +16,26 @@ Physica is an interactive learning environment, not a general-purpose simulator 
 
 The long-term ambition is to make this way of learning available across the fundamental ideas of physics, while maintaining scientific care and a coherent progression from intuitive reasoning to mathematical depth.
 
+## What Physica is about: space, time and motion
+
+Physica follows one thread: **space, time and motion**. It starts from where things are, how time is measured and how motion changes, and follows those same questions into relativity, curved spacetime and the expanding universe, where the everyday picture has to be revised.
+
+| Modules | Role in the thread |
+|---|---|
+| 1 · Understanding space | Where things are; which descriptions depend on the chosen coordinates and which do not |
+| 2 · Understanding time | How time is measured; every clock is a physical process |
+| 3 · Understanding motion | How motion changes and why: forces, momentum and reference frames. This is the Newtonian picture that relativity later revises |
+| 4 · Special relativity | Time and length measurements depend on the observer; space and time combine into spacetime |
+| 5 · General relativity | Gravity as spacetime geometry: clock rates and free-fall paths |
+| 6 · Cosmology | Space and time on the largest scale, and where the models stop |
+
+Consequences for product decisions:
+
+- **Mechanics serves the thread.** Module 3 is not a general mechanics course. Its experiments are chosen because relativity later revisits their ideas: net force and acceleration, momentum conservation (later tied to the symmetry of space), Galilean frames and orbits.
+- **Breadth beyond the thread is deliberate.** Waves, electromagnetism, thermodynamics and quantum physics (roadmap P3) would be new threads, not more of this one. Add them only after the current thread has demonstrated learning value.
+- **No letters on experiments.** Experiments are named, not lettered; cross-references use the experiment's name.
+- **Levels are mathematical depth, not audiences.** The product does not label levels or modules with school years or degree stages; where a topic needs prerequisites, it states them.
+
 ## Product principles
 
 These principles guide product, curriculum, content, design, and engineering decisions.
@@ -97,7 +117,7 @@ Intermediate and Advanced levels serve this audience, with Advanced intended par
 
 Teachers, tutors, and other educators may use experiments as demonstrations, guided investigations, or discussion prompts. They need clear learning goals, reliable and reproducible setups, and material that can be shared with learners.
 
-The product now includes a teacher guide with lesson outlines, suggested timings, classroom sequences, discussion prompts, and checks for understanding. Teachers remain a supporting audience: the product does not yet provide class rosters, student accounts, assignment distribution, grading, or learner-progress dashboards. Those capabilities require separate evidence of need and an explicit privacy and safeguarding model.
+The product includes a teacher guide with a lesson outline for every experiment (learning intentions, suggested timings, a classroom sequence, discussion prompts and a check for understanding), and a small, anonymous assessment pilot (see [the pilot plan](ASSESSMENT_PILOT_PLAN.md)). Teachers remain a supporting audience: the product does not yet provide class rosters, student accounts, assignment distribution, grading, or learner-progress dashboards. Those capabilities require separate evidence of need and an explicit privacy and safeguarding model.
 
 ### Audience and level are related, not interchangeable
 
@@ -129,7 +149,7 @@ After completing this module, learners should be able to:
 
 **Current foundation:** pendulum dynamics, period measurement, small-angle and exact-period treatments, and comparisons across environments. Relativistic clock-rate effects are developed in Modules 4 and 5.
 
-### Module 3 — Classical mechanics
+### Module 3 — Understanding motion
 
 After completing this module, learners should be able to:
 1. State Newton's second law and calculate acceleration from a specified net force and mass.
@@ -140,7 +160,7 @@ After completing this module, learners should be able to:
 6. Compare descriptions of the same motion from different Galilean reference frames.
 7. Distinguish ideal projectile motion from motion with air resistance, and interpret the associated changes in energy and trajectory.
 
-**Current foundation:** a constant-net-force, constant-mass, one-dimensional investigation of Newton's second law; projectile motion on different worlds; a dropped-object comparison; Galilean observers; and optional quadratic air resistance. Free-body diagrams with multiple forces, circular motion, momentum, work/energy and orbital gravitation still need dedicated lessons.
+**Current foundation:** Newton's second law (constant net force and mass, one dimension); free-body diagrams with multiple forces, static and kinetic friction and inclined planes (Force Lab); one-dimensional momentum, impulse and elastic/inelastic collisions; projectile motion on different worlds with Galilean observers and optional quadratic air resistance. Circular motion, work and energy beyond the projectile examples, and orbital gravitation still need dedicated lessons.
 
 ### Module 4 — Special relativity
 
@@ -152,7 +172,7 @@ After completing this module, learners should be able to:
 5. Use the invariant spacetime interval to distinguish observer-dependent coordinate descriptions from invariant relationships.
 6. Compare Galilean, Lorentzian space-and-time, and spacetime descriptions, and identify which predictions agree with experiment.
 
-**Current foundation:** moving-clock comparisons, reference-frame changes, simultaneity, interval invariance, and comparison of alternative descriptions. Length contraction should receive a dedicated treatment before it is presented as a fully taught module outcome.
+**Current foundation:** moving-clock comparisons, reference-frame changes, simultaneity, interval invariance, comparison of alternative descriptions, and a dedicated length-contraction measurement lab (proper length, endpoint simultaneity and its ship-frame timing). Velocity addition and relativistic momentum still need dedicated lessons.
 
 ### Module 5 — General relativity
 
@@ -164,7 +184,7 @@ After completing this module, learners should be able to:
 5. Explain what a gravitational time-dilation model predicts near a Schwarzschild horizon, while recognising the limits of the chosen coordinates and idealisations.
 6. Identify the difference between a demonstrated clock-rate effect and a broader claim about the nature of gravity or spacetime.
 
-**Current foundation:** Schwarzschild clock rates, light-signal comparisons, spatial ruler distance, horizon behaviour, and GPS corrections. Geodesic motion and the broader field-equation foundations of general relativity need dedicated learning experiences before they can be considered covered outcomes.
+**Current foundation:** Schwarzschild clock rates, light-signal comparisons, spatial ruler distance, horizon behaviour, GPS corrections, and timelike geodesics (free-fall orbits, measured periapsis precession and the Newtonian limit). The field equations and the equivalence-principle bridge to curved spacetime still need dedicated learning experiences.
 
 ### Module 6 — Cosmology
 

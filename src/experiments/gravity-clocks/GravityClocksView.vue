@@ -123,7 +123,7 @@ function primaryAction() {
 const gpsBars = computed(() => {
   const items = [
     { id: 'gravity', label: tx('Higher up, weaker gravity'), value: gps.gravity },
-    { id: 'velocity', label: tx('Orbital speed (Experiment B)'), value: gps.velocity },
+    { id: 'velocity', label: tx('Orbital speed (“Different clocks”)'), value: gps.velocity },
     { id: 'net', label: tx('Net effect'), value: gps.net },
   ]
   const max = Math.max(...items.map((i) => Math.abs(i.value)))
@@ -330,7 +330,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
               <strong>{{ tx('Does gravity slow time itself, or only clocks?') }}</strong> {{ tx('Every clock and every process slows by the same factor, so no measurement can separate the two. Whether that means “time itself” runs slower depends on what you think time is: something that exists on its own, or a measure of how physical processes relate.') }}
             </li>
             <li>
-              <strong>{{ tx('Is gravity a force or geometry?') }}</strong> {{ tx('General relativity describes it as the curvature of spacetime, and the lapse in the 3 + 1 split is exactly the clock rate you measured. Other formulations, such as the teleparallel equivalent of general relativity, describe gravity differently but make the same predictions. As in Experiment E, equal predictions leave the interpretation open.') }}
+              <strong>{{ tx('Is gravity a force or geometry?') }}</strong> {{ tx('General relativity describes it as the curvature of spacetime, and the lapse in the 3 + 1 split is exactly the clock rate you measured. Other formulations, such as the teleparallel equivalent of general relativity, describe gravity differently but make the same predictions. As in “Space and time versus spacetime”, equal predictions leave the interpretation open.') }}
             </li>
           </ul>
         </InfoCallout>
@@ -340,11 +340,11 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p><strong>{{ tx('Next:') }}</strong> {{ tx('Experiment D, where space itself evolves in time. See also Experiments B and E.') }}</p>
+      <p><strong>{{ tx('Next:') }}</strong> {{ tx('“Evolving space”, where space itself evolves in time. See also “Different clocks” and “Space and time versus spacetime”.') }}</p>
       <span class="nav-links">
-        <RouterLink to="/cosmology/evolving-space">{{ tx('Experiment D →') }}</RouterLink>
-        <RouterLink to="/relativity/moving-clocks">{{ tx('Experiment B') }}</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">{{ tx('Experiment E') }}</RouterLink>
+        <RouterLink to="/cosmology/evolving-space">{{ tx('Evolving space →') }}</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx('Different clocks') }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx('Space and time versus spacetime') }}</RouterLink>
         <RouterLink to="/">{{ tx('All modules') }}</RouterLink>
       </span>
     </nav>

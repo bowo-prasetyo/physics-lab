@@ -111,7 +111,7 @@ const rotationTex = computed(() => {
       <p>
         {{ tx('So the straight line is the shortest path in Euclidean space. In Minkowski spacetime the minus sign in') }}
         <MathFormula tex="s^2 = c^2 t^2 - |\Delta\mathbf r|^2" /> {{ tx('reverses the inequality: the straight (inertial) worldline between two events') }}
-        {{ tx('has the') }} <em>{{ tx('longest') }}</em> {{ tx('proper time. The Lorentz group of Experiment E plays the role that the Euclidean group plays here.') }}
+        {{ tx('has the') }} <em>{{ tx('longest') }}</em> {{ tx('proper time. The Lorentz group of “Space and time versus spacetime” plays the role that the Euclidean group plays here.') }}
       </p>
     </template>
   </div>

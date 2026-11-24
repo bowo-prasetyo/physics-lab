@@ -158,7 +158,7 @@ export const PREDICTIONS: readonly Prediction<Throw>[] = [
     explanation:
       'For the train, the ball has no horizontal speed (x′ = x − ut with u = v_x), so it goes straight up and down, like a ball tossed ' +
       'inside the train. The shape of a path depends on the observer, but the acceleration (g, straight down) and Newton’s laws are the same ' +
-      'for both. This is Galilean relativity, the idea that Experiments A, B and E develop further.',
+      'for both. This is Galilean relativity, the idea that “Space versus time”, “Different clocks” and “Space and time versus spacetime” develop further.',
     observed: observedTrain,
     hint: trainHint,
   },

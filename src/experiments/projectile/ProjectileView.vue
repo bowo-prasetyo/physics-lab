@@ -271,7 +271,7 @@ const dropDifference = computed(() => {
               <strong>{{ localizeExperimentText('Is there an absolute space?', locale) }}</strong> {{ localizeExperimentText('Newton believed space is a fixed stage and that there is a true state of rest, even though no experiment with moving trains or ships can detect it. Leibniz, and later Mach, argued that only motion relative to other things is real.', locale) }}
             </li>
             <li>
-              <strong>{{ localizeExperimentText('Is time absolute?', locale) }}</strong> {{ localizeExperimentText('Newton’s time flows equally for everyone, which is the assumption', locale) }} <MathFormula tex="t' = t" />{{ localizeExperimentText(' used for the train here. Experiments A, B and E show how relativity changed that, and keep the question of what space and time really are open.', locale) }}
+              <strong>{{ localizeExperimentText('Is time absolute?', locale) }}</strong> {{ localizeExperimentText('Newton’s time flows equally for everyone, which is the assumption', locale) }} <MathFormula tex="t' = t" />{{ localizeExperimentText(' used for the train here. “Space versus time”, “Different clocks” and “Space and time versus spacetime” show how relativity changed that, and keep the question of what space and time really are open.', locale) }}
             </li>
           </ul>
         </InfoCallout>
@@ -281,10 +281,10 @@ const dropDifference = computed(() => {
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p>{{ localizeExperimentText('See also: Experiment A for motion in one dimension, and Experiment B for what happens near the speed of light.', locale) }}</p>
+      <p>{{ localizeExperimentText('See also: “Space versus time” for motion in one dimension, and “Different clocks” for what happens near the speed of light.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/space/space-vs-time">{{ tx("Experiment A") }}</RouterLink>
-        <RouterLink to="/relativity/moving-clocks">{{ tx("Experiment B") }}</RouterLink>
+        <RouterLink to="/space/space-vs-time">{{ tx("Space versus time") }}</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx("Different clocks") }}</RouterLink>
         <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>

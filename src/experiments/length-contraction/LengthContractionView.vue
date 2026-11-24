@@ -250,7 +250,7 @@ watch(locale, () => {
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p>{{ tx('Length contraction and time dilation are two consequences of the same Lorentz transformations.') }} {{ tx('Compare both, and the descriptions behind them, in Experiments B and E.') }}</p>
+      <p>{{ tx('Length contraction and time dilation are two consequences of the same Lorentz transformations.') }} {{ tx('Compare both, and the descriptions behind them, in “Different clocks” and “Space and time versus spacetime”.') }}</p>
       <span class="nav-links">
         <RouterLink to="/relativity/moving-clocks">{{ tx('Different clocks, different elapsed times') }}</RouterLink>
         <RouterLink to="/relativity/two-perspectives">{{ tx('Space and time versus spacetime') }}</RouterLink>

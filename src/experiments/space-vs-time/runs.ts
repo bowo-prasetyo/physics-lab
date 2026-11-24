@@ -1,6 +1,6 @@
 import type { RunRecord } from '@/physics'
 
-/** A run of Experiment A together with the settings the motion model does not track. */
+/** A run of “Space versus time” together with the settings the motion model does not track. */
 export interface ExperimentRun extends RunRecord {
   /**
    * Velocity of the second observer during this run (m/s). It is fixed for

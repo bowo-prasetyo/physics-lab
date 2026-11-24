@@ -202,10 +202,10 @@ const chartSeries = computed<ChartSeries[]>(() =>
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p>{{ localizeExperimentText('Next: Experiment C, in which gravity, not motion, changes how fast clocks tick.', locale) }}</p>
+      <p>{{ localizeExperimentText('Next: “Gravity and clock rates”, in which gravity, not motion, changes how fast clocks tick.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/relativity/moving-clocks">{{ tx("← Experiment B") }}</RouterLink>
-        <RouterLink to="/gravity/clock-rates">{{ tx('Experiment C →') }}</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx("← Different clocks") }}</RouterLink>
+        <RouterLink to="/gravity/clock-rates">{{ tx('Gravity and clock rates →') }}</RouterLink>
         <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>

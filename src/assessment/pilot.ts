@@ -42,7 +42,7 @@ const makeQuestion = (id: string, prompt: string, labels: [string, string, strin
 
 const english: PilotExperiment[] = [
   {
-    id: 'force-lab', title: 'Force Lab: free-body diagrams', module: 'Module 3 · Classical mechanics',
+    id: 'force-lab', title: 'Force Lab: free-body diagrams', module: 'Module 3 · Understanding motion',
     route: '/mechanics/force-lab',
     outcome: 'Relate the vector sum of forces to an object’s acceleration, and distinguish static from kinetic friction.',
     pre: [
@@ -135,11 +135,11 @@ const metadata: Record<PilotLocale, Record<PilotExperimentId, { title: string; m
     'length-contraction': { title: english[1]!.title, module: english[1]!.module, outcome: english[1]!.outcome, explanationPrompt: english[1]!.explanationPrompt },
   },
   id: {
-    'force-lab': { title: 'Laboratorium Gaya: diagram benda bebas', module: 'Modul 3 · Mekanika klasik', outcome: 'Menghubungkan jumlah vektor gaya dengan percepatan benda serta membedakan gesekan statis dan kinetis.', explanationPrompt: 'Jelaskan mengapa troli bermuatan memiliki percepatan berbeda. Hubungkan gaya netto, massa, dan hubungan fisika di antara keduanya.' },
+    'force-lab': { title: 'Laboratorium Gaya: diagram benda bebas', module: 'Modul 3 · Memahami gerak', outcome: 'Menghubungkan jumlah vektor gaya dengan percepatan benda serta membedakan gesekan statis dan kinetis.', explanationPrompt: 'Jelaskan mengapa troli bermuatan memiliki percepatan berbeda. Hubungkan gaya netto, massa, dan hubungan fisika di antara keduanya.' },
     'length-contraction': { title: 'Laboratorium Kontraksi Panjang', module: 'Modul 4 · Relativitas khusus', outcome: 'Menjelaskan ketergantungan panjang terukur benda bergerak pada kerangka pengamat dan pengukuran simultan kedua ujung.', explanationPrompt: 'Jelaskan mengapa panjang terukur berbeda dari panjang proper. Sertakan peran kerangka pengamat dan pengukuran simultan kedua ujung.' },
   },
   ja: {
-    'force-lab': { title: '力の実験室：自由物体図', module: 'モジュール3 · 古典力学', outcome: '力のベクトル和と物体の加速度を関連付け、静止摩擦と動摩擦を区別する。', explanationPrompt: '荷物を載せた台車の加速度が異なる理由を説明してください。正味の力、質量、および両者を結ぶ物理法則に触れてください。' },
+    'force-lab': { title: '力の実験室：自由物体図', module: 'モジュール3 · 運動を理解する', outcome: '力のベクトル和と物体の加速度を関連付け、静止摩擦と動摩擦を区別する。', explanationPrompt: '荷物を載せた台車の加速度が異なる理由を説明してください。正味の力、質量、および両者を結ぶ物理法則に触れてください。' },
     'length-contraction': { title: '長さの収縮ラボ', module: 'モジュール4 · 特殊相対性理論', outcome: '運動する物体の測定長が観測者の慣性系と両端の同時測定に依存することを説明する。', explanationPrompt: '測定される長さが固有長と異なる理由を説明してください。観測者の慣性系と両端の同時測定の役割を含めてください。' },
   },
 }
@@ -220,4 +220,37 @@ export function cohortToCsv(cohort: PilotCohort): string {
     const escaped = value.replaceAll('"', '""')
     return /[",\n]/.test(escaped) ? `"${escaped}"` : escaped
   }).join(',')).join('\n')
+}
+
+/**
+ * Present the options in a per-participant order. The question bank lists the
+ * correct answer first, so without this a learner who always picks the first
+ * option would score full marks. Scoring is by option value, so the order
+ * does not affect it. The same seed always gives the same order, so a page
+ * re-render does not reshuffle a participant's answers.
+ */
+export function orderOptions(question: PilotQuestion, seed: number): PilotOption[] {
+  let state = seed >>> 0
+  for (const char of question.id) state = Math.imul(state ^ char.charCodeAt(0), 2654435761) >>> 0
+  const random = () => {
+    // mulberry32
+    state = (state + 0x6d2b79f5) >>> 0
+    let t = state
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+  const options = [...question.options]
+  for (let i = options.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(random() * (i + 1))
+    const swap = options[i] as PilotOption
+    options[i] = options[j] as PilotOption
+    options[j] = swap
+  }
+  return options
+}
+
+/** A fresh seed for each participant. */
+export function newParticipantSeed(): number {
+  return Math.floor(Math.random() * 2 ** 32)
 }

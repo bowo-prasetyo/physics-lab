@@ -61,7 +61,7 @@ const seriesExample = computed(() => {
       <p>{{ tx('Gravity pulls the bob back towards the bottom with a force along the arc of') }} <MathFormula tex="-m g \sin\theta" />, so</p>
       <MathFormula display tex="\begin{gathered} m L\,\ddot\theta = -m g \sin\theta \\ \Longrightarrow\quad \ddot\theta = -\frac{g}{L}\sin\theta \end{gathered}" />
       <p>
-        {{ tx('The mass cancels: the same') }} <MathFormula tex="m" /> {{ tx('measures how strongly gravity pulls (gravitational mass) and how hard the bob is to accelerate (inertial mass). That they are equal is the') }} <strong>{{ tx('equivalence principle') }}</strong>{{ tx(', the foundation of general relativity (Experiment C).') }}
+        {{ tx('The mass cancels: the same') }} <MathFormula tex="m" /> {{ tx('measures how strongly gravity pulls (gravitational mass) and how hard the bob is to accelerate (inertial mass). That they are equal is the') }} <strong>{{ tx('equivalence principle') }}</strong>{{ tx(', the foundation of general relativity (“Gravity and clock rates”).') }}
       </p>
       <h3>{{ tx('Small swings: simple harmonic motion') }}</h3>
       <MathFormula display tex="\begin{gathered} \sin\theta \approx \theta \;\Longrightarrow\; \theta(t) = \theta_0 \cos\!\left(\sqrt{\tfrac{g}{L}}\,t\right) \\ T_0 = 2\pi\sqrt{\tfrac{L}{g}} \end{gathered}" />

@@ -201,7 +201,7 @@ function formatClock(seconds: number): string {
               <strong>{{ localizeExperimentText('If every clock is a physical process, what is time?', locale) }}</strong> {{ localizeExperimentText('Aristotle called time “the number of motion”: nothing more than change, counted. Newton held that time flows on its own, whether or not anything changes. Physics uses clocks either way; the question is what they are measuring.', locale) }}
             </li>
             <li>
-              <strong>{{ localizeExperimentText('Why do good clocks agree?', locale) }}</strong> {{ localizeExperimentText('Atoms, crystals and planets, built on completely different physics, keep step with each other when they are together. Some see that agreement as evidence of a single underlying time; others see time as nothing but that web of agreements. Relativity adds that clocks in different places or states of motion need not agree at all (Experiments B and C).', locale) }}
+              <strong>{{ localizeExperimentText('Why do good clocks agree?', locale) }}</strong> {{ localizeExperimentText('Atoms, crystals and planets, built on completely different physics, keep step with each other when they are together. Some see that agreement as evidence of a single underlying time; others see time as nothing but that web of agreements. Relativity adds that clocks in different places or states of motion need not agree at all (“Different clocks” and “Gravity and clock rates”).', locale) }}
             </li>
           </ul>
         </InfoCallout>
@@ -211,10 +211,10 @@ function formatClock(seconds: number): string {
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p>{{ localizeExperimentText('Next: Experiment B, where clocks that move disagree, and Experiment C, where gravity changes how fast time passes.', locale) }}</p>
+      <p>{{ localizeExperimentText('Next: “Different clocks”, where clocks that move disagree, and “Gravity and clock rates”, where gravity changes how fast time passes.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/relativity/moving-clocks">{{ tx('Experiment B') }}</RouterLink>
-        <RouterLink to="/gravity/clock-rates">{{ tx('Experiment C') }}</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx('Different clocks') }}</RouterLink>
+        <RouterLink to="/gravity/clock-rates">{{ tx('Gravity and clock rates') }}</RouterLink>
         <RouterLink to="/">{{ tx('All modules') }}</RouterLink>
       </span>
     </nav>

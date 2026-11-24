@@ -1,5 +1,5 @@
 /**
- * Three descriptions of the same physical situations, for Experiment E.
+ * Three descriptions of the same physical situations, for “Space and time versus spacetime”.
  *
  * Each function answers a question about something that can be measured,
  * using only the tools of one description:

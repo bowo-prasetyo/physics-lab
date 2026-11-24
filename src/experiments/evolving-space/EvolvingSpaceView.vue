@@ -248,7 +248,7 @@ const expansionWord = computed(() => {
               <strong>{{ localizeExperimentText('Is time fundamental?', locale) }}</strong> {{ localizeExperimentText('In some approaches to quantum gravity the basic equation has no time in it, and time emerges from how parts of the universe change relative to each other, for example using the size of the universe itself as a clock. This bears directly on whether space and time are separate fundamental things.', locale) }}
             </li>
             <li>
-              <strong>{{ localizeExperimentText('Is space really stretching?', locale) }}</strong> {{ localizeExperimentText('“Expanding space” is a natural description in these coordinates. Some physicists prefer to describe the same thing as galaxies moving apart. As in Experiment E, the predictions are the same.', locale) }}
+              <strong>{{ localizeExperimentText('Is space really stretching?', locale) }}</strong> {{ localizeExperimentText('“Expanding space” is a natural description in these coordinates. Some physicists prefer to describe the same thing as galaxies moving apart. As in “Space and time versus spacetime”, the predictions are the same.', locale) }}
             </li>
           </ul>
         </InfoCallout>
@@ -258,10 +258,10 @@ const expansionWord = computed(() => {
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p><strong>{{ localizeExperimentText('See also:', locale) }}</strong> {{ localizeExperimentText('Experiment C for clocks in gravity, and Experiment E for the 3 + 1 split.', locale) }}</p>
+      <p><strong>{{ localizeExperimentText('See also:', locale) }}</strong> {{ localizeExperimentText('“Gravity and clock rates” for clocks in gravity, and “Space and time versus spacetime” for the 3 + 1 split.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/gravity/clock-rates">{{ tx("Experiment C") }}</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">{{ tx("Experiment E") }}</RouterLink>
+        <RouterLink to="/gravity/clock-rates">{{ tx("Gravity and clock rates") }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx("Space and time versus spacetime") }}</RouterLink>
         <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>
