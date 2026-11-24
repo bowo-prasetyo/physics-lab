@@ -77,6 +77,10 @@ function resetPrediction() {
   prediction.value = null
   lastRun.value = null
 }
+function clearTrials() {
+  trials.value = []
+  trialCount.value = 0
+}
 watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration], resetPrediction)
 </script>
 
@@ -155,7 +159,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
           <p class="small muted">{{ tx('Positive values point up the slope or to the right. Negative values point down the slope or to the left.') }}</p>
           <p v-if="lastRun" class="trial-note" aria-live="polite">{{ tx('Trial recorded') }} · {{ trialCount }} · {{ tx('Net force') }}: {{ fmt(lastRun.netForce) }} N</p>
           <section v-if="trials.length" class="trials">
-            <div class="trials-heading"><h3>{{ tx('Recorded trials') }}</h3><button class="btn btn-small" type="button" @click="trials = []; trialCount = 0">{{ tx('Clear trials') }}</button></div>
+            <div class="trials-heading"><h3>{{ tx('Recorded trials') }}</h3><button class="btn btn-small" type="button" @click="clearTrials">{{ tx('Clear trials') }}</button></div>
             <div class="table-scroll"><table><thead><tr><th>{{ tx('Trial') }}</th><th>{{ tx('Surface') }}</th><th>{{ tx('Mass') }}</th><th>{{ tx('Net force') }}</th><th>{{ tx('Acceleration') }}</th></tr></thead><tbody><tr v-for="(trial, index) in trials" :key="index"><td>{{ index + 1 }}</td><td>{{ tx(trial.scenario === 'horizontal' ? 'Horizontal surface' : 'Inclined plane') }}</td><td>{{ trial.mass }} kg</td><td>{{ fmt(trial.netForce) }} N</td><td>{{ fmt(trial.acceleration) }} m/s²</td></tr></tbody></table></div>
           </section>
         </div>
