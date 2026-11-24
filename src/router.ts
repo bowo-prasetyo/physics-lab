@@ -1,5 +1,8 @@
+import { watch } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
+import { locale } from '@/i18n'
+import { getForceLabDocumentTitle } from '@/experiments/force-lab/copy'
 
 export const router = createRouter({
   history: createWebHashHistory(),
@@ -79,6 +82,18 @@ export const router = createRouter({
   },
 })
 
-router.afterEach((to) => {
-  if (typeof to.meta.title === 'string') document.title = to.meta.title
+function updateDocumentTitle(): void {
+  const currentRoute = router.currentRoute.value
+  if (currentRoute.name === 'force-lab') {
+    document.title = getForceLabDocumentTitle(locale.value)
+  } else if (typeof currentRoute.meta.title === 'string') {
+    document.title = currentRoute.meta.title
+  }
+}
+
+router.afterEach(updateDocumentTitle)
+
+// Keep the Force Lab title in sync when the language changes without navigation.
+watch(locale, () => {
+  if (router.currentRoute.value.name === 'force-lab') updateDocumentTitle()
 })
