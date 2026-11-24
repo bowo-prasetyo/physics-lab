@@ -51,5 +51,22 @@ const translated: Record<Exclude<Locale, 'en'>, readonly ModuleEntry[]> = {
 }
 
 export function getLocalizedModules(locale: Locale): readonly ModuleEntry[] {
-  return locale === 'en' ? MODULES : translated[locale]
+  const modules = locale === 'en' ? MODULES : translated[locale]
+  return modules.map((module) => {
+    if (module.number !== 3) return module
+    const forceLab = locale === 'id'
+      ? { title: 'Laboratorium Gaya: diagram benda bebas', summary: 'Susun diagram benda bebas, uraikan gaya pada bidang datar atau miring, dan uji bagaimana gaya resultan menentukan percepatan.', path: '/mechanics/force-lab' }
+      : locale === 'ja'
+        ? { title: '力の実験室：自由物体図と複数の力', summary: '自由物体図を作成し、水平面や斜面に働く力を分解して、合力が加速度をどう決めるかを調べます。', path: '/mechanics/force-lab' }
+        : { title: 'Force Lab: free-body diagrams and multiple forces', summary: 'Build a free-body diagram, resolve forces on a level surface or incline, and test how the net force determines acceleration.', path: '/mechanics/force-lab' }
+    return {
+      ...module,
+      plannedTopics: module.plannedTopics.filter((topic) => topic !== 'Diagram benda bebas dengan beberapa gaya' && topic !== '複数の力を扱う力の図'),
+      experiments: module.experiments.flatMap((experiment) =>
+        experiment.path === '/mechanics/newtonian'
+          ? [experiment, forceLab]
+          : [experiment],
+      ),
+    }
+  })
 }
