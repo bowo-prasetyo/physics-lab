@@ -9,6 +9,7 @@ const experiments: readonly ExperimentMetadataId[] = [
   'projectile',
   'moving-clocks',
   'two-perspectives',
+  'length-contraction',
   'gravity-clocks',
   'evolving-space',
 ]
@@ -24,6 +25,7 @@ describe('experiment metadata and section localization', () => {
       'モジュール 3 · 古典力学 · 放物運動',
       'モジュール 4 · 特殊相対性理論 · 実験 B',
       'モジュール 4 · 特殊相対性理論 · 実験 E · 二つの視点',
+      'モジュール 4 · 特殊相対性理論 · 実験 F · 長さの収縮',
       'モジュール 5 · 一般相対性理論 · 実験 C',
       'モジュール 6 · 宇宙論 · 実験 D',
     ])
