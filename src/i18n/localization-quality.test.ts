@@ -85,6 +85,7 @@ describe('localization quality assurance', () => {
       'displacement-3d',
       'pendulum',
       'newtonian',
+      'momentum-collisions',
       'projectile',
       'moving-clocks',
       'two-perspectives',
