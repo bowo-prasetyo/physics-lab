@@ -36,6 +36,13 @@ describe('calculateForceLab', () => {
     expect(result.forces.reduce((sum, force) => sum + force.x, 0)).toBeCloseTo(result.netForce)
   })
 
+  it('balances a sub-limit applied force with static friction', () => {
+    const result = calculateForceLab({ ...base, appliedForce: 5 })
+    expect(result.frictionForce).toBeCloseTo(5)
+    expect(result.netForce).toBeCloseTo(0)
+    expect(result.acceleration).toBeCloseTo(0)
+  })
+
   it('uses no friction when the tendency to slide is zero', () => {
     const result = calculateForceLab({ ...base, appliedForce: 0 })
     expect(result.frictionForce).toBe(0)
