@@ -61,14 +61,17 @@ export function getLocalizedModules(locale: Locale): readonly ModuleEntry[] {
       : locale === 'ja'
         ? { title: '力の実験室：自由物体図と複数の力', summary: '自由物体図を作成し、水平面や斜面に働く力を分解して、合力が加速度をどう決めるかを調べます。', path: '/mechanics/force-lab' }
         : { title: 'Force Lab: free-body diagrams and multiple forces', summary: 'Build a free-body diagram, resolve forces on a level surface or incline, and test how the net force determines acceleration.', path: '/mechanics/force-lab' }
+    const momentum = locale === 'id'
+      ? { title: 'Momentum dan tumbukan', summary: 'Prediksikan gerak dua kereta setelah bertumbukan; bandingkan tumbukan lenting dan tidak lenting, kekekalan momentum, serta perubahan energi kinetik.', path: '/mechanics/momentum-collisions' }
+      : locale === 'ja'
+        ? { title: '運動量と衝突', summary: '衝突後の2台の台車の運動を予測し、弾性衝突と非弾性衝突、運動量保存、運動エネルギーの変化を比較します。', path: '/mechanics/momentum-collisions' }
+        : { title: 'Momentum and collisions', summary: 'Predict how two carts move after colliding; compare elastic and inelastic outcomes, momentum conservation and kinetic-energy changes.', path: '/mechanics/momentum-collisions' }
     return {
       ...module,
-      plannedTopics: module.plannedTopics.filter((topic) => topic !== 'Diagram benda bebas dengan beberapa gaya' && topic !== '複数の力を扱う力の図'),
+      plannedTopics: module.plannedTopics.filter((topic) => topic !== 'Diagram benda bebas dengan beberapa gaya' && topic !== '複数の力を扱う力の図' && topic !== 'Momentum dan tumbukan' && topic !== '運動量と衝突'),
       experiments: module.experiments.some((experiment) => experiment.path === '/mechanics/force-lab')
-        ? module.experiments
-        : module.experiments.flatMap((experiment) =>
-          experiment.path === '/mechanics/newtonian' ? [experiment, forceLab] : [experiment],
-        ),
+        ? module.experiments.flatMap((experiment) => experiment.path === '/mechanics/force-lab' ? [experiment, momentum] : [experiment])
+        : module.experiments.flatMap((experiment) => experiment.path === '/mechanics/newtonian' ? [experiment, forceLab, momentum] : [experiment]),
     }
   })
 }
