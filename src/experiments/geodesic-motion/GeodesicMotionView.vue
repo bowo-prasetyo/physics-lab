@@ -11,7 +11,7 @@ import { useLocale } from '@/composables/useLocale'
 import { atLeast, isLevel } from '@/levels'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import { calculateGeodesic, newtonianReference } from './geodesic'
-import { localizeGeodesicText } from './copy'
+import { getGeodesicMotionDocumentTitle, localizeGeodesicText } from './copy'
 
 const route = useRoute()
 const level = useLevel()
@@ -51,6 +51,7 @@ const newtonianPath = computed(() => pathFor(newtonian.value.points))
 const minRadius = computed(() => Math.min(...relativistic.value.points.map(p => p.radius)))
 const periapsisText = computed(() => String(relativistic.value.periapses))
 watch([radius, angular, radial], () => { prediction.value = null; tested.value = false })
+watch(locale, () => { if (route.name === 'geodesic-motion') document.title = getGeodesicMotionDocumentTitle(locale.value) })
 </script>
 
 <template>
