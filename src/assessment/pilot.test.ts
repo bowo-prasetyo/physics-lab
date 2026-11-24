@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   addParticipantResult, cohortToCsv, createEmptyCohort, getPilotExperiments,
-  pilotExperiments, scoreQuestions,
+  orderOptions, pilotExperiments, scoreQuestions,
 } from './pilot'
 
 describe('learning assessment pilot', () => {
@@ -76,5 +76,27 @@ describe('learning assessment pilot', () => {
     expect(csv).toContain('length-contraction')
     expect(csv).not.toContain('learner')
     expect(csv.split('\n')).toHaveLength(2)
+  })
+
+  it('shows options in a per-participant order, so always picking one position cannot score full marks', () => {
+    const questions = pilotExperiments.flatMap((experiment) => [...experiment.pre, ...experiment.post, experiment.transfer])
+    for (const question of questions) {
+      const order = orderOptions(question, 12345)
+      expect(order.map((o) => o.value).sort()).toEqual(question.options.map((o) => o.value).sort())
+      expect(orderOptions(question, 12345)).toEqual(order) // stable for one participant
+    }
+    // Across many participants, the correct answer lands in every position.
+    for (const question of questions) {
+      const positions = new Set<number>()
+      for (let seed = 0; seed < 200; seed += 1) positions.add(orderOptions(question, seed).findIndex((o) => o.value === question.correct))
+      expect(positions.size, question.id).toBe(question.options.length)
+    }
+    // For one participant, a single fixed position never answers every question correctly.
+    for (let seed = 0; seed < 50; seed += 1) {
+      for (let position = 0; position < 4; position += 1) {
+        const allRight = questions.every((q) => orderOptions(q, seed)[position]?.value === q.correct)
+        expect(allRight).toBe(false)
+      }
+    }
   })
 })

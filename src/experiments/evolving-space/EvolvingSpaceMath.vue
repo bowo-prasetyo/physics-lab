@@ -114,7 +114,7 @@ const hubbleTime = computed(() => 1 / hubbleRateToday(props.cosmology))
         <MathFormula tex="ds^2 = -c^2 dt^2 + a(t)^2\,\delta_{ij}\,dx^i dx^j" />.
       </p>
       <p>
-        {{ tx('In the ADM 3 + 1 language of Experiments E and C: the lapse is') }} <MathFormula tex="N = 1" />, {{ tx('the shift is zero, and the spatial metric is') }} <MathFormula tex="g_{ij} = a(t)^2\,\gamma_{ij}^{(k)}" />. {{ tx('Clocks of all comoving galaxies tick at the same rate; the spatial geometry may be flat, positively curved, or negatively curved.') }}
+        {{ tx('In the ADM 3 + 1 language of “Space and time versus spacetime” and “Gravity and clock rates”: the lapse is') }} <MathFormula tex="N = 1" />, {{ tx('the shift is zero, and the spatial metric is') }} <MathFormula tex="g_{ij} = a(t)^2\,\gamma_{ij}^{(k)}" />. {{ tx('Clocks of all comoving galaxies tick at the same rate; the spatial geometry may be flat, positively curved, or negatively curved.') }}
       </p>
 
       <h3>{{ tx('The age of the universe') }}</h3>

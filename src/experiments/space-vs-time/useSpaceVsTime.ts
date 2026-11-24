@@ -1,5 +1,5 @@
 /**
- * State and controls for Experiment A. This is the only place where the
+ * State and controls for “Space versus time”. This is the only place where the
  * physics model meets Vue: it owns a MotionRun, advances it on animation
  * frames and exposes plain reactive snapshots for the views to draw.
  */

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { useLocale } from '@/composables/useLocale'
-import { getPilotExperiments, addParticipantResult, cohortToCsv, createEmptyCohort, scoreQuestions, type AssessmentPhase, type PilotExperiment } from './pilot'
+import { getPilotExperiments, addParticipantResult, cohortToCsv, createEmptyCohort, newParticipantSeed, orderOptions, scoreQuestions, type AssessmentPhase, type PilotExperiment } from './pilot'
 
 type Stage = 'intro' | 'pre' | 'post' | 'done'
 const { locale } = useLocale()
@@ -96,6 +96,8 @@ const rubricScore = ref('')
 const preScore = ref(0)
 const cohort = ref(createEmptyCohort())
 const notice = ref('')
+// Each participant sees the answer options in their own order.
+const seed = ref(newParticipantSeed())
 const experiment = computed(() => experiments.value.find(item => item.id === experimentId.value)!)
 const questions = computed(() => stage.value === 'pre' ? experiment.value.pre : [...experiment.value.post, experiment.value.transfer])
 const allAnswered = computed(() => questions.value.every(item => answers[item.id] !== undefined))
@@ -114,6 +116,7 @@ function begin(): void {
   if (!consent.value) { notice.value = text.value.consentRequired; return }
   preScore.value = 0
   clearAnswers()
+  seed.value = newParticipantSeed()
   stage.value = phase.value === 'immediate' ? 'pre' : 'post'
 }
 function continueToPost(): void {
@@ -172,7 +175,7 @@ function exportCsv(): void {
     <section v-else-if="stage === 'pre'" class="card assessment-card">
       <h2>{{ text.preTitle }}</h2><p class="muted">{{ text.preHelp }}</p>
       <fieldset v-for="(item, index) in questions" :key="item.id" class="question"><legend>{{ index + 1 }}. {{ item.prompt }}</legend>
-        <label v-for="option in item.options" :key="option.value" class="answer"><input v-model="answers[item.id]" type="radio" :name="item.id" :value="option.value" /><span>{{ option.label }}</span></label>
+        <label v-for="option in orderOptions(item, seed)" :key="option.value" class="answer"><input v-model="answers[item.id]" type="radio" :name="item.id" :value="option.value" /><span>{{ option.label }}</span></label>
       </fieldset>
       <div class="step-panel"><h3>{{ text.experimentStep }}</h3><p>{{ text.experimentHelp }}</p><a class="btn" :href="experiment.route" target="_blank" rel="noopener noreferrer">{{ text.openExperiment }}</a></div>
       <button class="btn btn-primary" type="button" :disabled="!allAnswered" @click="continueToPost">{{ text.continue }}</button>
@@ -180,7 +183,7 @@ function exportCsv(): void {
     <section v-else-if="stage === 'post'" class="card assessment-card">
       <h2>{{ text.postTitle }}</h2><p class="muted">{{ text.postHelp }}</p>
       <fieldset v-for="(item, index) in questions" :key="item.id" class="question"><legend>{{ index + 1 }}. {{ item.prompt }}</legend>
-        <label v-for="option in item.options" :key="option.value" class="answer"><input v-model="answers[item.id]" type="radio" :name="item.id" :value="option.value" /><span>{{ option.label }}</span></label>
+        <label v-for="option in orderOptions(item, seed)" :key="option.value" class="answer"><input v-model="answers[item.id]" type="radio" :name="item.id" :value="option.value" /><span>{{ option.label }}</span></label>
       </fieldset>
       <div class="explanation-panel">
         <label class="field-label" for="learner-explanation">{{ text.explanation }}</label><p class="muted">{{ experiment.explanationPrompt }}</p>

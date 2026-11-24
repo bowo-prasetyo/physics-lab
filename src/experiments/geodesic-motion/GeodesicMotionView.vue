@@ -217,10 +217,10 @@ watch(locale, () => { if (route.name === 'geodesic-motion') document.title = get
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p>{{ tx('Next: Experiment D scales up from one mass to the whole universe, where space itself evolves.') }}</p>
+      <p>{{ tx('Next: “Evolving space” scales up from one mass to the whole universe, where space itself evolves.') }}</p>
       <span class="nav-links">
-        <RouterLink to="/gravity/clock-rates">{{ tx('Experiment C') }}</RouterLink>
-        <RouterLink to="/cosmology/evolving-space">{{ tx('Experiment D') }}</RouterLink>
+        <RouterLink to="/gravity/clock-rates">{{ tx('Gravity and clock rates') }}</RouterLink>
+        <RouterLink to="/cosmology/evolving-space">{{ tx('Evolving space') }}</RouterLink>
         <RouterLink to="/">{{ tx('All modules') }}</RouterLink>
       </span>
     </nav>

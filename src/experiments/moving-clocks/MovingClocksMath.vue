@@ -168,7 +168,7 @@ const phi = computed(() => (props.beta < 1 ? rapidity(props.beta) : 0))
       <MathFormula display tex="\begin{aligned} ct' &= ct\cosh\varphi - x\sinh\varphi \\ x' &= x\cosh\varphi - ct\sinh\varphi \end{aligned}" />
       <p>
         {{ tx('Rapidities add under successive boosts, while velocities combine as') }}
-        <MathFormula tex="w' = \dfrac{w - u}{1 - w u / c^2}" />{{ tx(', which never exceeds') }} <MathFormula tex="c" />{{ tx('. Experiment E compares this spacetime description with the separate space-and-time description you have been using.') }}
+        <MathFormula tex="w' = \dfrac{w - u}{1 - w u / c^2}" />{{ tx(', which never exceeds') }} <MathFormula tex="c" />{{ tx('. “Space and time versus spacetime” compares this spacetime description with the separate space-and-time description you have been using.') }}
       </p>
     </template>
   </div>

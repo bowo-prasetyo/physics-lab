@@ -1,5 +1,5 @@
 /**
- * State for Experiment C: two clocks held at rest at different heights above
+ * State for “Gravity and clock rates”: two clocks held at rest at different heights above
  * a mass (or a GPS satellite and a ground clock), running in time-lapse.
  * The physics lives in src/physics/gravity.ts.
  */

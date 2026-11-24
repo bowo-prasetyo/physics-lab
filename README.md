@@ -1,88 +1,62 @@
 # Physica
 
-Interactive physics experiments about space, time and motion for high-school and undergraduate students.
+Interactive experiments about space, time and motion, from where things are and how clocks keep time to relativity, curved spacetime and the expanding universe. For high-school and undergraduate learners, and the teachers who work with them.
 
-**Product direction:** [Product vision, principles, audiences and learning outcomes](docs/product/PRODUCT_VISION.md).
+**Product direction:** [vision, principles, audiences and learning outcomes](docs/product/PRODUCT_VISION.md) · [curriculum coverage and roadmap](docs/product/CURRICULUM_ROADMAP.md) · [learning effectiveness](docs/product/LEARNING_EFFECTIVENESS.md) · [assessment pilot plan](docs/product/ASSESSMENT_PILOT_PLAN.md)
 
-Most introductory material starts with equations. Here every experiment follows the opposite order:
+## One thread: space, time and motion
 
-1. **Phenomenon.** Start from something physical.
-2. **Predict.** The student commits to an answer before experimenting.
-3. **Experiment.** Change parameters and observe the result immediately.
-4. **Mathematics.** Describe what was seen, at the student's chosen level.
-5. **Meaning.** Separate established physics from philosophical interpretation.
+Physica follows a single thread. Modules 1–3 build the everyday picture: where things are, how time is measured, and how motion changes and why. Modules 4–6 follow the same questions into special relativity, general relativity and cosmology, where that picture has to be revised. The mechanics experiments in Module 3 are steps on this path: forces, momentum and reference frames are what relativity later reinterprets.
 
-The same phenomenon is offered at three mathematical levels (Beginner, Intermediate and Advanced). The experiment never changes with the level; only the depth of the mathematics does.
+Most introductory material starts with equations. Here every experiment follows the opposite order, and every experiment page has the same layout:
 
-**For educators:** the in-app [Teacher guide](#/teachers) provides lesson outlines, learning intentions, classroom sequences, discussion prompts and checks for understanding. Experiment settings can be shared through their URL where supported.
+1. **Predict.** The learner commits to an answer before seeing the result. Each explanation unlocks only after the learner has run the experiment that tests it.
+2. **Experiment.** Change parameters and observe. Results appear only after a run.
+3. **Mathematics.** Describe what was seen, at the learner's chosen level.
+4. **Meaning.** Separate established physics from interpretation, and state the model's assumptions and limits.
 
-## Curriculum coverage
+Every experiment works at three mathematical levels (Beginner, Intermediate and Advanced), and each level adds questions of its own. The levels describe mathematical depth, not age or school year: the experiment and its physics never change with the level.
 
-The home page distinguishes topics explored by implemented experiments from planned curriculum topics. See the [curriculum coverage and roadmap](docs/product/CURRICULUM_ROADMAP.md) and [learning effectiveness metrics](docs/product/LEARNING_EFFECTIVENESS.md) for scope, priorities, and evaluation.
+## Experiments
 
-## Status
+<!-- catalogue:start (generated from src/modules.ts by `npm run docs:catalogue`; do not edit by hand) -->
+Thirteen experiments across six modules. Modules 1–3 build the everyday picture of space, time and motion; Modules 4–6 follow the same questions into relativity, curved spacetime and cosmology.
 
-Twelve experiments are currently implemented across the six modules. Further experiments are listed in the app as planned.
+**Module 1 · Understanding space.** Where things are: positions, distances and displacements, and which of them depend on the coordinates you choose.
 
-**Force Lab: free-body diagrams and multiple forces** (Module 3):
-- Compare horizontal and inclined surfaces; vary mass, applied force, friction and incline angle.
-- Build a live free-body diagram with applied, friction, normal and resolved weight components; compare the net force with acceleration, velocity and displacement.
-- Includes Beginner, Intermediate and Advanced mathematics, plus explicit assumptions and model limits.
+- [Space versus time](https://bowo-prasetyo.github.io/physics-lab/#/space/space-vs-time): Move an object along a track, then stop it. Does time stop too?
+- [Displacement in 3D](https://bowo-prasetyo.github.io/physics-lab/#/space/displacement-3d): Move an object through 3D space, measure its displacement, and find out what changing the coordinates does.
 
-**Momentum and collisions** (Module 3):
-- Investigate two carts in a one-dimensional collision; vary masses, signed initial velocities and coefficient of restitution.
-- Compare total momentum before and after impact with kinetic energy, which is conserved only for an ideal elastic collision.
-- Includes impulse, a perfectly inelastic limiting case, three mathematical levels and explicit isolation/one-dimensional assumptions.
+**Module 2 · Understanding time.** How time is measured: every clock is a physical process that repeats, and it keeps time only as well as its physics allows.
 
-**Force, mass and acceleration** (Module 3):
-- Investigate Newton’s second law by varying net force and cart mass independently.
-- Record trials and compare acceleration, then connect the result to velocity and displacement from rest.
-- Makes the constant-net-force, constant-mass, one-dimensional and friction-free assumptions explicit.
+- [Pendulum clocks](https://bowo-prasetyo.github.io/physics-lab/#/time/pendulum): Measure a pendulum’s period, take a pendulum clock to the Moon, and ask what a clock really measures.
 
-**Experiment A, Space versus time** (Module 1):
-- A track and a live position–time graph, with earlier runs overlaid for comparison.
-- Velocity changes mid-run, and ends of the track where the object stops while the clock keeps running.
-- A second, moving observer at the Advanced level, showing that rest depends on the frame of reference.
+**Module 3 · Understanding motion.** How motion through space changes over time, and why: forces, momentum and reference frames. This Newtonian picture is the one relativity later revises.
 
-**Displacement in 3D** (Module 1):
-- Move an object through 3D space with 1 m steps, by typing a point, or with example journeys, in a Three.js scene you can turn and zoom, or look at from above, the front or the side.
-- Live readouts of position, displacement Δr, its size |Δr| and the distance travelled; the components of Δr are drawn as dashed lines.
-- At Intermediate: a second coordinate system that can be moved and turned (and tilted at Advanced). Every coordinate changes; the length of the displacement does not.
-- At Advanced: the rotation matrix, the invariant dot product, direction cosines, and the triangle inequality, which spacetime reverses (the twin paradox).
+- [Force, mass and acceleration](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/newtonian): Vary net force and cart mass to investigate Newton’s second law.
+- [Force Lab: free-body diagrams and multiple forces](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/force-lab): Build a free-body diagram, resolve forces on a level surface or incline, and test how the net force determines acceleration.
+- [Momentum and collisions](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/momentum-collisions): Predict how two carts move after colliding; compare elastic and inelastic outcomes, momentum conservation and kinetic-energy changes.
+- [Projectile launcher](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/projectile): Launch a ball on the Earth, Moon, Mars or Jupiter, with or without air, and watch it from the ground or a moving train.
 
-**Experiment B, Different clocks, different elapsed times** (Module 4):
-- A spacetime diagram (time up, light at 45°) of an Earth clock and a ship clock passing at up to 0.99c. Dots mark each second on each clock.
-- A "Seen from" switch between the Earth's and the ship's frame, showing that time dilation is reciprocal.
-- From Intermediate on, the moving observer's tilted line of "now" (relativity of simultaneity). At Advanced, the invariant interval s² = τ².
-- A section separating established physics (muons, Hafele–Keating, GPS) from interpretation (is there a universal "now"?), and a note on seeing versus measuring.
+**Module 4 · Special relativity.** Near the speed of light, measurements of time and length depend on the observer, and space and time combine into spacetime.
 
-**Experiment E, Space and time versus spacetime** ("Two perspectives", Module 4):
-- Three situations (a ship's headlight, two lightning flashes, a moving clock) and a ship speed up to 0.99c.
-- Three descriptions side by side: Galilean (space + absolute time), space + time related by Lorentz transformations, and spacetime (4-vectors, the interval, boosts as rapidity rotations). Each shows its working with the student's numbers and its prediction.
-- A "Make the measurement" step reveals what experiments find, with the evidence, and marks each prediction as matching or not. A chart shows all three predictions at every speed.
-- The lesson: Galilean physics is the low-speed limit, except for light. The two relativistic descriptions agree on every measurement, so the question of whether spacetime is fundamental is one of interpretation.
+- [Different clocks, different elapsed times](https://bowo-prasetyo.github.io/physics-lab/#/relativity/moving-clocks): A spaceship passes the Earth. Compare their clocks on a spacetime diagram, from either point of view.
+- [Space and time versus spacetime](https://bowo-prasetyo.github.io/physics-lab/#/relativity/two-perspectives): Two perspectives: compare Galilean, space + time (Lorentz) and spacetime predictions with what experiments find.
+- [Length contraction](https://bowo-prasetyo.github.io/physics-lab/#/relativity/length-contraction): Measure a moving spaceship by recording both endpoints at the same time. Compare its measured length with its proper length.
 
-**Experiment C, Gravity and clock rates** (Module 5):
-- Two clocks held at rest at adjustable heights above the Earth and compact objects, with clock-rate comparisons.
-- GPS gravitational and kinematic clock corrections.
-- At Advanced: light signals, the approach to the horizon, curved space and the ADM lapse as the clock rate.
+**Module 5 · General relativity.** Gravity as the geometry of spacetime: clocks at different heights run at different rates, and free fall follows the straightest possible paths.
 
-**Experiment D, Evolving space** (Module 6):
-- Four model universes: ΛCDM, matter only, radiation only, and dark energy only.
-- Evolve the scale factor, redshift and Hubble quantities; compare expansion histories and model limits.
+- [Gravity and clock rates](https://bowo-prasetyo.github.io/physics-lab/#/gravity/clock-rates): Two clocks at different heights, from the Earth to a black hole, and why GPS needs relativity.
+- [Geodesic Motion Lab](https://bowo-prasetyo.github.io/physics-lab/#/gravity/geodesic-motion): Compare Newtonian orbits with free-fall paths through Schwarzschild spacetime; investigate periapsis precession.
 
-**Projectile launcher** (Module 3):
-- Launch speed, angle and height; the Earth, Moon, Mars or Jupiter; optional air resistance; an optional ball dropped at the same moment.
-- Compare trajectories and velocity/height graphs, and watch from the ground or a moving train (Galilean frames).
+**Module 6 · Cosmology.** Space and time on the largest scale: how the universe’s own expansion evolves, and where our models stop being reliable.
 
-**Pendulum clocks** (Module 2):
-- A pendulum with adjustable length, release angle, bob mass and world; compare measured period with small-angle and exact predictions.
-- Compare a pendulum clock with an atomic clock and explore calibration across environments.
+- [Evolving space](https://bowo-prasetyo.github.io/physics-lab/#/cosmology/evolving-space): Run a model universe forwards and backwards: Hubble’s law, redshift, dark energy and where the model breaks down.
+<!-- catalogue:end -->
 
-All experiments include:
-- Predict–observe–explain cards. Each explanation unlocks only after the student has performed the experiment that tests it, with hints for near-misses.
-- Mathematics at three levels, with worked examples where available.
-- Shareable links that encode the level and experiment setup where supported.
+Every experiment page has shareable links that encode the level and setup, an investigation guide, and full translations into Indonesian and Japanese.
+
+**For teachers:** the in-app [teacher guide](https://bowo-prasetyo.github.io/physics-lab/#/teachers) has a lesson outline for every experiment: learning intentions, timings, a classroom sequence, discussion prompts and a check for understanding. The [learning assessment pilot](https://bowo-prasetyo.github.io/physics-lab/#/assessment-pilot) runs short, anonymous pre/post checks; see the [pilot plan](docs/product/ASSESSMENT_PILOT_PLAN.md).
 
 ## Getting started
 
@@ -101,6 +75,7 @@ Other scripts:
 | `npm run typecheck` | Type-check the physics engine, the app and the tests |
 | `npm run build` | Type-check, then build static files into `dist/` |
 | `npm run preview` | Serve the production build locally |
+| `npm run docs:catalogue` | Regenerate the README's experiment list from `src/modules.ts` |
 
 The build is fully static and uses hash-based routes with relative asset paths, so `dist/` can be hosted anywhere (GitHub Pages, a school web server, a network share) without server configuration.
 
@@ -110,7 +85,12 @@ Every push to `main` is tested, built and published to GitHub Pages by `.github/
 
 ## Architecture
 
-The physics engine under `src/physics/` is framework-independent TypeScript. It is tested separately from the Vue interface. The Newtonian force model is intentionally small and explicit about its domain; the teacher guide provides classroom context without introducing student tracking or class-management infrastructure.
+- **Physics engine.** `src/physics/` is framework-independent TypeScript with no DOM access, tested separately from the interface (`architecture.test.ts` enforces this). Numerical methods are checked against exact solutions where they exist.
+- **One catalogue.** `src/modules.ts` is the single source for modules and experiments. The home page, the translated catalogues (keyed by route), the teacher guide's lesson coverage and this README are all checked against it.
+- **One learning loop.** Every experiment uses the shared prediction cards (`src/experiments/prediction.ts`, `PredictionCard.vue`): each level adds questions, and each explanation unlocks only after the run that tests it.
+- **One page layout.** `src/experiments/layout.test.ts` checks that every experiment page has the same sections in the same order.
+- **Localization.** English, Indonesian and Japanese, with tests for completeness and runtime audits (`npm run audit:localization:runtime`). See [docs/internationalization.md](docs/internationalization.md).
+- **No learner tracking.** The teacher guide and the assessment pilot work without accounts, rosters or analytics; pilot answers stay in the browser tab.
 
 ## Technology
 

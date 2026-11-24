@@ -73,7 +73,7 @@ const translations: Record<string, readonly [string, string]> = {
   '(here': ['(di sini', '（ここでは'],
   'Rapidities add under successive boosts, while velocities combine as': ['Rapiditas dijumlahkan pada boost berturut-turut, sedangkan kecepatan digabungkan menurut persamaan', 'ブーストを続けて行うとラピディティは加算されます。一方、速度は次の式で合成されます。'],
   ', which never exceeds': [', yang nilainya tidak pernah melebihi', '。この合成速度が'],
-  '. Experiment E compares this spacetime description with the separate space-and-time description you have been using.': ['. Eksperimen E membandingkan deskripsi ruang-waktu ini dengan deskripsi ruang dan waktu yang terpisah yang telah Anda gunakan.', '。実験 E では、この時空による記述と、これまで使ってきた空間と時間を分けた記述を比較します。'],
+  '. “Space and time versus spacetime” compares this spacetime description with the separate space-and-time description you have been using.': ['. Eksperimen “Ruang dan waktu versus ruang-waktu” membandingkan deskripsi ruang-waktu ini dengan deskripsi ruang dan waktu yang terpisah yang telah Anda gunakan.', '。「空間と時間と時空」 では、この時空による記述と、これまで使ってきた空間と時間を分けた記述を比較します。'],
 }
 
 export function localizeMovingClocksMathText(value: string, locale: Locale): string {

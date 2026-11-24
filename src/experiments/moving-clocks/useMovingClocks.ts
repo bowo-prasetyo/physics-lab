@@ -1,5 +1,5 @@
 /**
- * State and controls for Experiment B: an Earth clock and a ship clock that
+ * State and controls for “Different clocks”: an Earth clock and a ship clock that
  * pass each other at t = 0 (both reading 0), compared from either frame.
  *
  * The physics lives in src/physics/spacetime.ts; this composable only keeps

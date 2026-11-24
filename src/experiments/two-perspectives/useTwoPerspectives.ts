@@ -1,5 +1,5 @@
 /**
- * State for Experiment E: one scenario, one ship speed, three descriptions'
+ * State for “Space and time versus spacetime”: one scenario, one ship speed, three descriptions'
  * predictions, and a measurement the student must choose to make.
  */
 

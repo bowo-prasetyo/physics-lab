@@ -244,9 +244,9 @@ useQuerySync({
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p><strong>{{ tx("Next:") }}</strong> {{ tx('Experiment B compares two clocks moving relative to each other near the speed of light.') }}</p>
+      <p><strong>{{ tx("Next:") }}</strong> {{ tx('“Different clocks” compares two clocks moving relative to each other near the speed of light.') }}</p>
       <span class="nav-links">
-        <RouterLink to="/relativity/moving-clocks">{{ tx("Experiment B →") }}</RouterLink>
+        <RouterLink to="/relativity/moving-clocks">{{ tx("Different clocks →") }}</RouterLink>
         <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>

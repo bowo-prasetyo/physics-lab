@@ -11,7 +11,6 @@ const availableCount = computed(() => modules.value.reduce(
 ))
 const levelKeys = { beginner: 'app.level.beginner', intermediate: 'app.level.intermediate', advanced: 'app.level.advanced' } as const
 const audienceKeys = { beginner: 'app.level.beginnerDetails', intermediate: 'app.level.intermediateDetails', advanced: 'app.level.advancedDetails' } as const
-const levelAudienceKeys = { beginner: 'home.audience.beginner', intermediate: 'home.audience.intermediate', advanced: 'home.audience.advanced' } as const
 </script>
 
 <template>
@@ -44,11 +43,9 @@ const levelAudienceKeys = { beginner: 'home.audience.beginner', intermediate: 'h
         <article v-for="module in modules" :key="module.number" class="module-card card">
           <div class="module-heading">
             <span class="module-number">0{{ module.number }}</span>
-            <div>
-              <p class="module-audience">{{ module.audience }}</p>
-              <h3>{{ module.title }}</h3>
-            </div>
+            <h3>{{ module.title }}</h3>
           </div>
+          <p class="module-role">{{ module.role }}</p>
           <ul class="experiments">
             <li v-for="experiment in module.experiments" :key="experiment.title">
               <RouterLink v-if="experiment.path" :to="experiment.path" class="experiment-link">
@@ -81,7 +78,6 @@ const levelAudienceKeys = { beginner: 'home.audience.beginner', intermediate: 'h
       <div class="levels">
         <article v-for="info in LEVELS" :key="info.id" class="level-card card">
           <h3>{{ t(levelKeys[info.id]) }}</h3>
-          <p class="level-audience">{{ t(levelAudienceKeys[info.id]) }}</p>
           <p>{{ t(audienceKeys[info.id]) }}</p>
         </article>
       </div>
@@ -109,7 +105,7 @@ const levelAudienceKeys = { beginner: 'home.audience.beginner', intermediate: 'h
 .module-card { padding:18px; }
 .module-heading { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
 .module-number { display:grid; place-items:center; flex:0 0 40px; height:40px; border-radius:10px; background:var(--accent-soft); color:var(--accent); font-size:.9rem; font-weight:750; }
-.module-audience { margin:0 0 2px; color:var(--text-muted); font-size:.75rem; }
+.module-role { margin:-4px 0 12px; color:var(--text-muted); font-size:.88rem; }
 .module-heading h3 { margin:0; }
 .experiments { display:grid; gap:8px; margin:0; padding:0; list-style:none; }
 .experiment-link,.planned-experiment { position:relative; display:grid; gap:3px; padding:11px 32px 11px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); text-decoration:none; }
@@ -129,7 +125,6 @@ const levelAudienceKeys = { beginner: 'home.audience.beginner', intermediate: 'h
 .level-card { padding:16px 18px; }
 .level-card h3 { margin-bottom:3px; }
 .level-card p { margin:0; }
-.level-card .level-audience { margin-bottom:8px; color:var(--text-muted); font-size:.82rem; }
 .level-note { max-width:85ch; margin:0; padding:12px 14px; border-left:3px solid var(--accent); background:var(--surface); color:var(--text-muted); font-size:.9rem; }
 .level-note strong { color:var(--text); }
 @media(max-width:620px) { .home { gap:36px; padding-top:26px; } .method { grid-template-columns:1fr; gap:7px; margin-top:20px; } .method li { grid-template-columns:105px 1fr; align-items:baseline; } }

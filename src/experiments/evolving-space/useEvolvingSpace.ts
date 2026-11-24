@@ -1,5 +1,5 @@
 /**
- * State for Experiment D: a model universe run forwards or backwards in time,
+ * State for “Evolving space”: a model universe run forwards or backwards in time,
  * with a grid of galaxies whose separations scale with a(t).
  * The physics lives in src/physics/cosmology.ts.
  */

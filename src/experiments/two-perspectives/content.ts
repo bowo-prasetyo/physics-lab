@@ -1,5 +1,5 @@
 /**
- * Text and worked derivations for Experiment E. Each derivation is written in
+ * Text and worked derivations for “Space and time versus spacetime”. Each derivation is written in
  * the language of its own description, with the student's current speed.
  */
 

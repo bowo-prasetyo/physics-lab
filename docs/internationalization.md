@@ -31,27 +31,17 @@ The locale preference, browser-language detection, document language, message lo
 
 ### P1 — Application interface
 
-The shared interface and home-page catalogue are localized in English, Indonesian, and Japanese. This includes navigation, mathematical-level selection, experiment navigation, sharing, prediction workflow chrome, and experiment-support UI.
+The shared interface and home-page catalogue are localized in English, Indonesian, and Japanese. This includes navigation, mathematical-level selection, experiment navigation, sharing, prediction workflow chrome, and experiment-support UI. The translated catalogue (`src/i18n/home-catalog.ts`) is keyed by module number and experiment route: its structure always comes from `src/modules.ts`, and `home-catalog.test.ts` fails if any module or experiment lacks a translation or if a stale entry remains.
 
 ### P2 — Experiment and teaching content
 
-The teacher guide is localized in `src/i18n/teacher-guide.ts`, with six complete lesson outlines in all supported locales.
+The teacher guide is localized in `src/i18n/teacher-guide.ts`, with a lesson outline for every experiment (twelve outlines) in all supported locales.
 
-The nine experiment-specific predict–observe–explain banks are localized in `src/i18n/experiment-content.ts`. The catalogue covers every question, task, answer option, and revealed explanation in the following experiments:
-
-1. Position and time (`space-vs-time`)
-2. Three-dimensional displacement (`displacement3d`)
-3. Pendulum clocks (`pendulum`)
-4. Newtonian force, mass, and acceleration (`newtonian`)
-5. Projectile motion (`projectile`)
-6. Moving clocks (`moving-clocks`)
-7. Two perspectives on special relativity (`two-perspectives`)
-8. Gravity and clock rates (`gravity-clocks`)
-9. Evolving space (`evolving-space`)
+The predict–observe–explain banks of all thirteen experiments are localized in `src/i18n/experiment-content.ts`, keyed by experiment and prediction ID. The catalogue covers every question, task, answer option and revealed explanation; `experiment-content.test.ts` checks every bank in both translated locales.
 
 The active locale is applied at the view boundary. Prediction IDs, option IDs, correct-answer IDs, level thresholds, observation predicates, hint logic, route paths, query parameters, and physics calculations remain in the experiment modules and are not translated. This separation keeps saved/shared experiment setups and assessment behavior stable across languages.
 
-The nine experiment views also use `src/components/LocalizedExperimentGuide.vue` for Indonesian and Japanese explanations of established physics, interpretive questions, and text descriptions of the key visualizations. The four longer learning prompts in each experiment's support panel (key concept, prediction question, suggested activity, and reflection) are localized through `src/i18n/experiment-support.ts`. The English long-form interpretation remains the source-language presentation. These descriptions provide a text alternative to the visual evidence and explain axes, markers, reference frames, and model limits where relevant.
+Nine experiment views also use `src/components/LocalizedExperimentGuide.vue` for Indonesian and Japanese notes on established physics, interpretive questions and text descriptions of the key visualizations. These notes appear inside the Meaning section, never above Predict, so the page layout is the same in every language. The four longer learning prompts in each experiment's support panel (key concept, prediction question, suggested activity, and reflection) are localized through `src/i18n/experiment-support.ts`. The English long-form interpretation remains the source-language presentation. These descriptions provide a text alternative to the visual evidence and explain axes, markers, reference frames, and model limits where relevant.
 
 The translated guides are presentation-only. They do not alter experiment state, equations, plotted data, or observation logic. Dynamic prediction hints are localized at the experiment-view boundary through `src/i18n/experiment-ui.ts`, preserving the original prediction functions and observation logic. Shared line, prediction, clock-rate, scale-factor, position–time, and spacetime visualizations localize axis titles, accessible chart descriptions, table summaries and key data headings. The 3D scene and galaxy field expose localized accessible descriptions and galaxy-selection labels. The experiment views also localize key control-group and navigation labels. This includes individual experiment controls: slider labels and hints, common action buttons, recorded-trial and view controls, and disclosure/fieldset labels.
 
@@ -71,13 +61,16 @@ Run `npm test`, `npm run audit:localization`, `npm run audit:localization:runtim
 - Prediction question, task, option, and explanation coverage, including preservation of stable prediction and option IDs.
 - Locale-aware number and date formatting.
 
-The WebGL audit stubs the GPU renderer in jsdom but uses the production scene and CSS2D label construction. It verifies DOM-backed labels and accessibility, not actual raster pixels or real-browser glyph layout. The galaxy-field visualization is SVG, not Canvas/WebGL, and is covered by the runtime DOM audit. Browser screenshot review is still required for label collisions, clipping, contrast, font fallback, and responsive layout.\n\nThe source audit is a review aid, not an automatic missing-translation verdict: it flags literal Latin-language text in Vue templates, including SVG text and static accessibility attributes. Some candidates may be intentional English fallback or shared technical labels. It does not inspect TypeScript-generated labels, Canvas/WebGL drawing text, remote content, or runtime-only props. CI uploads the generated JSON and Markdown reports as the `localization-audit` artifact.
+The WebGL audit stubs the GPU renderer in jsdom but uses the production scene and CSS2D label construction. It verifies DOM-backed labels and accessibility, not actual raster pixels or real-browser glyph layout. The galaxy-field visualization is SVG, not Canvas/WebGL, and is covered by the runtime DOM audit. Browser screenshot review is still required for label collisions, clipping, contrast, font fallback, and responsive layout.
+
+The source audit is a review aid, not an automatic missing-translation verdict: it flags literal Latin-language text in Vue templates, including SVG text and static accessibility attributes. Some candidates may be intentional English fallback or shared technical labels. It does not inspect TypeScript-generated labels, Canvas/WebGL drawing text, remote content, or runtime-only props. CI uploads the generated JSON and Markdown reports as the `localization-audit` artifact.
 
 Automated checks cannot judge translation naturalness, register, terminology consistency, or scientific nuance. Before release, review each locale in the running application and complete the following checklist:
 
 - [ ] Review English, Indonesian, and Japanese on desktop and narrow mobile layouts.
 - [ ] Check that headings, buttons, hints, support panels, teacher resources, chart labels, SVG annotations, and accessible names use the selected language where translations are available.
-- [ ] Check that long Japanese and Indonesian text wraps without clipping, overlap, or horizontal overflow.\n- [ ] Inspect the 3D WebGL scene in a real browser at desktop and narrow mobile widths; check axis labels, direction labels, point markers, and text alternatives for clipping, collisions, contrast, and font fallback.
+- [ ] Check that long Japanese and Indonesian text wraps without clipping, overlap, or horizontal overflow.
+- [ ] Inspect the 3D WebGL scene in a real browser at desktop and narrow mobile widths; check axis labels, direction labels, point markers, and text alternatives for clipping, collisions, contrast, and font fallback.
 - [ ] Check number/date separators and ensure units, symbols, equations, and significant digits remain meaningful.
 - [ ] Check interpolation in context (counts, progress, module numbers) and confirm no raw placeholder tokens are visible.
 - [ ] Check language switching, reload persistence, browser-language detection, and English fallback.

@@ -1,4 +1,4 @@
-/** Predict–observe–explain prompts for Experiment E (see experiments/prediction.ts). */
+/** Predict–observe–explain prompts for “Space and time versus spacetime” (see experiments/prediction.ts). */
 
 import type { Prediction } from '@/experiments/prediction'
 import type { Scenario } from '@/physics'

@@ -230,7 +230,7 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
           <ul>
             <li>{{ localizeExperimentText('Over everyday distances, space is described extremely well by Euclidean geometry: Pythagoras holds, and triangles have angles adding up to 180°.', locale) }}</li>
             <li>{{ localizeExperimentText('Coordinates are a human choice; distances, lengths and angles are not. Physical laws are written so that they do not depend on the choice.', locale) }}</li>
-            <li>{{ localizeExperimentText('Near massive bodies space is very slightly curved, and Euclidean geometry is only an approximation (Experiment C).', locale) }}</li>
+            <li>{{ localizeExperimentText('Near massive bodies space is very slightly curved, and Euclidean geometry is only an approximation (“Gravity and clock rates”).', locale) }}</li>
           </ul>
         </InfoCallout>
         <InfoCallout kind="interpretation" :title="experimentSectionLabel('interpretation', locale)">
@@ -249,10 +249,10 @@ const showFrame = computed(() => intermediate.value && !frameIsStandard.value)
     </details>
 
     <nav class="next card" :aria-label="experimentSectionLabel('nextSteps', locale)">
-      <p><strong>{{ localizeExperimentText('Next:', locale) }}</strong> {{ localizeExperimentText('Experiment A adds time to position, and Experiment E compares space and time with spacetime.', locale) }}</p>
+      <p><strong>{{ localizeExperimentText('Next:', locale) }}</strong> {{ localizeExperimentText('“Space versus time” adds time to position, and “Space and time versus spacetime” compares space and time with spacetime.', locale) }}</p>
       <span class="nav-links">
-        <RouterLink to="/space/space-vs-time">{{ tx("Experiment A") }}</RouterLink>
-        <RouterLink to="/relativity/two-perspectives">{{ tx("Experiment E") }}</RouterLink>
+        <RouterLink to="/space/space-vs-time">{{ tx("Space versus time") }}</RouterLink>
+        <RouterLink to="/relativity/two-perspectives">{{ tx("Space and time versus spacetime") }}</RouterLink>
         <RouterLink to="/">{{ tx("All modules") }}</RouterLink>
       </span>
     </nav>

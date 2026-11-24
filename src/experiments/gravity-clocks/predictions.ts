@@ -1,4 +1,4 @@
-/** Predict–observe–explain prompts for Experiment C (see experiments/prediction.ts). */
+/** Predict–observe–explain prompts for “Gravity and clock rates” (see experiments/prediction.ts). */
 
 import type { Prediction } from '@/experiments/prediction'
 import { schwarzschildRadius } from '@/physics'
@@ -99,7 +99,7 @@ export const PREDICTIONS: readonly Prediction<GravityRun>[] = [
     correct: 'fast',
     explanation:
       'Two effects compete. Being higher up, in weaker gravity, makes the satellite clock gain about 45.7 μs per day. Its orbital speed ' +
-      'makes it lose about 7.2 μs per day (the time dilation of Experiment B). Gravity wins: a net gain of about 38.5 μs per day.',
+      'makes it lose about 7.2 μs per day (the time dilation of “Different clocks”). Gravity wins: a net gain of about 38.5 μs per day.',
     observed: observedGps,
     hint: gpsHint,
   },
@@ -145,7 +145,7 @@ export const PREDICTIONS: readonly Prediction<GravityRun>[] = [
     id: 'agree',
     minLevel: 'advanced',
     question:
-      'In Experiment B, each moving observer found the other’s clock slow. Here, do the observers at the lower and upper clocks agree about which clock is slow?',
+      'In “Different clocks”, each moving observer found the other’s clock slow. Here, do the observers at the lower and upper clocks agree about which clock is slow?',
     task: 'Run any two clocks at different heights for at least one day, and compare the “signals received” readouts.',
     options: [
       { id: 'agree', label: 'Yes: both find the lower clock slow' },

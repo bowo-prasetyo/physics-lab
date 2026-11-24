@@ -33,7 +33,7 @@ const translations: Record<string, readonly [string, string]> = {
   'The flat special case': ['Kasus khusus datar', '平坦な特殊ケース'],
   'has': ['memiliki', 'では'],
   'giving the simpler metric': ['sehingga menghasilkan metrik yang lebih sederhana', 'となり、より簡潔な計量が得られます'],
-  'In the ADM 3 + 1 language of Experiments E and C: the lapse is': ['Dalam istilah ADM 3 + 1 dari Eksperimen E dan C: lapse bernilai', '実験EおよびCで扱ったADMの3＋1形式では、ラプス関数は'],
+  'In the ADM 3 + 1 language of “Space and time versus spacetime” and “Gravity and clock rates”: the lapse is': ['Dalam istilah ADM 3 + 1 dari “Ruang dan waktu versus ruang-waktu” dan “Gravitasi dan laju jam”: lapse bernilai', '「空間と時間と時空」と「重力と時計の進み方」で扱ったADMの3＋1形式では、ラプス関数は'],
   'the shift is zero, and the spatial metric is': ['shift bernilai nol, dan metrik ruangnya adalah', 'シフトベクトルはゼロで、空間計量は'],
   'Clocks of all comoving galaxies tick at the same rate; the spatial geometry may be flat, positively curved, or negatively curved.': ['Jam pada semua galaksi yang bergerak bersama ekspansi berdetak dengan laju yang sama; geometri ruang dapat datar, melengkung positif, atau melengkung negatif.', '共動するすべての銀河の時計は同じ速さで進みます。空間幾何は平坦、正曲率、または負曲率のいずれでもあり得ます。'],
   'The age of the universe': ['Usia alam semesta', '宇宙の年齢'],

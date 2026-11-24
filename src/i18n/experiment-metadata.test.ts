@@ -19,26 +19,26 @@ describe('experiment metadata and section localization', () => {
   it('builds complete module eyebrows from localized catalogue metadata', () => {
     const japanese = experiments.map((id) => getExperimentModuleEyebrow(id, 'ja'))
     expect(japanese).toEqual([
-      'モジュール 1 · 空間を理解する · 実験 A',
+      'モジュール 1 · 空間を理解する · 空間と時間',
       'モジュール 1 · 空間を理解する · 3次元の変位',
       'モジュール 2 · 時間を理解する · 振り子時計',
-      'モジュール 3 · 古典力学 · ニュートン力学の基礎',
-      'モジュール 3 · 古典力学 · 放物運動',
-      'モジュール 4 · 特殊相対性理論 · 実験 B',
-      'モジュール 4 · 特殊相対性理論 · 実験 E · 二つの視点',
-      'モジュール 4 · 特殊相対性理論 · 実験 F · 長さの収縮',
-      'モジュール 5 · 一般相対性理論 · 実験 C',
-      'モジュール 5 · 一般相対性理論 · 実験 G · 測地線運動',
-      'モジュール 6 · 宇宙論 · 実験 D',
+      'モジュール 3 · 運動を理解する · ニュートン力学の基礎',
+      'モジュール 3 · 運動を理解する · 放物運動',
+      'モジュール 4 · 特殊相対性理論 · 異なる時計',
+      'モジュール 4 · 特殊相対性理論 · 二つの視点',
+      'モジュール 4 · 特殊相対性理論 · 長さの収縮',
+      'モジュール 5 · 一般相対性理論 · 重力と時計の進み方',
+      'モジュール 5 · 一般相対性理論 · 測地線運動',
+      'モジュール 6 · 宇宙論 · 進化する空間',
     ])
     expect(japanese.every((label) => !/Module|Understanding|Experiment/.test(label))).toBe(true)
   })
 
   it('keeps English and Indonesian module metadata complete too', () => {
     expect(getExperimentModuleEyebrow('space-vs-time', 'en'))
-      .toBe('Module 1 · Understanding space · Experiment A')
+      .toBe('Module 1 · Understanding space · Space versus time')
     expect(getExperimentModuleEyebrow('space-vs-time', 'id'))
-      .toBe('Modul 1 · Memahami ruang · Eksperimen A')
+      .toBe('Modul 1 · Memahami ruang · Ruang versus waktu')
     for (const id of experiments) {
       for (const locale of ['en', 'id', 'ja'] as const) {
         expect(getExperimentModuleEyebrow(id, locale).trim()).not.toBe('')

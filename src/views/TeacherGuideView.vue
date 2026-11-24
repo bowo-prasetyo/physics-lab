@@ -2,21 +2,26 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useLocale } from '@/composables/useLocale'
-import { getTeacherGuide } from '@/i18n/teacher-guide'
-import { localizeExperimentText } from '@/i18n/experiment-ui'
+import { LESSON_EXPERIMENTS, getTeacherGuide } from '@/i18n/teacher-guide'
+import { getLocalizedModules } from '@/i18n/home-catalog'
 
 const { locale, t } = useLocale()
 const guide = computed(() => getTeacherGuide(locale.value))
-const tx = (value: string) => localizeExperimentText(value, locale.value) ?? value
 const assessmentLink = computed(() => locale.value === 'ja' ? '学習評価パイロットを実施' : locale.value === 'id' ? 'Jalankan uji coba asesmen pembelajaran' : 'Run the learning assessment pilot')
-const lessonLinks = [
-  [{ label: 'Space versus time', to: '/space/space-vs-time' }, { label: 'Displacement in 3D', to: '/space/displacement-3d' }],
-  [{ label: 'Pendulum clocks', to: '/time/pendulum' }],
-  [{ label: 'Force, mass and acceleration', to: '/mechanics/newtonian' }, { label: 'Projectile launcher', to: '/mechanics/projectile' }],
-  [{ label: 'Different clocks, different elapsed times', to: '/relativity/moving-clocks' }, { label: 'Space and time versus spacetime', to: '/relativity/two-perspectives' }],
-  [{ label: 'Gravity and clock rates', to: '/gravity/clock-rates' }],
-  [{ label: 'Evolving space', to: '/cosmology/evolving-space' }],
-]
+// Each lesson links to its experiments, titled as in the home catalogue.
+const lessons = computed(() => {
+  const titles = new Map(getLocalizedModules(locale.value).flatMap((module) => module.experiments.map((experiment) => [experiment.path, experiment.title] as const)))
+  const seen = new Set<number>()
+  return guide.value.lessons.map((lesson, index) => {
+    const plan = LESSON_EXPERIMENTS[index]
+    const moduleNumber = plan?.moduleNumber ?? 0
+    // The first lesson of each module is the target of "Teacher resources for Module N".
+    const anchor = seen.has(moduleNumber) ? `lesson-${index + 1}` : `module-${moduleNumber}`
+    seen.add(moduleNumber)
+    const links = (plan?.experiments ?? []).map((to) => ({ to, label: titles.get(to) ?? to }))
+    return { ...lesson, anchor, links }
+  })
+})
 </script>
 
 <template>
@@ -41,7 +46,7 @@ const lessonLinks = [
       <h2 id="plans-title">{{ guide.plans }}</h2>
       <p class="muted">{{ guide.timing }}</p>
       <div class="lesson-grid">
-        <article v-for="(lesson, index) in guide.lessons" :key="lesson.module" :id="`module-${index + 1}`" class="card lesson-card">
+        <article v-for="lesson in lessons" :key="lesson.anchor" :id="lesson.anchor" class="card lesson-card">
           <p class="eyebrow">{{ lesson.module }}</p>
           <h3>{{ lesson.title }}</h3>
           <p class="time">{{ lesson.time }}</p>
@@ -54,7 +59,7 @@ const lessonLinks = [
           <h4>{{ guide.check }}</h4>
           <p>{{ lesson.check }}</p>
           <div class="lesson-links">
-            <RouterLink v-for="link in lessonLinks[index]" :key="link.to" :to="link.to">{{ tx(link.label) }}</RouterLink>
+            <RouterLink v-for="link in lesson.links" :key="link.to" :to="link.to">{{ link.label }}</RouterLink>
           </div>
         </article>
       </div>

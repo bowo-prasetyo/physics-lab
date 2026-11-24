@@ -33,19 +33,19 @@ const experimentPaths: Record<ExperimentMetadataId, string> = {
 }
 
 const moduleLabels: Record<ExperimentMetadataId, readonly [string, string, string]> = {
-  'space-vs-time': ['Experiment A', 'Eksperimen A', '実験 A'],
+  'space-vs-time': ['Space versus time', 'Ruang versus waktu', '空間と時間'],
   displacement3d: ['Displacement in 3D', 'Perpindahan dalam 3D', '3次元の変位'],
   pendulum: ['Pendulum clocks', 'Jam bandul', '振り子時計'],
   newtonian: ['Newtonian foundations', 'Dasar-dasar Newton', 'ニュートン力学の基礎'],
   'force-lab': ['Force Lab', 'Laboratorium Gaya', '力の実験室'],
   'momentum-collisions': ['Momentum and collisions', 'Momentum dan tumbukan', '運動量と衝突'],
   projectile: ['Projectile motion', 'Gerak proyektil', '放物運動'],
-  'moving-clocks': ['Experiment B', 'Eksperimen B', '実験 B'],
-  'two-perspectives': ['Experiment E · Two perspectives', 'Eksperimen E · Dua perspektif', '実験 E · 二つの視点'],
-  'length-contraction': ['Experiment F · Length contraction', 'Eksperimen F · Kontraksi panjang', '実験 F · 長さの収縮'],
-  'gravity-clocks': ['Experiment C', 'Eksperimen C', '実験 C'],
-  'geodesic-motion': ['Experiment G · Geodesic motion', 'Eksperimen G · Gerak geodesik', '実験 G · 測地線運動'],
-  'evolving-space': ['Experiment D', 'Eksperimen D', '実験 D'],
+  'moving-clocks': ['Different clocks', 'Jam berbeda', '異なる時計'],
+  'two-perspectives': ['Two perspectives', 'Dua perspektif', '二つの視点'],
+  'length-contraction': ['Length contraction', 'Kontraksi panjang', '長さの収縮'],
+  'gravity-clocks': ['Gravity and clock rates', 'Gravitasi dan laju jam', '重力と時計の進み方'],
+  'geodesic-motion': ['Geodesic motion', 'Gerak geodesik', '測地線運動'],
+  'evolving-space': ['Evolving space', 'Ruang yang berevolusi', '進化する空間'],
 }
 
 /**

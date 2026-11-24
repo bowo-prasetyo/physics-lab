@@ -125,7 +125,7 @@ export const PREDICTIONS: readonly Prediction<PeriodMeasurement>[] = [
     explanation:
       'A pendulum measures gravity as much as time: its rhythm depends on g. Atomic clocks, which define the second, do not work that way. ' +
       'Compared side by side, they show the Moon’s time running very slightly fast, by about 56 microseconds a day, because of the weaker ' +
-      'gravity there (Experiment C). “Time” is best thought of as what all good clocks agree on when they are together; a clock that ' +
+      'gravity there (“Gravity and clock rates”). “Time” is best thought of as what all good clocks agree on when they are together; a clock that ' +
       'disagrees is measuring something else as well.',
     observed: observedMoon,
     hint: moonHint,

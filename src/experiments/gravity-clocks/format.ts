@@ -1,4 +1,4 @@
-/** Number formatting for Experiment C, where values span from 10⁻¹⁷ to millions. */
+/** Number formatting for “Gravity and clock rates”, where values span from 10⁻¹⁷ to millions. */
 
 import { schwarzschildRadius, type Body } from '@/physics'
 import type { Locale } from '@/i18n/locales'
