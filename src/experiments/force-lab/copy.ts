@@ -55,6 +55,16 @@ const copy: Record<string, readonly [string, string]> = {
   'Friction is limited by the coefficient times the normal force; below that limit it balances the tendency to slide.': ['Gaya gesek dibatasi oleh koefisien dikalikan gaya normal; di bawah batas tersebut, gaya gesek menyeimbangkan kecenderungan untuk bergeser.', '摩擦力の上限は摩擦係数と垂直抗力の積です。その上限以下では、摩擦力が滑ろうとする力とつり合います。'],
 }
 
+/** Localized browser/document title for the Force Lab route. */
+export function getForceLabDocumentTitle(locale: Locale): string {
+  const titles: Record<Locale, string> = {
+    en: 'Force Lab · Physica',
+    id: 'Laboratorium Gaya · Physica',
+    ja: '力の実験室 · Physica',
+  }
+  return titles[locale]
+}
+
 export function localizeForceLabText(value: string, locale: Locale): string {
   if (locale === 'en') return value
   const translation = copy[value]
