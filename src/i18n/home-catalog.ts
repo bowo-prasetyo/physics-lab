@@ -21,6 +21,7 @@ const translated: Record<Exclude<Locale, 'en'>, readonly ModuleEntry[]> = {
     ] },
     { number: 5, title: 'Relativitas umum', audience: 'Sarjana tingkat lanjut', coverage: [], plannedTopics: ['Gerak geodesik dan jatuh bebas', 'Persamaan medan Einstein dan peran energi-momentum', 'Penghubung yang cermat dari prinsip ekuivalensi menuju ruang-waktu melengkung', 'Di luar kondisi Schwarzschild yang statis dan simetris bola'], experiments: [
       { title: 'C · Gravitasi dan laju jam', summary: 'Dua jam pada ketinggian berbeda, dari Bumi hingga lubang hitam, dan alasan GPS memerlukan relativitas.', path: '/gravity/clock-rates' },
+      { title: 'G · Laboratorium Gerak Geodesik', summary: 'Bandingkan orbit Newton dengan lintasan jatuh bebas dalam ruang-waktu Schwarzschild dan selidiki presesi periapsis.', path: '/gravity/geodesic-motion' },
     ] },
     { number: 6, title: 'Kosmologi', audience: 'Sarjana tingkat lanjut', coverage: [], plannedTopics: ['Bukti observasi dan inferensi parameter dalam kosmologi modern', 'Ukuran jarak kosmik dan horizon', 'Pembahasan lebih mendalam tentang alam semesta awal dan inflasi', 'Status dan batas ekstrapolasi kosmologi klasik menuju singularitas awal'], experiments: [
       { title: 'Ruang yang berevolusi', summary: 'Jalankan model alam semesta maju dan mundur: hukum Hubble, pergeseran merah, energi gelap, dan batas model.', path: '/cosmology/evolving-space' },
@@ -45,6 +46,7 @@ const translated: Record<Exclude<Locale, 'en'>, readonly ModuleEntry[]> = {
     ] },
     { number: 5, title: '一般相対性理論', audience: '学部上級', coverage: [], plannedTopics: ['測地線運動と自由落下', 'アインシュタイン方程式とエネルギー運動量の役割', '等価原理から曲がった時空への慎重な橋渡し', '静的・球対称なシュワルツシルト時空を超えて'], experiments: [
       { title: 'C · 重力と時計の進み方', summary: '地球からブラックホールまで、高さの異なる2つの時計とGPSに相対論が必要な理由を調べます。', path: '/gravity/clock-rates' },
+      { title: 'G · 測地線運動実験室', summary: 'ニュートン力学の軌道とシュワルツシルト時空での自由落下経路を比較し、近日点移動を調べます。', path: '/gravity/geodesic-motion' },
     ] },
     { number: 6, title: '宇宙論', audience: '学部上級', coverage: [], plannedTopics: ['現代宇宙論における観測的証拠とパラメーター推定', '宇宙距離の尺度と地平線', '初期宇宙とインフレーションの詳しい考察', '初期特異点に向けた古典宇宙論の外挿の位置付けと限界'], experiments: [
       { title: '時間とともに変化する空間', summary: 'モデル宇宙を未来と過去へ進め、ハッブルの法則、赤方偏移、ダークエネルギー、モデルの限界を調べます。', path: '/cosmology/evolving-space' },

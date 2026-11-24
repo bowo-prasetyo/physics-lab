@@ -14,3 +14,10 @@ describe('Length Contraction Lab catalogue entry', () => {
     expect(relativity?.experiments.filter((experiment) => experiment.path === '/relativity/length-contraction')).toHaveLength(1)
   })
 })
+
+describe('Geodesic Motion Lab catalogue entry', () => {
+  it.each(['en', 'id', 'ja'] as const)('appears once in the %s Module 5 catalogue', (locale) => {
+    const relativity = getLocalizedModules(locale).find((module) => module.number === 5)
+    expect(relativity?.experiments.filter((experiment) => experiment.path === '/gravity/geodesic-motion')).toHaveLength(1)
+  })
+})

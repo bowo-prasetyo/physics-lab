@@ -13,6 +13,7 @@ export type ExperimentMetadataId =
   | 'two-perspectives'
   | 'length-contraction'
   | 'gravity-clocks'
+  | 'geodesic-motion'
   | 'evolving-space'
 
 const experimentPaths: Record<ExperimentMetadataId, string> = {
@@ -27,6 +28,7 @@ const experimentPaths: Record<ExperimentMetadataId, string> = {
   'two-perspectives': '/relativity/two-perspectives',
   'length-contraction': '/relativity/length-contraction',
   'gravity-clocks': '/gravity/clock-rates',
+  'geodesic-motion': '/gravity/geodesic-motion',
   'evolving-space': '/cosmology/evolving-space',
 }
 
@@ -42,6 +44,7 @@ const moduleLabels: Record<ExperimentMetadataId, readonly [string, string, strin
   'two-perspectives': ['Experiment E · Two perspectives', 'Eksperimen E · Dua perspektif', '実験 E · 二つの視点'],
   'length-contraction': ['Experiment F · Length contraction', 'Eksperimen F · Kontraksi panjang', '実験 F · 長さの収縮'],
   'gravity-clocks': ['Experiment C', 'Eksperimen C', '実験 C'],
+  'geodesic-motion': ['Experiment G · Geodesic motion', 'Eksperimen G · Gerak geodesik', '実験 G · 測地線運動'],
   'evolving-space': ['Experiment D', 'Eksperimen D', '実験 D'],
 }
 
