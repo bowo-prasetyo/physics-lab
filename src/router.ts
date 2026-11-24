@@ -65,6 +65,12 @@ export const router = createRouter({
       meta: { title: 'Space and time versus spacetime · Physica' },
     },
     {
+      path: '/gravity/geodesic-motion',
+      name: 'geodesic-motion',
+      component: () => import('@/experiments/geodesic-motion/GeodesicMotionView.vue'),
+      meta: { title: 'Geodesic Motion Lab · Physica' },
+    },
+    {
       path: '/gravity/clock-rates',
       name: 'gravity-clocks',
       component: () => import('@/experiments/gravity-clocks/GravityClocksView.vue'),
