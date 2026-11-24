@@ -10,6 +10,7 @@ type ExperimentId =
   | 'projectile'
   | 'moving-clocks'
   | 'two-perspectives'
+  | 'length-contraction'
   | 'gravity-clocks'
   | 'evolving-space'
 
@@ -289,6 +290,44 @@ const copy: Record<ExperimentId, Record<'id' | 'ja', GuideCopy>> = {
       visual: [
         '各パネルは同じ状況と速度について、ガリレイ的・ローレンツ的・時空的な予測を比較します。数値は対応する単位とシナリオの仮定とともに読んでください。',
         '測定パネルは予測との比較に使う実験的証拠を示します。「一致」「不一致」の表示は予測と測定の適合性を評価するもので、解釈の好みや見た目を評価するものではありません。'
+      ]
+    }
+  },
+  'length-contraction': {
+    id: {
+      establishedTitle: 'Apa yang ditunjukkan fisika',
+      established: [
+        'Panjang wajar L₀ diukur dalam kerangka diam benda. Pengamat yang melihat benda bergerak mengukur panjang dengan mencatat posisi kedua ujung pada waktu yang sama menurut jam-jam yang tersinkronisasi dalam kerangkanya.',
+        'Untuk gerak inersial sepanjang sumbu benda, panjang terukur adalah L = L₀/γ, dengan γ = 1/√(1 − v²/c²). Kontraksi hanya terjadi sepanjang arah gerak relatif; dimensi yang tegak lurus terhadap gerak tidak berubah.',
+        'Keserentakan bergantung pada kerangka. Dua peristiwa ujung yang serentak di Bumi tidak serentak dalam kerangka pesawat, sehingga kedua pengamat memilih pasangan peristiwa yang berbeda untuk pengukuran panjang.'
+      ],
+      interpretationTitle: 'Pertanyaan konseptual',
+      interpretation: [
+        'Benda tidak mengalami pemendekan dalam kerangka diamnya sendiri. Setiap pengamat inersial yang mengukur benda bergerak memperoleh panjang yang lebih pendek sepanjang arah gerak relatif.',
+        'Kontraksi panjang adalah hasil pengukuran posisi ujung pada satu waktu yang sama, bukan sekadar bagaimana benda tampak dalam foto. Penampilan optik juga dipengaruhi waktu tempuh cahaya.'
+      ],
+      visualTitle: 'Cara membaca visualisasi',
+      visual: [
+        'Dua garis miring menunjukkan garis dunia ujung belakang dan depan pesawat. Irisan horizontal memilih dua peristiwa yang serentak dalam kerangka Bumi; jarak di antara keduanya adalah panjang terukur.',
+        'Irisan miring menunjukkan keserentakan dalam kerangka pesawat. Irisan ini memotong garis dunia pada peristiwa yang berbeda, memperlihatkan mengapa pengukuran panjang memerlukan pilihan kerangka.'
+      ]
+    },
+    ja: {
+      establishedTitle: '物理が示すこと',
+      established: [
+        '固有長 L₀ は物体の静止基準系で測定します。運動する物体を観測する人は、自分の基準系で同期した時計を使い、同じ時刻に両端の位置を記録して長さを測定します。',
+        '物体の軸に沿った慣性運動では、測定される長さは L = L₀/γ、γ = 1/√(1 − v²/c²) です。収縮するのは相対運動の方向だけであり、運動に垂直な寸法は変化しません。',
+        '同時性は基準系に依存します。地球で同時の両端の事象は宇宙船の基準系では同時ではないため、二人の観測者は長さの測定に異なる事象の組を選びます。'
+      ],
+      interpretationTitle: '考えるべき問い',
+      interpretation: [
+        '物体自身の静止基準系では、物体は短くなりません。運動する物体を測定する各慣性観測者は、相対運動の方向に沿ってより短い長さを得ます。',
+        '長さの収縮は、同じ時刻における両端の位置の測定結果であり、写真でどのように見えるかという問題ではありません。光学的な見え方には光の伝播時間も影響します。'
+      ],
+      visualTitle: '図の読み方',
+      visual: [
+        '二本の斜線は宇宙船の後端と前端の世界線です。水平な断面は地球基準系で同時の二つの事象を選び、その間隔が測定された長さです。',
+        '傾いた断面は宇宙船基準系での同時性を示します。この断面は世界線上の異なる事象を選ぶため、長さの測定に基準系の選択が必要な理由が分かります。'
       ]
     }
   },
