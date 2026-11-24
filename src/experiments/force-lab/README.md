@@ -4,21 +4,22 @@
 
 1. Predict the direction of acceleration before running the model.
 2. Choose a horizontal surface or a fixed inclined plane.
-3. Vary mass, an applied force parallel to the surface, kinetic friction and (on an incline) the angle.
-4. Inspect the free-body diagram and compare the force magnitudes.
-5. Relate the vector sum to acceleration, then to velocity and displacement from rest.
-6. Open the mathematics and meaning sections for the level-appropriate explanation and model limits.
+3. Vary mass, an applied force parallel to the surface, the static and kinetic friction coefficients and (on an incline) the angle.
+4. Inspect the free-body diagram, friction regime and force magnitudes.
+5. Compare the tangential force tendency with the maximum static friction to identify when sliding begins.
+6. Relate the vector sum to acceleration, then to velocity and displacement from rest.
+7. Open the mathematics and meaning sections for the level-appropriate explanation and model limits.
 
 ## Mathematical depth
 
-- **Beginner:** balanced versus unbalanced forces; acceleration follows the net force.
-- **Intermediate:** resolve weight into components parallel and perpendicular to the plane, sum forces and use Newton's second law.
-- **Advanced:** formulate the equations in a local orthonormal basis and distinguish the tangential equation of motion from the normal constraint equation.
+- **Beginner:** static friction adjusts to maintain rest up to a maximum; kinetic friction acts after the static limit is exceeded.
+- **Intermediate:** resolve weight into components parallel and perpendicular to the plane, compare the tangential tendency with \(\mu_s N\), and use \(f_k=\mu_kN\) while sliding.
+- **Advanced:** formulate the equations in a local orthonormal basis and distinguish the static constraint from the kinetic-friction equation of motion.
 
 All levels use the same physical model and numerical results.
 
 ## Model contract
 
-The pure TypeScript model uses a two-dimensional local basis: +x points up the surface and +y points away from it. The block is already sliding, kinetic friction opposes the tendency to slide, and the applied force is parallel to the surface. The normal acceleration is zero. Each trial starts from rest under a constant net force.
+The pure TypeScript model uses a two-dimensional local basis: +x points up the surface and +y points away from it. The block starts from rest. Static friction takes the value required for tangential equilibrium, up to \(f_{s,\max}=\mu_sN\). If the tangential tendency exceeds that limit, the model switches to kinetic friction of magnitude \(f_k=\mu_kN\), opposing the impending direction of motion. The applied force is parallel to the surface; the normal acceleration is zero; each trial uses constant forces after the friction regime is selected.
 
-The model intentionally excludes static friction, rotation, ropes/pulleys, air resistance, changing contact and non-inertial frames. These are future extensions, not silently approximated features.
+The regime switch represents breakaway without resolving its short transient. Kinetic friction is constant in magnitude. Rotation, ropes/pulleys, air resistance, changing contact and non-inertial frames are outside this model's scope.

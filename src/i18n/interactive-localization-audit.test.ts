@@ -116,9 +116,9 @@ async function settle(): Promise<void> {
 
 function verifyForceLabDifficulty(root: HTMLElement, level: 'beginner' | 'intermediate' | 'advanced', locale: Locale): void {
   const renderedText = normalize(root.textContent ?? '')
-  const beginnerCopy = localizeForceLabText('Beginner: balanced forces cancel. If the net force is not zero, the block accelerates in the direction of the net force.', locale)
-  const intermediateCopy = localizeForceLabText('Intermediate: resolve each force into components parallel and perpendicular to the surface, then add the components.', locale)
-  const advancedCopy = localizeForceLabText('Advanced: in a local orthonormal basis, the constraint fixes the normal acceleration to zero. The tangential equation determines the acceleration; the normal equation determines the constraint force.', locale)
+  const beginnerCopy = localizeForceLabText('Beginner: balanced forces cancel. Static friction can take any value needed for rest, up to its maximum. If the tendency to slide exceeds that maximum, kinetic friction acts while the block slides.', locale)
+  const intermediateCopy = localizeForceLabText('Intermediate: resolve each force into components parallel and perpendicular to the surface, then compare the tangential tendency with the maximum static friction.', locale)
+  const advancedCopy = localizeForceLabText('Advanced: at rest, friction is a constraint force that takes the value required by tangential equilibrium, provided that value does not exceed the Coulomb limit. Beyond the threshold, the model switches to kinetic friction opposite the impending motion.', locale)
 
   expect(renderedText, 'Force Lab beginner explanation must be visible in every difficulty').toContain(beginnerCopy)
   expect(renderedText.includes(intermediateCopy), 'Intermediate explanation visibility must match the selected difficulty').toBe(level !== 'beginner')
