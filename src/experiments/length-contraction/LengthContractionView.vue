@@ -43,7 +43,7 @@ const correctPrediction = computed(() => beta.value === 0 ? 'same' : 'shorter')
 const predictionMatches = computed(() => prediction.value === correctPrediction.value)
 const intermediate = computed(() => atLeast(level.value, 'intermediate'))
 const advanced = computed(() => atLeast(level.value, 'advanced'))
-const fmt = (value: number, digits = 2) => formatNumber(Number(value.toFixed(digits)), locale.value)
+const fmt = (value: number, digits = 2) => formatNumber(Number(value.toFixed(digits)))
 const timeDifferenceNs = computed(() => result.value.frontEventTimeInRestFrame * 1e9)
 const speedPercent = computed(() => beta.value * 100)
 
@@ -219,7 +219,7 @@ watch(locale, () => {
         </ul>
         <h3>{{ tx('Interpretation and observation') }}</h3>
         <p>{{ tx('This is a measurement of endpoint positions, not a photograph. The visual appearance of a fast-moving object also depends on light-travel time and can involve a different optical effect.') }}</p>
-        <p>{{ tx('The proper length is the same in every frame.') }}</p>
+        <p>{{ tx('The proper length is the object’s rest-frame length; other frames measure a different length.') }}</p>
         <h3>{{ tx('Model assumptions and limits') }}</h3>
         <p>{{ tx('The rod is idealized as having a constant proper length and moving inertially at constant speed. The model treats one-dimensional endpoint positions, synchronized clocks in each inertial frame, and ignores acceleration, rotation, deformation, thickness effects and optical appearance. A perfectly rigid body cannot be accelerated as a whole in special relativity; this experiment considers uniform motion after any acceleration has ended.') }}</p>
       </section>
