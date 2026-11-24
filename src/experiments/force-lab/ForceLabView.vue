@@ -25,6 +25,11 @@ const duration = ref(2)
 const prediction = ref<'up' | 'down' | 'none' | null>(null)
 const lastRun = ref<ForceLabResult | null>(null)
 const trialCount = ref(0)
+const predictionOptions = [
+  { id: 'up' as const, label: 'Up the slope / to the right' },
+  { id: 'down' as const, label: 'Down the slope / to the left' },
+  { id: 'none' as const, label: 'Zero acceleration' },
+]
 
 const result = computed(() => calculateForceLab({
   scenario: scenario.value,
@@ -46,14 +51,14 @@ const vectorEnd = (x: number, y: number) => ({
   x: 250 + x * arrowScale.value,
   y: 166 - y * arrowScale.value,
 })
-const vectorLabel = (id: string) => ({
+const vectorLabel = (id: 'applied' | 'friction' | 'normal' | 'weight-parallel' | 'weight-normal') => ({
   applied: tx('Applied force'),
   friction: tx('Friction'),
   normal: tx('Normal force'),
   'weight-parallel': tx('Weight along slope'),
   'weight-normal': tx('Weight into surface'),
 }[id] ?? id)
-const vectorColor = (id: string) => ({
+const vectorColor = (id: 'applied' | 'friction' | 'normal' | 'weight-parallel' | 'weight-normal') => ({
   applied: 'var(--accent)',
   friction: 'var(--warn)',
   normal: 'var(--success)',
@@ -87,7 +92,7 @@ watch([scenario, mass, appliedForce, frictionCoefficient, inclineAngle, duration
         <p>{{ tx('Before running the model, predict the direction of the block’s acceleration along the surface.') }}</p>
         <fieldset>
           <legend>{{ tx('Your prediction') }}</legend>
-          <label v-for="option in [{ id: 'up', label: 'Up the slope / to the right' }, { id: 'down', label: 'Down the slope / to the left' }, { id: 'none', label: 'Zero acceleration' }]" :key="option.id">
+          <label v-for="option in predictionOptions" :key="option.id">
             <input v-model="prediction" type="radio" name="force-prediction" :value="option.id" />
             {{ tx(option.label) }}
           </label>
