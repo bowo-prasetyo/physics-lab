@@ -33,6 +33,6 @@ export function calculateLengthContraction(properLength: number, beta: number): 
     contraction: properLength - measuredLength,
     // For endpoints at x = 0 and x = +L in the measuring frame at t = 0,
     // t' = gamma(t - vx/c²), so the front event has t' = -vL/c².
-    frontEventTimeInRestFrame: -beta * properLength / SPEED_OF_LIGHT,
+    frontEventTimeInRestFrame: beta === 0 ? 0 : -beta * properLength / SPEED_OF_LIGHT,
   }
 }
