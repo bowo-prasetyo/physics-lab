@@ -26,6 +26,11 @@ describe('learning assessment pilot', () => {
     }
   })
 
+  it('uses the contracted 12 m result for a 20 m rod moving at 0.8c', () => {
+    const transfer = pilotExperiments.find(item => item.id === 'length-contraction')!.transfer
+    expect(transfer.options[Number(transfer.correct)].label).toBe('12 m')
+  })
+
   it('scores only exact keyed responses', () => {
     const experiment = pilotExperiments[0]
     expect(scoreQuestions(experiment.pre, {

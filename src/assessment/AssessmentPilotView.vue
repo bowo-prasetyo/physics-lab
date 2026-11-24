@@ -21,7 +21,7 @@ const copy = {
     explanation: 'Explain your reasoning', rubricTitle: 'Facilitator rubric score', rubricHelp: 'A teacher or facilitator should score the explanation using the published 0–3 rubric. Do not score yourself.',
     rubric: ['0 · Unsupported', '1 · Descriptive', '2 · Partly explanatory', '3 · Well justified'],
     explanationPrompt: 'Write a brief explanation in your own words. The text is used only for the facilitator’s rubric judgment and is never saved or exported.',
-    submit: 'Add anonymous result to cohort', required: 'Answer every question and select a facilitator rubric score before submitting.',
+    submit: 'Add anonymous result to cohort', required: 'Answer every question, write a brief explanation, and select a facilitator rubric score before submitting.',
     completed: 'Result added to this browser session', completedHelp: 'No individual response was retained. The cohort summary contains totals only. Invite the next participant or export the aggregate.',
     next: 'Prepare next participant', summary: 'Current cohort summary', participants: 'Immediate participants', delayedParticipants: 'Delayed checks (unmatched)',
     export: 'Export aggregate CSV', empty: 'No results yet. Complete a voluntary assessment to begin the cohort summary.',
@@ -46,7 +46,7 @@ const copy = {
     explanation: 'Jelaskan penalaran', rubricTitle: 'Skor rubrik fasilitator', rubricHelp: 'Guru atau fasilitator menilai penjelasan menggunakan rubrik 0–3. Jangan menilai diri sendiri.',
     rubric: ['0 · Tanpa dukungan', '1 · Deskriptif', '2 · Penjelasan sebagian', '3 · Beralasan kuat'],
     explanationPrompt: 'Tuliskan penjelasan singkat dengan kata-kata sendiri. Teks ini hanya digunakan fasilitator untuk menilai rubrik dan tidak pernah disimpan atau diekspor.',
-    submit: 'Tambahkan hasil anonim ke agregat', required: 'Jawab semua pertanyaan dan pilih skor rubrik fasilitator sebelum mengirim.',
+    submit: 'Tambahkan hasil anonim ke agregat', required: 'Jawab semua pertanyaan, tulis penjelasan singkat, dan pilih skor rubrik fasilitator sebelum mengirim.',
     completed: 'Hasil ditambahkan ke sesi peramban ini', completedHelp: 'Tidak ada jawaban individu yang disimpan. Ringkasan kelompok hanya berisi jumlah. Undang peserta berikutnya atau ekspor agregat.',
     next: 'Siapkan peserta berikutnya', summary: 'Ringkasan kelompok saat ini', participants: 'Peserta asesmen langsung', delayedParticipants: 'Pemeriksaan tertunda (tidak berpasangan)',
     export: 'Ekspor CSV agregat', empty: 'Belum ada hasil. Selesaikan asesmen sukarela untuk memulai ringkasan kelompok.',
@@ -71,7 +71,7 @@ const copy = {
     explanation: '考え方を説明', rubricTitle: 'ファシリテーターによる評価', rubricHelp: '教師または進行役が公開済みの0〜3ルーブリックで説明を評価します。自己採点はしないでください。',
     rubric: ['0 · 根拠なし', '1 · 記述的', '2 · 部分的な説明', '3 · 十分な根拠あり'],
     explanationPrompt: '自分の言葉で簡潔に説明してください。この文章は進行役の評価にのみ使われ、保存・エクスポートされません。',
-    submit: '匿名の結果を集計に追加', required: 'すべての問題に回答し、進行役の評価を選択してください。',
+    submit: '匿名の結果を集計に追加', required: 'すべての問題に回答し、短い説明を書き、進行役の評価を選択してください。',
     completed: 'このブラウザーセッションに結果を追加しました', completedHelp: '個別の回答は保持されません。集計には合計値のみが含まれます。次の参加者を案内するか、集計をエクスポートしてください。',
     next: '次の参加者を準備', summary: '現在の集計', participants: '実験直後の参加者', delayedParticipants: '遅延チェック（個人照合なし）',
     export: '集計 CSV をエクスポート', empty: 'まだ結果はありません。任意の評価を完了すると集計が始まります。',
@@ -122,7 +122,7 @@ function continueToPost(): void {
   stage.value = 'post'
 }
 function finish(): void {
-  if (!allAnswered.value || rubricScore.value === '') { notice.value = text.value.required; return }
+  if (!allAnswered.value || !explanation.value.trim() || rubricScore.value === '') { notice.value = text.value.required; return }
   addParticipantResult(cohort.value, {
     experimentId: experiment.value.id, phase: phase.value,
     preCorrect: phase.value === 'immediate' ? preScore.value : 0,
@@ -130,8 +130,8 @@ function finish(): void {
     transferCorrect: scoreQuestions([experiment.value.transfer], answers),
     explanationScore: Number(rubricScore.value),
   })
+  clearAnswers()
   stage.value = 'done'
-  explanation.value = ''
 }
 function nextParticipant(): void {
   clearAnswers()
@@ -188,7 +188,7 @@ function exportCsv(): void {
         <select id="rubric-score" v-model="rubricScore"><option value="" disabled>—</option><option v-for="(label, index) in text.rubric" :key="index" :value="String(index)">{{ label }}</option></select>
         <small class="muted">{{ text.rubricScale }}</small>
       </div>
-      <button class="btn btn-primary" type="button" :disabled="!allAnswered || rubricScore === ''" @click="finish">{{ text.submit }}</button>
+      <button class="btn btn-primary" type="button" :disabled="!allAnswered || !explanation.trim() || rubricScore === ''" @click="finish">{{ text.submit }}</button>
       <p v-if="notice" class="notice" role="alert">{{ notice }}</p>
     </section>
     <section v-else-if="stage === 'done'" class="card assessment-card" aria-live="polite"><h2>{{ text.completed }}</h2><p>{{ text.completedHelp }}</p><button class="btn btn-primary" type="button" @click="nextParticipant">{{ text.next }}</button></section>

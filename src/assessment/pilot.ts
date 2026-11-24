@@ -97,7 +97,7 @@ const english: PilotExperiment[] = [
     ],
     transfer: makeQuestion('length-transfer', 'A second ideal spacecraft has a proper length of 20 m and passes Earth at 0.8c. What length does an Earth observer measure along its motion?', [
       '12 m', '16 m', '20 m', '25 m',
-    ], '1'),
+    ], '0'),
     explanationPrompt: 'Explain why the measured length differs from the proper length. Include the role of the observer’s frame and simultaneous endpoint measurements.',
   },
 ]
