@@ -5,12 +5,13 @@ const base = {
   scenario: 'horizontal' as const,
   mass: 5,
   appliedForce: 20,
-  frictionCoefficient: 0.2,
+  staticFrictionCoefficient: 0.4,
+  kineticFrictionCoefficient: 0.2,
   inclineAngle: 0,
   duration: 2,
 }
 
-describe('calculateForceLab', () => {
+describe('calculateForceLab friction regimes', () => {
   it('balances vertical forces on a horizontal surface', () => {
     const result = calculateForceLab(base)
     expect(result.normalForce).toBeCloseTo(49.05)
@@ -18,40 +19,74 @@ describe('calculateForceLab', () => {
     expect(result.forces.reduce((sum, force) => sum + force.y, 0)).toBeCloseTo(0)
   })
 
-  it('subtracts kinetic friction from the applied force', () => {
-    const result = calculateForceLab(base)
-    expect(result.frictionForce).toBeCloseTo(9.81)
-    expect(result.netForce).toBeCloseTo(10.19)
-    expect(result.acceleration).toBeCloseTo(2.038)
-    expect(result.velocity).toBeCloseTo(4.076)
-    expect(result.displacement).toBeCloseTo(4.076)
-  })
-
-  it('resolves weight and normal force on an incline', () => {
-    const result = calculateForceLab({
-      ...base, scenario: 'incline', inclineAngle: 30, appliedForce: 0,
-    })
-    expect(result.normalForce).toBeCloseTo(5 * 9.81 * Math.cos(Math.PI / 6))
-    expect(result.netForce).toBeLessThan(0)
-    expect(result.forces.reduce((sum, force) => sum + force.x, 0)).toBeCloseTo(result.netForce)
-  })
-
-  it('balances a sub-limit applied force with static friction', () => {
+  it('uses only the friction needed below the static limit', () => {
     const result = calculateForceLab({ ...base, appliedForce: 5 })
+    expect(result.frictionRegime).toBe('static')
+    expect(result.maximumStaticFriction).toBeCloseTo(19.62)
     expect(result.frictionForce).toBeCloseTo(5)
     expect(result.netForce).toBeCloseTo(0)
     expect(result.acceleration).toBeCloseTo(0)
   })
 
-  it('uses no friction when the tendency to slide is zero', () => {
+  it('remains at rest at the static-friction threshold', () => {
+    const result = calculateForceLab({ ...base, appliedForce: 19.62 })
+    expect(result.frictionRegime).toBe('static')
+    expect(result.frictionForce).toBeCloseTo(19.62)
+    expect(result.netForce).toBeCloseTo(0)
+  })
+
+  it('switches to kinetic friction when the static limit is exceeded', () => {
+    const result = calculateForceLab({ ...base, appliedForce: 25 })
+    expect(result.frictionRegime).toBe('kinetic')
+    expect(result.frictionForce).toBeCloseTo(9.81)
+    expect(result.netForce).toBeCloseTo(15.19)
+    expect(result.acceleration).toBeCloseTo(3.038)
+    expect(result.velocity).toBeCloseTo(6.076)
+    expect(result.displacement).toBeCloseTo(6.076)
+  })
+
+  it('uses the correct friction direction when gravity drives motion downhill', () => {
+    const result = calculateForceLab({
+      ...base, scenario: 'incline', inclineAngle: 30, appliedForce: 0,
+    })
+    expect(result.frictionRegime).toBe('kinetic')
+    expect(result.forces.find((force) => force.id === 'friction')?.x).toBeGreaterThan(0)
+    expect(result.netForce).toBeLessThan(0)
+  })
+
+  it('balances a sub-limit downhill tendency with static friction', () => {
+    const result = calculateForceLab({
+      ...base, scenario: 'incline', inclineAngle: 10, appliedForce: 0,
+      staticFrictionCoefficient: 0.3,
+    })
+    expect(result.frictionRegime).toBe('static')
+    expect(result.frictionForce).toBeCloseTo(5 * 9.81 * Math.sin(Math.PI / 18))
+    expect(result.netForce).toBeCloseTo(0)
+  })
+
+  it('uses no friction when the tangential force tendency is zero', () => {
     const result = calculateForceLab({ ...base, appliedForce: 0 })
+    expect(result.frictionRegime).toBe('static')
     expect(result.frictionForce).toBe(0)
     expect(result.netForce).toBe(0)
   })
 
+  it('resolves the critical incline angle from the static coefficient', () => {
+    const criticalAngle = Math.atan(base.staticFrictionCoefficient) * 180 / Math.PI
+    const below = calculateForceLab({
+      ...base, scenario: 'incline', inclineAngle: criticalAngle - 0.1, appliedForce: 0,
+    })
+    const above = calculateForceLab({
+      ...base, scenario: 'incline', inclineAngle: criticalAngle + 0.1, appliedForce: 0,
+    })
+    expect(below.frictionRegime).toBe('static')
+    expect(above.frictionRegime).toBe('kinetic')
+  })
+
   it('rejects invalid physical parameters', () => {
     expect(() => calculateForceLab({ ...base, mass: 0 })).toThrow(RangeError)
-    expect(() => calculateForceLab({ ...base, frictionCoefficient: -0.1 })).toThrow(RangeError)
+    expect(() => calculateForceLab({ ...base, staticFrictionCoefficient: -0.1 })).toThrow(RangeError)
+    expect(() => calculateForceLab({ ...base, kineticFrictionCoefficient: -0.1 })).toThrow(RangeError)
     expect(() => calculateForceLab({ ...base, duration: -1 })).toThrow(RangeError)
     expect(() => calculateForceLab({ ...base, inclineAngle: 90, scenario: 'incline' })).toThrow(RangeError)
   })
