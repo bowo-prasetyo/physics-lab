@@ -36,7 +36,7 @@ describe('locale configuration', () => {
     expect(translate('ja', 'app.navigation.forTeachers')).toBe('教員向け')
   })
 
-  it('provides a localized catalogue for all six modules and eleven experiments', () => {
+  it('provides a localized catalogue for all six modules and twelve experiments', () => {
     for (const locale of SUPPORTED_LOCALES) {
       const modules = getLocalizedModules(locale)
       expect(modules).toHaveLength(6)
