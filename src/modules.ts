@@ -44,7 +44,7 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 3,
     title: 'Classical mechanics',
     audience: 'High school / Undergraduate',
-    coverage: ['Newton’s second law: net force, mass and acceleration', 'Free-body diagrams and multiple forces', 'Kinetic friction and force components on an inclined plane', 'Ideal projectile motion', 'Effects of launch conditions and gravitational acceleration', 'Galilean reference frames', 'Quadratic air resistance and energy loss'],
+    coverage: ['Newton’s second law: net force, mass and acceleration', 'Free-body diagrams and multiple forces', 'Friction limits and force components on an inclined plane', 'Ideal projectile motion', 'Effects of launch conditions and gravitational acceleration', 'Galilean reference frames', 'Quadratic air resistance and energy loss'],
     plannedTopics: ['Static friction and limiting equilibrium', 'Circular motion', 'Momentum and collisions', 'Work, energy and conservation beyond projectile examples', 'Gravitation as a force and orbital motion'],
     experiments: [
       { title: 'Force, mass and acceleration', summary: 'Vary net force and cart mass to investigate Newton’s second law.', path: '/mechanics/newtonian' },
