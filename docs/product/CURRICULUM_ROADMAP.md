@@ -21,7 +21,7 @@ The product vision and module learning outcomes live in [Product vision, princip
 | 1. Understanding space | Space versus time; Displacement in 3D | Position, reference points, path length versus displacement, 3D vectors, coordinate-system changes, Euclidean spatial measurements | Broader 2D coordinate geometry and spatial measurement beyond the current examples |
 | 2. Understanding time | Pendulum clocks | Periodic motion, period and frequency, pendulum dynamics, small-angle versus exact period, clocks as physical processes | Other clock mechanisms, measurement uncertainty, and a broader treatment of time standards |
 | 3. Classical mechanics | Force, mass and acceleration; Force Lab; Projectile launcher | Newton’s second law; free-body diagrams and vector addition of multiple forces; normal forces and weight components; static-friction limits and kinetic friction on horizontal/inclined surfaces; ideal projectile motion, initial-condition dependence, gravitational acceleration, Galilean observers, optional quadratic drag and energy loss | Circular motion, momentum/collisions, work and energy beyond projectile examples, orbital gravitation |
-| 4. Special relativity | Different clocks, different elapsed times; Space and time versus spacetime | Lorentz transformations, time dilation, proper time, simultaneity, spacetime diagrams, interval invariance, comparison of equivalent relativistic descriptions | A dedicated length-contraction investigation, velocity addition and relativistic momentum, deeper experimental evidence connections |
+| 4. Special relativity | Different clocks, different elapsed times; Length Contraction Lab; Space and time versus spacetime | Lorentz transformations, time dilation, proper time, proper length and length contraction, frame-dependent simultaneity, spacetime diagrams, interval invariance, comparison of equivalent relativistic descriptions | Velocity addition and relativistic momentum, deeper experimental evidence connections |
 | 5. General relativity | Gravity and clock rates | Schwarzschild exterior clock rates, GPS clock corrections, static spherical geometry, proper radial distance, light signals and horizon behaviour | Geodesic/free-fall motion, Einstein field equations and stress-energy, equivalence-principle bridge, non-Schwarzschild settings |
 | 6. Cosmology | Evolving space | Homogeneous/isotropic FLRW models, scale factor, redshift, Hubble expansion, simple matter/radiation/dark-energy histories, acceleration and classical-model limits | Observational parameter inference, distance measures and horizons, inflation/early-universe physics, limits of extrapolation toward the initial singularity |
 
@@ -30,7 +30,7 @@ The product vision and module learning outcomes live in [Product vision, princip
 - **Module 1:** The current 3D displacement experiment provides a strong vector and coordinate foundation; it is not a complete course in Euclidean geometry.
 - **Module 2:** The pendulum is a useful example of a physical clock, not a survey of clock technologies or precision timekeeping.
 - **Module 3:** Force Lab now provides free-body diagrams, multiple force components, static friction up to \(\mu_sN\), and kinetic friction \(\mu_kN\) after breakaway. It remains a translational model from rest with a force parallel to the surface; rotation, ropes/pulleys, air resistance and changing contact are outside its scope. The projectile launcher remains a focused kinematics and force-of-gravity application.
-- **Module 4:** The current lessons address time dilation and simultaneity in depth. Length contraction is not yet a dedicated learner investigation and should not be advertised as covered.
+- **Module 4:** Length Contraction Lab complements the moving-clocks lesson by making the operational definition of length explicit: record both endpoint positions simultaneously in the measuring frame. It distinguishes proper length from the contracted measured length and from optical appearance. The model is one-dimensional, inertial and idealized; it does not simulate acceleration or light propagation to a camera.
 - **Module 5:** The current lesson uses the Schwarzschild exterior and static clock comparisons. It is not a general introduction to all solutions or the full mathematical structure of general relativity; geodesics are not yet taught.
 - **Module 6:** The evolving-space lesson is a controlled FLRW/Friedmann model laboratory. It does not constitute a complete observational or early-universe cosmology course. The behaviour as the scale factor approaches zero is a model boundary, not a complete explanation of the beginning of the universe.
 
@@ -46,6 +46,13 @@ Priorities are based on educational value, curriculum coherence, scientific prer
 4. **Improve the learning loop before adding breadth.** Review prediction prompts, evidence, hints, explanations, and worked examples for the existing experiments.
 
 **Exit condition:** learners and educators can tell what each module currently teaches, what it does not yet teach, and how learning will be evaluated.
+
+### P1 — Complete the core special-relativity measurement pair (in progress)
+
+1. **Length contraction (delivered in this branch).** Add a prediction-first measurement lab that connects proper length, Lorentz contraction and frame-dependent simultaneity using endpoint events and a spacetime diagram.
+2. **Velocity addition and relativistic momentum.** Develop the next dedicated investigations after the measurement pair is established.
+
+**Exit condition:** learners can distinguish proper length from a length measured in a moving frame, explain why endpoint simultaneity matters, and connect the result to the Lorentz transformation.
 
 ### P2 — Support teaching and close the highest-value curriculum gaps (in progress)
 
