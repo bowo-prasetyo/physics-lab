@@ -7,6 +7,7 @@ const copy: Record<string, readonly [string, string]> = {
   'The same as its rest length': ['Sama dengan panjang saat diam', '静止時の長さと同じ'],
   'Shorter than its rest length': ['Lebih pendek daripada panjang saat diam', '静止時の長さより短い'],
   'Longer than its rest length': ['Lebih panjang daripada panjang saat diam', '静止時の長さより長い'],
+  'Run the experiment': ['Jalankan eksperimen', '実験を実行'],
   'Run the experiment to test your prediction.': ['Jalankan eksperimen untuk menguji prediksi Anda.', '実験を実行して予測を確かめてください。'],
   'Your prediction matches the measured-frame result.': ['Prediksi Anda sesuai dengan hasil dalam kerangka pengukuran.', '予測は測定基準系での結果と一致しています。'],
   'The measured length is shorter. Compare the two endpoint events and their simultaneity.': ['Panjang terukur lebih pendek. Bandingkan kedua peristiwa pada ujung benda dan keserentakannya.', '測定された長さは短くなります。両端の事象とその同時性を比較してください。'],
@@ -39,8 +40,16 @@ const copy: Record<string, readonly [string, string]> = {
   'Model assumptions and limits': ['Asumsi dan keterbatasan model', 'モデルの前提と限界'],
   'The rod is idealized as having a constant proper length and moving inertially at constant speed. The model treats one-dimensional endpoint positions, synchronized clocks in each inertial frame, and ignores acceleration, rotation, deformation, thickness effects and optical appearance. A perfectly rigid body cannot be accelerated as a whole in special relativity; this experiment considers uniform motion after any acceleration has ended.': ['Batang diidealkan memiliki panjang wajar yang konstan dan bergerak secara inersial dengan kecepatan tetap. Model membahas posisi kedua ujung dalam satu dimensi dan jam tersinkronisasi pada setiap kerangka inersial, serta mengabaikan percepatan, rotasi, deformasi, efek ketebalan, dan penampilan optik. Dalam relativitas khusus, benda tegar sempurna tidak dapat dipercepat sebagai satu kesatuan; eksperimen ini membahas gerak seragam setelah percepatan berakhir.', '棒は一定の固有長を持ち、一定速度で慣性運動すると理想化しています。モデルは一次元の両端位置と各慣性系で同期した時計を扱い、加速、回転、変形、厚さの効果、光学的な見え方は無視します。特殊相対論では完全な剛体を一体として加速することはできません。この実験では加速が終わった後の等速運動を扱います。'],
   'Predict how the measured length changes as the relative speed increases.': ['Prediksikan bagaimana panjang terukur berubah ketika kecepatan relatif meningkat.', '相対速度が増すと、測定される長さがどう変化するか予測してください。'],
-  'The proper length is the same in every frame.': ['Panjang wajar sama dalam setiap kerangka.', '固有長はどの基準系でも同じです。'],
+  'The proper length is the object’s rest-frame length; other frames measure a different length.': ['Panjang wajar adalah panjang benda dalam kerangka diamnya; kerangka lain mengukur panjang yang berbeda.', '固有長は物体の静止基準系での長さであり、他の基準系では異なる長さが測定されます。'],
   'Length contraction is not an ordinary optical shrinking effect.': ['Kontraksi panjang bukan efek penyusutan optik biasa.', '長さの収縮は通常の光学的な縮小効果ではありません。'],
+  'Established physics': ['Fisika yang telah mapan', '確立された物理学'],
+  'Interpretation and observation': ['Interpretasi dan pengamatan', '解釈と観測'],
+  'The proper length is the object’s rest-frame length; other frames measure a different length.': ['Panjang wajar adalah panjang benda dalam kerangka diamnya; kerangka lain mengukur panjang yang berbeda.', '固有長は物体の静止基準系での長さであり、他の基準系では異なる長さが測定されます。'],
+  'Length contraction and time dilation are two consequences of the same Lorentz transformations.': ['Kontraksi panjang dan dilatasi waktu merupakan dua konsekuensi dari transformasi Lorentz yang sama.', '長さの収縮と時間の遅れは、同じローレンツ変換から導かれる二つの帰結です。'],
+  '← Different clocks, different elapsed times': ['← Jam berbeda, waktu berlalu berbeda', '← 異なる時計、異なる経過時間'],
+  'Space and time versus spacetime →': ['Ruang dan waktu versus ruang-waktu →', '空間と時間、それとも時空 →'],
+  'All modules': ['Semua modul', 'すべてのモジュール'],
+  'The result depends on speed: at zero speed the measured length equals the proper length; at nonzero speed it is shorter.': ['Hasilnya bergantung pada kecepatan: saat diam, panjang terukur sama dengan panjang wajar; pada kecepatan bukan nol, panjang terukur lebih pendek.', '結果は速度によって変わります。速度がゼロなら測定長は固有長と等しく、ゼロでなければ短くなります。'],
 }
 
 export function localizeLengthContractionText(value: string, locale: Locale): string {
