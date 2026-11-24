@@ -3,8 +3,9 @@
  *
  * Coordinates are local to the surface: +x is up the slope (or right on a
  * horizontal surface), +y is perpendicular and away from the surface.
- * The body is already sliding, so friction is kinetic. Static friction,
- * rotation, ropes/pulleys and deformation are intentionally out of scope.
+ * One coefficient sets a limiting friction force: it balances the tendency
+ * to slide below the limit and has constant magnitude once sliding begins.
+ * Distinct static/kinetic coefficients, rotation and ropes/pulleys are out of scope.
  */
 export type ForceLabScenario = 'horizontal' | 'incline'
 
@@ -68,8 +69,8 @@ export function calculateForceLab(input: ForceLabInput): ForceLabResult {
   const weight = input.mass * gravity
   const normalForce = weight * Math.cos(angle)
   const weightParallel = weight * Math.sin(angle)
-  // The positive direction is up the surface. Kinetic friction opposes the
-  // direction in which the applied force and gravity would move the body.
+  // The positive direction is up the surface. Friction opposes the tendency
+  // produced by the applied force and the component of weight.
   const tendency = input.appliedForce - weightParallel
   const frictionLimit = input.frictionCoefficient * normalForce
   // A single coefficient is used as a simple friction limit: below the limit
