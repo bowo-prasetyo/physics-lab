@@ -58,7 +58,7 @@ export function calculateGeodesic(settings: GeodesicSettings, relativistic = tru
   if (!Number.isFinite(initialRadius) || initialRadius <= 1.5) throw new RangeError('Initial radius must be outside the photon sphere (r > 1.5 r_s).')
   if (!Number.isFinite(angularMomentumFactor) || angularMomentumFactor <= 0) throw new RangeError('Angular-momentum factor must be positive.')
   if (!Number.isFinite(radialVelocity)) throw new RangeError('Radial velocity must be finite.')
-  const steps = Math.max(1, Math.min(12000, Math.floor(settings.steps ?? 2400)))
+  const steps = Math.max(1, Math.min(30000, Math.floor(settings.steps ?? 2400)))
   const h = settings.stepSize ?? 0.025
   const l = circularGeodesicAngularMomentum(initialRadius) * angularMomentumFactor
   let state: State = { r: initialRadius, vr: radialVelocity, phi: 0 }
