@@ -5,6 +5,7 @@ import { createApp, nextTick } from 'vue'
 import { describe, expect, it } from 'vitest'
 import App from '@/App.vue'
 import { router } from '@/router'
+import { localizeForceLabText } from '@/experiments/force-lab/copy'
 import { setLocale, SUPPORTED_LOCALES, type Locale } from './index'
 
 const ROUTES = [
@@ -19,6 +20,10 @@ const ROUTES = [
   { path: '/mechanics/projectile', name: 'projectile' },
   { path: '/time/pendulum', name: 'pendulum' },
   { path: '/space/displacement-3d', name: 'displacement-3d' },
+  // Each Force Lab difficulty is mounted independently so conditional lessons are checked.
+  { path: '/mechanics/force-lab?level=beginner', name: 'force-lab-beginner', difficultyLevel: 'beginner' },
+  { path: '/mechanics/force-lab?level=intermediate', name: 'force-lab-intermediate', difficultyLevel: 'intermediate' },
+  { path: '/mechanics/force-lab?level=advanced', name: 'force-lab-advanced', difficultyLevel: 'advanced' },
 ] as const
 
 const REVIEWED_ATTRIBUTES = [
@@ -106,6 +111,18 @@ async function settle(): Promise<void> {
   await nextTick()
   await new Promise((resolveTick) => setTimeout(resolveTick, 0))
   await nextTick()
+}
+
+
+function verifyForceLabDifficulty(root: HTMLElement, level: 'beginner' | 'intermediate' | 'advanced', locale: Locale): void {
+  const renderedText = normalize(root.textContent ?? '')
+  const beginnerCopy = localizeForceLabText('Beginner: balanced forces cancel. If the net force is not zero, the block accelerates in the direction of the net force.', locale)
+  const intermediateCopy = localizeForceLabText('Intermediate: resolve each force into components parallel and perpendicular to the surface, then add the components.', locale)
+  const advancedCopy = localizeForceLabText('Advanced: in a local orthonormal basis, the constraint fixes the normal acceleration to zero. The tangential equation determines the acceleration; the normal equation determines the constraint force.', locale)
+
+  expect(renderedText, 'Force Lab beginner explanation must be visible in every difficulty').toContain(beginnerCopy)
+  expect(renderedText.includes(intermediateCopy), 'Intermediate explanation visibility must match the selected difficulty').toBe(level !== 'beginner')
+  expect(renderedText.includes(advancedCopy), 'Advanced explanation visibility must match the selected difficulty').toBe(level === 'advanced')
 }
 
 /** Exercise each user-editable control and safe in-page action, recording each resulting state. */
@@ -215,7 +232,7 @@ describe('interactive runtime localization audit', () => {
     const snapshots = new Map<string, CopyRecord[]>()
     const accessibilityIssues: Array<{ route: string; locale: Locale; state: string; element: string }> = []
     const languageIssues: Array<{ route: string; locale: Locale; state: string; actual: string }> = []
-    const stats = { controls: 0, buttons: 0, disclosures: 0, states: 0 }
+    const stats = { controls: 0, buttons: 0, disclosures: 0, states: 0, forceLabDifficultyChecks: 0 }
 
     const originalResizeObserver = globalThis.ResizeObserver
     globalThis.ResizeObserver = class {
@@ -238,6 +255,10 @@ describe('interactive runtime localization audit', () => {
           await settle()
 
           try {
+            if ('difficultyLevel' in route) {
+              verifyForceLabDifficulty(root, route.difficultyLevel, locale)
+              stats.forceLabDifficultyChecks += 1
+            }
             await exercisePage(root, route.name, locale, snapshots, stats, accessibilityIssues, languageIssues)
           } finally {
             app.unmount()
@@ -288,6 +309,7 @@ describe('interactive runtime localization audit', () => {
         exercisedControlChanges: stats.controls,
         activatedWorkflowButtons: stats.buttons,
         openedDisclosures: stats.disclosures,
+      forceLabDifficultyChecks: stats.forceLabDifficultyChecks,
         unchangedEnglishCandidates: candidates.length,
         unnamedInteractiveElements: accessibilityIssues.length,
         documentLanguageMismatches: languageIssues.length,
@@ -315,6 +337,7 @@ describe('interactive runtime localization audit', () => {
       '- Control changes exercised: ' + stats.controls,
       '- Workflow buttons activated: ' + stats.buttons,
       '- Disclosures opened: ' + stats.disclosures,
+      '- Force Lab difficulty/locale combinations verified: ' + stats.forceLabDifficultyChecks,
       '- Unchanged-English candidates: ' + candidates.length,
       '- Unnamed interactive elements: ' + accessibilityIssues.length,
       '- Document language mismatches: ' + languageIssues.length,
@@ -327,6 +350,7 @@ describe('interactive runtime localization audit', () => {
 
     expect(languageIssues, 'The document language must follow the selected locale in every exercised state').toEqual([])
     expect(accessibilityIssues, 'Interactive elements must retain accessible names after state changes').toEqual([])
+    expect(stats.forceLabDifficultyChecks).toBe(3 * SUPPORTED_LOCALES.length)
     expect(stats.states).toBeGreaterThan(ROUTES.length * SUPPORTED_LOCALES.length)
     console.info('Interactive localization audit: ' + stats.states + ' states; ' + stats.controls + ' control changes; ' + stats.buttons + ' button activations; ' + candidates.length + ' unchanged-English candidates.')
   }, 180_000)
