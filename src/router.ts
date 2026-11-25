@@ -12,6 +12,7 @@ export const router = createRouter({
   routes: [
     { path: '/', name: 'home', component: HomeView, meta: { title: 'Physica' } },
     { path: '/learning', name: 'learning', component: () => import('@/learning/LearningPathView.vue'), meta: { title: 'Learning path & practice · Physica' } },
+    { path: '/problem-solving', name: 'problem-solving', component: () => import('@/problem-solving/ProblemSolvingView.vue'), meta: { title: 'Physics Problem-Solving Lab · Physica' } },
     {
       path: '/teachers',
       name: 'teachers',
