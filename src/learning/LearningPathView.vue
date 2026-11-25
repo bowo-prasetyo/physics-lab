@@ -110,7 +110,7 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
           </div>
         </li>
       </ol>
-      <GraphInterpretation />
+      <GraphInterpretation v-if="isExplored('/mechanics/force-lab') && isExplored('/mechanics/projectile') && isExplored('/time/pendulum')" />
       <p class="privacy-note">{{ ui.privacyNote }}</p>
     </section>
   </article>
