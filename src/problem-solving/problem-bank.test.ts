@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, expect, it } from 'vitest'
 import { SUPPORTED_LOCALES } from '@/i18n/locales'
 import { getProblemSet, isNumericallyCorrect } from './problem-bank'
