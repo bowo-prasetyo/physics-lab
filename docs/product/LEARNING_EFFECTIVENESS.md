@@ -8,7 +8,7 @@ The in-app assessment pilot now provides a deliberately small, voluntary workflo
 
 ## Practice is not assessment
 
-The learning path's practice questions are learning activities: they give immediate feedback and explanations, unlock only after the learner has tested a prediction in the matching experiment, and record nothing. They are not evidence of learning and must not be reported as such. Use the assessment pilot for measurement.
+The learning path's practice questions are learning activities: they give immediate feedback and explanations, unlock only after the learner has tested a prediction in the matching experiment, and record nothing. The Physics Problem-Solving Lab (`/problem-solving`) adds numerical exercises with hints, answer checking and worked steps; its answers also remain in page memory only. Neither practice experience is an assessment or evidence of learning and neither must be reported as such. Use the assessment pilot for measurement.
 
 ## Measurement principles
 
