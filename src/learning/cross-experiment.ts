@@ -157,7 +157,7 @@ const COPY: Record<Locale, Readonly<Record<string, ChallengeCopy>>> = {
   ja: {
     'force-projectile': {
       title: '力が飛行経路を変える',
-      intro: '力の成分のモデルと projectile（放物運動）の実験を結び付けます。通常の理想化が成り立たなくなったときに何が起こるか考えましょう。',
+      intro: '力の成分のモデルと放物運動の実験を結び付けます。通常の理想化が成り立たなくなったときに何が起こるか考えましょう。',
       prerequisiteLabel: '先に両方の実験を探究してください',
       prerequisiteTitles: ['力の実験室', '放物運動ランチャー'],
       prompt: 'ボールがすでに飛行中です。重力が鉛直方向に働く唯一の力である一方、新たに一定の水平方向の合力が働きます。理想的な放物運動と比べて何が変わりますか。',
