@@ -202,6 +202,35 @@ const COPY: Record<Locale, Readonly<Record<string, ChallengeCopy>>> = {
   },
 }
 
+
+export interface CrossExperimentHeading {
+  readonly title: string
+  readonly intro: string
+  readonly locked: string
+}
+
+const HEADING: Record<Locale, CrossExperimentHeading> = {
+  en: {
+    title: 'Connect ideas across experiments',
+    intro: 'These challenges ask you to use evidence and models from more than one experiment. They become available after you have explored every linked experiment.',
+    locked: 'Complete both linked experiments to unlock this synthesis question.',
+  },
+  id: {
+    title: 'Hubungkan gagasan antar-eksperimen',
+    intro: 'Tantangan ini mengajak Anda menggunakan bukti dan model dari lebih dari satu eksperimen. Tantangan terbuka setelah Anda menjelajahi semua eksperimen yang terkait.',
+    locked: 'Selesaikan kedua eksperimen yang terhubung untuk membuka soal sintesis ini.',
+  },
+  ja: {
+    title: '複数の実験をつなげて考える',
+    intro: '複数の実験で得た証拠とモデルを組み合わせる課題です。関連するすべての実験を探究すると解けるようになります。',
+    locked: '関連する2つの実験を完了すると、この統合問題が解けるようになります。',
+  },
+}
+
+export function getCrossExperimentHeading(locale: Locale): CrossExperimentHeading {
+  return HEADING[locale]
+}
+
 export function getCrossExperimentChallenges(locale: Locale): CrossExperimentChallenge[] {
   return SOURCES.map((source) => {
     const copy = COPY[locale][source.id]
