@@ -8,6 +8,7 @@ import { setLocale } from '@/i18n'
 import { useLevel } from '@/composables/useLevel'
 import { PROBLEM_COPY } from './problem-bank'
 import { markExplored, resetExplored } from './session-progress'
+import { classifyNumericResponse } from './numeric-feedback'
 
 async function render(path: string): Promise<string> {
   const app = createSSRApp(App)
@@ -54,6 +55,15 @@ describe('learning path: Apply it', () => {
     expect(html).toContain('応用してみよう')
     expect(html).toContain('あなたの答え')
     expect(html).toContain(PROBLEM_COPY.ja['pendulum-period']!.title)
+  })
+})
+
+describe('quantitative feedback classification', () => {
+  it('diagnoses common numerical slips', () => {
+    expect(classifyNumericResponse(-2, '2')).toBe('sign')
+    expect(classifyNumericResponse(2, '20')).toBe('tenfold')
+    expect(classifyNumericResponse(10, '11')).toBe('near')
+    expect(classifyNumericResponse(2, 'nope')).toBe('invalid')
   })
 })
 

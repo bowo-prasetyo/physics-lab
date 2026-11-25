@@ -9,6 +9,7 @@ import { getLearningPath } from './learning-content'
 import { isExplored } from './session-progress'
 import PracticeQuestion from './PracticeQuestion.vue'
 import ProblemCard from './ProblemCard.vue'
+import GraphPractice from './GraphPractice.vue'
 
 const { locale, t } = useLocale()
 const level = useLevel()
@@ -93,6 +94,7 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
             <p v-if="!isExplored(step.path)" class="locked">🔒 {{ ui.lockedLabel }}</p>
             <template v-else>
               <PracticeQuestion v-for="q in visibleQuestions(step.questions)" :key="q.id" :question="q" :ui="ui" :seed="seed" :level-tag="levelName(q.minLevel)" />
+              <GraphPractice v-if="step.path === '/space/space-vs-time'" />
               <template v-if="visibleQuestions(step.problems).length">
                 <h5 class="apply-title">{{ t('learning.apply.title') }}</h5>
                 <p class="apply-intro">{{ t('learning.apply.intro') }}</p>
