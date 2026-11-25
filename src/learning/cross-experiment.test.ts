@@ -15,6 +15,7 @@ describe('cross-experiment synthesis practice', () => {
     for (const challenge of challenges) {
       expect(MODULES.some((module) => module.number === challenge.module), challenge.id).toBe(true)
       expect(challenge.prerequisites.length).toBeGreaterThanOrEqual(2)
+      expect(challenge.anchorPath).toBe(challenge.prerequisites.at(-1)?.path)
       for (const prerequisite of challenge.prerequisites) {
         expect(routes.has(prerequisite.path), prerequisite.path).toBe(true)
         expect(experiments.has(prerequisite.path), prerequisite.path).toBe(true)
@@ -32,6 +33,7 @@ describe('cross-experiment synthesis practice', () => {
         expect(challenge.intro.trim()).not.toBe('')
         expect(challenge.prerequisiteLabel.trim()).not.toBe('')
         expect(challenge.prerequisites.every((item) => item.title.trim().length > 0)).toBe(true)
+        expect(challenge.prerequisites.some((item) => item.path === challenge.anchorPath)).toBe(true)
         expect(challenge.question.options).toHaveLength(4)
         expect(new Set(challenge.question.options.map((option) => option.id)).size).toBe(4)
         expect(challenge.question.options.some((option) => option.id === challenge.question.answer)).toBe(true)
