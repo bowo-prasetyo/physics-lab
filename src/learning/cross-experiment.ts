@@ -4,6 +4,7 @@ import type { PracticeQuestion } from './learning-content'
 export interface CrossExperimentChallenge {
   readonly id: string
   readonly module: number
+  readonly anchorPath: string
   readonly title: string
   readonly intro: string
   readonly prerequisiteLabel: string
@@ -248,6 +249,7 @@ export function getCrossExperimentChallenges(locale: Locale): CrossExperimentCha
     return {
       id: source.id,
       module: source.module,
+      anchorPath: source.paths[source.paths.length - 1]!,
       title: copy.title,
       intro: copy.intro,
       prerequisiteLabel: copy.prerequisiteLabel,
