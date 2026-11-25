@@ -71,8 +71,3 @@ export function localizeLengthContractionText(value: string, locale: Locale): st
   return copy[value]?.[locale === 'id' ? 0 : 1] ?? value
 }
 
-export function getLengthContractionDocumentTitle(locale: Locale): string {
-  if (locale === 'id') return 'Laboratorium Kontraksi Panjang · Physica'
-  if (locale === 'ja') return '長さの収縮実験室 · Physica'
-  return 'Length Contraction Lab · Physica'
-}

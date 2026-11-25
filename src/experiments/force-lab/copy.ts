@@ -84,15 +84,6 @@ const copy: Record<string, readonly [string, string]> = {
   "Keep the angle and the friction coefficients, and run again with a different mass.": ["Pertahankan sudut dan koefisien gesek, lalu jalankan lagi dengan massa berbeda.", "角度と摩擦係数はそのままにして、質量を変えてもう一度実行してください。"],
 }
 
-/** Localized browser/document title for the Force Lab route. */
-export function getForceLabDocumentTitle(locale: Locale): string {
-  const titles: Record<Locale, string> = {
-    en: 'Force Lab · Physica',
-    id: 'Laboratorium Gaya · Physica',
-    ja: '力の実験室 · Physica',
-  }
-  return titles[locale]
-}
 
 export function localizeForceLabText(value: string, locale: Locale): string {
   if (locale === 'en') return value

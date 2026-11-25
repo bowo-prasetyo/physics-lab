@@ -13,7 +13,7 @@ import { atLeast, isLevel } from '@/levels'
 import { calculateMomentumCollision } from '@/physics'
 import { experimentSectionLabel, getExperimentModuleEyebrow } from '@/i18n/experiment-metadata'
 import { localizePredictions } from '@/i18n/experiment-content'
-import { getMomentumCollisionsDocumentTitle, localizeMomentumCollisionsText } from './copy'
+import { localizeMomentumCollisionsText } from './copy'
 import { PREDICTIONS, type CollisionRun } from './predictions'
 
 const route = useRoute()
@@ -105,9 +105,6 @@ function startApproach() {
 watch([mass1, mass2, velocity1, velocity2, restitution], () => {
   clearAnimationTimer()
   phase.value = 'idle'
-})
-watch(locale, () => {
-  if (route.name === 'momentum-collisions') document.title = getMomentumCollisionsDocumentTitle(locale.value)
 })
 onBeforeUnmount(clearAnimationTimer)
 </script>

@@ -46,4 +46,3 @@ const entries:Record<string,readonly[string,string]> = {
   "Make cart 1 at least five times heavier than cart 2, with cart 2 at rest and e = 1.": ["Buat kereta 1 setidaknya lima kali lebih berat daripada kereta 2, dengan kereta 2 diam dan e = 1.", "台車 1 を台車 2 の 5 倍以上重くし、台車 2 を静止させ、e = 1 にしてください。"],
 }
 export function localizeMomentumCollisionsText(value:string,locale:Locale):string{return locale==='en'?value:entries[value]?.[locale==='id'?0:1]??value}
-export function getMomentumCollisionsDocumentTitle(locale:Locale):string{return locale==='id'?'Momentum dan Tumbukan · Physica':locale==='ja'?'運動量と衝突 · Physica':'Momentum and collisions · Physica'}
