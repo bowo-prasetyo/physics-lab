@@ -1,8 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { SUPPORTED_LOCALES } from '@/i18n/locales'
 import { getProblemSet, isNumericallyCorrect } from './problem-bank'
+import { router } from '@/router'
 
 describe('physics problem bank', () => {
+  it('is reachable through the application router', () => {
+    expect(router.getRoutes().some((route) => route.path === '/problem-solving')).toBe(true)
+  })
   it('provides a unique, valid problem set in every supported language', () => {
     for (const locale of SUPPORTED_LOCALES) {
       const problems = getProblemSet(locale)
