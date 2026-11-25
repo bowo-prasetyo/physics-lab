@@ -1,6 +1,7 @@
 import type { Locale } from '@/i18n/locales'
 import type { Level } from '@/levels'
 import { getLocalizedModules } from '@/i18n/home-catalog'
+import type { RunRecord, TrackBounds } from '@/physics'
 import { problemsFor, type PhysicsProblem } from './problem-bank'
 
 /**
@@ -18,6 +19,11 @@ import { problemsFor, type PhysicsProblem } from './problem-bank'
  * so understanding is checked against evidence the learner has seen. The same
  * unlock opens the step's numerical problems (problem-bank.ts), where the
  * learner applies the model they have just tested.
+ *
+ * Practice comes in three types, all unlocked together: concept questions,
+ * graph questions (practice questions with a `graph`: the learner reads the
+ * answer from a plot drawn with the experiments' own graph component) and
+ * numerical problems.
  */
 
 export interface StepCopy { readonly focus: string; readonly idea: string; readonly prerequisite: string }
@@ -28,6 +34,8 @@ export interface PracticeQuestion {
   /** Route of the experiment whose evidence the question draws on. */
   readonly experiment: string
   readonly minLevel: Level
+  /** Set for a graph question: the GRAPHS entry the answer is read from. */
+  readonly graph?: string
   readonly prompt: string
   readonly options: readonly PracticeOption[]
   readonly answer: string
@@ -46,7 +54,7 @@ export interface LearningUi {
   readonly chooseLabel: string; readonly privacyNote: string
 }
 
-interface PracticeSource { readonly id: string; readonly experiment: string; readonly minLevel: Level; readonly options: readonly string[]; readonly answer: string }
+interface PracticeSource { readonly id: string; readonly experiment: string; readonly graph?: string; readonly minLevel: Level; readonly options: readonly string[]; readonly answer: string }
 interface PracticeCopy { readonly prompt: string; readonly options: Readonly<Record<string, string>>; readonly hint: string; readonly explanation: string }
 
 const UI: Record<Locale, LearningUi> = {
@@ -162,6 +170,11 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "idea": "Investigate how horizontal motion and vertical acceleration shape a projectile path.",
       "prerequisite": "Be familiar with velocity components and constant gravitational acceleration in the ideal model."
     },
+    "/mechanics/circular-orbits": {
+      "focus": "A circle needs a force towards the centre",
+      "idea": "Launch a satellite sideways and find when gravity bends its path into a circle, an ellipse or not at all.",
+      "prerequisite": "Know Newton’s second law, and that velocity has a direction as well as a size. The projectile launcher is a good warm-up: a faster sideways throw lands farther away."
+    },
     "/relativity/moving-clocks": {
       "focus": "Observers can measure different elapsed times",
       "idea": "Compare clock readings for observers following different paths through spacetime.",
@@ -180,7 +193,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     "/gravity/geodesic-motion": {
       "focus": "Gravity changes the geometry of motion",
       "idea": "Compare Newtonian orbits with free-fall paths in a curved-spacetime model.",
-      "prerequisite": "Know Newtonian gravity as a useful approximation and distinguish a model from the system it represents."
+      "prerequisite": "Start with Circular motion and orbits in Module 3: this lab compares curved-spacetime paths with the Newtonian ellipses you launched there. Know that a model is not the system it represents."
     },
     "/gravity/clock-rates": {
       "focus": "Gravity changes how fast clocks run",
@@ -229,6 +242,11 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "idea": "Selidiki bagaimana gerak horizontal dan percepatan vertikal membentuk lintasan proyektil.",
       "prerequisite": "Kenali komponen kecepatan dan percepatan gravitasi konstan dalam model ideal."
     },
+    "/mechanics/circular-orbits": {
+      "focus": "Lingkaran memerlukan gaya menuju pusat",
+      "idea": "Luncurkan satelit ke samping dan temukan kapan gravitasi membelokkan lintasannya menjadi lingkaran, elips, atau tidak sama sekali.",
+      "prerequisite": "Pahami hukum kedua Newton, dan bahwa kecepatan memiliki arah selain besar. Peluncur proyektil adalah pemanasan yang baik: lemparan ke samping yang lebih cepat mendarat lebih jauh."
+    },
     "/relativity/moving-clocks": {
       "focus": "Pengamat dapat mengukur waktu berlalu yang berbeda",
       "idea": "Bandingkan pembacaan jam bagi pengamat yang menempuh lintasan berbeda dalam ruang-waktu.",
@@ -247,7 +265,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     "/gravity/geodesic-motion": {
       "focus": "Gravitasi mengubah geometri gerak",
       "idea": "Bandingkan orbit Newton dengan lintasan jatuh bebas dalam model ruang-waktu melengkung.",
-      "prerequisite": "Pahami gravitasi Newton sebagai pendekatan yang berguna dan bedakan model dari sistem fisik yang diwakilinya."
+      "prerequisite": "Mulailah dengan Gerak melingkar dan orbit di Modul 3: laboratorium ini membandingkan lintasan dalam ruang-waktu melengkung dengan elips Newton yang Anda luncurkan di sana. Pahami bahwa model bukanlah sistem yang diwakilinya."
     },
     "/gravity/clock-rates": {
       "focus": "Gravitasi mengubah laju jam",
@@ -296,6 +314,11 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "idea": "水平運動と鉛直加速度が放物運動の軌道をどう形作るか調べます。",
       "prerequisite": "理想モデルにおける速度成分と一定の重力加速度に慣れておきましょう。"
     },
+    "/mechanics/circular-orbits": {
+      "focus": "円運動には中心向きの力が必要",
+      "idea": "衛星を横向きに打ち出し、重力が経路を円や楕円に曲げるのはいつか、曲げきれないのはいつかを調べます。",
+      "prerequisite": "ニュートンの第2法則と、速度には大きさだけでなく向きもあることを理解しておきましょう。投射装置がよい準備になります。横向きに速く投げるほど遠くに落ちます。"
+    },
     "/relativity/moving-clocks": {
       "focus": "観測者によって経過時間の測定が異なる",
       "idea": "時空内で異なる経路をたどる観測者の時計を比較します。",
@@ -314,7 +337,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     "/gravity/geodesic-motion": {
       "focus": "重力は運動の幾何を変える",
       "idea": "ニュートン力学の軌道と、曲がった時空モデルでの自由落下経路を比較します。",
-      "prerequisite": "ニュートン重力が有用な近似であることを理解し、モデルと物理系を区別しましょう。"
+      "prerequisite": "まずモジュール3の「円運動と軌道」に取り組みましょう。この実験室では、そこで打ち上げたニュートン力学の楕円と、曲がった時空での経路を比べます。モデルと、それが表す物理系とは別物であることも理解しておきましょう。"
     },
     "/gravity/clock-rates": {
       "focus": "重力は時計の進み方を変える",
@@ -358,6 +381,48 @@ export const CHAPTER_PREREQUISITES: Record<Locale, Readonly<Record<number, strin
 }
 
 /** The practice bank: structure (experiment, level, option ids, answer) is shared by every language. */
+/** A position–time graph for graph questions: one piecewise-uniform run. */
+export interface MotionGraph {
+  readonly record: RunRecord
+  readonly duration: number
+  readonly bounds: TrackBounds
+}
+
+/** Build a run from its starting position and a list of [velocity (m/s), duration (s)] pieces. */
+function piecewiseRun(x0: number, pieces: readonly (readonly [number, number])[], bounds: TrackBounds): MotionGraph {
+  let t = 0
+  let x = x0
+  let distance = 0
+  const segments = pieces.map(([v, duration]) => {
+    const segment = { tStart: t, xStart: x, v }
+    t += duration
+    x += v * duration
+    distance += Math.abs(v) * duration
+    return segment
+  })
+  return { record: { x0, segments, tEnd: t, distance }, duration: t, bounds }
+}
+
+/** Graphs that graph questions refer to, by id. */
+export const GRAPHS: Readonly<Record<string, MotionGraph>> = {
+  // Forwards at +2 m/s, still for 2 s while the clock runs, back to the start at −2 m/s.
+  'walk-stop-return': piecewiseRun(0, [[2, 2], [0, 2], [-2, 2]], { min: 0, max: 6 }),
+}
+
+export interface GraphCopy { readonly title: string; readonly intro: string }
+
+export const GRAPH_COPY: Record<Locale, Readonly<Record<string, GraphCopy>>> = {
+  en: {
+    'walk-stop-return': { title: 'Read a position–time graph', intro: 'One run of an object on the track. The questions below are all about this graph; its slope is the velocity.' },
+  },
+  id: {
+    'walk-stop-return': { title: 'Membaca grafik posisi–waktu', intro: 'Satu percobaan sebuah benda di lintasan. Semua pertanyaan di bawah ini tentang grafik ini; kemiringannya adalah kecepatan.' },
+  },
+  ja: {
+    'walk-stop-return': { title: '位置–時間グラフを読み取る', intro: 'レール上の物体の1回の試行です。下の質問はすべてこのグラフについてです。グラフの傾きが速度を表します。' },
+  },
+}
+
 export const PRACTICE_BANK: readonly PracticeSource[] = [
   {
     "id": "walk",
@@ -579,6 +644,65 @@ export const PRACTICE_BANK: readonly PracticeSource[] = [
       "half"
     ],
     "answer": "two"
+  },
+  {
+    "id": "graph-rest",
+    "experiment": "/space/space-vs-time",
+    "graph": "walk-stop-return",
+    "minLevel": "beginner",
+    "options": [
+      "rest",
+      "forward",
+      "backward"
+    ],
+    "answer": "rest"
+  },
+  {
+    "id": "graph-slope",
+    "experiment": "/space/space-vs-time",
+    "graph": "walk-stop-return",
+    "minLevel": "beginner",
+    "options": [
+      "plus2",
+      "plus4",
+      "minus2"
+    ],
+    "answer": "plus2"
+  },
+  {
+    "id": "graph-average",
+    "experiment": "/space/space-vs-time",
+    "graph": "walk-stop-return",
+    "minLevel": "intermediate",
+    "options": [
+      "zero",
+      "speed",
+      "plus2"
+    ],
+    "answer": "zero"
+  },
+  {
+    "id": "graph-corners",
+    "experiment": "/space/space-vs-time",
+    "graph": "walk-stop-return",
+    "minLevel": "advanced",
+    "options": [
+      "instant",
+      "clock",
+      "normal"
+    ],
+    "answer": "instant"
+  },
+  {
+    "id": "orbit-string",
+    "experiment": "/mechanics/circular-orbits",
+    "minLevel": "beginner",
+    "options": [
+      "tangent",
+      "outward",
+      "centre"
+    ],
+    "answer": "tangent"
   }
 ]
 
@@ -785,6 +909,56 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "In an expanding universe, 1 + z equals the ratio of the scale factor now to the scale factor when the light was emitted.",
       "explanation": "1 + z = a_now / a_then = 2, so distances between comoving galaxies have doubled since the light set out. The light’s wavelength has been stretched by the same factor."
+    },
+    "graph-rest": {
+      "prompt": "What is the object doing between 2 s and 4 s?",
+      "options": {
+        "rest": "It is at rest.",
+        "forward": "It moves forwards at a constant velocity.",
+        "backward": "It moves backwards."
+      },
+      "hint": "Read the position at 2 s and at 4 s. Did it change?",
+      "explanation": "The line is horizontal: the position stays at 4 m while 2 s pass, so the velocity is zero. Time keeps running while the object is still."
+    },
+    "graph-slope": {
+      "prompt": "What is the object’s velocity from 0 s to 2 s?",
+      "options": {
+        "plus2": "+2 m/s",
+        "plus4": "+4 m/s",
+        "minus2": "−2 m/s"
+      },
+      "hint": "Velocity is the slope: the change in position divided by the change in time.",
+      "explanation": "The position goes from 0 m to 4 m in 2 s, so the slope is (4 − 0) m / (2 − 0) s = +2 m/s. The final position, 4 m, is not the velocity."
+    },
+    "graph-average": {
+      "prompt": "What is the object’s average velocity over the whole 6 s?",
+      "options": {
+        "zero": "0 m/s",
+        "speed": "+1.3 m/s (8 m of path in 6 s)",
+        "plus2": "+2 m/s"
+      },
+      "hint": "Average velocity is displacement divided by time. Where does the object finish?",
+      "explanation": "The object finishes at 0 m, where it started, so its displacement is zero and its average velocity is 0 m/s. Its average speed is different: 8 m of path in 6 s, about 1.3 m/s."
+    },
+    "graph-corners": {
+      "prompt": "The graph has sharp corners at 2 s and 4 s. What would a sharp corner mean for a real object?",
+      "options": {
+        "instant": "The velocity would change in no time, which needs an infinitely large acceleration; a real graph has rounded corners.",
+        "clock": "Time stops for an instant at each corner.",
+        "normal": "Nothing special: real motion often has sharp corners."
+      },
+      "hint": "The slope is the velocity. How long does the slope take to change at a corner?",
+      "explanation": "At a corner the slope jumps from one value to another instantly, so a = Δv/Δt would be infinite. Changing velocity takes a force acting over some time, so a real x–t graph bends smoothly between its straight parts. Sharp corners are an idealisation of the model, which the experiment uses too."
+    },
+    "orbit-string": {
+      "prompt": "You whirl a ball on a string in a horizontal circle, and the string snaps. Which way does the ball fly off?",
+      "options": {
+        "tangent": "Straight on, along the direction it was moving at that moment",
+        "outward": "Straight outwards, away from the centre",
+        "centre": "Towards the centre"
+      },
+      "hint": "Once the string breaks, no force acts sideways. What does an object do when no net force acts on it?",
+      "explanation": "The string supplied the force towards the centre that kept bending the path. Without it, the ball carries on in a straight line along its velocity at that moment, tangent to the circle. Nothing was pulling it outwards; the satellite in the experiment would do the same if gravity were switched off."
     }
   },
   "id": {
@@ -989,6 +1163,56 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "Dalam alam semesta yang mengembang, 1 + z sama dengan rasio faktor skala sekarang terhadap faktor skala saat cahaya dipancarkan.",
       "explanation": "1 + z = a_sekarang / a_dulu = 2, sehingga jarak antargalaksi yang bergerak bersama ruang telah menjadi dua kali lipat sejak cahaya berangkat. Panjang gelombang cahaya teregang dengan faktor yang sama."
+    },
+    "graph-rest": {
+      "prompt": "Apa yang dilakukan benda antara 2 s dan 4 s?",
+      "options": {
+        "rest": "Benda diam.",
+        "forward": "Benda bergerak maju dengan kecepatan tetap.",
+        "backward": "Benda bergerak mundur."
+      },
+      "hint": "Baca posisi pada 2 s dan pada 4 s. Apakah berubah?",
+      "explanation": "Garisnya mendatar: posisi tetap 4 m selama 2 s berlalu, sehingga kecepatannya nol. Waktu terus berjalan meskipun benda diam."
+    },
+    "graph-slope": {
+      "prompt": "Berapa kecepatan benda dari 0 s hingga 2 s?",
+      "options": {
+        "plus2": "+2 m/s",
+        "plus4": "+4 m/s",
+        "minus2": "−2 m/s"
+      },
+      "hint": "Kecepatan adalah kemiringan: perubahan posisi dibagi perubahan waktu.",
+      "explanation": "Posisi berubah dari 0 m menjadi 4 m dalam 2 s, jadi kemiringannya (4 − 0) m / (2 − 0) s = +2 m/s. Posisi akhir, 4 m, bukanlah kecepatan."
+    },
+    "graph-average": {
+      "prompt": "Berapa kecepatan rata-rata benda selama seluruh 6 s?",
+      "options": {
+        "zero": "0 m/s",
+        "speed": "+1,3 m/s (lintasan 8 m dalam 6 s)",
+        "plus2": "+2 m/s"
+      },
+      "hint": "Kecepatan rata-rata adalah perpindahan dibagi waktu. Di mana benda berakhir?",
+      "explanation": "Benda berakhir di 0 m, tempat ia memulai, sehingga perpindahannya nol dan kecepatan rata-ratanya 0 m/s. Kelajuan rata-ratanya berbeda: lintasan 8 m dalam 6 s, sekitar 1,3 m/s."
+    },
+    "graph-corners": {
+      "prompt": "Grafik memiliki sudut tajam pada 2 s dan 4 s. Apa arti sudut tajam bagi benda nyata?",
+      "options": {
+        "instant": "Kecepatan akan berubah tanpa selang waktu, yang memerlukan percepatan tak hingga; grafik nyata memiliki sudut yang membulat.",
+        "clock": "Waktu berhenti sesaat di setiap sudut.",
+        "normal": "Tidak ada yang istimewa: gerak nyata sering memiliki sudut tajam."
+      },
+      "hint": "Kemiringan adalah kecepatan. Berapa lama kemiringan berubah di sebuah sudut?",
+      "explanation": "Di sebuah sudut, kemiringan melompat dari satu nilai ke nilai lain seketika, sehingga a = Δv/Δt akan tak hingga. Mengubah kecepatan memerlukan gaya yang bekerja selama selang waktu tertentu, jadi grafik x–t nyata melengkung mulus di antara bagian lurusnya. Sudut tajam adalah idealisasi model, yang juga digunakan dalam eksperimen."
+    },
+    "orbit-string": {
+      "prompt": "Anda memutar bola bertali dalam lingkaran horizontal, lalu talinya putus. Ke mana bola terlempar?",
+      "options": {
+        "tangent": "Lurus ke depan, searah geraknya pada saat itu",
+        "outward": "Lurus ke luar, menjauhi pusat",
+        "centre": "Menuju pusat"
+      },
+      "hint": "Setelah tali putus, tidak ada gaya ke samping. Apa yang dilakukan benda jika tidak ada gaya resultan padanya?",
+      "explanation": "Tali memberikan gaya menuju pusat yang terus membelokkan lintasan. Tanpa tali, bola terus bergerak lurus searah kecepatannya saat itu, menyinggung lingkaran. Tidak ada yang menariknya ke luar; satelit dalam eksperimen akan melakukan hal yang sama jika gravitasi dimatikan."
     }
   },
   "ja": {
@@ -1193,6 +1417,56 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "膨張する宇宙では、1 + z は現在のスケール因子と光が出たときのスケール因子の比に等しくなります。",
       "explanation": "1 + z = a現在 / a当時 = 2 なので、共動する銀河どうしの距離は光が出発してから2倍になりました。光の波長も同じ倍率で引き伸ばされています。"
+    },
+    "graph-rest": {
+      "prompt": "2秒から4秒の間、物体はどうしていますか。",
+      "options": {
+        "rest": "静止している。",
+        "forward": "一定の速度で前に進んでいる。",
+        "backward": "後ろ向きに動いている。"
+      },
+      "hint": "2秒と4秒での位置を読み取りましょう。変わっていますか。",
+      "explanation": "線は水平です。2秒が経過する間、位置は4 mのままなので、速度はゼロです。物体が止まっていても時間は進み続けます。"
+    },
+    "graph-slope": {
+      "prompt": "0秒から2秒までの物体の速度はいくらですか。",
+      "options": {
+        "plus2": "+2 m/s",
+        "plus4": "+4 m/s",
+        "minus2": "−2 m/s"
+      },
+      "hint": "速度は傾きです。位置の変化を時間の変化で割ります。",
+      "explanation": "2秒間で位置が0 mから4 mになるので、傾きは (4 − 0) m / (2 − 0) s = +2 m/s です。最後の位置4 mは速度ではありません。"
+    },
+    "graph-average": {
+      "prompt": "6秒間全体での物体の平均速度はいくらですか。",
+      "options": {
+        "zero": "0 m/s",
+        "speed": "+1.3 m/s（6秒で8 mの道のり）",
+        "plus2": "+2 m/s"
+      },
+      "hint": "平均速度は変位を時間で割ったものです。物体はどこで終わりますか。",
+      "explanation": "物体は出発点の0 mで終わるので、変位はゼロで、平均速度は0 m/sです。平均の速さは別で、6秒で8 mの道のり、約1.3 m/sです。"
+    },
+    "graph-corners": {
+      "prompt": "グラフには2秒と4秒に鋭い角があります。実際の物体にとって、鋭い角は何を意味しますか。",
+      "options": {
+        "instant": "速度が一瞬で変わることになり、無限大の加速度が必要です。実際のグラフの角は丸くなります。",
+        "clock": "角のところで時間が一瞬止まる。",
+        "normal": "特に意味はない。実際の運動にも鋭い角はよくある。"
+      },
+      "hint": "傾きは速度です。角のところで、傾きが変わるのにどれだけ時間がかかりますか。",
+      "explanation": "角では傾きが一瞬で別の値に跳ぶので、a = Δv/Δt は無限大になります。速度を変えるには力がある時間働く必要があるので、実際の x–t グラフは直線部分の間でなめらかに曲がります。鋭い角はモデルの理想化で、実験でも同じ理想化を使っています。"
+    },
+    "orbit-string": {
+      "prompt": "ひもにつけたボールを水平な円を描くように回していると、ひもが切れました。ボールはどちらへ飛んでいきますか。",
+      "options": {
+        "tangent": "その瞬間に動いていた向きにまっすぐ",
+        "outward": "中心から離れる向きにまっすぐ外へ",
+        "centre": "中心に向かって"
+      },
+      "hint": "ひもが切れると、横向きの力は働きません。合力が働かない物体はどう動きますか。",
+      "explanation": "ひもは、経路を曲げ続ける中心向きの力を与えていました。それがなくなると、ボールはその瞬間の速度の向き、つまり円の接線方向にまっすぐ進みます。外向きに引くものはありません。実験の衛星も、重力がなくなれば同じように動きます。"
     }
   }
 }
@@ -1201,9 +1475,17 @@ export interface LearningStep extends StepCopy {
   readonly path: string
   readonly title: string
   readonly summary: string
+  /** Concept questions (no graph). */
   readonly questions: readonly PracticeQuestion[]
+  /** Graph exercises: one graph each, with the questions read from it. */
+  readonly graphs: readonly LearningGraph[]
   /** Numerical problems for the "Apply it" step, easiest first. */
   readonly problems: readonly PhysicsProblem[]
+}
+export interface LearningGraph extends GraphCopy {
+  readonly id: string
+  readonly graph: MotionGraph
+  readonly questions: readonly PracticeQuestion[]
 }
 export interface LearningChapter {
   readonly number: number
@@ -1223,11 +1505,22 @@ function practiceFor(experiment: string, locale: Locale): PracticeQuestion[] {
       const text = PRACTICE_COPY[locale][q.id] ?? PRACTICE_COPY.en[q.id]
       if (!text) throw new Error(`Missing practice copy for ${q.id}`)
       return {
-        id: q.id, experiment: q.experiment, minLevel: q.minLevel, answer: q.answer,
+        id: q.id, experiment: q.experiment, minLevel: q.minLevel, answer: q.answer, ...(q.graph ? { graph: q.graph } : {}),
         prompt: text.prompt, hint: text.hint, explanation: text.explanation,
         options: q.options.map((id) => ({ id, label: text.options[id] ?? id })),
       }
     })
+}
+
+/** Group a step's graph questions by graph, in the order their graphs first appear. */
+function graphsFor(practice: readonly PracticeQuestion[], locale: Locale): LearningGraph[] {
+  const ids = [...new Set(practice.flatMap((q) => (q.graph ? [q.graph] : [])))]
+  return ids.map((id) => {
+    const graph = GRAPHS[id]
+    const copy = GRAPH_COPY[locale][id] ?? GRAPH_COPY.en[id]
+    if (!graph || !copy) throw new Error(`Missing graph ${id}`)
+    return { id, graph, ...copy, questions: practice.filter((q) => q.graph === id) }
+  })
 }
 
 /** The whole path in one language: chapters and steps in catalogue order. */
@@ -1241,7 +1534,13 @@ export function getLearningPath(locale: Locale): { ui: LearningUi; chapters: Lea
       if (!experiment.path) return []
       const copy = STEP_COPY[locale][experiment.path] ?? STEP_COPY.en[experiment.path]
       if (!copy) return []
-      return [{ ...copy, path: experiment.path, title: experiment.title, summary: experiment.summary, questions: practiceFor(experiment.path, locale), problems: problemsFor(experiment.path, locale) }]
+      const practice = practiceFor(experiment.path, locale)
+      return [{
+        ...copy, path: experiment.path, title: experiment.title, summary: experiment.summary,
+        questions: practice.filter((q) => !q.graph),
+        graphs: graphsFor(practice, locale),
+        problems: problemsFor(experiment.path, locale),
+      }]
     }),
   }))
   return { ui: UI[locale], chapters }

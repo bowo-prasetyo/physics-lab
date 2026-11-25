@@ -6,7 +6,7 @@ import { SUPPORTED_LOCALES } from '@/i18n/locales'
 import {
   calculateForceLab, calculateLengthContraction, calculateMomentumCollision, exactPeriod, exactRange, gamma,
   gpsBreakdown, intervalSquared, KM_S_MPC_PER_GYR, lorentzBoost, schwarzschildRadius, smallAnglePeriod,
-  SOLAR_MASS, vec3, vectorInFrame, weakFieldShift, BODIES, SECONDS_PER_DAY,
+  SOLAR_MASS, vec3, vectorInFrame, weakFieldShift, BODIES, SECONDS_PER_DAY, centripetalAcceleration, circularSpeed, EARTH_GM,
 } from '@/physics'
 import { PROBLEM_COPY, PROBLEM_SOURCES, RELATIVE_TOLERANCE, isNumericallyCorrect, problemsFor } from './problem-bank'
 import { getLearningPath } from './learning-content'
@@ -129,6 +129,8 @@ describe('answers agree with the physics engine', () => {
     agrees('inelastic-collision', calculateMomentumCollision({ mass1: 2, mass2: 1, velocity1: 3, velocity2: -1, restitution: 0 }).velocity1After)
     agrees('elastic-rebound', calculateMomentumCollision({ mass1: 1, mass2: 3, velocity1: 4, velocity2: 0, restitution: 1 }).velocity1After)
     agrees('projectile-range', exactRange({ speed: 20, angleDeg: 30, height: 0, g: 9.8, k: 0 }))
+    agrees('car-bend', centripetalAcceleration(20, 50))
+    agrees('iss-speed', circularSpeed(EARTH_GM, 6.77e6) / 1000)
     agrees('projectile-horizontal', exactRange({ speed: 2, angleDeg: 0, height: 1.25, g: 9.8, k: 0 }))
   })
 

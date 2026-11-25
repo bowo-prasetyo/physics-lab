@@ -4,7 +4,7 @@ import { IMPLEMENTED_EXPERIMENTS, MODULES } from '@/modules'
 import { router } from '@/router'
 import { SUPPORTED_LOCALES } from '@/i18n/locales'
 import { seededShuffle } from '@/shuffle'
-import { CHAPTER_PREREQUISITES, PRACTICE_BANK, PRACTICE_COPY, STEP_COPY, getLearningPath } from './learning-content'
+import { CHAPTER_PREREQUISITES, GRAPHS, GRAPH_COPY, PRACTICE_BANK, PRACTICE_COPY, STEP_COPY, getLearningPath } from './learning-content'
 import { isExplored, markExplored, resetExplored } from './session-progress'
 
 describe('learning path structure', () => {
@@ -68,7 +68,9 @@ describe('practice questions', () => {
   })
 
   it('cannot be passed by always choosing the same position', () => {
-    const questions = getLearningPath('en').chapters.flatMap((c) => c.steps.flatMap((s) => s.questions))
+    // Concept and graph questions alike: every multiple-choice question in the path.
+    const questions = getLearningPath('en').chapters.flatMap((c) => c.steps.flatMap((s) => [...s.questions, ...s.graphs.flatMap((g) => g.questions)]))
+    expect(questions.length).toBe(PRACTICE_BANK.length)
     for (let seed = 0; seed < 50; seed += 1) {
       for (let position = 0; position < 4; position += 1) {
         const allRight = questions.every((q) => seededShuffle(q.options, q.id, seed)[position]?.id === q.answer)
@@ -80,6 +82,35 @@ describe('practice questions', () => {
       for (let seed = 0; seed < 200; seed += 1) seen.add(seededShuffle(q.options, q.id, seed).findIndex((o) => o.id === q.answer))
       expect(seen.size, q.id).toBe(q.options.length)
     }
+  })
+})
+
+describe('graph questions', () => {
+  it('refer only to defined graphs, and every graph has questions and copy in every language', () => {
+    const used = new Set(PRACTICE_BANK.flatMap((q) => ('graph' in q && q.graph ? [q.graph] : [])))
+    expect([...used].sort()).toEqual(Object.keys(GRAPHS).sort())
+    for (const locale of SUPPORTED_LOCALES) {
+      expect(Object.keys(GRAPH_COPY[locale]).sort(), locale).toEqual(Object.keys(GRAPHS).sort())
+      for (const [id, copy] of Object.entries(GRAPH_COPY[locale])) {
+        expect(copy.title.trim(), `${locale} ${id}`).not.toBe('')
+        expect(copy.intro.trim(), `${locale} ${id}`).not.toBe('')
+        if (locale !== 'en') expect(copy.intro).not.toBe(GRAPH_COPY.en[id]!.intro)
+      }
+    }
+  })
+
+  it('group under their step, separate from the concept questions, with questions at every level', () => {
+    const step = getLearningPath('en').chapters.flatMap((c) => c.steps).find((s) => s.path === '/space/space-vs-time')!
+    expect(step.questions.every((q) => !q.graph)).toBe(true)
+    expect(step.graphs.map((g) => g.id)).toEqual(['walk-stop-return'])
+    expect(new Set(step.graphs[0]!.questions.map((q) => q.minLevel))).toEqual(new Set(['beginner', 'intermediate', 'advanced']))
+  })
+
+  it('draw a run that matches the questions’ answers', () => {
+    const { record, duration } = GRAPHS['walk-stop-return']!
+    expect(duration).toBe(6)
+    expect(record.segments.map((s) => [s.tStart, s.xStart, s.v])).toEqual([[0, 0, 2], [2, 4, 0], [4, 4, -2]])
+    expect(record.distance).toBe(8)
   })
 })
 

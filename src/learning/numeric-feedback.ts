@@ -1,22 +1,71 @@
 import type { Locale } from '@/i18n/locales'
-export type NumericFeedbackKind = 'invalid' | 'sign' | 'tenfold' | 'magnitude' | 'near' | 'review'
+import { translate, type MessageKey } from '@/i18n/messages'
+import { BOUNDARY_EPSILON, isWithinTolerance, parseNumericAnswer, RELATIVE_TOLERANCE } from './problem-bank'
+
+/**
+ * Diagnostic feedback for a wrong numerical answer: which common slip the
+ * response most likely shows. It reads the response with the same parser and
+ * tolerance as the marker (problem-bank.ts), so the two never disagree.
+ */
+export type NumericFeedbackKind =
+  | 'correct' // within tolerance: no coaching needed
+  | 'invalid' // not a number
+  | 'sign' // right size, opposite sign
+  | 'scale' // off by a power of ten: a unit or exponent slip
+  | 'near' // just outside tolerance: a rounding slip
+  | 'too-small' // far too small, but not by a clean power of ten
+  | 'too-large' // far too large, but not by a clean power of ten
+  | 'review' // anything else: most likely the model or a step
+
+/** Answers up to this far off (and outside the tolerance) are treated as rounding slips. */
+export const NEAR_LIMIT = 0.05
+/** How close the ratio to the answer must be to a power of ten to count as a scale slip. */
+const SCALE_MATCH = 0.1
+
+export interface NumericDiagnosis {
+  readonly kind: NumericFeedbackKind
+  /** For 'scale': the power of ten the response is off by (3 means 1000 times too large, −3 means 1000 times too small). */
+  readonly powerOfTen?: number
+}
+
+export function diagnoseNumericResponse(expected: number, raw: string): NumericDiagnosis {
+  const value = parseNumericAnswer(raw)
+  if (value === null) return { kind: 'invalid' }
+  if (isWithinTolerance(expected, value)) return { kind: 'correct' }
+  if (isWithinTolerance(-expected, value)) return { kind: 'sign' }
+  if (value !== 0 && Math.sign(value) === Math.sign(expected)) {
+    const ratio = value / expected
+    const powerOfTen = Math.round(Math.log10(ratio))
+    if (powerOfTen !== 0 && Math.abs(ratio / 10 ** powerOfTen - 1) <= SCALE_MATCH) return { kind: 'scale', powerOfTen }
+  }
+  const relativeError = Math.abs(value - expected) / Math.abs(expected)
+  if (relativeError <= NEAR_LIMIT + BOUNDARY_EPSILON) return { kind: 'near' }
+  if (Math.abs(value) < Math.abs(expected) / 10) return { kind: 'too-small' }
+  if (Math.abs(value) > Math.abs(expected) * 10) return { kind: 'too-large' }
+  return { kind: 'review' }
+}
+
 export function classifyNumericResponse(expected: number, raw: string): NumericFeedbackKind {
-  const trimmed = raw.trim()
-  const normalized = trimmed.replace(',', '.').replace(/[−–]/g, '-')
-  if (!trimmed || !Number.isFinite(Number(normalized))) return 'invalid'
-  const value = Number(normalized)
-  if (Math.abs(value - expected) <= Math.abs(expected) * 0.02) return 'review'
-  if (Math.abs(value + expected) <= Math.abs(expected) * 0.02) return 'sign'
-  const ratio = Math.abs(value / expected)
-  const powerOfTen = 10 ** Math.round(Math.log10(ratio))
-  if (powerOfTen > 0 && Math.abs(ratio / powerOfTen - 1) <= 0.1 && Math.abs(Math.round(Math.log10(ratio))) >= 1) return 'tenfold'
-  if (Math.abs(value) < Math.abs(expected) / 10) return 'magnitude'
-  if (Math.abs(value - expected) <= Math.abs(expected) * 0.15) return 'near'
-  return 'review'
+  return diagnoseNumericResponse(expected, raw).kind
 }
-const COPY: Record<Locale, Record<NumericFeedbackKind, string>> = {
-  en: { invalid: 'Enter a numerical value. Use a decimal point or comma, and include a minus sign when direction matters.', sign: 'Your magnitude is right, but the sign is reversed. Recheck the positive direction and the direction of the quantity.', tenfold: 'Your answer is about ten times too large or too small. Check unit conversions and powers of ten.', magnitude: 'Your answer is much smaller than expected. Recheck the scale of the quantities and any squared or square-root terms.', near: 'You are close. Keep more digits during intermediate steps, then round only the final result.', review: 'Try a structured check: write the governing equation, substitute values with units, check signs, and estimate whether the result is reasonable.' },
-  id: { invalid: 'Masukkan nilai numerik. Gunakan titik atau koma desimal, serta tanda minus jika arah besaran berpengaruh.', sign: 'Besar nilainya sudah tepat, tetapi tandanya terbalik. Periksa kembali arah positif dan arah besaran.', tenfold: 'Jawaban Anda sekitar sepuluh kali terlalu besar atau terlalu kecil. Periksa konversi satuan dan pangkat sepuluh.', magnitude: 'Jawaban Anda jauh lebih kecil dari perkiraan. Periksa skala besaran serta penggunaan kuadrat atau akar kuadrat.', near: 'Hampir tepat. Pertahankan lebih banyak angka pada langkah antara, lalu bulatkan hanya hasil akhir.', review: 'Periksa secara bertahap: tulis persamaan fisika, masukkan nilai beserta satuannya, periksa tanda, lalu nilai kewajaran hasilnya.' },
-  ja: { invalid: '数値を入力してください。小数点はピリオドまたはカンマを使い、向きが重要な場合はマイナス符号も確認してください。', sign: '大きさは合っていますが、符号が逆です。正の向きと物理量の向きを確認しましょう。', tenfold: '答えが約10倍ずれています。単位の変換と10の累乗を確認しましょう。', magnitude: '答えが予想よりかなり小さくなっています。物理量の桁や二乗・平方根の扱いを確認しましょう。', near: 'あと少しです。途中計算では多くの桁を残し、最後に丸めましょう。', review: '順番に確認しましょう。物理の式を書き、単位付きで代入し、符号を確認して、結果が妥当な大きさか見積もります。' },
+
+const KEYS: Record<Exclude<NumericFeedbackKind, 'correct' | 'scale'>, MessageKey> = {
+  invalid: 'learning.feedback.invalid',
+  sign: 'learning.feedback.sign',
+  near: 'learning.feedback.near',
+  'too-small': 'learning.feedback.tooSmall',
+  'too-large': 'learning.feedback.tooLarge',
+  review: 'learning.feedback.review',
 }
-export function numericFeedback(expected: number, raw: string, locale: Locale): string { return COPY[locale][classifyNumericResponse(expected, raw)] }
+
+/** Coaching text for a response, or '' when it is correct. `unit` is the unit the answer is asked in. */
+export function numericFeedback(expected: number, raw: string, locale: Locale, unit = ''): string {
+  const { kind, powerOfTen } = diagnoseNumericResponse(expected, raw)
+  if (kind === 'correct') return ''
+  if (kind === 'scale' && powerOfTen !== undefined) {
+    const key: MessageKey = powerOfTen > 0 ? 'learning.feedback.scaleLarge' : 'learning.feedback.scaleSmall'
+    const factor = new Intl.NumberFormat(locale).format(10 ** Math.abs(powerOfTen))
+    return translate(locale, key).replace('{factor}', factor).replace('{unit}', unit)
+  }
+  return translate(locale, KEYS[kind as keyof typeof KEYS]).replace('{percent}', String(RELATIVE_TOLERANCE * 100))
+}

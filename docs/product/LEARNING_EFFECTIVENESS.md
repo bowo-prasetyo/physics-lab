@@ -8,7 +8,7 @@ The in-app assessment pilot now provides a deliberately small, voluntary workflo
 
 ## Practice is not assessment
 
-The learning path's practice is a learning activity: its concept questions and its *Apply it* numerical problems give immediate feedback, hints and worked explanations, unlock only after the learner has tested a prediction in the matching experiment, and record nothing. Practice is not an assessment or evidence of learning and must not be reported as such. Use the assessment pilot for measurement.
+The learning path's practice is a learning activity: its concept questions, graph questions and *Apply it* numerical problems give immediate feedback, hints and worked explanations, unlock only after the learner has tested a prediction in the matching experiment, and record nothing. Practice is not an assessment or evidence of learning and must not be reported as such. Use the assessment pilot for measurement.
 
 ## Measurement principles
 

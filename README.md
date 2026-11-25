@@ -20,7 +20,7 @@ Every experiment works at three mathematical levels (Beginner, Intermediate and 
 ## Experiments
 
 <!-- catalogue:start (generated from src/modules.ts by `npm run docs:catalogue`; do not edit by hand) -->
-Thirteen experiments across six modules. Modules 1–3 build the everyday picture of space, time and motion; Modules 4–6 follow the same questions into relativity, curved spacetime and cosmology.
+Fourteen experiments across six modules. Modules 1–3 build the everyday picture of space, time and motion; Modules 4–6 follow the same questions into relativity, curved spacetime and cosmology.
 
 **Module 1 · Understanding space.** Where things are: positions, distances and displacements, and which of them depend on the coordinates you choose.
 
@@ -37,6 +37,7 @@ Thirteen experiments across six modules. Modules 1–3 build the everyday pictur
 - [Force Lab: free-body diagrams and multiple forces](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/force-lab): Build a free-body diagram, resolve forces on a level surface or incline, and test how the net force determines acceleration.
 - [Momentum and collisions](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/momentum-collisions): Predict how two carts move after colliding; compare elastic and inelastic outcomes, momentum conservation and kinetic-energy changes.
 - [Projectile launcher](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/projectile): Launch a ball on the Earth, Moon, Mars or Jupiter, with or without air, and watch it from the ground or a moving train.
+- [Circular motion and orbits](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/circular-orbits): Launch a satellite sideways: find the speed for a circular orbit, see what gravity must supply, and push it into an ellipse or out of reach.
 
 **Module 4 · Special relativity.** Near the speed of light, measurements of time and length depend on the observer, and space and time combine into spacetime.
 
@@ -56,7 +57,7 @@ Thirteen experiments across six modules. Modules 1–3 build the everyday pictur
 
 Every experiment page has shareable links that encode the level and setup, an investigation guide, and full translations into Indonesian and Japanese.
 
-**Learning path:** the [learning path](https://bowo-prasetyo.github.io/physics-lab/#/learning) walks the same thread chapter by chapter, from Module 1 to Module 6. Each step links to an experiment and says what to know first. Once the learner has tested a prediction in that experiment, the step unlocks practice questions and then an **Apply it** set of numerical problems with hints and worked solutions (answers within 2% count as correct). Progress lasts for the browser session only. The home page has one call to action, *Start the learning path*; the experiment catalogue below it is for browsing.
+**Learning path:** the [learning path](https://bowo-prasetyo.github.io/physics-lab/#/learning) walks the same thread chapter by chapter, from Module 1 to Module 6. Each step links to an experiment and says what to know first. Once the learner has tested a prediction in that experiment, the step unlocks concept questions, graph questions where the step has a graph, and then an **Apply it** set of numerical problems with hints, worked solutions and feedback on the likely slip (answers within 2% count as correct). Progress lasts for the browser session only. The home page has one call to action, *Start the learning path*; the experiment catalogue below it is for browsing.
 
 **For teachers:** the in-app [teacher guide](https://bowo-prasetyo.github.io/physics-lab/#/teachers) has a lesson outline for every experiment: learning intentions, timings, a classroom sequence, discussion prompts and a check for understanding. The [learning assessment pilot](https://bowo-prasetyo.github.io/physics-lab/#/assessment-pilot) runs short, anonymous pre/post checks; see the [pilot plan](docs/product/ASSESSMENT_PILOT_PLAN.md).
 

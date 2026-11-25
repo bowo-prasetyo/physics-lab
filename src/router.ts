@@ -72,6 +72,11 @@ export const router = createRouter({
       component: () => import('@/experiments/evolving-space/EvolvingSpaceView.vue'),
     },
     {
+      path: '/mechanics/circular-orbits',
+      name: 'circular-orbits',
+      component: () => import('@/experiments/circular-orbits/CircularOrbitsView.vue'),
+    },
+    {
       path: '/mechanics/projectile',
       name: 'projectile',
       component: () => import('@/experiments/projectile/ProjectileView.vue'),

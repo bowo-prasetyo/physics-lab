@@ -9,6 +9,7 @@ export type ExperimentMetadataId =
   | 'force-lab'
   | 'momentum-collisions'
   | 'projectile'
+  | 'circular-orbits'
   | 'moving-clocks'
   | 'two-perspectives'
   | 'length-contraction'
@@ -24,6 +25,7 @@ const experimentPaths: Record<ExperimentMetadataId, string> = {
   'force-lab': '/mechanics/force-lab',
   'momentum-collisions': '/mechanics/momentum-collisions',
   projectile: '/mechanics/projectile',
+  'circular-orbits': '/mechanics/circular-orbits',
   'moving-clocks': '/relativity/moving-clocks',
   'two-perspectives': '/relativity/two-perspectives',
   'length-contraction': '/relativity/length-contraction',
@@ -40,6 +42,7 @@ const moduleLabels: Record<ExperimentMetadataId, readonly [string, string, strin
   'force-lab': ['Force Lab', 'Laboratorium Gaya', '力の実験室'],
   'momentum-collisions': ['Momentum and collisions', 'Momentum dan tumbukan', '運動量と衝突'],
   projectile: ['Projectile motion', 'Gerak proyektil', '放物運動'],
+  'circular-orbits': ['Circular motion and orbits', 'Gerak melingkar dan orbit', '円運動と軌道'],
   'moving-clocks': ['Different clocks', 'Jam berbeda', '異なる時計'],
   'two-perspectives': ['Two perspectives', 'Dua perspektif', '二つの視点'],
   'length-contraction': ['Length contraction', 'Kontraksi panjang', '長さの収縮'],

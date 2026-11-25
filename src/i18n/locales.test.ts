@@ -36,11 +36,11 @@ describe('locale configuration', () => {
     expect(translate('ja', 'app.navigation.forTeachers')).toBe('教員向け')
   })
 
-  it('provides a localized catalogue for all six modules and thirteen experiments', () => {
+  it('provides a localized catalogue for all six modules and fourteen experiments', () => {
     for (const locale of SUPPORTED_LOCALES) {
       const modules = getLocalizedModules(locale)
       expect(modules).toHaveLength(6)
-      expect(modules.reduce((count, module) => count + module.experiments.length, 0)).toBe(13)
+      expect(modules.reduce((count, module) => count + module.experiments.length, 0)).toBe(14)
       expect(modules.every(module => module.title.length > 0 && module.role.length > 0)).toBe(true)
     }
   })

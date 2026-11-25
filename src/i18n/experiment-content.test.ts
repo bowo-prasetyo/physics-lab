@@ -5,6 +5,7 @@ import { PREDICTIONS as displacement } from '@/experiments/displacement3d/predic
 import { PREDICTIONS as pendulum } from '@/experiments/pendulum/predictions'
 import { PREDICTIONS as newtonian } from '@/experiments/newtonian/predictions'
 import { PREDICTIONS as projectile } from '@/experiments/projectile/predictions'
+import { PREDICTIONS as circularOrbits } from '@/experiments/circular-orbits/predictions'
 import { PREDICTIONS as movingClocks } from '@/experiments/moving-clocks/predictions'
 import { PREDICTIONS as twoPerspectives } from '@/experiments/two-perspectives/predictions'
 import { PREDICTIONS as gravityClocks } from '@/experiments/gravity-clocks/predictions'
@@ -62,6 +63,7 @@ describe('experiment content localization', () => {
     checkTranslations('pendulum', pendulum)
     checkTranslations('newtonian', newtonian)
     checkTranslations('projectile', projectile)
+    checkTranslations('circular-orbits', circularOrbits)
     checkTranslations('moving-clocks', movingClocks)
     checkTranslations('two-perspectives', twoPerspectives)
     checkTranslations('gravity-clocks', gravityClocks)
