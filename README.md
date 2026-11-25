@@ -88,6 +88,8 @@ Every push to `main` is tested, built and published to GitHub Pages by `.github/
 
 ## Architecture
 
+Contributors and coding agents: start with [CLAUDE.md](CLAUDE.md), the house rules that the tests enforce.
+
 - **Physics engine.** `src/physics/` is framework-independent TypeScript with no DOM access, tested separately from the interface (`architecture.test.ts` enforces this). Numerical methods are checked against exact solutions where they exist.
 - **One catalogue.** `src/modules.ts` is the single source for modules and experiments. The home page, the translated catalogues (keyed by route), the learning path, the teacher guide's lesson coverage and this README are all checked against it.
 - **One learning loop.** Every experiment uses the shared prediction cards (`src/experiments/prediction.ts`, `PredictionCard.vue`): each level adds questions, and each explanation unlocks only after the run that tests it.
