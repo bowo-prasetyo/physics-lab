@@ -56,6 +56,8 @@ Thirteen experiments across six modules. Modules 1–3 build the everyday pictur
 
 Every experiment page has shareable links that encode the level and setup, an investigation guide, and full translations into Indonesian and Japanese.
 
+**Learning path:** the [learning path](https://bowo-prasetyo.github.io/physics-lab/#/learning) walks the same thread chapter by chapter, from Module 1 to Module 6. Each step links to an experiment and says what to know first. Its practice questions unlock once the learner has tested a prediction in that experiment, and progress lasts for the browser session only.
+
 **For teachers:** the in-app [teacher guide](https://bowo-prasetyo.github.io/physics-lab/#/teachers) has a lesson outline for every experiment: learning intentions, timings, a classroom sequence, discussion prompts and a check for understanding. The [learning assessment pilot](https://bowo-prasetyo.github.io/physics-lab/#/assessment-pilot) runs short, anonymous pre/post checks; see the [pilot plan](docs/product/ASSESSMENT_PILOT_PLAN.md).
 
 ## Getting started
@@ -86,7 +88,7 @@ Every push to `main` is tested, built and published to GitHub Pages by `.github/
 ## Architecture
 
 - **Physics engine.** `src/physics/` is framework-independent TypeScript with no DOM access, tested separately from the interface (`architecture.test.ts` enforces this). Numerical methods are checked against exact solutions where they exist.
-- **One catalogue.** `src/modules.ts` is the single source for modules and experiments. The home page, the translated catalogues (keyed by route), the teacher guide's lesson coverage and this README are all checked against it.
+- **One catalogue.** `src/modules.ts` is the single source for modules and experiments. The home page, the translated catalogues (keyed by route), the learning path, the teacher guide's lesson coverage and this README are all checked against it.
 - **One learning loop.** Every experiment uses the shared prediction cards (`src/experiments/prediction.ts`, `PredictionCard.vue`): each level adds questions, and each explanation unlocks only after the run that tests it.
 - **One page layout.** `src/experiments/layout.test.ts` checks that every experiment page has the same sections in the same order.
 - **Localization.** English, Indonesian and Japanese, with tests for completeness and runtime audits (`npm run audit:localization:runtime`). See [docs/internationalization.md](docs/internationalization.md).

@@ -6,6 +6,10 @@ Physica exists to improve learners' understanding of physics, not simply to maxi
 
 The in-app assessment pilot now provides a deliberately small, voluntary workflow. It is a measurement aid, not evidence that Physica has already improved learning. Establish baselines before setting numerical targets. The [assessment pilot plan](ASSESSMENT_PILOT_PLAN.md) describes how to run the first cohorts and record the results.
 
+## Practice is not assessment
+
+The learning path's practice questions are learning activities: they give immediate feedback and explanations, unlock only after the learner has tested a prediction in the matching experiment, and record nothing. They are not evidence of learning and must not be reported as such. Use the assessment pilot for measurement.
+
 ## Measurement principles
 
 1. **Measure learning, not clicks.** Interaction and completion data can diagnose the experience, but cannot establish understanding.

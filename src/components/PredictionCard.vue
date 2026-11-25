@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, useId } from 'vue'
+import { computed, ref, useId, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { markExplored } from '@/learning/session-progress'
 import type { PredictionText } from '@/experiments/prediction'
 import { useLocale } from '@/composables/useLocale'
 
@@ -16,6 +18,10 @@ const correctOption = computed(() => props.prediction.options.find((o) => o.id =
 const wasRight = computed(() => selected.value === props.prediction.correct)
 function commit() { if (selected.value) committed.value = true }
 function retry() { selected.value = null; committed.value = false }
+// Record (in memory only) that the learner has tested a prediction on this
+// experiment, so the learning path can unlock its practice questions.
+const route = useRoute()
+watch(stage, (value) => { if (value === 'explain' && route?.path) markExplored(route.path) }, { immediate: true })
 </script>
 
 <template>
