@@ -33,6 +33,16 @@ describe('learning path: Apply it', () => {
     expect(html).not.toContain('Apply it')
   })
 
+  it('unlocks visual graph interpretation only after the matching experiment is explored', async () => {
+    setLocale('en')
+    let html = await render('/learning?module=1')
+    expect(html).not.toContain('Read a position–time graph')
+    markExplored('/space/space-vs-time')
+    html = await render('/learning?module=1')
+    expect(html).toContain('Read a position–time graph')
+    expect(html).toContain('The slope of a position–time graph is velocity.')
+  })
+
   it('shows the step’s problems once explored, adding harder ones at higher levels', async () => {
     setLocale('en')
     markExplored('/time/pendulum')

@@ -8,7 +8,8 @@ export function classifyNumericResponse(expected: number, raw: string): NumericF
   if (Math.abs(value - expected) <= Math.abs(expected) * 0.02) return 'review'
   if (Math.abs(value + expected) <= Math.abs(expected) * 0.02) return 'sign'
   const ratio = Math.abs(value / expected)
-  if ((ratio >= 9 && ratio <= 11) || (ratio >= 0.09 && ratio <= 0.11)) return 'tenfold'
+  const powerOfTen = 10 ** Math.round(Math.log10(ratio))
+  if (powerOfTen > 0 && Math.abs(ratio / powerOfTen - 1) <= 0.1 && Math.abs(Math.round(Math.log10(ratio))) >= 1) return 'tenfold'
   if (Math.abs(value) < Math.abs(expected) / 10) return 'magnitude'
   if (Math.abs(value - expected) <= Math.abs(expected) * 0.15) return 'near'
   return 'review'
