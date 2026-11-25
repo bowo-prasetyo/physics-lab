@@ -16,7 +16,15 @@ const completed = ref(false)
 const selectedPath = computed(() => content.value.paths.find((path) => path.id === selectedPathId.value) ?? content.value.paths[0]!)
 const question = computed(() => selectedPath.value.questions[questionIndex.value])
 const totalQuestions = computed(() => selectedPath.value.questions.length)
-const progress = computed(() => completed.value ? 100 : Math.round((questionIndex.value / totalQuestions.value) * 100))
+const progress = computed(() => completed.value ? 100 : Math.round(((questionIndex.value + (submitted.value ? 1 : 0)) / totalQuestions.value) * 100))
+const relatedExperimentPath = computed(() => {
+  const routes: Record<string, readonly string[]> = {
+    foundations: ['/space/displacement-3d', '/time/pendulum'],
+    motion: ['/mechanics/newtonian', '/mechanics/momentum-collisions'],
+    relativity: ['/relativity/two-perspectives', '/gravity/clock-rates'],
+  }
+  return routes[selectedPath.value.id]?.[questionIndex.value] ?? selectedPath.value.steps[0]!.path
+})
 const isCorrect = computed(() => submitted.value && selectedAnswer.value === question.value?.answer)
 
 function selectPath(id: string): void {
@@ -110,14 +118,14 @@ watch(locale, () => {
         <div v-if="submitted" class="answer-feedback" :class="{ correct: isCorrect, incorrect: !isCorrect }" role="status" aria-live="polite">
           <strong>{{ isCorrect ? content.correctLabel : content.incorrectLabel }}</strong>
           <h4>{{ content.explanationLabel }}</h4><p>{{ question.explanation }}</p>
-          <RouterLink :to="selectedPath.steps[Math.min(questionIndex, selectedPath.steps.length - 1)]!.path">{{ content.sequenceLabel }}</RouterLink>
+          <RouterLink :to="relatedExperimentPath">{{ content.relatedExperimentLabel }}</RouterLink>
         </div>
       </div>
       <div v-else class="completion" role="status">
         <h3>{{ content.completeLabel }}</h3><p>{{ content.scoreLabel }}: <strong>{{ score }} / {{ totalQuestions }}</strong></p>
         <button type="button" class="btn btn-primary" @click="restartPath">{{ content.restartLabel }}</button>
       </div>
-      <p class="privacy-note">{{ content.intro }}</p>
+      <p class="privacy-note">{{ content.privacyNote }}</p>
     </section>
   </article>
 </template>

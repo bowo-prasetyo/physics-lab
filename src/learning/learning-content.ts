@@ -5,7 +5,7 @@ export interface PracticeQuestion { prompt: string; options: readonly { id: stri
 export interface LearningPath { id: string; title: string; description: string; prerequisites: string; steps: readonly LearningStep[]; questions: readonly PracticeQuestion[] }
 export interface LearningContent {
   eyebrow: string; title: string; intro: string; pathsLabel: string; prerequisitesLabel: string;
-  sequenceLabel: string; practiceLabel: string; questionLabel: string; hintLabel: string;
+  sequenceLabel: string; practiceLabel: string; questionLabel: string; hintLabel: string; relatedExperimentLabel: string; privacyNote: string;
   checkLabel: string; nextLabel: string; restartLabel: string; chooseLabel: string;
   correctLabel: string; incorrectLabel: string; explanationLabel: string; completeLabel: string; scoreLabel: string;
   paths: readonly LearningPath[]
@@ -16,7 +16,7 @@ const copy: Record<Locale, LearningContent> = {
     eyebrow: 'A route through the experiments', title: 'Learn in a sequence. Practise as you go.',
     intro: 'Choose a learning path to see what to learn first, why each idea matters, and which experiment to try. Then check your understanding with short questions. Your answers stay in this session only.',
     pathsLabel: 'Choose a learning path', prerequisitesLabel: 'Before you begin', sequenceLabel: 'Your learning sequence',
-    practiceLabel: 'Check your understanding', questionLabel: 'Question', hintLabel: 'Show a hint', checkLabel: 'Check answer',
+    practiceLabel: 'Check your understanding', questionLabel: 'Question', hintLabel: 'Show a hint', relatedExperimentLabel: 'Try the related experiment', privacyNote: 'Your answers and score are kept only in this browser session. They are not saved or sent to Physica.', checkLabel: 'Check answer',
     nextLabel: 'Next question', restartLabel: 'Try this path again', chooseLabel: 'Choose an answer to continue.',
     correctLabel: 'That is correct.', incorrectLabel: 'Not quite. Review the explanation, then try the idea in the experiment.',
     explanationLabel: 'Why?', completeLabel: 'Path practice complete', scoreLabel: 'Correct answers',
@@ -71,7 +71,7 @@ const copy: Record<Locale, LearningContent> = {
     eyebrow: 'Jalur belajar melalui eksperimen', title: 'Belajar secara bertahap. Berlatih di setiap langkah.',
     intro: 'Pilih jalur belajar untuk mengetahui apa yang perlu dipelajari terlebih dahulu, mengapa setiap gagasan penting, dan eksperimen mana yang dapat dicoba. Periksa pemahaman dengan soal singkat. Jawaban hanya tersimpan selama sesi ini.',
     pathsLabel: 'Pilih jalur belajar', prerequisitesLabel: 'Sebelum memulai', sequenceLabel: 'Urutan belajar',
-    practiceLabel: 'Periksa pemahaman Anda', questionLabel: 'Soal', hintLabel: 'Tampilkan petunjuk', checkLabel: 'Periksa jawaban',
+    practiceLabel: 'Periksa pemahaman Anda', questionLabel: 'Soal', hintLabel: 'Tampilkan petunjuk', relatedExperimentLabel: 'Coba eksperimen terkait', privacyNote: 'Jawaban dan nilai Anda hanya disimpan selama sesi peramban ini. Data tidak disimpan atau dikirim ke Physica.', checkLabel: 'Periksa jawaban',
     nextLabel: 'Soal berikutnya', restartLabel: 'Ulangi jalur ini', chooseLabel: 'Pilih jawaban untuk melanjutkan.',
     correctLabel: 'Jawaban Anda benar.', incorrectLabel: 'Belum tepat. Pelajari penjelasannya, lalu coba gagasan ini dalam eksperimen.',
     explanationLabel: 'Mengapa?', completeLabel: 'Latihan jalur selesai', scoreLabel: 'Jawaban benar',
@@ -123,7 +123,7 @@ const copy: Record<Locale, LearningContent> = {
     eyebrow: '実験をたどる学習ルート', title: '順番に学び、各段階で練習する。',
     intro: '学習ルートを選ぶと、最初に学ぶこと、各概念が重要な理由、試すべき実験が分かります。短い問題で理解度も確認できます。回答はこのセッション中だけ保持されます。',
     pathsLabel: '学習ルートを選択', prerequisitesLabel: '始める前に', sequenceLabel: '学習の順序',
-    practiceLabel: '理解度を確認', questionLabel: '問題', hintLabel: 'ヒントを表示', checkLabel: '回答を確認',
+    practiceLabel: '理解度を確認', questionLabel: '問題', hintLabel: 'ヒントを表示', relatedExperimentLabel: '関連する実験を試す', privacyNote: '回答と得点はこのブラウザーセッション中だけ保持されます。保存されたり Physica に送信されたりすることはありません。', checkLabel: '回答を確認',
     nextLabel: '次の問題', restartLabel: 'このルートをもう一度', chooseLabel: '続けるには回答を選択してください。',
     correctLabel: '正解です。', incorrectLabel: 'もう少しです。解説を読み、実験でこの考え方を試してみましょう。',
     explanationLabel: '解説', completeLabel: 'このルートの練習は完了です', scoreLabel: '正解数',
