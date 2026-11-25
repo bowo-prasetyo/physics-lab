@@ -171,7 +171,7 @@ watch(locale, () => {
 .hint { margin:12px 0 0; padding:10px 12px; border-left:3px solid var(--accent); background:var(--surface-2); }
 .answer-feedback { margin-top:16px; padding:14px; border:1px solid var(--border); border-radius:var(--radius-sm); }
 .answer-feedback.correct { border-left:4px solid var(--success, var(--accent)); }
-.answer-feedback.incorrect { border-left:4px solid var(--warning, var(--accent)); }
+.answer-feedback.incorrect { border-left:4px solid var(--warn, var(--accent)); }
 .answer-feedback h4 { margin:10px 0 4px; }
 .answer-feedback p { margin:0 0 8px; }
 .completion { padding:10px 0; }
