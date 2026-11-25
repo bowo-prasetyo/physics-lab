@@ -20,7 +20,7 @@ Every experiment works at three mathematical levels (Beginner, Intermediate and 
 ## Experiments
 
 <!-- catalogue:start (generated from src/modules.ts by `npm run docs:catalogue`; do not edit by hand) -->
-Thirteen experiments across six modules. Modules 1–3 build the everyday picture of space, time and motion; Modules 4–6 follow the same questions into relativity, curved spacetime and cosmology.
+Fourteen experiments across six modules. Modules 1–3 build the everyday picture of space, time and motion; Modules 4–6 follow the same questions into relativity, curved spacetime and cosmology.
 
 **Module 1 · Understanding space.** Where things are: positions, distances and displacements, and which of them depend on the coordinates you choose.
 
@@ -37,6 +37,7 @@ Thirteen experiments across six modules. Modules 1–3 build the everyday pictur
 - [Force Lab: free-body diagrams and multiple forces](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/force-lab): Build a free-body diagram, resolve forces on a level surface or incline, and test how the net force determines acceleration.
 - [Momentum and collisions](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/momentum-collisions): Predict how two carts move after colliding; compare elastic and inelastic outcomes, momentum conservation and kinetic-energy changes.
 - [Projectile launcher](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/projectile): Launch a ball on the Earth, Moon, Mars or Jupiter, with or without air, and watch it from the ground or a moving train.
+- [Circular motion and orbits](https://bowo-prasetyo.github.io/physics-lab/#/mechanics/circular-orbits): Launch a satellite sideways: find the speed for a circular orbit, see what gravity must supply, and push it into an ellipse or out of reach.
 
 **Module 4 · Special relativity.** Near the speed of light, measurements of time and length depend on the observer, and space and time combine into spacetime.
 

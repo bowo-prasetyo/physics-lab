@@ -57,6 +57,8 @@ export const PROBLEM_SOURCES: readonly ProblemSource[] = [
   { id: 'elastic-rebound', experiment: '/mechanics/momentum-collisions', minLevel: 'advanced', answer: ((1 - 3) * 4) / (1 + 3) },
   { id: 'projectile-horizontal', experiment: '/mechanics/projectile', minLevel: 'beginner', answer: 2 * Math.sqrt((2 * 1.25) / 9.8) },
   { id: 'projectile-range', experiment: '/mechanics/projectile', minLevel: 'intermediate', answer: (20 ** 2 * Math.sin(Math.PI / 3)) / 9.8 },
+  { id: 'car-bend', experiment: '/mechanics/circular-orbits', minLevel: 'beginner', answer: 20 ** 2 / 50 },
+  { id: 'iss-speed', experiment: '/mechanics/circular-orbits', minLevel: 'intermediate', answer: Math.sqrt(3.99e14 / 6.77e6) / 1000 },
   { id: 'time-dilation', experiment: '/relativity/moving-clocks', minLevel: 'beginner', answer: 4 / Math.sqrt(1 - 0.8 ** 2) },
   { id: 'simultaneity-offset', experiment: '/relativity/moving-clocks', minLevel: 'advanced', answer: (0.8 * 6) / Math.sqrt(1 - 0.8 ** 2) },
   { id: 'interval-proper-time', experiment: '/relativity/two-perspectives', minLevel: 'beginner', answer: Math.sqrt(5 ** 2 - 3 ** 2) },
@@ -73,6 +75,36 @@ export const PROBLEM_SOURCES: readonly ProblemSource[] = [
 
 export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>> = {
   "en": {
+    "car-bend": {
+      "title": "Round a bend",
+      "scenario": "A car drives round a circular bend of radius 50 m at a steady 20 m/s. What acceleration does it have, and so what must the road’s friction supply per kilogram?",
+      "given": "v = 20 m/s; r = 50 m",
+      "target": "Centripetal acceleration",
+      "unit": "m/s²",
+      "formula": "a = v² / r",
+      "hint": "The speed is steady, but the direction changes. Square the speed, then divide by the radius.",
+      "steps": [
+        "Moving in a circle at constant speed, the car accelerates towards the centre of the bend.",
+        "a = v² / r = (20 m/s)² / 50 m = 400 / 50 m/s².",
+        "a = 8.0 m/s², towards the centre of the bend.",
+        "Friction from the road must supply 8.0 N per kilogram; on ice it cannot, and the car carries on in a straight line."
+      ]
+    },
+    "iss-speed": {
+      "title": "How fast is the ISS?",
+      "scenario": "The International Space Station orbits about 6.77 × 10⁶ m from the Earth’s centre, on a nearly circular orbit. For the Earth, GM = 3.99 × 10¹⁴ m³/s². How fast does the station move?",
+      "given": "r = 6.77 × 10⁶ m; GM = 3.99 × 10¹⁴ m³/s²",
+      "target": "Orbital speed",
+      "unit": "km/s",
+      "formula": "GMm/r² = mv²/r, so v = √(GM/r)",
+      "hint": "Gravity supplies exactly the force a circle needs. Set them equal, solve for v, and convert m/s to km/s.",
+      "steps": [
+        "For a circular orbit, gravity is the centripetal force: GMm/r² = mv²/r.",
+        "The satellite’s mass cancels: v = √(GM/r) = √(3.99 × 10¹⁴ / 6.77 × 10⁶) m/s.",
+        "v ≈ √(5.89 × 10⁷) ≈ 7.68 × 10³ m/s ≈ 7.68 km/s.",
+        "At this speed the station goes round the Earth in about 92 minutes."
+      ]
+    },
     "average-speed-pause": {
       "title": "Average speed with a stop",
       "scenario": "An object moves 6.0 m along a track in 4.0 s, then stays still for 6.0 s while the clock keeps running. What is its average speed over the whole 10 s?",
@@ -465,6 +497,36 @@ export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>>
     }
   },
   "id": {
+    "car-bend": {
+      "title": "Melewati tikungan",
+      "scenario": "Sebuah mobil melaju mengitari tikungan melingkar berjari-jari 50 m dengan kelajuan tetap 20 m/s. Berapa percepatannya, dan dengan demikian berapa gaya gesek jalan yang harus diberikan per kilogram?",
+      "given": "v = 20 m/s; r = 50 m",
+      "target": "Percepatan sentripetal",
+      "unit": "m/s²",
+      "formula": "a = v² / r",
+      "hint": "Kelajuannya tetap, tetapi arahnya berubah. Kuadratkan kelajuan, lalu bagi dengan jari-jari.",
+      "steps": [
+        "Saat bergerak melingkar dengan kelajuan tetap, mobil mengalami percepatan menuju pusat tikungan.",
+        "a = v² / r = (20 m/s)² / 50 m = 400 / 50 m/s².",
+        "a = 8,0 m/s², menuju pusat tikungan.",
+        "Gesekan jalan harus memberikan 8,0 N per kilogram; di atas es hal itu tidak mungkin, dan mobil terus bergerak lurus."
+      ]
+    },
+    "iss-speed": {
+      "title": "Seberapa cepat ISS?",
+      "scenario": "Stasiun Luar Angkasa Internasional mengorbit sekitar 6,77 × 10⁶ m dari pusat Bumi dalam orbit yang hampir lingkaran. Untuk Bumi, GM = 3,99 × 10¹⁴ m³/s². Seberapa cepat stasiun itu bergerak?",
+      "given": "r = 6,77 × 10⁶ m; GM = 3,99 × 10¹⁴ m³/s²",
+      "target": "Kelajuan orbit",
+      "unit": "km/s",
+      "formula": "GMm/r² = mv²/r, sehingga v = √(GM/r)",
+      "hint": "Gravitasi memberikan tepat gaya yang diperlukan lingkaran. Samakan keduanya, selesaikan untuk v, lalu ubah m/s ke km/s.",
+      "steps": [
+        "Untuk orbit lingkaran, gravitasi adalah gaya sentripetal: GMm/r² = mv²/r.",
+        "Massa satelit saling meniadakan: v = √(GM/r) = √(3,99 × 10¹⁴ / 6,77 × 10⁶) m/s.",
+        "v ≈ √(5,89 × 10⁷) ≈ 7,68 × 10³ m/s ≈ 7,68 km/s.",
+        "Dengan kelajuan ini, stasiun mengelilingi Bumi dalam sekitar 92 menit."
+      ]
+    },
     "average-speed-pause": {
       "title": "Kelajuan rata-rata dengan berhenti",
       "scenario": "Sebuah benda bergerak 6,0 m sepanjang lintasan dalam 4,0 s, lalu diam selama 6,0 s sementara jam terus berjalan. Berapa kelajuan rata-ratanya selama seluruh 10 s?",
@@ -857,6 +919,36 @@ export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>>
     }
   },
   "ja": {
+    "car-bend": {
+      "title": "カーブを曲がる",
+      "scenario": "車が半径50 mの円形のカーブを一定の速さ20 m/sで曲がっています。加速度はいくらですか。つまり、道路の摩擦は1 kgあたりどれだけの力を与える必要がありますか。",
+      "given": "v = 20 m/s、r = 50 m",
+      "target": "向心加速度",
+      "unit": "m/s²",
+      "formula": "a = v² / r",
+      "hint": "速さは一定でも向きは変わります。速さを2乗し、半径で割りましょう。",
+      "steps": [
+        "一定の速さで円運動をすると、車はカーブの中心に向かって加速します。",
+        "a = v² / r = (20 m/s)² / 50 m = 400 / 50 m/s²。",
+        "a = 8.0 m/s²（カーブの中心向き）。",
+        "道路の摩擦は1 kgあたり8.0 Nを与える必要があります。凍った道ではそれができず、車はまっすぐ進んでしまいます。"
+      ]
+    },
+    "iss-speed": {
+      "title": "ISSはどれだけ速いか",
+      "scenario": "国際宇宙ステーションは、地球の中心から約6.77 × 10⁶ mの所をほぼ円軌道で回っています。地球では GM = 3.99 × 10¹⁴ m³/s² です。ステーションの速さはいくらですか。",
+      "given": "r = 6.77 × 10⁶ m、GM = 3.99 × 10¹⁴ m³/s²",
+      "target": "軌道の速さ",
+      "unit": "km/s",
+      "formula": "GMm/r² = mv²/r より v = √(GM/r)",
+      "hint": "重力が円運動に必要な力をちょうど与えています。両者を等しいとおいてvを求め、m/sをkm/sに換算しましょう。",
+      "steps": [
+        "円軌道では重力が向心力です: GMm/r² = mv²/r。",
+        "衛星の質量は約分されます: v = √(GM/r) = √(3.99 × 10¹⁴ / 6.77 × 10⁶) m/s。",
+        "v ≈ √(5.89 × 10⁷) ≈ 7.68 × 10³ m/s ≈ 7.68 km/s。",
+        "この速さで、ステーションは約92分で地球を1周します。"
+      ]
+    },
     "average-speed-pause": {
       "title": "止まっている時間を含む平均の速さ",
       "scenario": "物体がレールに沿って4.0 sで6.0 m進み、その後、時計が進み続ける間に6.0 s静止しました。10 s全体での平均の速さはいくらですか。",
@@ -1277,9 +1369,12 @@ export function parseNumericAnswer(raw: string): number | null {
   return Number.isFinite(value) ? value : null
 }
 
+/** Absorbs floating-point rounding, so an answer exactly on a boundary (10.2 for 10) counts as on it. */
+export const BOUNDARY_EPSILON = 1e-9
+
 /** True when `value` is within RELATIVE_TOLERANCE of `expected`. */
 export function isWithinTolerance(expected: number, value: number): boolean {
-  return Math.abs(value - expected) <= RELATIVE_TOLERANCE * Math.abs(expected)
+  return Math.abs(value - expected) <= (RELATIVE_TOLERANCE + BOUNDARY_EPSILON) * Math.abs(expected)
 }
 
 /** True when `raw` is a number within RELATIVE_TOLERANCE of the answer. */

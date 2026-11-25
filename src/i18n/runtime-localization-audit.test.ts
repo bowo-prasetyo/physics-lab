@@ -22,6 +22,8 @@ const ROUTES = [
   { path: '/relativity/moving-clocks', name: 'moving-clocks' },
   { path: '/relativity/two-perspectives', name: 'two-perspectives' },
   { path: '/gravity/clock-rates', name: 'gravity-clocks' },
+  { path: '/mechanics/circular-orbits', name: 'circular-orbits' },
+  { path: '/mechanics/circular-orbits?level=advanced', name: 'circular-orbits-advanced' },
   { path: '/gravity/geodesic-motion', name: 'geodesic-motion' },
   { path: '/gravity/geodesic-motion?level=advanced', name: 'geodesic-motion-advanced' },
   { path: '/cosmology/evolving-space', name: 'evolving-space' },

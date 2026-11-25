@@ -152,6 +152,20 @@ const supportCopy: Record<string, LocalizedSupportCopy> = {
       reflect: 'この比較では何を一定に保っていますか。また、GPS の補正が重力だけによるものではないのはなぜでしょうか。'
     }
   },
+  'circular-orbits': {
+    id: {
+      focus: 'Gerak melingkar memerlukan gaya resultan menuju pusat, m v²/r. Untuk orbit, gravitasilah yang memberikannya.',
+      prompt: 'Jika satelit bergerak dengan kelajuan tetap, mengapa ia memerlukan gaya, dan ke mana arah gaya itu?',
+      action: 'Prediksikan lintasannya, luncurkan dengan berbagai kelajuan dan ketinggian, lalu bandingkan percepatan yang diperlukan lingkaran dengan percepatan yang diberikan gravitasi.',
+      reflect: 'Apa yang menentukan apakah sebuah peluncuran menghasilkan lingkaran, elips, lepas, atau jatuh?'
+    },
+    ja: {
+      focus: '円運動には中心向きの合力 m v²/r が必要です。軌道運動では重力がその力を与えます。',
+      prompt: '衛星が一定の速さで動いているなら、なぜ力が必要なのでしょうか。また、その力はどちらを向いているはずでしょうか。',
+      action: '経路を予測し、速さと高さを変えて打ち上げ、円運動に必要な加速度と重力による加速度を比べてください。',
+      reflect: '打ち上げが円、楕円、脱出、墜落のどれになるかは、何で決まるのでしょうか。'
+    }
+  },
   'geodesic-motion': {
     id: {
       focus: 'Benda yang jatuh bebas mengikuti geodesik timelike dalam geometri ruang-waktu yang dipilih; lintasan orbit bukan diagram gaya.',

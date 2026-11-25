@@ -170,6 +170,11 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "idea": "Investigate how horizontal motion and vertical acceleration shape a projectile path.",
       "prerequisite": "Be familiar with velocity components and constant gravitational acceleration in the ideal model."
     },
+    "/mechanics/circular-orbits": {
+      "focus": "A circle needs a force towards the centre",
+      "idea": "Launch a satellite sideways and find when gravity bends its path into a circle, an ellipse or not at all.",
+      "prerequisite": "Know Newton’s second law, and that velocity has a direction as well as a size. The projectile launcher is a good warm-up: a faster sideways throw lands farther away."
+    },
     "/relativity/moving-clocks": {
       "focus": "Observers can measure different elapsed times",
       "idea": "Compare clock readings for observers following different paths through spacetime.",
@@ -188,7 +193,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     "/gravity/geodesic-motion": {
       "focus": "Gravity changes the geometry of motion",
       "idea": "Compare Newtonian orbits with free-fall paths in a curved-spacetime model.",
-      "prerequisite": "Know Newtonian gravity as a useful approximation and distinguish a model from the system it represents."
+      "prerequisite": "Start with Circular motion and orbits in Module 3: this lab compares curved-spacetime paths with the Newtonian ellipses you launched there. Know that a model is not the system it represents."
     },
     "/gravity/clock-rates": {
       "focus": "Gravity changes how fast clocks run",
@@ -237,6 +242,11 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "idea": "Selidiki bagaimana gerak horizontal dan percepatan vertikal membentuk lintasan proyektil.",
       "prerequisite": "Kenali komponen kecepatan dan percepatan gravitasi konstan dalam model ideal."
     },
+    "/mechanics/circular-orbits": {
+      "focus": "Lingkaran memerlukan gaya menuju pusat",
+      "idea": "Luncurkan satelit ke samping dan temukan kapan gravitasi membelokkan lintasannya menjadi lingkaran, elips, atau tidak sama sekali.",
+      "prerequisite": "Pahami hukum kedua Newton, dan bahwa kecepatan memiliki arah selain besar. Peluncur proyektil adalah pemanasan yang baik: lemparan ke samping yang lebih cepat mendarat lebih jauh."
+    },
     "/relativity/moving-clocks": {
       "focus": "Pengamat dapat mengukur waktu berlalu yang berbeda",
       "idea": "Bandingkan pembacaan jam bagi pengamat yang menempuh lintasan berbeda dalam ruang-waktu.",
@@ -255,7 +265,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     "/gravity/geodesic-motion": {
       "focus": "Gravitasi mengubah geometri gerak",
       "idea": "Bandingkan orbit Newton dengan lintasan jatuh bebas dalam model ruang-waktu melengkung.",
-      "prerequisite": "Pahami gravitasi Newton sebagai pendekatan yang berguna dan bedakan model dari sistem fisik yang diwakilinya."
+      "prerequisite": "Mulailah dengan Gerak melingkar dan orbit di Modul 3: laboratorium ini membandingkan lintasan dalam ruang-waktu melengkung dengan elips Newton yang Anda luncurkan di sana. Pahami bahwa model bukanlah sistem yang diwakilinya."
     },
     "/gravity/clock-rates": {
       "focus": "Gravitasi mengubah laju jam",
@@ -304,6 +314,11 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "idea": "水平運動と鉛直加速度が放物運動の軌道をどう形作るか調べます。",
       "prerequisite": "理想モデルにおける速度成分と一定の重力加速度に慣れておきましょう。"
     },
+    "/mechanics/circular-orbits": {
+      "focus": "円運動には中心向きの力が必要",
+      "idea": "衛星を横向きに打ち出し、重力が経路を円や楕円に曲げるのはいつか、曲げきれないのはいつかを調べます。",
+      "prerequisite": "ニュートンの第2法則と、速度には大きさだけでなく向きもあることを理解しておきましょう。投射装置がよい準備になります。横向きに速く投げるほど遠くに落ちます。"
+    },
     "/relativity/moving-clocks": {
       "focus": "観測者によって経過時間の測定が異なる",
       "idea": "時空内で異なる経路をたどる観測者の時計を比較します。",
@@ -322,7 +337,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     "/gravity/geodesic-motion": {
       "focus": "重力は運動の幾何を変える",
       "idea": "ニュートン力学の軌道と、曲がった時空モデルでの自由落下経路を比較します。",
-      "prerequisite": "ニュートン重力が有用な近似であることを理解し、モデルと物理系を区別しましょう。"
+      "prerequisite": "まずモジュール3の「円運動と軌道」に取り組みましょう。この実験室では、そこで打ち上げたニュートン力学の楕円と、曲がった時空での経路を比べます。モデルと、それが表す物理系とは別物であることも理解しておきましょう。"
     },
     "/gravity/clock-rates": {
       "focus": "重力は時計の進み方を変える",
@@ -677,6 +692,17 @@ export const PRACTICE_BANK: readonly PracticeSource[] = [
       "normal"
     ],
     "answer": "instant"
+  },
+  {
+    "id": "orbit-string",
+    "experiment": "/mechanics/circular-orbits",
+    "minLevel": "beginner",
+    "options": [
+      "tangent",
+      "outward",
+      "centre"
+    ],
+    "answer": "tangent"
   }
 ]
 
@@ -923,6 +949,16 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "The slope is the velocity. How long does the slope take to change at a corner?",
       "explanation": "At a corner the slope jumps from one value to another instantly, so a = Δv/Δt would be infinite. Changing velocity takes a force acting over some time, so a real x–t graph bends smoothly between its straight parts. Sharp corners are an idealisation of the model, which the experiment uses too."
+    },
+    "orbit-string": {
+      "prompt": "You whirl a ball on a string in a horizontal circle, and the string snaps. Which way does the ball fly off?",
+      "options": {
+        "tangent": "Straight on, along the direction it was moving at that moment",
+        "outward": "Straight outwards, away from the centre",
+        "centre": "Towards the centre"
+      },
+      "hint": "Once the string breaks, no force acts sideways. What does an object do when no net force acts on it?",
+      "explanation": "The string supplied the force towards the centre that kept bending the path. Without it, the ball carries on in a straight line along its velocity at that moment, tangent to the circle. Nothing was pulling it outwards; the satellite in the experiment would do the same if gravity were switched off."
     }
   },
   "id": {
@@ -1167,6 +1203,16 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "Kemiringan adalah kecepatan. Berapa lama kemiringan berubah di sebuah sudut?",
       "explanation": "Di sebuah sudut, kemiringan melompat dari satu nilai ke nilai lain seketika, sehingga a = Δv/Δt akan tak hingga. Mengubah kecepatan memerlukan gaya yang bekerja selama selang waktu tertentu, jadi grafik x–t nyata melengkung mulus di antara bagian lurusnya. Sudut tajam adalah idealisasi model, yang juga digunakan dalam eksperimen."
+    },
+    "orbit-string": {
+      "prompt": "Anda memutar bola bertali dalam lingkaran horizontal, lalu talinya putus. Ke mana bola terlempar?",
+      "options": {
+        "tangent": "Lurus ke depan, searah geraknya pada saat itu",
+        "outward": "Lurus ke luar, menjauhi pusat",
+        "centre": "Menuju pusat"
+      },
+      "hint": "Setelah tali putus, tidak ada gaya ke samping. Apa yang dilakukan benda jika tidak ada gaya resultan padanya?",
+      "explanation": "Tali memberikan gaya menuju pusat yang terus membelokkan lintasan. Tanpa tali, bola terus bergerak lurus searah kecepatannya saat itu, menyinggung lingkaran. Tidak ada yang menariknya ke luar; satelit dalam eksperimen akan melakukan hal yang sama jika gravitasi dimatikan."
     }
   },
   "ja": {
@@ -1411,6 +1457,16 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "傾きは速度です。角のところで、傾きが変わるのにどれだけ時間がかかりますか。",
       "explanation": "角では傾きが一瞬で別の値に跳ぶので、a = Δv/Δt は無限大になります。速度を変えるには力がある時間働く必要があるので、実際の x–t グラフは直線部分の間でなめらかに曲がります。鋭い角はモデルの理想化で、実験でも同じ理想化を使っています。"
+    },
+    "orbit-string": {
+      "prompt": "ひもにつけたボールを水平な円を描くように回していると、ひもが切れました。ボールはどちらへ飛んでいきますか。",
+      "options": {
+        "tangent": "その瞬間に動いていた向きにまっすぐ",
+        "outward": "中心から離れる向きにまっすぐ外へ",
+        "centre": "中心に向かって"
+      },
+      "hint": "ひもが切れると、横向きの力は働きません。合力が働かない物体はどう動きますか。",
+      "explanation": "ひもは、経路を曲げ続ける中心向きの力を与えていました。それがなくなると、ボールはその瞬間の速度の向き、つまり円の接線方向にまっすぐ進みます。外向きに引くものはありません。実験の衛星も、重力がなくなれば同じように動きます。"
     }
   }
 }

@@ -1,6 +1,6 @@
 import type { Locale } from '@/i18n/locales'
 import { translate, type MessageKey } from '@/i18n/messages'
-import { isWithinTolerance, parseNumericAnswer, RELATIVE_TOLERANCE } from './problem-bank'
+import { BOUNDARY_EPSILON, isWithinTolerance, parseNumericAnswer, RELATIVE_TOLERANCE } from './problem-bank'
 
 /**
  * Diagnostic feedback for a wrong numerical answer: which common slip the
@@ -39,7 +39,7 @@ export function diagnoseNumericResponse(expected: number, raw: string): NumericD
     if (powerOfTen !== 0 && Math.abs(ratio / 10 ** powerOfTen - 1) <= SCALE_MATCH) return { kind: 'scale', powerOfTen }
   }
   const relativeError = Math.abs(value - expected) / Math.abs(expected)
-  if (relativeError <= NEAR_LIMIT) return { kind: 'near' }
+  if (relativeError <= NEAR_LIMIT + BOUNDARY_EPSILON) return { kind: 'near' }
   if (Math.abs(value) < Math.abs(expected) / 10) return { kind: 'too-small' }
   if (Math.abs(value) > Math.abs(expected) * 10) return { kind: 'too-large' }
   return { kind: 'review' }

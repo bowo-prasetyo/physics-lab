@@ -57,13 +57,14 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 3,
     title: 'Understanding motion',
     role: 'How motion through space changes over time, and why: forces, momentum and reference frames. This Newtonian picture is the one relativity later revises.',
-    coverage: ['Newton’s second law: net force, mass and acceleration', 'Free-body diagrams and multiple forces', 'Static and kinetic friction, and force components on an inclined plane', 'Linear momentum and impulse', 'One-dimensional elastic and inelastic collisions', 'Momentum conservation and kinetic-energy change', 'Ideal projectile motion', 'Effects of launch conditions and gravitational acceleration', 'Galilean reference frames', 'Quadratic air resistance and energy loss'],
-    plannedTopics: ['Circular motion', 'Work, energy and conservation beyond projectile examples', 'Gravitation as a force and orbital motion'],
+    coverage: ['Newton’s second law: net force, mass and acceleration', 'Free-body diagrams and multiple forces', 'Static and kinetic friction, and force components on an inclined plane', 'Linear momentum and impulse', 'One-dimensional elastic and inelastic collisions', 'Momentum conservation and kinetic-energy change', 'Ideal projectile motion', 'Effects of launch conditions and gravitational acceleration', 'Galilean reference frames', 'Quadratic air resistance and energy loss', 'Uniform circular motion and centripetal force', 'Newtonian gravitation and circular, elliptical and escape orbits', 'Kepler’s third law'],
+    plannedTopics: ['Work, energy and conservation beyond projectile examples'],
     experiments: [
       { title: 'Force, mass and acceleration', summary: 'Vary net force and cart mass to investigate Newton’s second law.', path: '/mechanics/newtonian' },
       { title: 'Force Lab: free-body diagrams and multiple forces', summary: 'Build a free-body diagram, resolve forces on a level surface or incline, and test how the net force determines acceleration.', path: '/mechanics/force-lab' },
       { title: 'Momentum and collisions', summary: 'Predict how two carts move after colliding; compare elastic and inelastic outcomes, momentum conservation and kinetic-energy changes.', path: '/mechanics/momentum-collisions' },
       { title: 'Projectile launcher', summary: 'Launch a ball on the Earth, Moon, Mars or Jupiter, with or without air, and watch it from the ground or a moving train.', path: '/mechanics/projectile' },
+      { title: 'Circular motion and orbits', summary: 'Launch a satellite sideways: find the speed for a circular orbit, see what gravity must supply, and push it into an ellipse or out of reach.', path: '/mechanics/circular-orbits' },
     ],
   },
   {

@@ -18,6 +18,8 @@ describe('numerical feedback diagnosis', () => {
     expect(classifyNumericResponse(10, '10.1')).toBe('correct')
     expect(classifyNumericResponse(10, '10.4')).toBe('near')
     expect(classifyNumericResponse(10, '9.6')).toBe('near')
+    expect(classifyNumericResponse(8, '8.4')).toBe('near') // exactly 5%, despite floating-point rounding
+    expect(classifyNumericResponse(8, '8.16')).toBe('correct') // exactly 2%
     expect(classifyNumericResponse(10, '11')).toBe('review') // 10% off is a model or step problem, not rounding
     expect(classifyNumericResponse(answer('projectile-range'), '31.8')).toBe('review')
     expect(NEAR_LIMIT).toBeGreaterThan(RELATIVE_TOLERANCE)
