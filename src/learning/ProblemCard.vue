@@ -55,7 +55,7 @@ function retry(): void {
       <button v-if="!hintVisible && !checked" type="button" class="btn btn-small" @click="hintVisible = true">{{ t('learning.problem.hint') }}</button>
       <button v-if="!checked" type="button" class="btn btn-primary btn-small" :disabled="!response.trim()" @click="check">{{ t('learning.problem.check') }}</button>
       <button v-else type="button" class="btn btn-small" @click="retry">{{ t('learning.problem.retry') }}</button>
-      <button v-if="checked && !solutionVisible" type="button" class="btn btn-small" @click="solutionVisible = true; solutionStep = 1">{{ t('learning.problem.worked')</button>
+      <button v-if="checked && !solutionVisible" type="button" class="btn btn-small" @click="solutionVisible = true; solutionStep = 1">{{ t('learning.problem.worked') }}</button>
     </div>
     <p v-if="hintVisible && !checked" class="hint" role="status">{{ problem.hint }}</p>
     <div v-if="checked" class="feedback" :class="correct ? 'correct' : 'incorrect'" role="status" aria-live="polite">
