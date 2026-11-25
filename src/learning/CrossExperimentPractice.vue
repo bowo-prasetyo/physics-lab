@@ -7,7 +7,7 @@ import { isExplored } from './session-progress'
 import PracticeQuestion from './PracticeQuestion.vue'
 
 const props = defineProps<{
-  chapterNumber: number
+  stepPath: string
   locale: Locale
   ui: LearningUi
   seed: number
