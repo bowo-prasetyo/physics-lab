@@ -114,6 +114,11 @@ export const messages = {
     'learning.graph.corners': 'Corner points of the graph',
     'learning.graph.time': 'Time (s)',
     'learning.graph.position': 'Position (m)',
+    'learning.graph.values': 'Values on the curve',
+    'learning.graph.description': 'Graph of {y} against {x}.',
+    'learning.problem.stepProgress': 'Step {current} of {total}',
+    'learning.problem.nextStep': 'Show the next step',
+    'learning.problem.allSteps': 'All steps shown',
   },
   id: {
     'app.brand.homeLabel': 'Beranda Physica',
@@ -228,6 +233,11 @@ export const messages = {
     'learning.graph.corners': 'Titik sudut grafik',
     'learning.graph.time': 'Waktu (s)',
     'learning.graph.position': 'Posisi (m)',
+    'learning.graph.values': 'Nilai pada kurva',
+    'learning.graph.description': 'Grafik {y} terhadap {x}.',
+    'learning.problem.stepProgress': 'Langkah {current} dari {total}',
+    'learning.problem.nextStep': 'Tampilkan langkah berikutnya',
+    'learning.problem.allSteps': 'Semua langkah ditampilkan',
   },
   ja: {
     'app.brand.homeLabel': 'Physica ホーム',
@@ -342,6 +352,11 @@ export const messages = {
     'learning.graph.corners': 'グラフの角の点',
     'learning.graph.time': '時間 (s)',
     'learning.graph.position': '位置 (m)',
+    'learning.graph.values': '曲線上の値',
+    'learning.graph.description': '{x} に対する {y} のグラフ。',
+    'learning.problem.stepProgress': 'ステップ {current} / {total}',
+    'learning.problem.nextStep': '次のステップを表示',
+    'learning.problem.allSteps': 'すべてのステップを表示しました',
   },
 } as const
 

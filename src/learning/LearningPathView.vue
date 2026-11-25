@@ -10,7 +10,6 @@ import { isExplored } from './session-progress'
 import PracticeQuestion from './PracticeQuestion.vue'
 import ProblemCard from './ProblemCard.vue'
 import GraphPractice from './GraphPractice.vue'
-import GraphInterpretation from './GraphInterpretation.vue'
 
 const { locale, t } = useLocale()
 const level = useLevel()
@@ -110,7 +109,6 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
           </div>
         </li>
       </ol>
-      <GraphInterpretation v-if="isExplored('/mechanics/force-lab') && isExplored('/mechanics/projectile') && isExplored('/time/pendulum')" />
       <p class="privacy-note">{{ ui.privacyNote }}</p>
     </section>
   </article>

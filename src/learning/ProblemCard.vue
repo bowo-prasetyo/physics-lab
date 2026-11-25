@@ -12,12 +12,8 @@ const checked = ref(false)
 const hintVisible = ref(false)
 const solutionVisible = ref(false)
 const solutionStep = ref(0)
-const solutionProgress = computed(() => {
-  const labels = { en: 'Step', id: 'Langkah', ja: 'ステップ' }
-  return labels[locale.value] + ' ' + solutionStep.value + ' / ' + props.problem.steps.length
-})
-const nextStepLabel = computed(() => ({ en: 'Show next step', id: 'Tampilkan langkah berikutnya', ja: '次のステップを表示' })[locale.value])
-const completeLabel = computed(() => ({ en: 'All steps shown', id: 'Semua langkah ditampilkan', ja: 'すべてのステップを表示しました' })[locale.value])
+const solutionProgress = computed(() => t('learning.problem.stepProgress')
+  .replace('{current}', String(solutionStep.value)).replace('{total}', String(props.problem.steps.length)))
 const correct = computed(() => checked.value && isNumericallyCorrect(props.problem, response.value))
 const formattedAnswer = computed(() => new Intl.NumberFormat(locale.value, { maximumSignificantDigits: 3 }).format(props.problem.answer))
 const coaching = computed(() => !correct.value && checked.value ? numericFeedback(props.problem.answer, response.value, locale.value, props.problem.unit) : '')
@@ -69,8 +65,8 @@ function retry(): void {
       <p class="solution-progress" aria-live="polite">{{ solutionProgress }}</p>
       <ol><li v-for="(step, index) in problem.steps.slice(0, solutionStep)" :key="index">{{ step }}</li></ol>
       <div class="actions">
-        <button v-if="solutionStep < problem.steps.length" type="button" class="btn btn-primary btn-small" @click="solutionStep++">{{ nextStepLabel }}</button>
-        <span v-else class="input-help" role="status">{{ completeLabel }}</span>
+        <button v-if="solutionStep < problem.steps.length" type="button" class="btn btn-primary btn-small" @click="solutionStep++">{{ t('learning.problem.nextStep') }}</button>
+        <span v-else class="input-help" role="status">{{ t('learning.problem.allSteps') }}</span>
       </div>
       <p v-if="solutionStep === problem.steps.length" class="final-answer"><strong>{{ t('learning.problem.expected') }}:</strong> {{ formattedAnswer }} {{ problem.unit }}</p>
     </section>

@@ -1,7 +1,7 @@
 import type { Locale } from '@/i18n/locales'
 import type { Level } from '@/levels'
 import { getLocalizedModules } from '@/i18n/home-catalog'
-import type { RunRecord, TrackBounds } from '@/physics'
+import { accelerationFromNetForce, exactState, smallAnglePeriod, type RunRecord, type TrackBounds } from '@/physics'
 import { problemsFor, type PhysicsProblem } from './problem-bank'
 
 /**
@@ -380,13 +380,33 @@ export const CHAPTER_PREREQUISITES: Record<Locale, Readonly<Record<number, strin
   }
 }
 
-/** The practice bank: structure (experiment, level, option ids, answer) is shared by every language. */
-/** A position–time graph for graph questions: one piecewise-uniform run. */
+/** A position–time graph for graph questions: one piecewise-uniform run, drawn with PositionTimeGraph. */
 export interface MotionGraph {
+  readonly kind: 'motion'
   readonly record: RunRecord
   readonly duration: number
   readonly bounds: TrackBounds
 }
+
+/** A scale from 0 to `max`, labelled every `step`. */
+export interface GraphAxis { readonly max: number; readonly step: number }
+
+/**
+ * A model curve y = f(x) for graph questions, drawn with FunctionGraph. `f`
+ * must call the physics engine, so the plotted curve cannot drift from the
+ * model the experiment uses (problem-bank and learning-content tests check
+ * it). Scales start at zero, so proportionality can be read from the plot.
+ */
+export interface FunctionGraph {
+  readonly kind: 'function'
+  readonly x: GraphAxis
+  readonly y: GraphAxis
+  readonly f: (x: number) => number
+  /** x-values whose y-values are listed in a table beside the plot. */
+  readonly table: readonly number[]
+}
+
+export type PracticeGraph = MotionGraph | FunctionGraph
 
 /** Build a run from its starting position and a list of [velocity (m/s), duration (s)] pieces. */
 function piecewiseRun(x0: number, pieces: readonly (readonly [number, number])[], bounds: TrackBounds): MotionGraph {
@@ -400,29 +420,56 @@ function piecewiseRun(x0: number, pieces: readonly (readonly [number, number])[]
     distance += Math.abs(v) * duration
     return segment
   })
-  return { record: { x0, segments, tEnd: t, distance }, duration: t, bounds }
+  return { kind: 'motion', record: { x0, segments, tEnd: t, distance }, duration: t, bounds }
 }
+
+/** The projectile in the height–time graph: launched at 19.6 m/s, 30° above level ground, g = 9.8 m/s² (vertical speed 9.8 m/s). */
+export const GRAPH_PROJECTILE = { speed: 19.6, angleDeg: 30, height: 0, g: 9.8, k: 0 } as const
+/** The cart in the acceleration–force graph (kg). */
+export const GRAPH_CART_MASS = 2
 
 /** Graphs that graph questions refer to, by id. */
-export const GRAPHS: Readonly<Record<string, MotionGraph>> = {
+export const GRAPHS: Readonly<Record<string, PracticeGraph>> = {
   // Forwards at +2 m/s, still for 2 s while the clock runs, back to the start at −2 m/s.
   'walk-stop-return': piecewiseRun(0, [[2, 2], [0, 2], [-2, 2]], { min: 0, max: 6 }),
+  // Newton's second law for a 2 kg cart: a straight line through the origin with slope 1/m.
+  'force-acceleration': { kind: 'function', x: { max: 10, step: 2 }, y: { max: 5, step: 1 }, f: (force) => accelerationFromNetForce(force, GRAPH_CART_MASS), table: [0, 2, 4, 6, 8, 10] },
+  // Height of the ideal projectile from launch to landing: a parabola, highest at t = 1 s.
+  'projectile-height': { kind: 'function', x: { max: 2, step: 0.5 }, y: { max: 6, step: 1 }, f: (t) => Math.max(0, exactState(GRAPH_PROJECTILE, t).y), table: [0, 0.5, 1, 1.5, 2] },
+  // Small-angle period on the Earth: T = 2π√(L/g), through the origin and curving over.
+  'pendulum-length': { kind: 'function', x: { max: 2, step: 0.5 }, y: { max: 3, step: 0.5 }, f: (length) => smallAnglePeriod(length, 9.81), table: [0, 0.5, 1, 1.5, 2] },
 }
 
-export interface GraphCopy { readonly title: string; readonly intro: string }
+export interface GraphCopy {
+  readonly title: string
+  readonly intro: string
+  /** Axis labels with units; required for function graphs (PositionTimeGraph labels its own axes). */
+  readonly xLabel?: string
+  readonly yLabel?: string
+}
 
 export const GRAPH_COPY: Record<Locale, Readonly<Record<string, GraphCopy>>> = {
   en: {
     'walk-stop-return': { title: 'Read a position–time graph', intro: 'One run of an object on the track. The questions below are all about this graph; its slope is the velocity.' },
+    'force-acceleration': { title: 'Read an acceleration–force graph', intro: 'The model behind the experiment: one cart of fixed mass, pushed with different net forces.', xLabel: 'Net force (N)', yLabel: 'Acceleration (m/s²)' },
+    'projectile-height': { title: 'Read a height–time graph', intro: 'The height of an ideal projectile from launch to landing, with no air resistance.', xLabel: 'Time (s)', yLabel: 'Height (m)' },
+    'pendulum-length': { title: 'Read a period–length graph', intro: 'The small-swing period of pendulums of different lengths on the Earth.', xLabel: 'Length (m)', yLabel: 'Period (s)' },
   },
   id: {
     'walk-stop-return': { title: 'Membaca grafik posisi–waktu', intro: 'Satu percobaan sebuah benda di lintasan. Semua pertanyaan di bawah ini tentang grafik ini; kemiringannya adalah kecepatan.' },
+    'force-acceleration': { title: 'Membaca grafik percepatan–gaya', intro: 'Model di balik eksperimen: satu kereta bermassa tetap, didorong dengan gaya resultan yang berbeda-beda.', xLabel: 'Gaya resultan (N)', yLabel: 'Percepatan (m/s²)' },
+    'projectile-height': { title: 'Membaca grafik ketinggian–waktu', intro: 'Ketinggian proyektil ideal dari peluncuran hingga mendarat, tanpa hambatan udara.', xLabel: 'Waktu (s)', yLabel: 'Ketinggian (m)' },
+    'pendulum-length': { title: 'Membaca grafik periode–panjang', intro: 'Periode ayunan kecil pendulum dengan panjang berbeda-beda di Bumi.', xLabel: 'Panjang (m)', yLabel: 'Periode (s)' },
   },
   ja: {
     'walk-stop-return': { title: '位置–時間グラフを読み取る', intro: 'レール上の物体の1回の試行です。下の質問はすべてこのグラフについてです。グラフの傾きが速度を表します。' },
+    'force-acceleration': { title: '加速度–力グラフを読み取る', intro: '実験の背後にあるモデルです。質量が一定の台車を、さまざまな合力で押します。', xLabel: '合力 (N)', yLabel: '加速度 (m/s²)' },
+    'projectile-height': { title: '高さ–時間グラフを読み取る', intro: '空気抵抗のない理想的な投射物の、打ち上げから着地までの高さです。', xLabel: '時間 (s)', yLabel: '高さ (m)' },
+    'pendulum-length': { title: '周期–長さグラフを読み取る', intro: '地球上での、長さの異なる振り子の小さな振れの周期です。', xLabel: '長さ (m)', yLabel: '周期 (s)' },
   },
 }
 
+/** The practice bank: structure (experiment, level, option ids, answer) is shared by every language. */
 export const PRACTICE_BANK: readonly PracticeSource[] = [
   {
     "id": "walk",
@@ -703,6 +750,78 @@ export const PRACTICE_BANK: readonly PracticeSource[] = [
       "centre"
     ],
     "answer": "tangent"
+  },
+  {
+    "id": "graph-force-proportional",
+    "experiment": "/mechanics/force-lab",
+    "graph": "force-acceleration",
+    "minLevel": "beginner",
+    "options": [
+      "proportional",
+      "independent",
+      "constant"
+    ],
+    "answer": "proportional"
+  },
+  {
+    "id": "graph-force-mass",
+    "experiment": "/mechanics/force-lab",
+    "graph": "force-acceleration",
+    "minLevel": "intermediate",
+    "options": [
+      "two",
+      "half",
+      "ten"
+    ],
+    "answer": "two"
+  },
+  {
+    "id": "graph-height-velocity",
+    "experiment": "/mechanics/projectile",
+    "graph": "projectile-height",
+    "minLevel": "beginner",
+    "options": [
+      "steady",
+      "constant",
+      "top-only"
+    ],
+    "answer": "steady"
+  },
+  {
+    "id": "graph-height-top",
+    "experiment": "/mechanics/projectile",
+    "graph": "projectile-height",
+    "minLevel": "intermediate",
+    "options": [
+      "zero",
+      "upward",
+      "g"
+    ],
+    "answer": "zero"
+  },
+  {
+    "id": "graph-period-length",
+    "experiment": "/time/pendulum",
+    "graph": "pendulum-length",
+    "minLevel": "beginner",
+    "options": [
+      "root",
+      "linear",
+      "decreases"
+    ],
+    "answer": "root"
+  },
+  {
+    "id": "graph-period-double",
+    "experiment": "/time/pendulum",
+    "graph": "pendulum-length",
+    "minLevel": "intermediate",
+    "options": [
+      "four",
+      "two",
+      "root2"
+    ],
+    "answer": "four"
   }
 ]
 
@@ -959,6 +1078,66 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "Once the string breaks, no force acts sideways. What does an object do when no net force acts on it?",
       "explanation": "The string supplied the force towards the centre that kept bending the path. Without it, the ball carries on in a straight line along its velocity at that moment, tangent to the circle. Nothing was pulling it outwards; the satellite in the experiment would do the same if gravity were switched off."
+    },
+    "graph-force-proportional": {
+      "prompt": "For this cart of fixed mass, what does the straight line through the origin tell you?",
+      "options": {
+        "proportional": "Acceleration is proportional to the net force: double the force, double the acceleration.",
+        "independent": "Acceleration does not depend on the force.",
+        "constant": "The force grows because the acceleration is constant."
+      },
+      "hint": "Read the acceleration at 4 N and at 8 N. How do they compare?",
+      "explanation": "A straight line through the origin means proportional: 4 N gives 2 m/s² and 8 N gives 4 m/s². That is Newton’s second law, a = F_net/m, with the mass held fixed. The force is what you choose; the acceleration is the response."
+    },
+    "graph-force-mass": {
+      "prompt": "Use the slope of the line. What is the cart’s mass?",
+      "options": {
+        "two": "2 kg",
+        "half": "0.5 kg",
+        "ten": "10 kg"
+      },
+      "hint": "The slope is acceleration divided by force, a/F. Newton’s second law says a/F = 1/m.",
+      "explanation": "The slope is 5 m/s² ÷ 10 N = 0.5 (m/s²)/N. Since a = F/m, the slope is 1/m, so m = 1 ÷ 0.5 = 2 kg. A heavier cart would give a shallower line."
+    },
+    "graph-height-velocity": {
+      "prompt": "The slope of a height–time graph is the vertical velocity. What does this curve tell you about it?",
+      "options": {
+        "steady": "It changes steadily: it falls by the same amount every second, from upwards to downwards.",
+        "constant": "It stays the same all the way.",
+        "top-only": "It changes only at the top, where gravity acts."
+      },
+      "hint": "Compare the slope near the launch, at the top and near the landing.",
+      "explanation": "The slope starts steep and positive, is zero at the top and ends steep and negative: the vertical velocity falls steadily, from +9.8 m/s to −9.8 m/s in 2 s. A steady change in velocity is a constant acceleration, gravity’s 9.8 m/s² downwards, acting the whole time."
+    },
+    "graph-height-top": {
+      "prompt": "At the highest point, at t = 1 s, what is the ball’s vertical velocity?",
+      "options": {
+        "zero": "Zero: the graph is flat there",
+        "upward": "9.8 m/s upwards",
+        "g": "9.8 m/s², the acceleration due to gravity"
+      },
+      "hint": "Look at the slope of the curve exactly at the top.",
+      "explanation": "The curve is flat at the top, so the vertical velocity is zero for an instant. The acceleration is not zero: gravity still pulls at 9.8 m/s², which is why the velocity carries on changing, from upwards to downwards. Velocity and acceleration are different quantities."
+    },
+    "graph-period-length": {
+      "prompt": "As the pendulum gets longer, what happens to its period?",
+      "options": {
+        "root": "It increases, but more and more slowly: not in proportion to the length.",
+        "linear": "It increases in proportion to the length.",
+        "decreases": "It decreases."
+      },
+      "hint": "Read the period at 0.5 m and at 2 m. Four times the length gives how many times the period?",
+      "explanation": "The curve starts at the origin and bends over: 0.5 m gives about 1.4 s and 2 m gives about 2.8 s. Four times the length only doubles the period, because T = 2π√(L/g) grows with the square root of the length."
+    },
+    "graph-period-double": {
+      "prompt": "Using the graph, how much longer must the 0.5 m pendulum be to double its period?",
+      "options": {
+        "four": "Four times as long (2 m)",
+        "two": "Twice as long (1 m)",
+        "root2": "About 1.4 times as long (0.7 m)"
+      },
+      "hint": "Find the period at 0.5 m, double it, and read across to the length that gives it.",
+      "explanation": "At 0.5 m the period is about 1.42 s. Double that, about 2.84 s, is reached at 2 m: four times the length. Since T ∝ √L, doubling T needs L × 2² = 4L."
     }
   },
   "id": {
@@ -1213,6 +1392,66 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "Setelah tali putus, tidak ada gaya ke samping. Apa yang dilakukan benda jika tidak ada gaya resultan padanya?",
       "explanation": "Tali memberikan gaya menuju pusat yang terus membelokkan lintasan. Tanpa tali, bola terus bergerak lurus searah kecepatannya saat itu, menyinggung lingkaran. Tidak ada yang menariknya ke luar; satelit dalam eksperimen akan melakukan hal yang sama jika gravitasi dimatikan."
+    },
+    "graph-force-proportional": {
+      "prompt": "Untuk kereta bermassa tetap ini, apa arti garis lurus yang melalui titik asal?",
+      "options": {
+        "proportional": "Percepatan sebanding dengan gaya resultan: gaya dua kali lipat, percepatan dua kali lipat.",
+        "independent": "Percepatan tidak bergantung pada gaya.",
+        "constant": "Gaya bertambah karena percepatannya tetap."
+      },
+      "hint": "Baca percepatan pada 4 N dan pada 8 N. Bagaimana perbandingannya?",
+      "explanation": "Garis lurus melalui titik asal berarti sebanding: 4 N menghasilkan 2 m/s² dan 8 N menghasilkan 4 m/s². Itulah hukum kedua Newton, a = F_resultan/m, dengan massa tetap. Gaya adalah yang Anda pilih; percepatan adalah tanggapannya."
+    },
+    "graph-force-mass": {
+      "prompt": "Gunakan kemiringan garis. Berapa massa kereta?",
+      "options": {
+        "two": "2 kg",
+        "half": "0,5 kg",
+        "ten": "10 kg"
+      },
+      "hint": "Kemiringan adalah percepatan dibagi gaya, a/F. Hukum kedua Newton menyatakan a/F = 1/m.",
+      "explanation": "Kemiringannya 5 m/s² ÷ 10 N = 0,5 (m/s²)/N. Karena a = F/m, kemiringannya 1/m, sehingga m = 1 ÷ 0,5 = 2 kg. Kereta yang lebih berat menghasilkan garis yang lebih landai."
+    },
+    "graph-height-velocity": {
+      "prompt": "Kemiringan grafik ketinggian–waktu adalah kecepatan vertikal. Apa yang ditunjukkan kurva ini tentang kecepatan itu?",
+      "options": {
+        "steady": "Berubah secara teratur: berkurang dengan jumlah yang sama setiap detik, dari ke atas menjadi ke bawah.",
+        "constant": "Tetap sama sepanjang waktu.",
+        "top-only": "Berubah hanya di puncak, tempat gravitasi bekerja."
+      },
+      "hint": "Bandingkan kemiringan di dekat peluncuran, di puncak, dan di dekat pendaratan.",
+      "explanation": "Kemiringan mula-mula curam dan positif, nol di puncak, lalu berakhir curam dan negatif: kecepatan vertikal berkurang secara teratur, dari +9,8 m/s menjadi −9,8 m/s dalam 2 s. Perubahan kecepatan yang teratur adalah percepatan tetap, yaitu 9,8 m/s² ke bawah dari gravitasi, yang bekerja sepanjang waktu."
+    },
+    "graph-height-top": {
+      "prompt": "Di titik tertinggi, pada t = 1 s, berapa kecepatan vertikal bola?",
+      "options": {
+        "zero": "Nol: grafiknya mendatar di sana",
+        "upward": "9,8 m/s ke atas",
+        "g": "9,8 m/s², percepatan gravitasi"
+      },
+      "hint": "Perhatikan kemiringan kurva tepat di puncak.",
+      "explanation": "Kurva mendatar di puncak, sehingga kecepatan vertikal nol sesaat. Percepatannya tidak nol: gravitasi tetap menarik dengan 9,8 m/s², itulah sebabnya kecepatan terus berubah, dari ke atas menjadi ke bawah. Kecepatan dan percepatan adalah besaran yang berbeda."
+    },
+    "graph-period-length": {
+      "prompt": "Saat pendulum makin panjang, apa yang terjadi pada periodenya?",
+      "options": {
+        "root": "Bertambah, tetapi makin lambat: tidak sebanding dengan panjangnya.",
+        "linear": "Bertambah sebanding dengan panjangnya.",
+        "decreases": "Berkurang."
+      },
+      "hint": "Baca periode pada 0,5 m dan pada 2 m. Panjang empat kali menghasilkan periode berapa kali?",
+      "explanation": "Kurva berawal di titik asal lalu melengkung: 0,5 m menghasilkan sekitar 1,4 s dan 2 m sekitar 2,8 s. Panjang empat kali hanya menggandakan periode, karena T = 2π√(L/g) bertambah menurut akar kuadrat panjang."
+    },
+    "graph-period-double": {
+      "prompt": "Dengan grafik ini, berapa kali lebih panjang pendulum 0,5 m harus dibuat agar periodenya dua kali lipat?",
+      "options": {
+        "four": "Empat kali (2 m)",
+        "two": "Dua kali (1 m)",
+        "root2": "Sekitar 1,4 kali (0,7 m)"
+      },
+      "hint": "Tentukan periode pada 0,5 m, gandakan, lalu baca panjang yang menghasilkannya.",
+      "explanation": "Pada 0,5 m periodenya sekitar 1,42 s. Dua kalinya, sekitar 2,84 s, dicapai pada 2 m: empat kali panjangnya. Karena T ∝ √L, menggandakan T memerlukan L × 2² = 4L."
     }
   },
   "ja": {
@@ -1467,6 +1706,66 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "ひもが切れると、横向きの力は働きません。合力が働かない物体はどう動きますか。",
       "explanation": "ひもは、経路を曲げ続ける中心向きの力を与えていました。それがなくなると、ボールはその瞬間の速度の向き、つまり円の接線方向にまっすぐ進みます。外向きに引くものはありません。実験の衛星も、重力がなくなれば同じように動きます。"
+    },
+    "graph-force-proportional": {
+      "prompt": "質量が一定のこの台車について、原点を通る直線は何を示していますか。",
+      "options": {
+        "proportional": "加速度は合力に比例する。力を2倍にすると加速度も2倍になる。",
+        "independent": "加速度は力によらない。",
+        "constant": "加速度が一定なので力が増える。"
+      },
+      "hint": "4 Nと8 Nでの加速度を読み取りましょう。どう比べられますか。",
+      "explanation": "原点を通る直線は比例を表します。4 Nでは2 m/s²、8 Nでは4 m/s²です。これは質量を一定にしたときのニュートンの第2法則 a = F合力/m です。力は自分で選ぶ量で、加速度はその応答です。"
+    },
+    "graph-force-mass": {
+      "prompt": "直線の傾きを使いましょう。台車の質量はいくらですか。",
+      "options": {
+        "two": "2 kg",
+        "half": "0.5 kg",
+        "ten": "10 kg"
+      },
+      "hint": "傾きは加速度を力で割ったもの a/F です。ニュートンの第2法則より a/F = 1/m です。",
+      "explanation": "傾きは 5 m/s² ÷ 10 N = 0.5 (m/s²)/N です。a = F/m なので傾きは 1/m となり、m = 1 ÷ 0.5 = 2 kg です。重い台車ほど直線はゆるやかになります。"
+    },
+    "graph-height-velocity": {
+      "prompt": "高さ–時間グラフの傾きは鉛直方向の速度です。この曲線はその速度について何を示していますか。",
+      "options": {
+        "steady": "一定の割合で変わる。毎秒同じだけ減り、上向きから下向きになる。",
+        "constant": "最初から最後まで変わらない。",
+        "top-only": "重力が働く最高点でだけ変わる。"
+      },
+      "hint": "打ち上げ直後、最高点、着地直前の傾きを比べましょう。",
+      "explanation": "傾きは最初は急な正、最高点でゼロ、最後は急な負になります。鉛直速度は2秒間で +9.8 m/s から −9.8 m/s へ一定の割合で減ります。速度が一定の割合で変わることは、加速度が一定であること、つまり下向き 9.8 m/s² の重力がずっと働いていることを意味します。"
+    },
+    "graph-height-top": {
+      "prompt": "最高点（t = 1 s）でのボールの鉛直速度はいくらですか。",
+      "options": {
+        "zero": "ゼロ。そこでグラフは水平になっている",
+        "upward": "上向きに 9.8 m/s",
+        "g": "9.8 m/s²（重力加速度）"
+      },
+      "hint": "最高点ちょうどでの曲線の傾きを見ましょう。",
+      "explanation": "最高点で曲線は水平なので、鉛直速度は一瞬ゼロです。加速度はゼロではありません。重力は 9.8 m/s² で引き続けているので、速度は上向きから下向きへと変わり続けます。速度と加速度は別の量です。"
+    },
+    "graph-period-length": {
+      "prompt": "振り子を長くすると、周期はどうなりますか。",
+      "options": {
+        "root": "長くなるが、増え方はだんだんゆるやかになる。長さに比例はしない。",
+        "linear": "長さに比例して長くなる。",
+        "decreases": "短くなる。"
+      },
+      "hint": "0.5 mと2 mでの周期を読み取りましょう。長さを4倍にすると周期は何倍になりますか。",
+      "explanation": "曲線は原点から始まり、だんだん曲がっていきます。0.5 mでは約1.4 s、2 mでは約2.8 sです。T = 2π√(L/g) は長さの平方根に比例して増えるので、長さを4倍にしても周期は2倍にしかなりません。"
+    },
+    "graph-period-double": {
+      "prompt": "グラフを使って考えましょう。0.5 mの振り子の周期を2倍にするには、長さを何倍にすればよいですか。",
+      "options": {
+        "four": "4倍（2 m）",
+        "two": "2倍（1 m）",
+        "root2": "約1.4倍（0.7 m）"
+      },
+      "hint": "0.5 mでの周期を読み、それを2倍にして、その周期になる長さを読み取りましょう。",
+      "explanation": "0.5 mでの周期は約1.42 sです。その2倍の約2.84 sになるのは2 m、つまり長さの4倍です。T ∝ √L なので、Tを2倍にするには L × 2² = 4L が必要です。"
     }
   }
 }
@@ -1484,7 +1783,7 @@ export interface LearningStep extends StepCopy {
 }
 export interface LearningGraph extends GraphCopy {
   readonly id: string
-  readonly graph: MotionGraph
+  readonly graph: PracticeGraph
   readonly questions: readonly PracticeQuestion[]
 }
 export interface LearningChapter {

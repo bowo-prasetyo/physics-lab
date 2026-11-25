@@ -151,6 +151,28 @@ function collectAccessibilityIssues(markup: string, route: string, locale: Local
     .map((element) => ({ route, locale, element: element.tagName.toLowerCase() + (element.getAttribute('role') ? '[role=' + element.getAttribute('role') + ']' : '') }))
 }
 
+/**
+ * English function words that should never survive inside a translated
+ * accessible label. A label that is entirely unchanged English is already a
+ * candidate; this catches mixed strings such as "加速度 (m/s²) versus 合力 (N)",
+ * which an exact comparison with the English page cannot see.
+ */
+const ENGLISH_GLUE = /\b(against|versus|and|the|of|with|from|into|is|are|graph|current|earlier|run)\b/i
+
+function collectMixedEnglishLabels(markup: string, route: string, locale: Locale): Array<{ route: string; locale: Locale; attribute: string; text: string }> {
+  if (locale === 'en') return []
+  const container = document.createElement('div')
+  container.innerHTML = markup
+  const found: Array<{ route: string; locale: Locale; attribute: string; text: string }> = []
+  for (const attribute of ['aria-label', 'title', 'alt']) {
+    for (const element of Array.from(container.querySelectorAll(`[${attribute}]`))) {
+      const text = normalize(element.getAttribute(attribute) ?? '')
+      if (ENGLISH_GLUE.test(text)) found.push({ route, locale, attribute, text })
+    }
+  }
+  return found
+}
+
 function candidateKey(record: Pick<CopyRecord, 'kind' | 'attribute' | 'text'>): string {
   return [record.kind, record.attribute ?? '', record.text].join('::')
 }
@@ -178,6 +200,7 @@ describe('runtime localization audit', () => {
     const snapshots = new Map<string, CopyRecord[]>()
     const accessibilityIssues: Array<{ route: string; locale: Locale; element: string }> = []
     const documentLanguageIssues: Array<{ route: string; locale: Locale; actual: string }> = []
+    const mixedLabels: Array<{ route: string; locale: Locale; attribute: string; text: string }> = []
     let renderedPages = 0
 
     try {
@@ -199,6 +222,7 @@ describe('runtime localization audit', () => {
           expect(markup.length, `Expected rendered markup for ${route.name} (${locale})`).toBeGreaterThan(0)
           snapshots.set(`${route.name}:${locale}`, collectRenderedCopy(markup, route.name, locale))
           accessibilityIssues.push(...collectAccessibilityIssues(markup, route.name, locale))
+          mixedLabels.push(...collectMixedEnglishLabels(markup, route.name, locale))
           renderedPages += 1
         }
       }
@@ -246,6 +270,11 @@ describe('runtime localization audit', () => {
     }
 
     expect(documentLanguageIssues, 'The document language must follow the selected locale').toEqual([])
+    // The detector catches the mixed labels that reached main twice (#83, #85)…
+    expect(ENGLISH_GLUE.test('加速度 (m/s²) versus 合力 (N)')).toBe(true)
+    expect(ENGLISH_GLUE.test('Posisi (m) against Waktu (s)')).toBe(true)
+    // …and none may survive in a translated page.
+    expect(mixedLabels, 'Translated accessible labels must not contain English words').toEqual([])
     expect(accessibilityIssues, 'Every interactive control and named graphic must expose an accessible name').toEqual([])
 
     const report = {

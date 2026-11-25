@@ -6,10 +6,10 @@ import { setLocale, type Locale } from '@/i18n'
 import { getLearningPath } from './learning-content'
 import GraphPractice from './GraphPractice.vue'
 
-async function render(locale: Locale): Promise<string> {
+async function render(locale: Locale, step = '/space/space-vs-time'): Promise<string> {
   setLocale(locale)
   const path = getLearningPath(locale)
-  const exercise = path.chapters[0]!.steps.find((s) => s.path === '/space/space-vs-time')!.graphs[0]!
+  const exercise = path.chapters.flatMap((c) => c.steps).find((s) => s.path === step)!.graphs[0]!
   const app = createSSRApp({ render: () => h(GraphPractice, { exercise, questions: exercise.questions, ui: path.ui, seed: 7, levelTag: () => null }) })
   return renderToString(app)
 }
@@ -34,5 +34,23 @@ describe('graph practice', () => {
     }
     expect(await render('id')).toContain('Membaca grafik posisi–waktu')
     expect(await render('ja')).toContain('位置–時間グラフを読み取る')
+  })
+
+  it('draws model curves on labelled scales, with a table of values from the engine', async () => {
+    const html = await render('en', '/time/pendulum')
+    expect(html).toContain('Read a period–length graph')
+    expect(html).toContain('aria-label="Graph of Period (s) against Length (m)."')
+    for (const tick of ['0.5', '1.5', '2.5']) expect(html).toMatch(new RegExp(`class="tick[^"]*"[^>]*>${tick.replace('.', '\\.')}<`))
+    expect(html).toContain('Values on the curve')
+    expect(html).toMatch(/<td[^>]*>1\.42<\/td>/) // T(0.5 m)
+    expect(html).toMatch(/<td[^>]*>2\.84<\/td>/) // T(2 m)
+  })
+
+  it('translates model-curve graphs completely, including their accessible description', async () => {
+    for (const [locale, label] of [['id', 'Grafik Percepatan (m/s²) terhadap Gaya resultan (N).'], ['ja', '合力 (N) に対する 加速度 (m/s²) のグラフ。']] as const) {
+      const html = await render(locale, '/mechanics/force-lab')
+      expect(html).toContain(`aria-label="${label}"`)
+      expect(html).not.toMatch(/\b(against|versus|Values on the curve)\b/)
+    }
   })
 })
