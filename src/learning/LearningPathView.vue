@@ -10,6 +10,8 @@ import { isExplored } from './session-progress'
 import PracticeQuestion from './PracticeQuestion.vue'
 import ProblemCard from './ProblemCard.vue'
 import GraphPractice from './GraphPractice.vue'
+import CrossExperimentPractice from './CrossExperimentPractice.vue'
+import { getCrossExperimentChallenges } from './cross-experiment'
 
 const { locale, t } = useLocale()
 const level = useLevel()
@@ -42,7 +44,8 @@ const levelName = (min: 'beginner' | 'intermediate' | 'advanced') =>
 const visibleQuestions = <T extends { minLevel: 'beginner' | 'intermediate' | 'advanced' }>(questions: readonly T[]): T[] =>
   questions.filter((q) => atLeast(level.value, q.minLevel))
 const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
-  [...s.questions, ...s.graphs.flatMap((g) => g.questions), ...s.problems].some((q) => !atLeast(level.value, q.minLevel))))
+  [...s.questions, ...s.graphs.flatMap((g) => g.questions), ...s.problems].some((q) => !atLeast(level.value, q.minLevel))) ||
+  getCrossExperimentChallenges(locale.value).some((challenge) => challenge.module === chapter.value.number && !atLeast(level.value, challenge.question.minLevel)))
 </script>
 
 <template>
@@ -106,6 +109,7 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
                 <ProblemCard v-for="p in visibleQuestions(step.problems)" :key="p.id" :problem="p" :level-tag="levelName(p.minLevel)" />
               </template>
             </template>
+            <CrossExperimentPractice :step-path="step.path" :locale="locale" :ui="ui" :level="level" :seed="seed" />
           </div>
         </li>
       </ol>
