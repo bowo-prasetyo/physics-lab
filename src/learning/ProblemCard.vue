@@ -2,6 +2,7 @@
 import { computed, ref, useId } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { isNumericallyCorrect, type PhysicsProblem } from './problem-bank'
+import { numericFeedback } from './numeric-feedback'
 
 const props = defineProps<{ problem: PhysicsProblem; levelTag?: string | null }>()
 const { locale, t } = useLocale()
@@ -12,6 +13,7 @@ const hintVisible = ref(false)
 const solutionVisible = ref(false)
 const correct = computed(() => checked.value && isNumericallyCorrect(props.problem, response.value))
 const formattedAnswer = computed(() => new Intl.NumberFormat(locale.value, { maximumSignificantDigits: 3 }).format(props.problem.answer))
+const coaching = computed(() => !correct.value && checked.value ? numericFeedback(props.problem.answer, response.value, locale.value) : '')
 
 function check(): void {
   if (response.value.trim() !== '') checked.value = true
@@ -50,6 +52,7 @@ function retry(): void {
     <p v-if="hintVisible && !checked" class="hint" role="status">{{ problem.hint }}</p>
     <div v-if="checked" class="feedback" :class="correct ? 'correct' : 'incorrect'" role="status" aria-live="polite">
       <strong>{{ correct ? t('learning.problem.correct') : t('learning.problem.incorrect') }}</strong>
+      <p v-if="!correct" class="coaching">{{ coaching }}</p>
       <span v-if="correct"> {{ t('learning.problem.expected') }}: {{ formattedAnswer }} {{ problem.unit }}</span>
     </div>
     <section v-if="solutionVisible" class="solution" :aria-label="t('learning.problem.worked')">
@@ -82,6 +85,7 @@ function retry(): void {
 .hint { margin: 0; padding: 9px 12px; border-left: 3px solid var(--accent); background: var(--surface-2); }
 .feedback { padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
 .feedback.correct { border-left: 4px solid var(--success); }
+.coaching { margin: 6px 0 0; color: var(--text); }
 .feedback.incorrect { border-left: 4px solid var(--warn); }
 .solution { padding-top: 10px; border-top: 1px solid var(--border); }
 .solution h6 { margin: 0 0 5px; font-size: .9rem; }
