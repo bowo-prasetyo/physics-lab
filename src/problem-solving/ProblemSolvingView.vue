@@ -10,7 +10,6 @@ import ProblemCard from './ProblemCard.vue'
 const { locale, t } = useLocale()
 const level = useLevel()
 const modules = computed(() => getLocalizedModules(locale.value))
-const moduleTitle = (number: number) => modules.value.find((m) => m.number === number)?.title ?? ''
 const problems = computed(() => getProblemSet(locale.value).filter((problem) => atLeast(level.value, problem.minLevel)))
 const ui = computed(() => ({
   eyebrow: locale.value === 'en' ? 'Build confidence with the mathematics' : locale.value === 'id' ? 'Bangun kepercayaan diri dengan matematika' : '数学に自信をつける',
