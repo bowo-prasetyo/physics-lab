@@ -33,6 +33,8 @@ Consequences for product decisions:
 
 - **Mechanics serves the thread.** Module 3 is not a general mechanics course. Its experiments are chosen because relativity later revisits their ideas: net force and acceleration, momentum conservation (later tied to the symmetry of space), Galilean frames and orbits.
 - **Breadth beyond the thread is deliberate.** Waves, electromagnetism, thermodynamics and quantum physics (roadmap P3) would be new threads, not more of this one. Add them only after the current thread has demonstrated learning value.
+- **One learning path, built from the catalogue.** The learning path (`/learning`) walks the thread chapter by chapter: its chapters are the modules and its steps are the experiments, in catalogue order. It adds only what the catalogue does not have: why each step matters, what to know first, and practice. It never introduces a second structure, numbering or set of titles.
+- **Practice follows the method.** A step's practice questions unlock only after the learner has tested a prediction in that experiment, and they ask learners to transfer the idea to a new situation rather than recall it. Every experiment has a Beginner question; each module adds harder ones at Intermediate and Advanced. Progress lasts for the browser session only and is never stored or sent.
 - **No letters on experiments.** Experiments are named, not lettered; cross-references use the experiment's name.
 - **Levels are mathematical depth, not audiences.** The product does not label levels or modules with school years or degree stages; where a topic needs prerequisites, it states them.
 

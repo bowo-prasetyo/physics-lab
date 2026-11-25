@@ -46,6 +46,17 @@ Priorities are based on educational value, curriculum coherence, scientific prer
 - **Experiments:** Module 3 Force Lab and Momentum and collisions; Module 4 length contraction; Module 5 geodesic motion.
 - **Teaching support.** A lesson outline for every experiment, in all three languages, and an anonymous assessment pilot with pre/post, transfer and explanation items for Force Lab and length contraction.
 - **Identity.** Module 3 renamed "Understanding motion"; experiment letters and audience labels on levels and modules removed.
+- **Learning path.** One path through the thread (`/learning`): chapters are the modules, steps are the experiments, both taken from `src/modules.ts`, with prerequisites for every chapter and step. Practice questions (19, at least one per experiment, harder ones per module from Intermediate) unlock after the learner has tested a prediction in the experiment, and their options are shuffled.
+
+### How we will know the learning path works
+
+The path collects no data, so evidence comes from facilitated sessions, alongside the assessment pilot:
+
+1. **Navigation.** In a session, learners who start from the path can say which experiment comes next and why, without help. Record how many needed help.
+2. **Unlocking.** Facilitators note whether learners reach the explanation of at least one prediction per step before attempting practice. If many get stuck, the step's prerequisite text or the experiment's first prediction needs work.
+3. **Transfer.** Compare pilot transfer scores for groups that used the path before the post-check with groups that did not. Treat the comparison as descriptive: groups differ in more than the path.
+
+Revisit the path's design after the first two cohorts; until then, add no new path features.
 
 ### Now — gather evidence before adding breadth
 

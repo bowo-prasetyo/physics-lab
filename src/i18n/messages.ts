@@ -52,7 +52,7 @@ export const messages = {
     'home.title': 'Understand space, time and motion by experimenting.',
     'home.lead': 'Start with where things are, how clocks keep time and how motion changes. Then follow the same questions into relativity, curved spacetime and the expanding universe. In every experiment you predict first, test it, and explore the mathematics at the depth that suits you.',
     'home.start': 'Start your first experiment',
-    'home.learningPractice': 'Learning paths & practice',
+    'home.learningPractice': 'Learning path & practice',
     'home.teacherResources': 'Teacher resources',
     'home.methodLabel': 'How Physica works',
     'home.predict': 'Predict',

@@ -35,6 +35,8 @@ The shared interface and home-page catalogue are localized in English, Indonesia
 
 ### P2 — Experiment and teaching content
 
+The learning path's teaching text and practice questions are localized in `src/learning/learning-content.ts`, keyed by experiment route and module number; its titles and structure come from the localized catalogue, and `learning-content.test.ts` checks completeness in every locale.
+
 The teacher guide is localized in `src/i18n/teacher-guide.ts`, with a lesson outline for every experiment (twelve outlines) in all supported locales.
 
 The predict–observe–explain banks of all thirteen experiments are localized in `src/i18n/experiment-content.ts`, keyed by experiment and prediction ID. The catalogue covers every question, task, answer option and revealed explanation; `experiment-content.test.ts` checks every bank in both translated locales.

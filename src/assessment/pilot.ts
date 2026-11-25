@@ -1,3 +1,4 @@
+import { newSeed, seededShuffle } from '@/shuffle'
 export type AssessmentPhase = 'immediate' | 'delayed'
 export type PilotExperimentId = 'force-lab' | 'length-contraction'
 export type PilotLocale = 'en' | 'id' | 'ja'
@@ -226,31 +227,11 @@ export function cohortToCsv(cohort: PilotCohort): string {
  * Present the options in a per-participant order. The question bank lists the
  * correct answer first, so without this a learner who always picks the first
  * option would score full marks. Scoring is by option value, so the order
- * does not affect it. The same seed always gives the same order, so a page
- * re-render does not reshuffle a participant's answers.
+ * does not affect it.
  */
 export function orderOptions(question: PilotQuestion, seed: number): PilotOption[] {
-  let state = seed >>> 0
-  for (const char of question.id) state = Math.imul(state ^ char.charCodeAt(0), 2654435761) >>> 0
-  const random = () => {
-    // mulberry32
-    state = (state + 0x6d2b79f5) >>> 0
-    let t = state
-    t = Math.imul(t ^ (t >>> 15), t | 1)
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-  const options = [...question.options]
-  for (let i = options.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(random() * (i + 1))
-    const swap = options[i] as PilotOption
-    options[i] = options[j] as PilotOption
-    options[j] = swap
-  }
-  return options
+  return seededShuffle(question.options, question.id, seed)
 }
 
 /** A fresh seed for each participant. */
-export function newParticipantSeed(): number {
-  return Math.floor(Math.random() * 2 ** 32)
-}
+export const newParticipantSeed = newSeed
