@@ -69,12 +69,12 @@ const COPY: Record<Locale, Readonly<Record<string, ChallengeCopy>>> = {
       prompt: 'A ball is already in flight. A steady horizontal net force now acts on it, while gravity remains the only vertical force. Compared with an ideal projectile, what changes?',
       options: {
         a: 'Its vertical acceleration becomes zero.',
-        b: 'Its horizontal velocity is no longer constant, so the path is not the usual ideal parabola.',
+        b: 'Its horizontal velocity is no longer constant, so its path differs from the standard projectile curve.',
         c: 'Its mass increases because an extra force acts.',
         d: 'Its flight time must become zero.',
       },
       hint: 'Resolve the net force into horizontal and vertical components. Which component changes the horizontal acceleration?',
-      explanation: 'The horizontal net force produces horizontal acceleration, so horizontal velocity changes. Gravity still gives the same downward acceleration in this idealised setup. The standard projectile parabola assumes zero horizontal net force.',
+      explanation: 'The horizontal net force produces horizontal acceleration, so horizontal velocity changes. With constant horizontal force and constant gravity the trajectory is still parabolic, but it differs from the standard projectile model, which assumes zero horizontal net force.',
     },
     'momentum-force': {
       title: 'The same impulse, different carts',
@@ -116,12 +116,12 @@ const COPY: Record<Locale, Readonly<Record<string, ChallengeCopy>>> = {
       prompt: 'Sebuah bola sedang melayang. Kini ada gaya resultan horizontal yang tetap bekerja padanya, sedangkan gravitasi tetap menjadi satu-satunya gaya vertikal. Apa yang berubah dibandingkan gerak peluru ideal?',
       options: {
         a: 'Percepatan vertikalnya menjadi nol.',
-        b: 'Kecepatan horizontalnya tidak lagi konstan, sehingga lintasannya bukan parabola ideal seperti biasa.',
+        b: 'Kecepatan horizontalnya tidak lagi konstan, sehingga lintasannya berbeda dari kurva gerak peluru standar.',
         c: 'Massanya bertambah karena ada gaya tambahan.',
         d: 'Waktu terbangnya pasti menjadi nol.',
       },
       hint: 'Uraikan gaya resultan menjadi komponen horizontal dan vertikal. Komponen mana yang mengubah percepatan horizontal?',
-      explanation: 'Gaya resultan horizontal menghasilkan percepatan horizontal, sehingga kecepatan horizontal berubah. Dalam model ideal ini, gravitasi tetap menghasilkan percepatan ke bawah yang sama. Parabola gerak peluru standar mengasumsikan tidak ada gaya resultan horizontal.',
+      explanation: 'Gaya resultan horizontal menghasilkan percepatan horizontal, sehingga kecepatan horizontal berubah. Jika gaya horizontal dan gravitasi tetap konstan, lintasannya tetap berbentuk parabola, tetapi berbeda dari model gerak peluru standar yang mengasumsikan tidak ada gaya resultan horizontal.',
     },
     'momentum-force': {
       title: 'Impuls sama, kereta berbeda',
@@ -163,12 +163,12 @@ const COPY: Record<Locale, Readonly<Record<string, ChallengeCopy>>> = {
       prompt: 'ボールがすでに飛行中です。重力が鉛直方向に働く唯一の力である一方、新たに一定の水平方向の合力が働きます。理想的な放物運動と比べて何が変わりますか。',
       options: {
         a: '鉛直加速度がゼロになる。',
-        b: '水平方向の速度が一定でなくなり、通常の理想的な放物線軌道ではなくなる。',
+        b: '水平方向の速度が一定でなくなり、標準的な放物運動の軌道とは異なる。',
         c: '追加の力が働くため質量が増える。',
         d: '飛行時間が必ずゼロになる。',
       },
       hint: '合力を水平方向と鉛直方向の成分に分けます。どちらの成分が水平方向の加速度を変えますか。',
-      explanation: '水平方向の合力は水平方向の加速度を生み、速度を変化させます。この理想化では、重力による下向き加速度は変わりません。標準的な放物運動の放物線は、水平方向の合力がゼロであることを前提としています。',
+      explanation: '水平方向の合力は水平方向の加速度を生み、速度を変化させます。水平方向の力と重力が一定なら軌道は依然として放物線ですが、水平方向の合力がゼロという標準的な放物運動のモデルとは異なります。',
     },
     'momentum-force': {
       title: '同じ力積、異なる台車',
