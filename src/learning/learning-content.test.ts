@@ -4,7 +4,8 @@ import { IMPLEMENTED_EXPERIMENTS, MODULES } from '@/modules'
 import { router } from '@/router'
 import { SUPPORTED_LOCALES } from '@/i18n/locales'
 import { seededShuffle } from '@/shuffle'
-import { CHAPTER_PREREQUISITES, GRAPHS, GRAPH_COPY, PRACTICE_BANK, PRACTICE_COPY, STEP_COPY, getLearningPath } from './learning-content'
+import { CHAPTER_PREREQUISITES, GRAPHS, GRAPH_CART_MASS, GRAPH_COPY, GRAPH_PROJECTILE, PRACTICE_BANK, PRACTICE_COPY, STEP_COPY, getLearningPath, type FunctionGraph } from './learning-content'
+import { accelerationFromNetForce, exactFlightTime, exactMaxHeight, exactState, smallAnglePeriod } from '@/physics'
 import { isExplored, markExplored, resetExplored } from './session-progress'
 
 describe('learning path structure', () => {
@@ -107,10 +108,68 @@ describe('graph questions', () => {
   })
 
   it('draw a run that matches the questions’ answers', () => {
-    const { record, duration } = GRAPHS['walk-stop-return']!
+    const graph = GRAPHS['walk-stop-return']!
+    if (graph.kind !== 'motion') throw new Error('expected a run')
+    const { record, duration } = graph
     expect(duration).toBe(6)
     expect(record.segments.map((s) => [s.tStart, s.xStart, s.v])).toEqual([[0, 0, 2], [2, 4, 0], [4, 4, -2]])
     expect(record.distance).toBe(8)
+  })
+})
+
+describe('model-curve graphs', () => {
+  const fn = (id: string): FunctionGraph => {
+    const graph = GRAPHS[id]
+    if (!graph || graph.kind !== 'function') throw new Error(`${id} is not a function graph`)
+    return graph
+  }
+  const samples = (g: FunctionGraph) => Array.from({ length: 41 }, (_, i) => (g.x.max * i) / 40)
+
+  it('plot exactly what the physics engine computes', () => {
+    for (const x of samples(fn('force-acceleration'))) expect(fn('force-acceleration').f(x)).toBe(accelerationFromNetForce(x, GRAPH_CART_MASS))
+    for (const x of samples(fn('pendulum-length'))) expect(fn('pendulum-length').f(x)).toBe(smallAnglePeriod(x, 9.81))
+    for (const t of samples(fn('projectile-height'))) expect(fn('projectile-height').f(t)).toBeCloseTo(Math.max(0, exactState(GRAPH_PROJECTILE, t).y), 12)
+  })
+
+  it('draw the right shapes: a line and a √L curve through the origin, and a true parabola', () => {
+    expect(fn('force-acceleration').f(0)).toBe(0)
+    expect(fn('pendulum-length').f(0)).toBe(0)
+    // Equal time steps: the height changes by amounts that fall by the same step each time (constant g).
+    const h = fn('projectile-height').f
+    const steps = [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75].map((t) => h(t + 0.25) - h(t))
+    const second = steps.slice(1).map((d, i) => d - steps[i]!)
+    for (const d of second) expect(d).toBeCloseTo(-GRAPH_PROJECTILE.g * 0.25 ** 2, 9)
+  })
+
+  it('fit their scales, so the whole curve and the values the questions need are readable', () => {
+    for (const id of Object.keys(GRAPHS)) {
+      const g = GRAPHS[id]!
+      if (g.kind !== 'function') continue
+      for (const x of samples(g)) {
+        expect(g.f(x), id).toBeGreaterThanOrEqual(0)
+        expect(g.f(x), id).toBeLessThanOrEqual(g.y.max)
+      }
+      for (const x of g.table) expect(x, id).toBeLessThanOrEqual(g.x.max)
+    }
+    // The numbers the questions quote are what the scales show.
+    expect(fn('force-acceleration').f(10) / 10).toBe(0.5) // slope 0.5 (m/s²)/N, so m = 2 kg
+    expect(exactMaxHeight(GRAPH_PROJECTILE)).toBeCloseTo(4.9, 9)
+    expect(exactFlightTime(GRAPH_PROJECTILE)).toBeCloseTo(fn('projectile-height').x.max, 9)
+    expect(fn('pendulum-length').f(2) / fn('pendulum-length').f(0.5)).toBeCloseTo(2, 12) // four times the length, twice the period
+  })
+
+  it('have axis labels in every language, and sit on the experiment they are about', () => {
+    for (const locale of SUPPORTED_LOCALES) {
+      for (const id of Object.keys(GRAPHS)) {
+        if (GRAPHS[id]!.kind !== 'function') continue
+        expect(GRAPH_COPY[locale][id]?.xLabel?.trim(), `${locale} ${id}`).toBeTruthy()
+        expect(GRAPH_COPY[locale][id]?.yLabel?.trim(), `${locale} ${id}`).toBeTruthy()
+      }
+    }
+    const homeOf = (graph: string) => new Set(PRACTICE_BANK.filter((q) => 'graph' in q && q.graph === graph).map((q) => q.experiment))
+    expect([...homeOf('force-acceleration')]).toEqual(['/mechanics/force-lab'])
+    expect([...homeOf('projectile-height')]).toEqual(['/mechanics/projectile'])
+    expect([...homeOf('pendulum-length')]).toEqual(['/time/pendulum'])
   })
 })
 

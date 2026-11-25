@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue'
+import FunctionGraph from '@/components/FunctionGraph.vue'
 import PositionTimeGraph from '@/components/PositionTimeGraph.vue'
 import { graphVertices } from '@/physics'
 import { useLocale } from '@/composables/useLocale'
@@ -7,10 +8,11 @@ import type { LearningGraph, LearningUi, PracticeQuestion as Question } from './
 import PracticeQuestion from './PracticeQuestion.vue'
 
 /**
- * A graph exercise: one position–time graph, drawn with the same component as
- * the experiments, and the practice questions answered from it. The questions
- * are ordinary practice questions, so their options are shuffled and their
- * hints and explanations work as everywhere else.
+ * A graph exercise: one graph and the practice questions answered from it.
+ * Position–time runs are drawn with the experiments' PositionTimeGraph; model
+ * curves with FunctionGraph, from a function that calls the physics engine.
+ * The questions are ordinary practice questions, so their options are
+ * shuffled and their hints and explanations work as everywhere else.
  */
 const props = defineProps<{
   exercise: LearningGraph
@@ -21,10 +23,33 @@ const props = defineProps<{
   levelTag: (question: Question) => string | null
 }>()
 
-const { t } = useLocale()
+const { locale, t } = useLocale()
 const id = useId()
-const corners = computed(() => graphVertices(props.exercise.graph.record))
-const format = (value: number) => (Number.isInteger(value) ? String(value) : value.toFixed(1))
+const format = (value: number) => new Intl.NumberFormat(locale.value, { maximumFractionDigits: 2 }).format(value)
+
+/** Rows of the value table: the run's corner points, or the curve at the listed x-values. */
+const table = computed(() => {
+  const graph = props.exercise.graph
+  if (graph.kind === 'motion') {
+    const corners = graphVertices(graph.record)
+    return {
+      caption: t('learning.graph.corners'),
+      rows: [
+        { label: t('learning.graph.time'), values: corners.map((p) => format(p.t)) },
+        { label: t('learning.graph.position'), values: corners.map((p) => format(p.x)) },
+      ],
+    }
+  }
+  return {
+    caption: t('learning.graph.values'),
+    rows: [
+      { label: props.exercise.xLabel ?? '', values: graph.table.map(format) },
+      { label: props.exercise.yLabel ?? '', values: graph.table.map((x) => format(graph.f(x))) },
+    ],
+  }
+})
+const description = computed(() =>
+  t('learning.graph.description').replace('{y}', props.exercise.yLabel ?? '').replace('{x}', props.exercise.xLabel ?? ''))
 </script>
 
 <template>
@@ -34,18 +59,27 @@ const format = (value: number) => (Number.isInteger(value) ? String(value) : val
       <p class="intro">{{ exercise.intro }}</p>
     </div>
     <PositionTimeGraph
+      v-if="exercise.graph.kind === 'motion'"
       :current="exercise.graph.record"
       :history="[]"
       :duration="exercise.graph.duration"
       :bounds="exercise.graph.bounds"
       :observer-velocity="null"
     />
-    <div class="corner-table">
+    <FunctionGraph
+      v-else
+      :f="exercise.graph.f"
+      :x="exercise.graph.x"
+      :y="exercise.graph.y"
+      :x-label="exercise.xLabel ?? ''"
+      :y-label="exercise.yLabel ?? ''"
+      :description="description"
+    />
+    <div class="value-table">
       <table>
-        <caption>{{ t('learning.graph.corners') }}</caption>
+        <caption>{{ table.caption }}</caption>
         <tbody>
-          <tr><th scope="row">{{ t('learning.graph.time') }}</th><td v-for="(p, i) in corners" :key="`t${i}`">{{ format(p.t) }}</td></tr>
-          <tr><th scope="row">{{ t('learning.graph.position') }}</th><td v-for="(p, i) in corners" :key="`x${i}`">{{ format(p.x) }}</td></tr>
+          <tr v-for="row in table.rows" :key="row.label"><th scope="row">{{ row.label }}</th><td v-for="(value, i) in row.values" :key="i">{{ value }}</td></tr>
         </tbody>
       </table>
     </div>
@@ -57,9 +91,9 @@ const format = (value: number) => (Number.isInteger(value) ? String(value) : val
 .graph-practice { display: grid; gap: 10px; min-width: 0; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); }
 h6 { margin: 0; font-size: 1rem; }
 .intro { margin: 2px 0 0; color: var(--text-muted); font-size: .9rem; }
-.corner-table { max-width: 100%; overflow-x: auto; }
+.value-table { max-width: 100%; overflow-x: auto; }
 table { border-collapse: collapse; font-size: .84rem; font-variant-numeric: tabular-nums; }
 caption { margin-bottom: 4px; color: var(--text-muted); text-align: left; }
 th, td { padding: 4px 10px; border-bottom: 1px solid var(--border); text-align: center; }
-th { color: var(--text-muted); font-weight: 600; text-align: left; }
+th { color: var(--text-muted); font-weight: 600; text-align: left; white-space: nowrap; }
 </style>
