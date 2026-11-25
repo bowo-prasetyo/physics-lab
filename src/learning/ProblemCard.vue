@@ -11,6 +11,13 @@ const response = ref('')
 const checked = ref(false)
 const hintVisible = ref(false)
 const solutionVisible = ref(false)
+const solutionStep = ref(0)
+const solutionProgress = computed(() => {
+  const labels = { en: 'Step', id: 'Langkah', ja: 'ステップ' }
+  return labels[locale.value] + ' ' + solutionStep.value + ' / ' + props.problem.steps.length
+})
+const nextStepLabel = computed(() => ({ en: 'Show next step', id: 'Tampilkan langkah berikutnya', ja: '次のステップを表示' })[locale.value])
+const completeLabel = computed(() => ({ en: 'All steps shown', id: 'Semua langkah ditampilkan', ja: 'すべてのステップを表示しました' })[locale.value])
 const correct = computed(() => checked.value && isNumericallyCorrect(props.problem, response.value))
 const formattedAnswer = computed(() => new Intl.NumberFormat(locale.value, { maximumSignificantDigits: 3 }).format(props.problem.answer))
 const coaching = computed(() => !correct.value && checked.value ? numericFeedback(props.problem.answer, response.value, locale.value, props.problem.unit) : '')
@@ -23,6 +30,7 @@ function retry(): void {
   checked.value = false
   hintVisible.value = false
   solutionVisible.value = false
+  solutionStep.value = 0
 }
 </script>
 
@@ -47,7 +55,7 @@ function retry(): void {
       <button v-if="!hintVisible && !checked" type="button" class="btn btn-small" @click="hintVisible = true">{{ t('learning.problem.hint') }}</button>
       <button v-if="!checked" type="button" class="btn btn-primary btn-small" :disabled="!response.trim()" @click="check">{{ t('learning.problem.check') }}</button>
       <button v-else type="button" class="btn btn-small" @click="retry">{{ t('learning.problem.retry') }}</button>
-      <button v-if="checked && !solutionVisible" type="button" class="btn btn-small" @click="solutionVisible = true">{{ t('learning.problem.worked') }}</button>
+      <button v-if="checked && !solutionVisible" type="button" class="btn btn-small" @click="solutionVisible = true; solutionStep = 1">{{ t('learning.problem.worked')</button>
     </div>
     <p v-if="hintVisible && !checked" class="hint" role="status">{{ problem.hint }}</p>
     <div v-if="checked" class="feedback" :class="correct ? 'correct' : 'incorrect'" role="status" aria-live="polite">
@@ -58,8 +66,13 @@ function retry(): void {
     <section v-if="solutionVisible" class="solution" :aria-label="t('learning.problem.worked')">
       <h6>{{ t('learning.problem.formula') }}</h6>
       <p class="formula"><code>{{ problem.formula }}</code></p>
-      <ol><li v-for="(step, index) in problem.steps" :key="index">{{ step }}</li></ol>
-      <p class="final-answer"><strong>{{ t('learning.problem.expected') }}:</strong> {{ formattedAnswer }} {{ problem.unit }}</p>
+      <p class="solution-progress" aria-live="polite">{{ solutionProgress }}</p>
+      <ol><li v-for="(step, index) in problem.steps.slice(0, solutionStep)" :key="index">{{ step }}</li></ol>
+      <div class="actions">
+        <button v-if="solutionStep < problem.steps.length" type="button" class="btn btn-primary btn-small" @click="solutionStep++">{{ nextStepLabel }}</button>
+        <span v-else class="input-help" role="status">{{ completeLabel }}</span>
+      </div>
+      <p v-if="solutionStep === problem.steps.length" class="final-answer"><strong>{{ t('learning.problem.expected') }}:</strong> {{ formattedAnswer }} {{ problem.unit }}</p>
     </section>
   </div>
 </template>
@@ -89,6 +102,7 @@ function retry(): void {
 .feedback.incorrect { border-left: 4px solid var(--warn); }
 .solution { padding-top: 10px; border-top: 1px solid var(--border); }
 .solution h6 { margin: 0 0 5px; font-size: .9rem; }
+.solution-progress { margin: 0; color: var(--text-muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
 .formula { margin: 0 0 8px; }
 .formula code { display: inline-block; max-width: 100%; padding: 5px 8px; border-radius: 5px; background: var(--surface-2); white-space: normal; overflow-wrap: anywhere; }
 .solution ol { display: grid; gap: 7px; padding-left: 22px; }
