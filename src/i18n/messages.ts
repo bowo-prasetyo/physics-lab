@@ -119,6 +119,10 @@ export const messages = {
     'learning.problem.stepProgress': 'Step {current} of {total}',
     'learning.problem.nextStep': 'Show the next step',
     'learning.problem.allSteps': 'All steps shown',
+    'learning.synthesis.title': 'Connect experiments',
+    'learning.synthesis.combines': 'Combines this experiment with {experiments}.',
+    'learning.synthesis.locked': 'Unlocks once you have also explored:',
+    'learning.synthesis.quoted': '“{title}”',
   },
   id: {
     'app.brand.homeLabel': 'Beranda Physica',
@@ -238,6 +242,10 @@ export const messages = {
     'learning.problem.stepProgress': 'Langkah {current} dari {total}',
     'learning.problem.nextStep': 'Tampilkan langkah berikutnya',
     'learning.problem.allSteps': 'Semua langkah ditampilkan',
+    'learning.synthesis.title': 'Hubungkan eksperimen',
+    'learning.synthesis.combines': 'Menggabungkan eksperimen ini dengan {experiments}.',
+    'learning.synthesis.locked': 'Terbuka setelah Anda juga menjelajahi:',
+    'learning.synthesis.quoted': '“{title}”',
   },
   ja: {
     'app.brand.homeLabel': 'Physica ホーム',
@@ -357,6 +365,10 @@ export const messages = {
     'learning.problem.stepProgress': 'ステップ {current} / {total}',
     'learning.problem.nextStep': '次のステップを表示',
     'learning.problem.allSteps': 'すべてのステップを表示しました',
+    'learning.synthesis.title': '実験をつなげる',
+    'learning.synthesis.combines': 'この実験と{experiments}を組み合わせます。',
+    'learning.synthesis.locked': '次の実験も探究すると解けるようになります:',
+    'learning.synthesis.quoted': '「{title}」',
   },
 } as const
 

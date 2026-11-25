@@ -20,9 +20,10 @@ import { problemsFor, type PhysicsProblem } from './problem-bank'
  * unlock opens the step's numerical problems (problem-bank.ts), where the
  * learner applies the model they have just tested.
  *
- * Practice comes in three types, all unlocked together: concept questions,
+ * Practice comes in four types, all unlocked together: concept questions,
  * graph questions (practice questions with a `graph`: the learner reads the
- * answer from a plot drawn with the experiments' own graph component) and
+ * answer from a plot), synthesis questions (practice questions that
+ * `require` other experiments too, and wait until those are explored) and
  * numerical problems.
  */
 
@@ -36,6 +37,12 @@ export interface PracticeQuestion {
   readonly minLevel: Level
   /** Set for a graph question: the GRAPHS entry the answer is read from. */
   readonly graph?: string
+  /**
+   * Set for a synthesis question: the other experiments it combines with this
+   * one. It sits on this experiment's step, which must come after all of them
+   * in the catalogue, and unlocks once every one of them is explored too.
+   */
+  readonly requires?: readonly string[]
   readonly prompt: string
   readonly options: readonly PracticeOption[]
   readonly answer: string
@@ -54,7 +61,7 @@ export interface LearningUi {
   readonly chooseLabel: string; readonly privacyNote: string
 }
 
-interface PracticeSource { readonly id: string; readonly experiment: string; readonly graph?: string; readonly minLevel: Level; readonly options: readonly string[]; readonly answer: string }
+interface PracticeSource { readonly id: string; readonly experiment: string; readonly graph?: string; readonly requires?: readonly string[]; readonly minLevel: Level; readonly options: readonly string[]; readonly answer: string }
 interface PracticeCopy { readonly prompt: string; readonly options: Readonly<Record<string, string>>; readonly hint: string; readonly explanation: string }
 
 const UI: Record<Locale, LearningUi> = {
@@ -822,6 +829,70 @@ export const PRACTICE_BANK: readonly PracticeSource[] = [
       "root2"
     ],
     "answer": "four"
+  },
+  {
+    "id": "synth-force-projectile",
+    "experiment": "/mechanics/projectile",
+    "requires": [
+      "/mechanics/force-lab"
+    ],
+    "minLevel": "intermediate",
+    "options": [
+      "horizontal",
+      "fall",
+      "straight"
+    ],
+    "answer": "horizontal"
+  },
+  {
+    "id": "synth-impulse-carts",
+    "experiment": "/mechanics/momentum-collisions",
+    "requires": [
+      "/mechanics/newtonian"
+    ],
+    "minLevel": "intermediate",
+    "options": [
+      "momentum",
+      "speed",
+      "energy"
+    ],
+    "answer": "momentum"
+  },
+  {
+    "id": "synth-satellite-clock",
+    "experiment": "/gravity/clock-rates",
+    "requires": [
+      "/relativity/moving-clocks"
+    ],
+    "minLevel": "advanced",
+    "options": [
+      "sum",
+      "speed-wins",
+      "cancel"
+    ],
+    "answer": "sum"
+  },
+  {
+    "id": "newton-double-both",
+    "experiment": "/mechanics/newtonian",
+    "minLevel": "intermediate",
+    "options": [
+      "same",
+      "double",
+      "quadruple"
+    ],
+    "answer": "same"
+  },
+  {
+    "id": "length-runway",
+    "experiment": "/relativity/length-contraction",
+    "minLevel": "intermediate",
+    "options": [
+      "shorter",
+      "longer",
+      "proper"
+    ],
+    "answer": "shorter"
   }
 ]
 
@@ -1138,6 +1209,56 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "Find the period at 0.5 m, double it, and read across to the length that gives it.",
       "explanation": "At 0.5 m the period is about 1.42 s. Double that, about 2.84 s, is reached at 2 m: four times the length. Since T ∝ √L, doubling T needs L × 2² = 4L."
+    },
+    "synth-force-projectile": {
+      "prompt": "A ball is already in flight. A steady horizontal net force now acts on it, while gravity remains the only vertical force. Compared with an ideal projectile, what changes?",
+      "options": {
+        "horizontal": "Its horizontal velocity now changes steadily, while its vertical motion is exactly as before, so it follows a different curve.",
+        "fall": "Its vertical motion changes too, so it lands sooner or later than before.",
+        "straight": "It turns and moves in a straight line in the direction of the new force."
+      },
+      "hint": "Resolve the forces into horizontal and vertical components. Which component does the new force change?",
+      "explanation": "The new force is horizontal, so it changes only the horizontal acceleration: the horizontal velocity now changes steadily. The vertical force is still just gravity, so the vertical motion, and with it the flight time, is unchanged. Force sets the acceleration, not the direction of motion, so the path curves; with both forces constant it is still a parabola, just a different one."
+    },
+    "synth-impulse-carts": {
+      "prompt": "Two carts start at rest. The same impulse is delivered to each, but cart B has twice the mass of cart A. Which statement is correct?",
+      "options": {
+        "momentum": "Both gain the same momentum, so cart A ends up twice as fast as cart B.",
+        "speed": "Both gain the same speed, because they received the same impulse.",
+        "energy": "Both gain the same kinetic energy, because they were given the same push."
+      },
+      "hint": "Impulse equals the change in momentum. Then compare the speeds using p = m v.",
+      "explanation": "Impulse is the change in momentum, so both carts gain the same momentum p. Cart A has half the mass, so its speed p/m is twice cart B’s. Their kinetic energies are not equal: p²/2m is twice as large for cart A. The same impulse is the same push for the same time, not the same energy."
+    },
+    "synth-satellite-clock": {
+      "prompt": "A satellite clock moves relative to a clock on the ground and sits higher in the Earth’s gravity. How do you find their net difference in rate?",
+      "options": {
+        "sum": "Work out both effects with their signs and add them: the speed slows the satellite clock, the weaker gravity speeds it up.",
+        "speed-wins": "Only the speed matters: a moving clock runs slow, so the satellite clock runs slow overall.",
+        "cancel": "The two effects cancel in any circular orbit, because the orbital speed is set by gravity."
+      },
+      "hint": "Recall which way each effect shifts the satellite clock, then ask whether their sizes have to be equal.",
+      "explanation": "Motion makes the satellite clock run slower; being higher in the Earth’s gravity makes it run faster. The net rate is the sum of the two, with signs. For GPS satellites the gravitational effect is larger, so they gain about 38 μs a day. The orbital speed is linked to gravity, but the two effects only cancel at one particular orbit radius, not for every orbit."
+    },
+    "newton-double-both": {
+      "prompt": "You double both the net force on a cart and its mass. What happens to its acceleration?",
+      "options": {
+        "same": "It stays the same.",
+        "double": "It doubles, because the force doubled.",
+        "quadruple": "It becomes four times larger, because both quantities doubled."
+      },
+      "hint": "Write a = F/m and replace F with 2F and m with 2m.",
+      "explanation": "a = F/m, so (2F)/(2m) = F/m: the acceleration is unchanged. Doubling the force alone would double it; doubling the mass alone would halve it. Here the two effects cancel exactly."
+    },
+    "length-runway": {
+      "prompt": "Earth observers measure a passing spaceship as shorter than its proper length. What does the crew measure for a 100 m runway on Earth as it passes them?",
+      "options": {
+        "shorter": "Shorter than 100 m: in the ship’s frame the runway is the moving object.",
+        "longer": "Longer than 100 m, to make up for the ship being shorter.",
+        "proper": "Exactly 100 m, because the runway is not the thing that is moving."
+      },
+      "hint": "Which object is moving in the crew’s frame? Who has to record both of its ends at the same time?",
+      "explanation": "Motion is relative. In the ship’s frame the runway moves, so the crew, recording both ends of the runway at the same time in their frame, measure it as contracted: 100 m/γ. Each frame measures the other’s objects as shorter, and both are right, because they disagree about which events are simultaneous."
     }
   },
   "id": {
@@ -1452,6 +1573,56 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "Tentukan periode pada 0,5 m, gandakan, lalu baca panjang yang menghasilkannya.",
       "explanation": "Pada 0,5 m periodenya sekitar 1,42 s. Dua kalinya, sekitar 2,84 s, dicapai pada 2 m: empat kali panjangnya. Karena T ∝ √L, menggandakan T memerlukan L × 2² = 4L."
+    },
+    "synth-force-projectile": {
+      "prompt": "Sebuah bola sedang melayang. Kini ada gaya resultan horizontal yang tetap bekerja padanya, sedangkan gravitasi tetap menjadi satu-satunya gaya vertikal. Apa yang berubah dibandingkan gerak peluru ideal?",
+      "options": {
+        "horizontal": "Kecepatan horizontalnya kini berubah secara teratur, sedangkan gerak vertikalnya tetap persis sama, sehingga lintasannya menjadi kurva yang berbeda.",
+        "fall": "Gerak vertikalnya juga berubah, sehingga bola mendarat lebih cepat atau lebih lambat daripada sebelumnya.",
+        "straight": "Bola berbelok dan bergerak lurus searah gaya yang baru."
+      },
+      "hint": "Uraikan gaya menjadi komponen horizontal dan vertikal. Komponen mana yang diubah oleh gaya baru?",
+      "explanation": "Gaya baru itu horizontal, jadi hanya mengubah percepatan horizontal: kecepatan horizontal kini berubah secara teratur. Gaya vertikal tetap hanya gravitasi, sehingga gerak vertikal, dan juga waktu terbangnya, tidak berubah. Gaya menentukan percepatan, bukan arah gerak, sehingga lintasannya melengkung; dengan kedua gaya tetap, lintasannya tetap parabola, hanya parabola yang berbeda."
+    },
+    "synth-impulse-carts": {
+      "prompt": "Dua kereta mula-mula diam. Impuls yang sama diberikan kepada masing-masing kereta, tetapi massa kereta B dua kali massa kereta A. Pernyataan mana yang benar?",
+      "options": {
+        "momentum": "Keduanya memperoleh momentum yang sama, sehingga kereta A akhirnya dua kali lebih cepat daripada kereta B.",
+        "speed": "Keduanya memperoleh kelajuan yang sama, karena menerima impuls yang sama.",
+        "energy": "Keduanya memperoleh energi kinetik yang sama, karena diberi dorongan yang sama."
+      },
+      "hint": "Impuls sama dengan perubahan momentum. Lalu bandingkan kelajuannya dengan p = m v.",
+      "explanation": "Impuls adalah perubahan momentum, jadi kedua kereta memperoleh momentum p yang sama. Massa kereta A setengahnya, sehingga kelajuannya p/m dua kali kelajuan kereta B. Energi kinetiknya tidak sama: p²/2m dua kali lebih besar untuk kereta A. Impuls yang sama berarti dorongan yang sama selama waktu yang sama, bukan energi yang sama."
+    },
+    "synth-satellite-clock": {
+      "prompt": "Jam satelit bergerak relatif terhadap jam di permukaan Bumi dan berada lebih tinggi dalam gravitasi Bumi. Bagaimana cara menentukan selisih laju totalnya?",
+      "options": {
+        "sum": "Hitung kedua efek beserta tandanya lalu jumlahkan: kelajuan memperlambat jam satelit, gravitasi yang lebih lemah mempercepatnya.",
+        "speed-wins": "Hanya kelajuan yang berpengaruh: jam yang bergerak berjalan lambat, jadi jam satelit secara keseluruhan berjalan lambat.",
+        "cancel": "Kedua efek saling meniadakan pada setiap orbit lingkaran, karena kelajuan orbit ditentukan oleh gravitasi."
+      },
+      "hint": "Ingat ke arah mana setiap efek menggeser jam satelit, lalu tanyakan apakah besarnya harus sama.",
+      "explanation": "Gerak membuat jam satelit berjalan lebih lambat; berada lebih tinggi dalam gravitasi Bumi membuatnya berjalan lebih cepat. Laju totalnya adalah jumlah keduanya, dengan tandanya. Untuk satelit GPS efek gravitasi lebih besar, sehingga jamnya bertambah sekitar 38 μs per hari. Kelajuan orbit memang terkait dengan gravitasi, tetapi kedua efek hanya saling meniadakan pada satu jari-jari orbit tertentu, bukan pada setiap orbit."
+    },
+    "newton-double-both": {
+      "prompt": "Anda menggandakan gaya resultan pada sebuah kereta sekaligus massanya. Apa yang terjadi pada percepatannya?",
+      "options": {
+        "same": "Tetap sama.",
+        "double": "Menjadi dua kali, karena gayanya dua kali.",
+        "quadruple": "Menjadi empat kali, karena kedua besaran digandakan."
+      },
+      "hint": "Tulis a = F/m, lalu ganti F dengan 2F dan m dengan 2m.",
+      "explanation": "a = F/m, sehingga (2F)/(2m) = F/m: percepatannya tidak berubah. Menggandakan gaya saja akan menggandakan percepatan; menggandakan massa saja akan menjadikannya setengah. Di sini kedua efek saling meniadakan dengan tepat."
+    },
+    "length-runway": {
+      "prompt": "Pengamat di Bumi mengukur pesawat antariksa yang lewat lebih pendek daripada panjang wajarnya. Berapa panjang landasan 100 m di Bumi yang diukur awak pesawat saat landasan itu melewati mereka?",
+      "options": {
+        "shorter": "Lebih pendek dari 100 m: dalam kerangka pesawat, landasanlah benda yang bergerak.",
+        "longer": "Lebih panjang dari 100 m, untuk mengimbangi pesawat yang lebih pendek.",
+        "proper": "Tepat 100 m, karena landasan bukanlah benda yang bergerak."
+      },
+      "hint": "Benda mana yang bergerak dalam kerangka awak? Siapa yang harus mencatat kedua ujungnya pada saat yang sama?",
+      "explanation": "Gerak itu relatif. Dalam kerangka pesawat landasanlah yang bergerak, sehingga awak, yang mencatat kedua ujung landasan pada saat yang sama dalam kerangka mereka, mengukurnya memendek: 100 m/γ. Setiap kerangka mengukur benda milik kerangka lain lebih pendek, dan keduanya benar, karena mereka berbeda pendapat tentang peristiwa mana yang serentak."
     }
   },
   "ja": {
@@ -1766,6 +1937,56 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "0.5 mでの周期を読み、それを2倍にして、その周期になる長さを読み取りましょう。",
       "explanation": "0.5 mでの周期は約1.42 sです。その2倍の約2.84 sになるのは2 m、つまり長さの4倍です。T ∝ √L なので、Tを2倍にするには L × 2² = 4L が必要です。"
+    },
+    "synth-force-projectile": {
+      "prompt": "ボールがすでに飛行中です。重力が鉛直方向に働く唯一の力である一方、新たに一定の水平方向の合力が働きます。理想的な放物運動と比べて何が変わりますか。",
+      "options": {
+        "horizontal": "水平方向の速度が一定の割合で変わるようになるが、鉛直方向の運動はまったく同じなので、別の曲線をたどる。",
+        "fall": "鉛直方向の運動も変わるので、以前より早く、または遅く着地する。",
+        "straight": "新しい力の向きに曲がり、まっすぐ進むようになる。"
+      },
+      "hint": "力を水平成分と鉛直成分に分けましょう。新しい力はどちらの成分を変えますか。",
+      "explanation": "新しい力は水平なので、変わるのは水平方向の加速度だけです。水平方向の速度は一定の割合で変わるようになります。鉛直方向の力は重力だけのままなので、鉛直方向の運動、つまり飛行時間も変わりません。力が決めるのは加速度であって運動の向きではないので、経路は曲がります。両方の力が一定なら経路はやはり放物線ですが、別の放物線になります。"
+    },
+    "synth-impulse-carts": {
+      "prompt": "2台の台車は静止しています。それぞれに同じ力積を与えますが、台車Bの質量は台車Aの2倍です。正しい説明はどれですか。",
+      "options": {
+        "momentum": "どちらも同じ運動量を得るので、台車Aは台車Bの2倍の速さになる。",
+        "speed": "同じ力積を受けたので、どちらも同じ速さになる。",
+        "energy": "同じように押されたので、どちらも同じ運動エネルギーを得る。"
+      },
+      "hint": "力積は運動量の変化に等しくなります。次に p = m v を使って速さを比べましょう。",
+      "explanation": "力積は運動量の変化なので、どちらの台車も同じ運動量 p を得ます。台車Aの質量は半分なので、速さ p/m は台車Bの2倍です。運動エネルギーは等しくありません。p²/2m は台車Aのほうが2倍大きくなります。同じ力積とは、同じ時間だけ同じように押すことであり、同じエネルギーを与えることではありません。"
+    },
+    "synth-satellite-clock": {
+      "prompt": "衛星の時計は地上の時計に対して運動し、地球の重力の中でより高い位置にあります。両者の進み方の正味の差はどのように求めますか。",
+      "options": {
+        "sum": "両方の効果を符号付きで求めて足し合わせる。速さは衛星の時計を遅らせ、弱い重力は進ませる。",
+        "speed-wins": "速さだけが重要である。動く時計は遅れるので、衛星の時計は全体として遅れる。",
+        "cancel": "軌道の速さは重力で決まるので、どの円軌道でも2つの効果は打ち消し合う。"
+      },
+      "hint": "それぞれの効果が衛星の時計をどちらにずらすかを思い出し、その大きさが等しくなる必要があるかを考えましょう。",
+      "explanation": "運動は衛星の時計を遅らせ、地球の重力の中で高い位置にあることは時計を進ませます。正味の進み方は、符号を含めた両者の和です。GPS衛星では重力の効果のほうが大きいので、1日に約38 μs進みます。軌道の速さは重力と結び付いていますが、2つの効果が打ち消し合うのは特定の1つの軌道半径だけで、すべての軌道ではありません。"
+    },
+    "newton-double-both": {
+      "prompt": "台車に働く合力と台車の質量を両方とも2倍にします。加速度はどうなりますか。",
+      "options": {
+        "same": "変わらない。",
+        "double": "力が2倍になったので2倍になる。",
+        "quadruple": "両方の量が2倍になったので4倍になる。"
+      },
+      "hint": "a = F/m と書き、F を 2F、m を 2m に置き換えましょう。",
+      "explanation": "a = F/m なので (2F)/(2m) = F/m となり、加速度は変わりません。力だけを2倍にすれば加速度は2倍、質量だけを2倍にすれば半分になります。ここでは2つの効果がちょうど打ち消し合います。"
+    },
+    "length-runway": {
+      "prompt": "地球の観測者は、通過する宇宙船を固有の長さより短く測定します。では宇宙船の乗組員は、通過していく地球上の100 mの滑走路をどう測定しますか。",
+      "options": {
+        "shorter": "100 mより短い。宇宙船の座標系では滑走路のほうが動いている。",
+        "longer": "宇宙船が短くなった分を補うため、100 mより長い。",
+        "proper": "動いているのは滑走路ではないので、ちょうど100 m。"
+      },
+      "hint": "乗組員の座標系で動いているのはどちらですか。両端を同時に記録しなければならないのは誰ですか。",
+      "explanation": "運動は相対的です。宇宙船の座標系では滑走路が動いているので、自分たちの座標系で滑走路の両端を同時に記録する乗組員は、それを縮んだ長さ 100 m/γ と測定します。どちらの座標系も相手の物体を短く測定し、どちらも正しいのです。どの事象が同時かについて意見が異なるからです。"
     }
   }
 }
@@ -1774,8 +1995,10 @@ export interface LearningStep extends StepCopy {
   readonly path: string
   readonly title: string
   readonly summary: string
-  /** Concept questions (no graph). */
+  /** Concept questions (no graph, no other experiments required). */
   readonly questions: readonly PracticeQuestion[]
+  /** Synthesis questions: each combines this experiment with earlier ones, named from the catalogue. */
+  readonly syntheses: readonly LearningSynthesis[]
   /** Graph exercises: one graph each, with the questions read from it. */
   readonly graphs: readonly LearningGraph[]
   /** Numerical problems for the "Apply it" step, easiest first. */
@@ -1785,6 +2008,11 @@ export interface LearningGraph extends GraphCopy {
   readonly id: string
   readonly graph: PracticeGraph
   readonly questions: readonly PracticeQuestion[]
+}
+export interface LearningSynthesis {
+  readonly question: PracticeQuestion
+  /** The other experiments the question combines with this one, in catalogue order. */
+  readonly requires: readonly { readonly path: string; readonly title: string }[]
 }
 export interface LearningChapter {
   readonly number: number
@@ -1804,7 +2032,7 @@ function practiceFor(experiment: string, locale: Locale): PracticeQuestion[] {
       const text = PRACTICE_COPY[locale][q.id] ?? PRACTICE_COPY.en[q.id]
       if (!text) throw new Error(`Missing practice copy for ${q.id}`)
       return {
-        id: q.id, experiment: q.experiment, minLevel: q.minLevel, answer: q.answer, ...(q.graph ? { graph: q.graph } : {}),
+        id: q.id, experiment: q.experiment, minLevel: q.minLevel, answer: q.answer, ...(q.graph ? { graph: q.graph } : {}), ...(q.requires ? { requires: q.requires } : {}),
         prompt: text.prompt, hint: text.hint, explanation: text.explanation,
         options: q.options.map((id) => ({ id, label: text.options[id] ?? id })),
       }
@@ -1824,6 +2052,12 @@ function graphsFor(practice: readonly PracticeQuestion[], locale: Locale): Learn
 
 /** The whole path in one language: chapters and steps in catalogue order. */
 export function getLearningPath(locale: Locale): { ui: LearningUi; chapters: LearningChapter[] } {
+  const titles = new Map(getLocalizedModules(locale).flatMap((m) => m.experiments).flatMap((e) => (e.path ? [[e.path, e.title] as const] : [])))
+  const synthesesFor = (practice: readonly PracticeQuestion[]): LearningSynthesis[] =>
+    practice.filter((q) => q.requires).map((question) => ({
+      question,
+      requires: (question.requires ?? []).map((path) => ({ path, title: titles.get(path) ?? path })),
+    }))
   const chapters = getLocalizedModules(locale).map((module) => ({
     number: module.number,
     title: module.title,
@@ -1836,7 +2070,8 @@ export function getLearningPath(locale: Locale): { ui: LearningUi; chapters: Lea
       const practice = practiceFor(experiment.path, locale)
       return [{
         ...copy, path: experiment.path, title: experiment.title, summary: experiment.summary,
-        questions: practice.filter((q) => !q.graph),
+        questions: practice.filter((q) => !q.graph && !q.requires),
+        syntheses: synthesesFor(practice),
         graphs: graphsFor(practice, locale),
         problems: problemsFor(experiment.path, locale),
       }]
