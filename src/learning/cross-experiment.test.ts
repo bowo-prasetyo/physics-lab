@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, expect, it } from 'vitest'
 import { IMPLEMENTED_EXPERIMENTS, MODULES } from '@/modules'
 import { router } from '@/router'
