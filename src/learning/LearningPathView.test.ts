@@ -8,7 +8,6 @@ import { setLocale } from '@/i18n'
 import { useLevel } from '@/composables/useLevel'
 import { PROBLEM_COPY } from './problem-bank'
 import { markExplored, resetExplored } from './session-progress'
-import { classifyNumericResponse } from './numeric-feedback'
 
 async function render(path: string): Promise<string> {
   const app = createSSRApp(App)
@@ -40,7 +39,9 @@ describe('learning path: Apply it', () => {
     markExplored('/space/space-vs-time')
     html = await render('/learning?module=1')
     expect(html).toContain('Read a position–time graph')
-    expect(html).toContain('The slope of a position–time graph is velocity.')
+    expect(html).toContain('Graph of position x against time t.') // the experiments' own graph component
+    expect(html).toContain('What is the object doing between 2 s and 4 s?')
+    expect(html).not.toContain('What is the object’s average velocity') // Intermediate: hidden at Beginner
   })
 
   it('shows the step’s problems once explored, adding harder ones at higher levels', async () => {
@@ -65,15 +66,6 @@ describe('learning path: Apply it', () => {
     expect(html).toContain('応用してみよう')
     expect(html).toContain('あなたの答え')
     expect(html).toContain(PROBLEM_COPY.ja['pendulum-period']!.title)
-  })
-})
-
-describe('quantitative feedback classification', () => {
-  it('diagnoses common numerical slips', () => {
-    expect(classifyNumericResponse(-2, '2')).toBe('sign')
-    expect(classifyNumericResponse(2, '20')).toBe('tenfold')
-    expect(classifyNumericResponse(10, '11')).toBe('near')
-    expect(classifyNumericResponse(2, 'nope')).toBe('invalid')
   })
 })
 

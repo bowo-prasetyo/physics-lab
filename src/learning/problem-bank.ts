@@ -1265,12 +1265,25 @@ export function problemsFor(experiment: string, locale: Locale): PhysicsProblem[
 }
 
 /**
- * True when `raw` is a number within RELATIVE_TOLERANCE of the answer. Accepts
- * a decimal comma, a typographic minus sign and surrounding spaces.
+ * Reads a learner's typed number, or null when it is not one. Accepts a
+ * decimal comma, spaces (including thin spaces between digit groups) and any
+ * common minus or dash character. The marker and the feedback both use it, so
+ * they always agree about what was typed.
  */
-export function isNumericallyCorrect(problem: Pick<ProblemSource, 'answer'>, raw: string): boolean {
-  const text = raw.trim().replace(/\s/g, '').replace(',', '.').replace('\u2212', '-')
-  if (text === '') return false
+export function parseNumericAnswer(raw: string): number | null {
+  const text = raw.trim().replace(/[\s\u2009\u202f]/g, '').replace(',', '.').replace(/[\u2212\u2013\u2014\u2010]/g, '-')
+  if (text === '') return null
   const value = Number(text)
-  return Number.isFinite(value) && Math.abs(value - problem.answer) <= RELATIVE_TOLERANCE * Math.abs(problem.answer)
+  return Number.isFinite(value) ? value : null
+}
+
+/** True when `value` is within RELATIVE_TOLERANCE of `expected`. */
+export function isWithinTolerance(expected: number, value: number): boolean {
+  return Math.abs(value - expected) <= RELATIVE_TOLERANCE * Math.abs(expected)
+}
+
+/** True when `raw` is a number within RELATIVE_TOLERANCE of the answer. */
+export function isNumericallyCorrect(problem: Pick<ProblemSource, 'answer'>, raw: string): boolean {
+  const value = parseNumericAnswer(raw)
+  return value !== null && isWithinTolerance(problem.answer, value)
 }

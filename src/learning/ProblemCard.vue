@@ -13,7 +13,7 @@ const hintVisible = ref(false)
 const solutionVisible = ref(false)
 const correct = computed(() => checked.value && isNumericallyCorrect(props.problem, response.value))
 const formattedAnswer = computed(() => new Intl.NumberFormat(locale.value, { maximumSignificantDigits: 3 }).format(props.problem.answer))
-const coaching = computed(() => !correct.value && checked.value ? numericFeedback(props.problem.answer, response.value, locale.value) : '')
+const coaching = computed(() => !correct.value && checked.value ? numericFeedback(props.problem.answer, response.value, locale.value, props.problem.unit) : '')
 
 function check(): void {
   if (response.value.trim() !== '') checked.value = true

@@ -42,7 +42,7 @@ const levelName = (min: 'beginner' | 'intermediate' | 'advanced') =>
 const visibleQuestions = <T extends { minLevel: 'beginner' | 'intermediate' | 'advanced' }>(questions: readonly T[]): T[] =>
   questions.filter((q) => atLeast(level.value, q.minLevel))
 const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
-  [...s.questions, ...s.problems].some((q) => !atLeast(level.value, q.minLevel))))
+  [...s.questions, ...s.graphs.flatMap((g) => g.questions), ...s.problems].some((q) => !atLeast(level.value, q.minLevel))))
 </script>
 
 <template>
@@ -94,7 +94,12 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
             <p v-if="!isExplored(step.path)" class="locked">🔒 {{ ui.lockedLabel }}</p>
             <template v-else>
               <PracticeQuestion v-for="q in visibleQuestions(step.questions)" :key="q.id" :question="q" :ui="ui" :seed="seed" :level-tag="levelName(q.minLevel)" />
-              <GraphPractice v-if="step.path === '/space/space-vs-time'" />
+              <template v-for="exercise in step.graphs" :key="exercise.id">
+                <template v-if="visibleQuestions(exercise.questions).length">
+                  <h5 class="apply-title">{{ t('learning.graph.title') }}</h5>
+                  <GraphPractice :exercise="exercise" :questions="visibleQuestions(exercise.questions)" :ui="ui" :seed="seed" :level-tag="(q) => levelName(q.minLevel)" />
+                </template>
+              </template>
               <template v-if="visibleQuestions(step.problems).length">
                 <h5 class="apply-title">{{ t('learning.apply.title') }}</h5>
                 <p class="apply-intro">{{ t('learning.apply.intro') }}</p>
