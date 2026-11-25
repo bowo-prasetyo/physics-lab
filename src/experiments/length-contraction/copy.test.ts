@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getLengthContractionDocumentTitle, localizeLengthContractionText } from './copy'
+import { localizeLengthContractionText } from './copy'
 
 describe('Length Contraction Lab localization', () => {
   it.each([
@@ -11,12 +11,6 @@ describe('Length Contraction Lab localization', () => {
   ] as const)('localizes %s in Indonesian and Japanese', (source, indonesian, japanese) => {
     expect(localizeLengthContractionText(source, 'id')).toBe(indonesian)
     expect(localizeLengthContractionText(source, 'ja')).toBe(japanese)
-  })
-
-  it('localizes the browser document title', () => {
-    expect(getLengthContractionDocumentTitle('id')).toBe('Laboratorium Kontraksi Panjang · Physica')
-    expect(getLengthContractionDocumentTitle('ja')).toBe('長さの収縮実験室 · Physica')
-    expect(getLengthContractionDocumentTitle('en')).toBe('Length Contraction Lab · Physica')
   })
 
   it('keeps English source text unchanged', () => {

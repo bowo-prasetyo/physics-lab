@@ -5,7 +5,7 @@ import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
 import ExperimentNavigation from '@/components/ExperimentNavigation.vue'
 import { useLocale } from '@/composables/useLocale'
 
-const { locale, t } = useLocale()
+const { t } = useLocale()
 const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
 </script>
 
@@ -17,7 +17,6 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
       </RouterLink>
       <nav class="header-tools" :aria-label="t('app.navigation.main')">
         <RouterLink class="learning-link" to="/learning">{{ t('app.navigation.learning') }}</RouterLink>
-        <RouterLink class="problem-solving-link" to="/problem-solving">{{ locale === 'en' ? 'Problem solving' : locale === 'id' ? 'Pemecahan masalah' : '問題演習' }}</RouterLink>
         <RouterLink class="teacher-link" to="/teachers">{{ t('app.navigation.forTeachers') }}</RouterLink>
         <LevelSwitcher />
         <ThemeSwitcher />
@@ -82,8 +81,6 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
   text-decoration: none;
 }
 
-.problem-solving-link { font-size: 0.9rem; font-weight: 650; text-decoration: none; }
-
 .teacher-link {
   font-size: 0.9rem;
   font-weight: 650;
@@ -98,7 +95,7 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
 
 @media (max-width: 480px) {
   .header-tools { gap: 8px; }
-  .teacher-link, .learning-link, .problem-solving-link { font-size: 0.82rem; }
+  .teacher-link, .learning-link { font-size: 0.82rem; }
   .brand img { width: 126px; height: auto; }
 }
 </style>

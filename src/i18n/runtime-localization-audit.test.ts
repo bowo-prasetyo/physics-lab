@@ -7,10 +7,16 @@ import { describe, expect, it } from 'vitest'
 import App from '@/App.vue'
 import { router } from '@/router'
 import { setLocale, SUPPORTED_LOCALES, type Locale } from './index'
+import { IMPLEMENTED_EXPERIMENTS } from '@/modules'
+import { useLevel } from '@/composables/useLevel'
+import { markExplored, resetExplored } from '@/learning/session-progress'
 
 const ROUTES = [
   { path: '/', name: 'home' },
   { path: '/teachers', name: 'teachers' },
+  { path: '/learning', name: 'learning' },
+  // Every step unlocked at Advanced, so all practice questions and Apply-it problems render.
+  ...[1, 2, 3, 4, 5, 6].map((n) => ({ path: `/learning?module=${n}`, name: `learning-module-${n}-unlocked`, unlockAll: true })),
   { path: '/mechanics/newtonian', name: 'newtonian' },
   { path: '/space/space-vs-time', name: 'space-vs-time' },
   { path: '/relativity/moving-clocks', name: 'moving-clocks' },
@@ -31,7 +37,7 @@ const ROUTES = [
   { path: '/mechanics/newtonian?force=50&mass=1&time=5&level=advanced', name: 'newtonian-high-force-state' },
   { path: '/mechanics/projectile?level=advanced&v=30&angle=60&h=10&planet=mars&air=1', name: 'projectile-mars-drag-state' },
   { path: '/time/pendulum?level=advanced&L=2&amp=35&m=5&planet=mars', name: 'pendulum-mars-large-swing-state' },
-] as const
+] as const satisfies readonly { path: string; name: string; unlockAll?: boolean }[]
 
 const INTENTIONALLY_SHARED_COPY = new Set([
   'English',
@@ -174,6 +180,10 @@ describe('runtime localization audit', () => {
 
     try {
       for (const route of ROUTES) {
+        if ('unlockAll' in route) {
+          for (const experiment of IMPLEMENTED_EXPERIMENTS) markExplored(experiment.path)
+          useLevel().value = 'advanced'
+        }
         await router.push(route.path)
         await nextTick()
 
@@ -193,6 +203,8 @@ describe('runtime localization audit', () => {
     } finally {
       app.unmount()
       setLocale('en')
+      resetExplored()
+      useLevel().value = 'beginner'
       root.remove()
     }
 

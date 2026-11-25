@@ -70,6 +70,3 @@ export function localizeGeodesicText(value: string, locale: Locale): string {
   return translated ? translated[locale === 'id' ? 0 : 1] : value
 }
 
-export function getGeodesicMotionDocumentTitle(locale: Locale): string {
-  return localizeGeodesicText('Geodesic Motion Lab: falling through curved spacetime', locale) + ' · Physica'
-}

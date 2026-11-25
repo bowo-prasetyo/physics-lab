@@ -8,6 +8,7 @@ import { newSeed } from '@/shuffle'
 import { getLearningPath } from './learning-content'
 import { isExplored } from './session-progress'
 import PracticeQuestion from './PracticeQuestion.vue'
+import ProblemCard from './ProblemCard.vue'
 
 const { locale, t } = useLocale()
 const level = useLevel()
@@ -39,7 +40,8 @@ const levelName = (min: 'beginner' | 'intermediate' | 'advanced') =>
   min === 'beginner' ? null : t(min === 'intermediate' ? 'app.level.intermediate' : 'app.level.advanced')
 const visibleQuestions = <T extends { minLevel: 'beginner' | 'intermediate' | 'advanced' }>(questions: readonly T[]): T[] =>
   questions.filter((q) => atLeast(level.value, q.minLevel))
-const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) => s.questions.some((q) => !atLeast(level.value, q.minLevel))))
+const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
+  [...s.questions, ...s.problems].some((q) => !atLeast(level.value, q.minLevel))))
 </script>
 
 <template>
@@ -91,6 +93,11 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) => s
             <p v-if="!isExplored(step.path)" class="locked">🔒 {{ ui.lockedLabel }}</p>
             <template v-else>
               <PracticeQuestion v-for="q in visibleQuestions(step.questions)" :key="q.id" :question="q" :ui="ui" :seed="seed" :level-tag="levelName(q.minLevel)" />
+              <template v-if="visibleQuestions(step.problems).length">
+                <h5 class="apply-title">{{ t('learning.apply.title') }}</h5>
+                <p class="apply-intro">{{ t('learning.apply.intro') }}</p>
+                <ProblemCard v-for="p in visibleQuestions(step.problems)" :key="p.id" :problem="p" :level-tag="levelName(p.minLevel)" />
+              </template>
             </template>
           </div>
         </li>
@@ -136,6 +143,8 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) => s
 .practice { display: grid; gap: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
 .practice h5 { margin: 0; font-size: .9rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); }
 .locked { margin: 0; color: var(--text-muted); }
+.practice .apply-title { margin-top: 6px; }
+.apply-intro { margin: -4px 0 0; color: var(--text-muted); font-size: .9rem; }
 .privacy-note { margin: 0; color: var(--text-muted); font-size: .8rem; }
 @media (max-width: 560px) { .learning { gap: 20px; padding-top: 24px; } }
 </style>

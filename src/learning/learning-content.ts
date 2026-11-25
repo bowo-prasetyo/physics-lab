@@ -1,6 +1,7 @@
 import type { Locale } from '@/i18n/locales'
 import type { Level } from '@/levels'
 import { getLocalizedModules } from '@/i18n/home-catalog'
+import { problemsFor, type PhysicsProblem } from './problem-bank'
 
 /**
  * The learning path: one route through space, time and motion.
@@ -14,7 +15,9 @@ import { getLocalizedModules } from '@/i18n/home-catalog'
  *
  * Practice questions belong to one experiment each and unlock only after the
  * learner has tested a prediction in that experiment (see session-progress.ts),
- * so understanding is checked against evidence the learner has seen.
+ * so understanding is checked against evidence the learner has seen. The same
+ * unlock opens the step's numerical problems (problem-bank.ts), where the
+ * learner applies the model they have just tested.
  */
 
 export interface StepCopy { readonly focus: string; readonly idea: string; readonly prerequisite: string }
@@ -50,7 +53,7 @@ const UI: Record<Locale, LearningUi> = {
   "en": {
     "eyebrow": "One path through space, time and motion",
     "title": "Follow the thread, one experiment at a time.",
-    "intro": "The path follows Physica’s six modules in order: from where things are and how clocks keep time, through motion and forces, to relativity, gravity and the expanding universe. Each step links to an experiment. A step’s practice questions unlock once you have tested a prediction in that experiment, so you check your understanding against evidence you have seen.",
+    "intro": "The path follows Physica’s six modules in order: from where things are and how clocks keep time, through motion and forces, to relativity, gravity and the expanding universe. Each step links to an experiment. Once you have tested a prediction in a step’s experiment, its questions unlock, followed by numerical problems that apply the same model, so you check your understanding against evidence you have seen.",
     "chaptersLabel": "Chapters",
     "moduleLabel": "Module",
     "progressLabel": "{done} of {total} explored",
@@ -58,8 +61,8 @@ const UI: Record<Locale, LearningUi> = {
     "exploredLabel": "Explored",
     "notExploredLabel": "Not explored yet",
     "openLabel": "Open the experiment",
-    "lockedLabel": "Unlocks once you have tested a prediction in this experiment.",
-    "moreAtHigherLevels": "More questions appear at Intermediate and Advanced.",
+    "lockedLabel": "Questions and problems unlock once you have tested a prediction in this experiment.",
+    "moreAtHigherLevels": "More questions and problems appear at Intermediate and Advanced.",
     "tryAgainLabel": "Try again",
     "incorrectLabel": "Not quite. Read the explanation, then look again at what you saw in the experiment.",
     "privacyNote": "Progress and answers last for this browser session only. They are not saved or sent anywhere.",
@@ -74,7 +77,7 @@ const UI: Record<Locale, LearningUi> = {
   "id": {
     "eyebrow": "Satu jalur melalui ruang, waktu, dan gerak",
     "title": "Ikuti alurnya, satu eksperimen setiap kali.",
-    "intro": "Jalur ini mengikuti enam modul Physica secara berurutan: dari letak benda dan cara jam menjaga waktu, melalui gerak dan gaya, hingga relativitas, gravitasi, dan alam semesta yang mengembang. Setiap langkah tertaut ke sebuah eksperimen. Soal latihan suatu langkah terbuka setelah Anda menguji sebuah prediksi dalam eksperimennya, sehingga Anda memeriksa pemahaman berdasarkan bukti yang telah Anda lihat.",
+    "intro": "Jalur ini mengikuti enam modul Physica secara berurutan: dari letak benda dan cara jam menjaga waktu, melalui gerak dan gaya, hingga relativitas, gravitasi, dan alam semesta yang mengembang. Setiap langkah tertaut ke sebuah eksperimen. Setelah Anda menguji sebuah prediksi dalam eksperimen suatu langkah, soal-soalnya terbuka, diikuti soal hitungan yang menerapkan model yang sama, sehingga Anda memeriksa pemahaman berdasarkan bukti yang telah Anda lihat.",
     "chaptersLabel": "Bab",
     "moduleLabel": "Modul",
     "progressLabel": "{done} dari {total} dijelajahi",
@@ -82,8 +85,8 @@ const UI: Record<Locale, LearningUi> = {
     "exploredLabel": "Sudah dijelajahi",
     "notExploredLabel": "Belum dijelajahi",
     "openLabel": "Buka eksperimen",
-    "lockedLabel": "Terbuka setelah Anda menguji sebuah prediksi dalam eksperimen ini.",
-    "moreAtHigherLevels": "Soal lainnya muncul pada tingkat Menengah dan Lanjutan.",
+    "lockedLabel": "Soal latihan dan soal hitungan terbuka setelah Anda menguji sebuah prediksi dalam eksperimen ini.",
+    "moreAtHigherLevels": "Soal latihan dan soal hitungan lainnya muncul pada tingkat Menengah dan Lanjutan.",
     "tryAgainLabel": "Coba lagi",
     "incorrectLabel": "Belum tepat. Baca penjelasannya, lalu lihat kembali apa yang Anda amati dalam eksperimen.",
     "privacyNote": "Kemajuan dan jawaban hanya bertahan selama sesi peramban ini. Data tidak disimpan atau dikirim ke mana pun.",
@@ -98,7 +101,7 @@ const UI: Record<Locale, LearningUi> = {
   "ja": {
     "eyebrow": "空間・時間・運動をたどる一本の道",
     "title": "一つずつ実験しながら、流れをたどる。",
-    "intro": "この道はPhysicaの6つのモジュールを順にたどります。物がどこにあるか、時計がどう時を刻むかから始まり、運動と力を経て、相対性理論、重力、膨張する宇宙へと進みます。各ステップは実験につながっています。ステップの練習問題は、その実験で予測を確かめた後に解けるようになるので、自分が見た証拠に基づいて理解を確認できます。",
+    "intro": "この道はPhysicaの6つのモジュールを順にたどります。物がどこにあるか、時計がどう時を刻むかから始まり、運動と力を経て、相対性理論、重力、膨張する宇宙へと進みます。各ステップは実験につながっています。ステップの実験で予測を確かめると、練習問題と、同じモデルを使う計算問題が解けるようになるので、自分が見た証拠に基づいて理解を確認できます。",
     "chaptersLabel": "章",
     "moduleLabel": "モジュール",
     "progressLabel": "{total}件中{done}件を探究済み",
@@ -106,8 +109,8 @@ const UI: Record<Locale, LearningUi> = {
     "exploredLabel": "探究済み",
     "notExploredLabel": "未探究",
     "openLabel": "実験を開く",
-    "lockedLabel": "この実験で予測を確かめると解けるようになります。",
-    "moreAtHigherLevels": "中級と上級では、さらに問題が表示されます。",
+    "lockedLabel": "この実験で予測を確かめると、練習問題と計算問題が解けるようになります。",
+    "moreAtHigherLevels": "中級と上級では、さらに練習問題と計算問題が表示されます。",
     "tryAgainLabel": "もう一度",
     "incorrectLabel": "もう少しです。解説を読み、実験で見たことをもう一度振り返りましょう。",
     "privacyNote": "進み具合と回答はこのブラウザーセッションの間だけ保持されます。保存や送信はされません。",
@@ -1199,6 +1202,8 @@ export interface LearningStep extends StepCopy {
   readonly title: string
   readonly summary: string
   readonly questions: readonly PracticeQuestion[]
+  /** Numerical problems for the "Apply it" step, easiest first. */
+  readonly problems: readonly PhysicsProblem[]
 }
 export interface LearningChapter {
   readonly number: number
@@ -1236,7 +1241,7 @@ export function getLearningPath(locale: Locale): { ui: LearningUi; chapters: Lea
       if (!experiment.path) return []
       const copy = STEP_COPY[locale][experiment.path] ?? STEP_COPY.en[experiment.path]
       if (!copy) return []
-      return [{ ...copy, path: experiment.path, title: experiment.title, summary: experiment.summary, questions: practiceFor(experiment.path, locale) }]
+      return [{ ...copy, path: experiment.path, title: experiment.title, summary: experiment.summary, questions: practiceFor(experiment.path, locale), problems: problemsFor(experiment.path, locale) }]
     }),
   }))
   return { ui: UI[locale], chapters }

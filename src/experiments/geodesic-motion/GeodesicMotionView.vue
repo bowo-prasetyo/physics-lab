@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
 import InfoCallout from '@/components/InfoCallout.vue'
@@ -13,7 +13,7 @@ import { atLeast, isLevel } from '@/levels'
 import { localizePredictions } from '@/i18n/experiment-content'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import { calculateGeodesic, integrationFor, nearCircularShift, newtonianReference, periapsisShiftPerOrbit, type GeodesicRun } from './geodesic'
-import { getGeodesicMotionDocumentTitle, localizeGeodesicText } from './copy'
+import { localizeGeodesicText } from './copy'
 import { PREDICTIONS, type OrbitRun } from './predictions'
 
 const route = useRoute()
@@ -74,7 +74,6 @@ const relativisticPath = computed(() => (shown.value ? pathFor(shown.value.relat
 const newtonianPath = computed(() => (shown.value ? pathFor(shown.value.newtonian.points) : ''))
 const minRadius = computed(() => (shown.value ? Math.min(...shown.value.relativistic.points.map(p => p.radius)) : 0))
 const deg = (value: number) => `${value.toFixed(1)}°`
-watch(locale, () => { if (route.name === 'geodesic-motion') document.title = getGeodesicMotionDocumentTitle(locale.value) })
 </script>
 
 <template>

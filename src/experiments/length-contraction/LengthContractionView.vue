@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import ShareExperiment from '@/components/ShareExperiment.vue'
@@ -16,7 +16,7 @@ import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/exper
 import { localizePredictions } from '@/i18n/experiment-content'
 import { atLeast, isLevel } from '@/levels'
 import { calculateLengthContraction } from '@/physics'
-import { getLengthContractionDocumentTitle, localizeLengthContractionText } from './copy'
+import { localizeLengthContractionText } from './copy'
 import { PREDICTIONS, type LengthMeasurement } from './predictions'
 
 const route = useRoute()
@@ -92,9 +92,6 @@ function clearRuns() {
   lastRunKey.value = null
 }
 
-watch(locale, () => {
-  if (route.name === 'length-contraction') document.title = getLengthContractionDocumentTitle(locale.value)
-})
 </script>
 
 <template>
