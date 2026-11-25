@@ -36,6 +36,7 @@ If you change `src/modules.ts`, regenerate the README catalogue with `npm run do
 | Modules and experiments | `src/modules.ts` | Home page, translations, learning path, teacher guide and README are checked against it |
 | Physics | `src/physics/` | Framework-free TypeScript, no imports from outside (`architecture.test.ts`). Prefer exact solutions; validate numerical methods against them |
 | Concept and graph questions | `PRACTICE_BANK` and `PRACTICE_COPY` in `src/learning/learning-content.ts` | Rendered only by `PracticeQuestion.vue`, which shuffles options |
+| Cross-experiment synthesis | `src/learning/cross-experiment.ts` | Anchored inside an existing step, gated on every linked experiment, localized and rendered by `PracticeQuestion.vue` |
 | Graphs for graph questions | `GRAPHS` in `learning-content.ts` | A position–time run, or a function graph whose `f` calls `src/physics`. Drawn by `PositionTimeGraph.vue` or `FunctionGraph.vue`; never hand-draw a curve |
 | Numerical problems | `src/learning/problem-bank.ts` | Answers are checked against the engine in `problem-bank.test.ts`; marking and feedback share `parseNumericAnswer` and `RELATIVE_TOLERANCE` |
 | Interface text | `src/i18n/messages.ts` | Same keys in `en`, `id` and `ja`; use `t('key')` |
@@ -46,6 +47,7 @@ If you change `src/modules.ts`, regenerate the README catalogue with `npm run do
 - **A concept or graph question:** add a source to `PRACTICE_BANK` (with `graph` for a graph question) and its copy in all three languages to `PRACTICE_COPY`. Nothing else: the step picks it up, and shuffling, hints, levels and translation tests apply automatically.
 - **A new graph:** add it to `GRAPHS` and its title, intro and axis labels to `GRAPH_COPY`. Function graphs start their scales at zero and compute their curve with the physics engine.
 - **A numerical problem:** add a source and its copy to `problem-bank.ts`, and an engine cross-check to `problem-bank.test.ts`.
+- **A cross-experiment challenge:** add its prerequisite routes, chapter and answer key to `cross-experiment.ts`, with complete copy in all three locales. Anchor it to the final prerequisite step; it unlocks only after every linked experiment is explored. Reuse `PracticeQuestion.vue` so options, hints, feedback and answer privacy stay consistent.
 
 ## Translation
 
