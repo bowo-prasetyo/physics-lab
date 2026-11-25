@@ -107,10 +107,10 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
                 <ProblemCard v-for="p in visibleQuestions(step.problems)" :key="p.id" :problem="p" :level-tag="levelName(p.minLevel)" />
               </template>
             </template>
+            <CrossExperimentPractice :step-path="step.path" :locale="locale" :ui="ui" :seed="seed" />
           </div>
         </li>
       </ol>
-      <CrossExperimentPractice :chapter-number="chapter.number" :locale="locale" :ui="ui" :seed="seed" />
       <p class="privacy-note">{{ ui.privacyNote }}</p>
     </section>
   </article>
