@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { IMPLEMENTED_EXPERIMENTS, MODULES } from '@/modules'
 import { router } from '@/router'
 import { SUPPORTED_LOCALES } from '@/i18n/locales'
-import { getCrossExperimentChallenges } from './cross-experiment'
+import { getCrossExperimentChallenges, getCrossExperimentHeading } from './cross-experiment'
 
 describe('cross-experiment synthesis practice', () => {
   const routes = new Set(router.getRoutes().map((route) => route.path))
@@ -26,6 +26,10 @@ describe('cross-experiment synthesis practice', () => {
   it('provides complete, distinct localized copy and valid answer keys in every supported language', () => {
     const ids = getCrossExperimentChallenges('en').map((challenge) => challenge.id)
     for (const locale of SUPPORTED_LOCALES) {
+      const heading = getCrossExperimentHeading(locale)
+      expect(heading.title.trim()).not.toBe('')
+      expect(heading.intro.trim()).not.toBe('')
+      expect(heading.locked.trim()).not.toBe('')
       const challenges = getCrossExperimentChallenges(locale)
       expect(challenges.map((challenge) => challenge.id)).toEqual(ids)
       for (const challenge of challenges) {
