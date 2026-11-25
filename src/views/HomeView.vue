@@ -21,6 +21,7 @@ const audienceKeys = { beginner: 'app.level.beginnerDetails', intermediate: 'app
       <p class="lead">{{ t('home.lead') }}</p>
       <div class="home-actions">
         <RouterLink class="btn btn-primary start" to="/space/space-vs-time">{{ t('home.start') }} <span aria-hidden="true">→</span></RouterLink>
+        <RouterLink class="btn learning-cta" to="/learning">{{ t('home.learningPractice') }}</RouterLink>
         <RouterLink class="btn teacher-cta" to="/teachers">{{ t('home.teacherResources') }}</RouterLink>
       </div>
       <ol class="method" :aria-label="t('home.methodLabel')">
@@ -93,7 +94,7 @@ const audienceKeys = { beginner: 'app.level.beginnerDetails', intermediate: 'app
 .hero h1 { max-width:19ch; margin-bottom:12px; font-size:clamp(2.1rem,5vw,3.2rem); letter-spacing:-.035em; }
 .lead { max-width:65ch; margin-bottom:20px; color:var(--text-muted); font-size:1.12rem; }
 .home-actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
-.start,.teacher-cta { min-height:46px; text-decoration:none; }
+.start,.teacher-cta,.learning-cta { min-height:46px; text-decoration:none; }
 .method { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; max-width:850px; margin:28px 0 0; padding:0; list-style:none; }
 .method li { display:grid; gap:3px; padding:12px 14px; border-left:3px solid var(--accent); background:var(--surface); }
 .method strong { font-size:.92rem; }

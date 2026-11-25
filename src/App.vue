@@ -16,6 +16,7 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
         <img :src="logo" alt="Physica" width="148" height="40" />
       </RouterLink>
       <nav class="header-tools" :aria-label="t('app.navigation.main')">
+        <RouterLink class="learning-link" to="/learning">{{ t('app.navigation.learning') }}</RouterLink>
         <RouterLink class="teacher-link" to="/teachers">{{ t('app.navigation.forTeachers') }}</RouterLink>
         <LevelSwitcher />
         <ThemeSwitcher />
@@ -74,6 +75,12 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
   gap: 16px;
 }
 
+.learning-link {
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
 .teacher-link {
   font-size: 0.9rem;
   font-weight: 650;
@@ -88,7 +95,7 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
 
 @media (max-width: 480px) {
   .header-tools { gap: 8px; }
-  .teacher-link { font-size: 0.82rem; }
+  .teacher-link, .learning-link { font-size: 0.82rem; }
   .brand img { width: 126px; height: auto; }
 }
 </style>

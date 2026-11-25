@@ -1,6 +1,7 @@
 import { watch } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
+import LearningPathView from '@/learning/LearningPathView.vue'
 import { locale } from '@/i18n'
 import { getForceLabDocumentTitle } from '@/experiments/force-lab/copy'
 import { getLengthContractionDocumentTitle } from '@/experiments/length-contraction/copy'
@@ -11,6 +12,7 @@ export const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: '/', name: 'home', component: HomeView, meta: { title: 'Physica' } },
+    { path: '/learning', name: 'learning', component: LearningPathView, meta: { title: 'Learning paths & practice · Physica' } },
     {
       path: '/teachers',
       name: 'teachers',
