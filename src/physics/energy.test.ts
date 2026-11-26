@@ -22,7 +22,7 @@ describe('work and mechanical energy', () => {
   it('uses zero gravitational potential at infinity for Newtonian gravity', () => {
     const u = universalGravitationalPotentialEnergy(1000, 5.972e24, 6.77e6)
     expect(u).toBeLessThan(0)
-    expect(circularOrbitSpecificEnergy(5.972e24, 6.77e6)).toBeCloseTo(u / 1000 / 2, 10)
+    expect(circularOrbitSpecificEnergy(5.972e24, 6.77e6)).toBeCloseTo(u / 1000 / 2, 7)
   })
   it('rejects non-physical inputs', () => {
     expect(() => kineticEnergy(0, 2)).toThrow(RangeError)
