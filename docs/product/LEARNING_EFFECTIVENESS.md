@@ -8,7 +8,9 @@ The in-app assessment pilot now provides a deliberately small, voluntary workflo
 
 ## Practice is not assessment
 
-The learning path's practice is a learning activity: its concept questions, graph questions and *Apply it* numerical problems give immediate feedback, hints and worked explanations, unlock only after the learner has tested a prediction in the matching experiment, and record nothing. Practice is not an assessment or evidence of learning and must not be reported as such. Use the assessment pilot for measurement.
+The learning path's practice is a learning activity: its concept questions, graph questions and *Apply it* numerical problems give immediate feedback, hints and worked explanations, unlock only after the learner has tested a prediction in the matching experiment, and record nothing. Practice is not an assessment or evidence of learning and must not be reported as such. This includes the end-of-chapter *chapter review*, which deliberately keeps no score.
+
+Learners may opt in to remembering which experiments they have explored, in their own browser on their own device. That record never leaves the device, is not visible to teachers and contains no answers, so it cannot be used as a measure of learning either. On shared or school devices, ask learners to use *Forget progress on this device* at the end of a session (or leave remembering off), so the next learner starts afresh. Use the assessment pilot for measurement.
 
 ## Measurement principles
 

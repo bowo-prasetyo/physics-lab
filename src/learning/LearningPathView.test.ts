@@ -102,6 +102,35 @@ describe('learning path: synthesis questions', () => {
   })
 })
 
+describe('learning path: chapter review', () => {
+  afterEach(() => {
+    resetExplored()
+    useLevel().value = 'beginner'
+    setLocale('en')
+  })
+
+  it('appears only inside the unlocked last step of the chapter, and counts its questions correctly', async () => {
+    let html = await render('/learning?module=1')
+    expect(html).not.toContain('Chapter review')
+    markExplored('/space/space-vs-time') // an earlier step: the last step is still locked
+    html = await render('/learning?module=1')
+    expect(html).not.toContain('Chapter review')
+    markExplored('/space/displacement-3d') // the chapter's last step
+    html = await render('/learning?module=1')
+    expect(html).toContain('Chapter review')
+    expect(html).toMatch(/\d+ questions to review from the steps you have explored\./)
+    expect(html).not.toMatch(/exam/i)
+  })
+
+  it('is practice, not a test: it promises no score, in every language', async () => {
+    markExplored('/time/pendulum')
+    for (const [locale, noScore] of [['en', 'no score is kept'], ['id', 'tidak ada nilai yang dicatat'], ['ja', '得点は記録されず']] as const) {
+      setLocale(locale)
+      expect(await render('/learning?module=2')).toContain(noScore)
+    }
+  })
+})
+
 describe('home page front door', () => {
   it('has exactly one call to action, which starts the learning path', async () => {
     setLocale('en')

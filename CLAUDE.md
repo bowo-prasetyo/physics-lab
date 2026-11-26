@@ -20,6 +20,8 @@ npm run build
 
 If you change `src/modules.ts`, regenerate the README catalogue with `npm run docs:catalogue`.
 
+Fill in the pull-request template (`.github/pull_request_template.md`): its product check is the roadmap's decision rules, answered before review.
+
 ## Product rules
 
 - **One thread.** New work must close a gap in space, time and motion and pass the roadmap's decision rules. Do not start a new topic thread.
@@ -61,4 +63,6 @@ This file records product decisions. Change it in a pull request of its own, or 
 
 ## Privacy
 
-No accounts, tracking or analytics. Practice answers live in page memory. Progress is session-only by default; the learner may explicitly opt in to device-local browser storage. No learner data is sent to Physica; the assessment pilot exports only aggregates.
+No accounts, tracking or analytics. Practice answers live in page memory. Progress is session-only by default; the learner may opt in to remembering explored experiments in this browser on this device. That opt-in is a ratified decision with two safeguards that must stay: a visible "Forget progress on this device" control whenever remembering is on, and a shared-device note. Nothing about a learner is ever sent anywhere; the assessment pilot exports only aggregates.
+
+Practice is never scored as a test (the chapter review keeps no score), and learning aids never show values derived from an answer.

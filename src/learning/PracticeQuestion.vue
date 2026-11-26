@@ -3,13 +3,13 @@ import { computed, ref, useId } from 'vue'
 import type { LearningUi, PracticeQuestion } from './learning-content'
 import { seededShuffle } from '@/shuffle'
 
-const props = defineProps<{ question: PracticeQuestion; ui: LearningUi; seed: number; levelTag?: string | null; mode?: 'practice' | 'exam'; modelValue?: string; disabled?: boolean }>()
+const props = defineProps<{ question: PracticeQuestion; ui: LearningUi; seed: number; levelTag?: string | null; mode?: 'practice' | 'review'; modelValue?: string; disabled?: boolean }>()
 const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 const id = useId()
 const selectedPractice = ref('')
 const selected = computed({
-  get: () => props.mode === 'exam' ? props.modelValue ?? '' : selectedPractice.value,
-  set: (value: string) => { if (props.mode === 'exam') emit('update:modelValue', value); else selectedPractice.value = value },
+  get: () => props.mode === 'review' ? props.modelValue ?? '' : selectedPractice.value,
+  set: (value: string) => { if (props.mode === 'review') emit('update:modelValue', value); else selectedPractice.value = value },
 })
 const submitted = ref(false)
 const hintVisible = ref(false)
@@ -32,21 +32,21 @@ function retry(): void {
     <p :id="`${id}-prompt`" class="prompt">
       <span v-if="levelTag" class="level-tag">{{ levelTag }}</span>{{ question.prompt }}
     </p>
-    <fieldset class="answer-options" :disabled="mode === 'exam' ? disabled : submitted">
+    <fieldset class="answer-options" :disabled="mode === 'review' ? disabled : submitted">
       <legend class="visually-hidden">{{ ui.chooseLabel }}</legend>
       <label v-for="option in options" :key="option.id" class="answer-option" :class="{ selected: selected === option.id }">
         <input v-model="selected" type="radio" :name="id" :value="option.id" /><span>{{ option.label }}</span>
       </label>
     </fieldset>
-    <div v-if="mode !== 'exam'" class="question-actions">
+    <div v-if="mode !== 'review'" class="question-actions">
       <template v-if="!submitted">
         <button v-if="!hintVisible" type="button" class="btn btn-small" @click="hintVisible = true">{{ ui.hintLabel }}</button>
         <button type="button" class="btn btn-primary btn-small" :disabled="!selected" @click="check">{{ ui.checkLabel }}</button>
       </template>
       <button v-else type="button" class="btn btn-small" @click="retry">{{ ui.tryAgainLabel }}</button>
     </div>
-    <p v-if="mode !== 'exam' && hintVisible && !submitted" class="hint" role="status">{{ question.hint }}</p>
-    <div v-if="mode !== 'exam' && submitted" class="feedback" :class="correct ? 'correct' : 'incorrect'" role="status" aria-live="polite">
+    <p v-if="mode !== 'review' && hintVisible && !submitted" class="hint" role="status">{{ question.hint }}</p>
+    <div v-if="mode !== 'review' && submitted" class="feedback" :class="correct ? 'correct' : 'incorrect'" role="status" aria-live="polite">
       <strong>{{ correct ? ui.correctLabel : ui.incorrectLabel }}</strong>
       <p><b>{{ ui.explanationLabel }}</b> {{ question.explanation }}</p>
     </div>

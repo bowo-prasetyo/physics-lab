@@ -6,11 +6,11 @@ import { useLevel } from '@/composables/useLevel'
 import { atLeast } from '@/levels'
 import { newSeed } from '@/shuffle'
 import { getLearningPath } from './learning-content'
-import { isExplored, isProgressPersistenceEnabled, setProgressPersistenceEnabled } from './session-progress'
+import { forgetProgressOnThisDevice, isExplored, isProgressPersistenceEnabled, setProgressPersistenceEnabled } from './session-progress'
 import PracticeQuestion from './PracticeQuestion.vue'
 import ProblemCard from './ProblemCard.vue'
 import GraphPractice from './GraphPractice.vue'
-import ExamPractice from './ExamPractice.vue'
+import ChapterReview from './ChapterReview.vue'
 
 const { locale, t } = useLocale()
 const level = useLevel()
@@ -22,9 +22,14 @@ const ui = computed(() => path.value.ui)
 const seed = newSeed()
 const rememberProgress = ref(isProgressPersistenceEnabled())
 watch(rememberProgress, setProgressPersistenceEnabled)
+function forgetProgress(): void {
+  forgetProgressOnThisDevice()
+  rememberProgress.value = false
+}
 const totalSteps = computed(() => path.value.chapters.reduce((sum, item) => sum + item.steps.length, 0))
 const totalExplored = computed(() => path.value.chapters.reduce((sum, item) => sum + exploredCount(item.steps), 0))
-const examQuestions = computed(() => chapter.value.steps.filter((step) => isExplored(step.path)).flatMap((step) => [
+// The chapter review draws on questions from steps already explored (and synthesis questions already unlocked).
+const reviewQuestions = computed(() => chapter.value.steps.filter((step) => isExplored(step.path)).flatMap((step) => [
   ...visibleQuestions(step.questions),
   ...step.graphs.flatMap((graph) => visibleQuestions(graph.questions)),
   ...visibleSyntheses(step.syntheses).filter((item) => item.requires.every((required) => isExplored(required.path))).map((item) => item.question),
@@ -98,6 +103,7 @@ const listTitles = (items: readonly { title: string }[]) =>
         </div>
         <label class="remember-toggle"><input v-model="rememberProgress" type="checkbox" /> {{ t('learning.progress.remember') }}</label>
         <p class="privacy-note">{{ rememberProgress ? t('learning.progress.localPrivacy') : t('learning.progress.sessionPrivacy') }}</p>
+        <button v-if="rememberProgress" type="button" class="btn btn-small forget" @click="forgetProgress">{{ t('learning.progress.forget') }}</button>
       </section>
       <h3 class="steps-title">{{ ui.stepsLabel }}</h3>
       <p v-if="hasHigherLevelQuestions" class="muted small">{{ ui.moreAtHigherLevels }}</p>
@@ -146,8 +152,8 @@ const listTitles = (items: readonly { title: string }[]) =>
                 <p class="apply-intro">{{ t('learning.apply.intro') }}</p>
                 <ProblemCard v-for="p in visibleQuestions(step.problems)" :key="p.id" :problem="p" :level-tag="levelName(p.minLevel)" />
               </template>
+              <ChapterReview v-if="index === chapter.steps.length - 1 && reviewQuestions.length" :questions="reviewQuestions" :seed="seed" :ui="ui" />
             </template>
-            <ExamPractice v-if="index === chapter.steps.length - 1" :questions="examQuestions" :seed="seed" :ui="ui" />
           </div>
         </li>
       </ol>
@@ -206,5 +212,6 @@ const listTitles = (items: readonly { title: string }[]) =>
 .progress-track span { display: block; height: 100%; border-radius: inherit; background: var(--success); transition: width .2s ease; }
 .remember-toggle { display: flex; align-items: center; gap: 8px; width: fit-content; font-size: .9rem; font-weight: 600; cursor: pointer; }
 .remember-toggle input { width: 18px; height: 18px; accent-color: var(--accent); }
+.forget { width: fit-content; }
 @media (max-width: 560px) { .learning { gap: 20px; padding-top: 24px; } }
 </style>

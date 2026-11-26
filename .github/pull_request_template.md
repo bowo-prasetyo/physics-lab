@@ -1,0 +1,22 @@
+## What and why
+
+<!-- What changes for learners or teachers, and why now. One short paragraph. -->
+
+## Product check
+
+<!-- Answer each in a line or two. Write "n/a" only when it truly does not apply. These are the roadmap's decision rules and the house rules in CLAUDE.md. -->
+
+- **Learning outcome:** which outcome in `docs/product/PRODUCT_VISION.md` does this serve?
+- **Learner need:** which misconception or unanswered question does it address?
+- **On the thread:** how does it strengthen space, time and motion, rather than add a new topic?
+- **Predict, then evidence:** what does the learner predict, vary, observe and explain? Does anything reveal an answer before the evidence (including learning aids)?
+- **Practice:** does it add practice? Which steps, and are they still within the budget (2+ at Beginner, 3–7 at Advanced)? Is any of it scored? (It must not be.)
+- **Privacy:** does it store or send anything about a learner? (Sending: never. Storing: only the ratified opt-in, device-local progress.)
+- **House rules:** does it change `CLAUDE.md`, the vision or a rule? If so, quote the product owner's sign-off here, or split that change into its own pull request.
+
+## Testing
+
+- [ ] `npm test`
+- [ ] `npm run audit:localization && npm run audit:localization:runtime`
+- [ ] `npm run build`
+- [ ] Checked in a browser (say what you looked at, and what you could not check)

@@ -53,4 +53,16 @@ describe('graph practice', () => {
       expect(html).not.toMatch(/\b(against|versus|Values on the curve)\b/)
     }
   })
+
+  it('never shows values in its reading guide, which would answer the questions (all graphs, every language)', async () => {
+    for (const locale of ['en', 'id', 'ja'] as const) {
+      for (const step of ['/space/space-vs-time', '/mechanics/force-lab', '/mechanics/projectile', '/time/pendulum']) {
+        const html = await render(locale, step)
+        const start = html.lastIndexOf('<aside', html.indexOf('class="interpretation-guide"'))
+        const guide = html.slice(start, html.indexOf('</aside>', start))
+        expect(guide.length, `${locale} ${step}`).toBeGreaterThan(0)
+        expect(guide.replace(/<[^>]*>/g, ''), `${locale} ${step}`).not.toMatch(/\d/)
+      }
+    }
+  })
 })

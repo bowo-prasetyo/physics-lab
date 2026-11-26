@@ -48,4 +48,17 @@ describe('optional learning progress persistence', () => {
     progress = await import('./session-progress')
     expect(progress.isExplored('/space/space-vs-time')).toBe(false)
   })
+
+  it('forgets everything on this device in one step, for shared and school devices', () => {
+    progress.setProgressPersistenceEnabled(true)
+    progress.markExplored('/time/pendulum')
+    expect(values.size).toBeGreaterThan(0)
+
+    progress.forgetProgressOnThisDevice()
+    expect(values.size).toBe(0)
+    expect(progress.isExplored('/time/pendulum')).toBe(false)
+    expect(progress.isProgressPersistenceEnabled()).toBe(false)
+    progress.markExplored('/time/pendulum') // back to session-only: nothing is written
+    expect(values.size).toBe(0)
+  })
 })
