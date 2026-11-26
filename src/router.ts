@@ -37,6 +37,16 @@ export const router = createRouter({
       component: () => import('@/experiments/force-lab/ForceLabView.vue'),
     },
     {
+      path: '/mechanics/mass-spring',
+      name: 'mass-spring',
+      component: () => import('@/experiments/mass-spring/MassSpringView.vue'),
+    },
+    {
+      path: '/mechanics/inclined-plane',
+      name: 'inclined-plane',
+      component: () => import('@/experiments/inclined-plane/InclinedPlaneView.vue'),
+    },
+    {
       path: '/space/space-vs-time',
       name: 'space-vs-time',
       component: () => import('@/experiments/space-vs-time/SpaceVsTimeView.vue'),
