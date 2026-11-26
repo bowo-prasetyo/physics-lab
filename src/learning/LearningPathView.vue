@@ -10,8 +10,6 @@ import { isExplored } from './session-progress'
 import PracticeQuestion from './PracticeQuestion.vue'
 import ProblemCard from './ProblemCard.vue'
 import GraphPractice from './GraphPractice.vue'
-import CrossExperimentPractice from './CrossExperimentPractice.vue'
-import { getCrossExperimentChallenges } from './cross-experiment'
 
 const { locale, t } = useLocale()
 const level = useLevel()
@@ -44,8 +42,11 @@ const levelName = (min: 'beginner' | 'intermediate' | 'advanced') =>
 const visibleQuestions = <T extends { minLevel: 'beginner' | 'intermediate' | 'advanced' }>(questions: readonly T[]): T[] =>
   questions.filter((q) => atLeast(level.value, q.minLevel))
 const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
-  [...s.questions, ...s.graphs.flatMap((g) => g.questions), ...s.problems].some((q) => !atLeast(level.value, q.minLevel))) ||
-  getCrossExperimentChallenges(locale.value).some((challenge) => challenge.module === chapter.value.number && !atLeast(level.value, challenge.question.minLevel)))
+  [...s.questions, ...s.graphs.flatMap((g) => g.questions), ...s.syntheses.map((x) => x.question), ...s.problems].some((q) => !atLeast(level.value, q.minLevel))))
+const visibleSyntheses = <T extends { question: { minLevel: 'beginner' | 'intermediate' | 'advanced' } }>(items: readonly T[]): T[] =>
+  items.filter((item) => atLeast(level.value, item.question.minLevel))
+const listTitles = (items: readonly { title: string }[]) =>
+  new Intl.ListFormat(locale.value, { type: 'conjunction' }).format(items.map((i) => t('learning.synthesis.quoted').replace('{title}', i.title)))
 </script>
 
 <template>
@@ -103,13 +104,28 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
                   <GraphPractice :exercise="exercise" :questions="visibleQuestions(exercise.questions)" :ui="ui" :seed="seed" :level-tag="(q) => levelName(q.minLevel)" />
                 </template>
               </template>
+              <template v-if="visibleSyntheses(step.syntheses).length">
+                <h5 class="apply-title">{{ t('learning.synthesis.title') }}</h5>
+                <div v-for="item in visibleSyntheses(step.syntheses)" :key="item.question.id" class="synthesis">
+                  <p class="apply-intro">{{ t('learning.synthesis.combines').replace('{experiments}', listTitles(item.requires)) }}</p>
+                  <PracticeQuestion v-if="item.requires.every((r) => isExplored(r.path))" :question="item.question" :ui="ui" :seed="seed" :level-tag="levelName(item.question.minLevel)" />
+                  <div v-else class="synthesis-locked">
+                    <p class="locked">🔒 {{ t('learning.synthesis.locked') }}</p>
+                    <ul>
+                      <li v-for="r in item.requires" :key="r.path">
+                        <RouterLink :to="r.path">{{ r.title }}</RouterLink>
+                        <span class="status" :class="{ done: isExplored(r.path) }">{{ isExplored(r.path) ? `✓ ${ui.exploredLabel}` : ui.notExploredLabel }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </template>
               <template v-if="visibleQuestions(step.problems).length">
                 <h5 class="apply-title">{{ t('learning.apply.title') }}</h5>
                 <p class="apply-intro">{{ t('learning.apply.intro') }}</p>
                 <ProblemCard v-for="p in visibleQuestions(step.problems)" :key="p.id" :problem="p" :level-tag="levelName(p.minLevel)" />
               </template>
             </template>
-            <CrossExperimentPractice :step-path="step.path" :locale="locale" :ui="ui" :level="level" :seed="seed" />
           </div>
         </li>
       </ol>
@@ -156,6 +172,10 @@ const hasHigherLevelQuestions = computed(() => chapter.value.steps.some((s) =>
 .locked { margin: 0; color: var(--text-muted); }
 .practice .apply-title { margin-top: 6px; }
 .apply-intro { margin: -4px 0 0; color: var(--text-muted); font-size: .9rem; }
+.synthesis { display: grid; gap: 8px; }
+.synthesis-locked { padding: 10px 12px; border: 1px dashed var(--border); border-radius: var(--radius-sm); }
+.synthesis-locked ul { display: grid; gap: 4px; margin: 6px 0 0; padding: 0; list-style: none; }
+.synthesis-locked li { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
 .privacy-note { margin: 0; color: var(--text-muted); font-size: .8rem; }
 @media (max-width: 560px) { .learning { gap: 20px; padding-top: 24px; } }
 </style>

@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { IMPLEMENTED_EXPERIMENTS, MODULES } from '@/modules'
 import { router } from '@/router'
 import { SUPPORTED_LOCALES } from '@/i18n/locales'
+import { getLocalizedModules } from '@/i18n/home-catalog'
 import { seededShuffle } from '@/shuffle'
 import { CHAPTER_PREREQUISITES, GRAPHS, GRAPH_CART_MASS, GRAPH_COPY, GRAPH_PROJECTILE, PRACTICE_BANK, PRACTICE_COPY, STEP_COPY, getLearningPath, type FunctionGraph } from './learning-content'
 import { accelerationFromNetForce, exactFlightTime, exactMaxHeight, exactState, smallAnglePeriod } from '@/physics'
@@ -69,8 +70,8 @@ describe('practice questions', () => {
   })
 
   it('cannot be passed by always choosing the same position', () => {
-    // Concept and graph questions alike: every multiple-choice question in the path.
-    const questions = getLearningPath('en').chapters.flatMap((c) => c.steps.flatMap((s) => [...s.questions, ...s.graphs.flatMap((g) => g.questions)]))
+    // Concept, graph and synthesis questions alike: every multiple-choice question in the path.
+    const questions = getLearningPath('en').chapters.flatMap((c) => c.steps.flatMap((s) => [...s.questions, ...s.graphs.flatMap((g) => g.questions), ...s.syntheses.map((x) => x.question)]))
     expect(questions.length).toBe(PRACTICE_BANK.length)
     for (let seed = 0; seed < 50; seed += 1) {
       for (let position = 0; position < 4; position += 1) {
@@ -170,6 +171,53 @@ describe('model-curve graphs', () => {
     expect([...homeOf('force-acceleration')]).toEqual(['/mechanics/force-lab'])
     expect([...homeOf('projectile-height')]).toEqual(['/mechanics/projectile'])
     expect([...homeOf('pendulum-length')]).toEqual(['/time/pendulum'])
+  })
+})
+
+describe('synthesis questions', () => {
+  const order = IMPLEMENTED_EXPERIMENTS.map((e) => e.path)
+  const synthesis = PRACTICE_BANK.filter((q) => 'requires' in q && q.requires?.length)
+
+  it('combine real experiments and sit on the step that comes after all of them', () => {
+    expect(synthesis.length).toBeGreaterThanOrEqual(3)
+    for (const q of synthesis) {
+      for (const path of q.requires!) {
+        expect(order.includes(path), `${q.id} requires ${path}`).toBe(true)
+        expect(order.indexOf(path), `${q.id}: ${path} must come before ${q.experiment}`).toBeLessThan(order.indexOf(q.experiment))
+      }
+      expect(q.minLevel, q.id).not.toBe('beginner') // combining two models is never the first step
+    }
+  })
+
+  it('name the experiments they combine from the localized catalogue, never from copied text', () => {
+    for (const locale of SUPPORTED_LOCALES) {
+      const titles = new Map(getLocalizedModules(locale).flatMap((m) => m.experiments).map((e) => [e.path, e.title]))
+      const steps = getLearningPath(locale).chapters.flatMap((c) => c.steps)
+      expect(steps.flatMap((s) => s.syntheses).length).toBe(synthesis.length)
+      for (const step of steps) {
+        expect(step.questions.some((q) => q.requires), step.path).toBe(false)
+        for (const item of step.syntheses) for (const r of item.requires) expect(r.title, `${locale} ${r.path}`).toBe(titles.get(r.path))
+      }
+    }
+  })
+})
+
+describe('practice budget', () => {
+  /**
+   * Practice per step, all types together (concept, graph, synthesis, Apply it).
+   * The vision sets these bounds: enough practice on every step, and no step
+   * growing far beyond the others until a pilot shows where more is needed.
+   */
+  const BUDGET = { beginnerMin: 2, advancedMin: 3, advancedMax: 7 }
+
+  it('keeps every step within the budget', () => {
+    for (const step of getLearningPath('en').chapters.flatMap((c) => c.steps)) {
+      const all = [...step.questions, ...step.graphs.flatMap((g) => g.questions), ...step.syntheses.map((x) => x.question), ...step.problems]
+      const beginner = all.filter((q) => q.minLevel === 'beginner').length
+      expect(beginner, `${step.path} at Beginner`).toBeGreaterThanOrEqual(BUDGET.beginnerMin)
+      expect(all.length, `${step.path} at Advanced`).toBeGreaterThanOrEqual(BUDGET.advancedMin)
+      expect(all.length, `${step.path} at Advanced`).toBeLessThanOrEqual(BUDGET.advancedMax)
+    }
   })
 })
 

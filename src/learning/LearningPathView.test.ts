@@ -69,6 +69,39 @@ describe('learning path: Apply it', () => {
   })
 })
 
+describe('learning path: synthesis questions', () => {
+  afterEach(() => {
+    resetExplored()
+    useLevel().value = 'beginner'
+    setLocale('en')
+  })
+
+  it('appear only once their own step is explored, and wait for the other experiment', async () => {
+    useLevel().value = 'intermediate'
+    let html = await render('/learning?module=3')
+    expect(html).not.toContain('Connect experiments') // the projectile step itself is still locked
+
+    markExplored('/mechanics/projectile')
+    html = await render('/learning?module=3')
+    expect(html).toContain('Connect experiments')
+    expect(html).toContain('Combines this experiment with “Force Lab: free-body diagrams and multiple forces”.')
+    expect(html).toContain('Unlocks once you have also explored:')
+    expect(html).not.toContain('A steady horizontal net force now acts on it')
+
+    markExplored('/mechanics/force-lab')
+    html = await render('/learning?module=3')
+    expect(html).toContain('A steady horizontal net force now acts on it')
+  })
+
+  it('are hidden at Beginner, like every harder question, and use the catalogue names in Japanese', async () => {
+    markExplored('/mechanics/projectile')
+    expect(await render('/learning?module=3')).not.toContain('Connect experiments')
+    useLevel().value = 'intermediate'
+    setLocale('ja')
+    expect(await render('/learning?module=3')).toContain('この実験と「力の実験室：自由物体図と複数の力」を組み合わせます。')
+  })
+})
+
 describe('home page front door', () => {
   it('has exactly one call to action, which starts the learning path', async () => {
     setLocale('en')
