@@ -7,6 +7,8 @@ export type ExperimentMetadataId =
   | 'pendulum'
   | 'newtonian'
   | 'force-lab'
+  | 'mass-spring'
+  | 'inclined-plane'
   | 'momentum-collisions'
   | 'projectile'
   | 'circular-orbits'
@@ -23,6 +25,8 @@ const experimentPaths: Record<ExperimentMetadataId, string> = {
   pendulum: '/time/pendulum',
   newtonian: '/mechanics/newtonian',
   'force-lab': '/mechanics/force-lab',
+  'mass-spring': '/mechanics/mass-spring',
+  'inclined-plane': '/mechanics/inclined-plane',
   'momentum-collisions': '/mechanics/momentum-collisions',
   projectile: '/mechanics/projectile',
   'circular-orbits': '/mechanics/circular-orbits',
@@ -40,6 +44,8 @@ const moduleLabels: Record<ExperimentMetadataId, readonly [string, string, strin
   pendulum: ['Pendulum clocks', 'Jam bandul', '振り子時計'],
   newtonian: ['Newtonian foundations', 'Dasar-dasar Newton', 'ニュートン力学の基礎'],
   'force-lab': ['Force Lab', 'Laboratorium Gaya', '力の実験室'],
+  'mass-spring': ['Mass–spring', 'Pegas–massa', 'ばね–質量'],
+  'inclined-plane': ['Energy on an incline', 'Energi pada bidang miring', '斜面でのエネルギー'],
   'momentum-collisions': ['Momentum and collisions', 'Momentum dan tumbukan', '運動量と衝突'],
   projectile: ['Projectile motion', 'Gerak proyektil', '放物運動'],
   'circular-orbits': ['Circular motion and orbits', 'Gerak melingkar dan orbit', '円運動と軌道'],
