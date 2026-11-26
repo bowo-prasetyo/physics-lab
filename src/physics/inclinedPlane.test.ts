@@ -13,7 +13,7 @@ describe('inclinedPlane', () => {
     expect(r.height).toBeCloseTo(L * 0.5, 12)
     // v = √(2 g h)
     expect(r.speedAtBottom).toBeCloseTo(Math.sqrt(2 * g * r.height), 10)
-    expect(r.workByFriction).toBe(0)
+    expect(Math.abs(r.workByFriction)).toBe(0)
   })
 
   it('same height, different angle: same frictionless speed', () => {
