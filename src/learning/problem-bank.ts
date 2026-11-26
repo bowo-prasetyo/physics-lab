@@ -497,7 +497,7 @@ export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>>
         "Some stars are older than 9.3 Gyr: one sign that a matter-only model is not our universe. Dark energy makes the expansion speed up and the age longer."
       ]
     }
-  
+  ,
   "work-energy-speed": {
       "title": "Where did the cart's energy go?",
       "scenario": "A 10 kg cart is moving at 2 m/s. A motor pulls it forward with 50 N while kinetic friction opposes it with 10 N over 4 m. What is its final speed?",
@@ -938,7 +938,7 @@ export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>>
         "Sebagian bintang lebih tua dari 9,3 miliar tahun: satu tanda bahwa model yang hanya berisi materi bukanlah alam semesta kita. Energi gelap mempercepat pengembangan dan membuat usianya lebih panjang."
       ]
     }
-  
+  ,
   "work-energy-speed": {
       "title": "Ke mana energi kereta berpindah?",
       "scenario": "Kereta bermassa 10 kg bergerak dengan kecepatan 2 m/s. Motor menariknya ke depan dengan gaya 50 N, sedangkan gesekan kinetik 10 N melawannya sepanjang 4 m. Berapa kecepatan akhirnya?",
@@ -1379,7 +1379,7 @@ export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>>
         "9.3 Gyrより古い恒星があることは、物質だけのモデルが私たちの宇宙ではない兆候の一つです。暗黒エネルギーは膨張を加速させ、年齢を長くします。"
       ]
     }
-  
+  ,
   "work-energy-speed": {
       "title": "台車のエネルギーはどこへ移った？",
       "scenario": "質量10 kgの台車が2 m/sで動いています。モーターは進行方向に50 N、動摩擦力は反対向きに10 Nを及ぼし、その状態で4 m進みます。最後の速さはいくらですか？",
