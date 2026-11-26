@@ -6,12 +6,11 @@ import { useLevel } from '@/composables/useLevel'
 import { atLeast } from '@/levels'
 import { newSeed } from '@/shuffle'
 import { getLearningPath } from './learning-content'
-import { isExplored } from './session-progress'
+import { isExplored, isProgressPersistenceEnabled, setProgressPersistenceEnabled } from './session-progress'
 import PracticeQuestion from './PracticeQuestion.vue'
 import ProblemCard from './ProblemCard.vue'
 import GraphPractice from './GraphPractice.vue'
 import ExamPractice from './ExamPractice.vue'
-import { isProgressPersistenceEnabled, setProgressPersistenceEnabled } from './session-progress'
 
 const { locale, t } = useLocale()
 const level = useLevel()
