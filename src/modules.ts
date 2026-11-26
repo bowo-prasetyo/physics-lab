@@ -58,7 +58,7 @@ export const MODULES: readonly ModuleEntry[] = [
     title: 'Understanding motion',
     role: 'How motion through space changes over time, and why: forces, momentum and reference frames. This Newtonian picture is the one relativity later revises.',
     coverage: ['Newton’s second law: net force, mass and acceleration', 'Free-body diagrams and multiple forces', 'Static and kinetic friction, and force components on an inclined plane', 'Linear momentum and impulse', 'One-dimensional elastic and inelastic collisions', 'Momentum conservation and kinetic-energy change', 'Ideal projectile motion', 'Effects of launch conditions and gravitational acceleration', 'Galilean reference frames', 'Quadratic air resistance and energy loss', 'Uniform circular motion and centripetal force', 'Newtonian gravitation and circular, elliptical and escape orbits', 'Kepler’s third law'],
-    plannedTopics: ['Work, energy and conservation beyond projectile examples'],
+    plannedTopics: [],
     experiments: [
       { title: 'Force, mass and acceleration', summary: 'Vary net force and cart mass to investigate Newton’s second law.', path: '/mechanics/newtonian' },
       { title: 'Force Lab: free-body diagrams and multiple forces', summary: 'Build a free-body diagram, resolve forces on a level surface or incline, and test how the net force determines acceleration.', path: '/mechanics/force-lab' },
