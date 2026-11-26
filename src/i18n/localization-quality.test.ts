@@ -53,7 +53,7 @@ describe('localization quality assurance', () => {
       expect(localized.map((module) => module.number)).toEqual(MODULES.map((module) => module.number))
       expect(localized.flatMap((module) => module.experiments.map((experiment) => experiment.path)))
         .toEqual(MODULES.flatMap((module) => module.experiments.map((experiment) => experiment.path)))
-      expect(localized.flatMap((module) => module.experiments)).toHaveLength(14)
+      expect(localized.flatMap((module) => module.experiments)).toHaveLength(16)
     }
   })
 
@@ -86,6 +86,8 @@ describe('localization quality assurance', () => {
       'pendulum',
       'newtonian',
       'force-lab',
+      'mass-spring',
+      'inclined-plane',
       'momentum-collisions',
       'projectile',
       'circular-orbits',
