@@ -12,6 +12,10 @@ const checked = ref(false)
 const hintVisible = ref(false)
 const solutionVisible = ref(false)
 const solutionStep = ref(0)
+const workspaceVisible = ref(false)
+const modelWork = ref('')
+const substitutionWork = ref('')
+const reasonablenessWork = ref('')
 const solutionProgress = computed(() => t('learning.problem.stepProgress')
   .replace('{current}', String(solutionStep.value)).replace('{total}', String(props.problem.steps.length)))
 const correct = computed(() => checked.value && isNumericallyCorrect(props.problem, response.value))
@@ -40,6 +44,19 @@ function retry(): void {
       <div><dt>{{ t('learning.problem.given') }}</dt><dd>{{ problem.given }}</dd></div>
       <div><dt>{{ t('learning.problem.find') }}</dt><dd>{{ problem.target }} ({{ problem.unit }})</dd></div>
     </dl>
+    <div class="multi-step-work">
+      <button type="button" class="btn btn-small" @click="workspaceVisible = !workspaceVisible">{{ workspaceVisible ? t('learning.problem.hideWorkspace') : t('learning.problem.openWorkspace') }}</button>
+      <section v-if="workspaceVisible" class="workspace" :aria-label="t('learning.problem.workspace')">
+        <h6>{{ t('learning.problem.workspace') }}</h6>
+        <label :for="id + '-model'">{{ t('learning.problem.modelStep') }}</label>
+        <textarea :id="id + '-model'" v-model="modelWork" rows="2" :placeholder="t('learning.problem.modelPlaceholder')"></textarea>
+        <label :for="id + '-substitution'">{{ t('learning.problem.substitutionStep') }}</label>
+        <textarea :id="id + '-substitution'" v-model="substitutionWork" rows="2" :placeholder="t('learning.problem.substitutionPlaceholder')"></textarea>
+        <label :for="id + '-check'">{{ t('learning.problem.checkStep') }}</label>
+        <textarea :id="id + '-check'" v-model="reasonablenessWork" rows="2" :placeholder="t('learning.problem.checkPlaceholder')"></textarea>
+        <p class="input-help">{{ t('learning.problem.workspaceHelp') }}</p>
+      </section>
+    </div>
     <label class="answer-label" :for="`${id}-answer`">{{ t('learning.problem.answerLabel') }}</label>
     <div class="answer-row">
       <input :id="`${id}-answer`" v-model="response" type="text" inputmode="decimal"
@@ -76,6 +93,11 @@ function retry(): void {
 <style scoped>
 .problem-card { display: grid; gap: 10px; min-width: 0; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
 .problem-title { margin: 0; font-weight: 650; }
+.multi-step-work { display: grid; gap: 8px; }
+.workspace { display: grid; gap: 7px; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); }
+.workspace h6 { margin: 0; font-size: .95rem; }
+.workspace label { font-size: .86rem; font-weight: 650; }
+.workspace textarea { width: 100%; min-height: 58px; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font: inherit; resize: vertical; }
 .level-tag { display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .75rem; font-weight: 700; vertical-align: 1px; }
 .scenario { margin: 0; }
 .givens { display: grid; gap: 8px; margin: 0; padding: 10px 12px; background: var(--surface-2); border-radius: var(--radius-sm); }

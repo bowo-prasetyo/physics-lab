@@ -61,4 +61,4 @@ This file records product decisions. Change it in a pull request of its own, or 
 
 ## Privacy
 
-No accounts, tracking or analytics. Practice and progress live in page memory only; the assessment pilot exports only aggregates.
+No accounts, tracking or analytics. Practice answers live in page memory. Progress is session-only by default; the learner may explicitly opt in to device-local browser storage. No learner data is sent to Physica; the assessment pilot exports only aggregates.
