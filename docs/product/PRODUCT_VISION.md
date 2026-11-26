@@ -174,6 +174,9 @@ After completing this module, learners should be able to:
 7. Distinguish ideal projectile motion from motion with air resistance, and interpret the associated changes in energy and trajectory.
 8. Explain why motion in a circle at constant speed needs a net force towards the centre, F = mv²/r, and identify gravity as that force for an orbit.
 9. Use the circular-orbit speed and T² ∝ r³ to compare orbits, and explain how the launch speed decides between circular, elliptical and escape paths.
+10. Calculate work from a constant force and displacement, including negative work by friction.
+11. Apply the work–energy theorem to determine changes in kinetic energy, and distinguish energy transfer from energy conservation.
+12. Calculate kinetic and gravitational potential energy in near-surface and Newtonian orbital settings, stating the chosen zero of potential energy.
 
 **Current foundation:** Newtonian force, momentum and circular-orbit models establish the everyday reference for the later modules. The learning path now introduces signed work, the work–energy theorem, mechanical-energy conservation, and the energy of a bound circular orbit through Force Lab and Circular motion and orbits. These are focused applications, not a complete survey of energy methods.
 
