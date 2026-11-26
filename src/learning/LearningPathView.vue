@@ -147,7 +147,7 @@ const listTitles = (items: readonly { title: string }[]) =>
                 <ProblemCard v-for="p in visibleQuestions(step.problems)" :key="p.id" :problem="p" :level-tag="levelName(p.minLevel)" />
               </template>
             </template>
-            <ExamPractice v-if="index === chapter.steps.length - 1" :questions="examQuestions" :seed="seed" />
+            <ExamPractice v-if="index === chapter.steps.length - 1" :questions="examQuestions" :seed="seed" :ui="ui" />
           </div>
         </li>
       </ol>

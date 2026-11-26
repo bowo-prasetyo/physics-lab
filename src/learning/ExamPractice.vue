@@ -2,9 +2,10 @@
 import { computed, ref, useId } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { seededShuffle } from '@/shuffle'
-import type { PracticeQuestion } from './learning-content'
+import type { LearningUi, PracticeQuestion } from './learning-content'
+import PracticeQuestionCard from './PracticeQuestion.vue'
 
-const props = defineProps<{ questions: readonly PracticeQuestion[]; seed: number }>()
+const props = defineProps<{ questions: readonly PracticeQuestion[]; seed: number; ui: LearningUi }>()
 const { t } = useLocale()
 const id = useId()
 const active = ref(false)
@@ -35,11 +36,7 @@ function start(): void {
     <template v-else>
       <ol class="exam-questions">
         <li v-for="question in examQuestions" :key="question.id">
-          <p class="question">{{ question.prompt }}</p>
-          <label v-for="option in seededShuffle(question.options, question.id, seed)" :key="option.id" class="option">
-            <input v-model="answers[question.id]" type="radio" :name="id + '-' + question.id" :value="option.id" :disabled="submitted" />
-            <span>{{ option.label }}</span>
-          </label>
+          <PracticeQuestionCard :question="question" :ui="ui" :seed="seed" mode="exam" :model-value="answers[question.id]" :disabled="submitted" @update:model-value="(value) => answers[question.id] = value" />
           <div v-if="submitted" class="answer-review" :class="answers[question.id] === question.answer ? 'right' : 'wrong'">
             <strong>{{ answers[question.id] === question.answer ? '✓' : '✗' }}</strong>
             <p>{{ t('learning.exam.explanation') }}: {{ question.explanation }}</p>
@@ -61,9 +58,6 @@ function start(): void {
 .intro { margin: 3px 0 0; color: var(--text-muted); font-size: .88rem; }
 .exam-questions { display: grid; gap: 16px; margin: 0; padding-left: 22px; }
 .exam-questions li { padding-left: 4px; }
-.question { margin: 0 0 8px; font-weight: 600; }
-.option { display: flex; align-items: flex-start; gap: 8px; margin: 6px 0; font-size: .9rem; cursor: pointer; }
-.option input { margin-top: 5px; accent-color: var(--accent); }
 .answer-review { display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-top: 8px; padding: 9px 11px; border-radius: var(--radius-sm); background: var(--surface); font-size: .88rem; }
 .answer-review p { margin: 0; }
 .answer-review.right { border-left: 3px solid var(--success); }
