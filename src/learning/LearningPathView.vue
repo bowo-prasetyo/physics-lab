@@ -147,8 +147,8 @@ const listTitles = (items: readonly { title: string }[]) =>
                 <p class="apply-intro">{{ t('learning.apply.intro') }}</p>
                 <ProblemCard v-for="p in visibleQuestions(step.problems)" :key="p.id" :problem="p" :level-tag="levelName(p.minLevel)" />
               </template>
-              <ExamPractice v-if="index === chapter.steps.length - 1" :questions="examQuestions" :seed="seed" />
             </template>
+            <ExamPractice v-if="index === chapter.steps.length - 1" :questions="examQuestions" :seed="seed" />
           </div>
         </li>
       </ol>
