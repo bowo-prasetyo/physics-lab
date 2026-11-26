@@ -1,8 +1,14 @@
 import { reactive } from 'vue'
 
 /**
- * Explored experiments are session-only unless the learner explicitly opts in
- * to remembering progress on this device. Nothing is transmitted to Physica.
+ * Which experiments the learner has explored: an experiment counts once one of
+ * its prediction cards has reached the explanation, which only happens after
+ * the learner has run the test.
+ *
+ * Session-only by default. The learner may opt in to remembering it in this
+ * browser on this device (a ratified product decision, see the vision's
+ * privacy note); nothing is ever sent to Physica. Because school devices are
+ * often shared, a visible "forget" control clears it at any time.
  */
 const STORAGE_KEY = 'physica.learning-progress.v1'
 const explored = reactive(new Set<string>())
@@ -51,6 +57,11 @@ export function setProgressPersistenceEnabled(enabled: boolean): void {
       store.removeItem(STORAGE_KEY)
     }
   } catch { /* Continue in session-only mode when storage is unavailable. */ }
+}
+/** Forget everything about this learner on this device: the saved data, the opt-in and this session's progress. */
+export function forgetProgressOnThisDevice(): void {
+  explored.clear()
+  setProgressPersistenceEnabled(false)
 }
 export function isProgressPersistenceEnabled(): boolean {
   return settings.persistenceEnabled
