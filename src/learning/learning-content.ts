@@ -164,7 +164,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     },
     "/mechanics/force-lab": {
       "focus": "Add forces with a free-body diagram",
-      "idea": "Resolve forces into components and identify the net force along the direction of motion.",
+      "idea": "Resolve forces into components, then use signed work to track how the net force changes kinetic energy.",
       "prerequisite": "Review vector components and the difference between static and kinetic friction."
     },
     "/mechanics/momentum-collisions": {
@@ -236,7 +236,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     },
     "/mechanics/force-lab": {
       "focus": "Jumlahkan gaya dengan diagram benda bebas",
-      "idea": "Uraikan gaya menjadi komponen dan tentukan gaya resultan sepanjang arah gerak.",
+      "idea": "Uraikan gaya menjadi komponen, lalu gunakan usaha bertanda untuk menelusuri bagaimana gaya resultan mengubah energi kinetik.",
       "prerequisite": "Pelajari kembali komponen vektor serta perbedaan gesekan statis dan kinetis."
     },
     "/mechanics/momentum-collisions": {
@@ -308,7 +308,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     },
     "/mechanics/force-lab": {
       "focus": "自由物体図で力を合成する",
-      "idea": "力を成分に分解し、運動方向の合力を求めます。",
+      "idea": "力を成分に分解し、符号付きの仕事を使って合力が運動エネルギーをどう変えるかを追います。",
       "prerequisite": "ベクトル成分と静止摩擦・動摩擦の違いを復習しましょう。"
     },
     "/mechanics/momentum-collisions": {

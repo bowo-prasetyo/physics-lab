@@ -71,6 +71,8 @@ export const PROBLEM_SOURCES: readonly ProblemSource[] = [
   { id: 'cosmological-redshift', experiment: '/cosmology/evolving-space', minLevel: 'beginner', answer: 1 + 1.5 },
   { id: 'hubble-time', experiment: '/cosmology/evolving-space', minLevel: 'intermediate', answer: 3.086e19 / 70 / 3.156e16 },
   { id: 'matter-age', experiment: '/cosmology/evolving-space', minLevel: 'advanced', answer: (2 / 3) * (3.086e19 / 70 / 3.156e16) },
+  { id: 'work-energy-speed', experiment: '/mechanics/force-lab', minLevel: 'advanced', answer: 6 },
+  { id: 'circular-orbit-energy', experiment: '/mechanics/circular-orbits', minLevel: 'advanced', answer: -(3.99e14 / (2 * 6.77e6)) / 1e6 },
 ]
 
 export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>> = {
@@ -494,8 +496,26 @@ export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>>
         "t₀ = (2/3) × 13.97 Gyr ≈ 9.31 Gyr.",
         "Some stars are older than 9.3 Gyr: one sign that a matter-only model is not our universe. Dark energy makes the expansion speed up and the age longer."
       ]
-    }
+    },
+  "work-energy-speed": {
+    "title": "Where did the cart's energy go?",
+    "scenario": "A 10 kg cart is moving at 2 m/s. A motor pulls it forward with 50 N while kinetic friction opposes it with 10 N over 4 m. What is its final speed?",
+    "given": "m = 10 kg; vᵢ = 2 m/s; Fmotor = 50 N; fₖ = 10 N; d = 4 m",
+    "target": "Final speed", "unit": "m/s",
+    "formula": "Wnet = (Fmotor − fₖ)d; Kf = Ki + Wnet; v_f = √(2Kf/m)",
+    "hint": "Calculate the signed work of each force. Friction does negative work; add net work to the initial kinetic energy.",
+    "steps": ["The initial kinetic energy is Ki = ½mvᵢ² = 20 J.", "The motor does +50 × 4 = +200 J; friction does −10 × 4 = −40 J. Net work is +160 J.", "The work–energy theorem gives Kf = Ki + Wnet = 20 + 160 = 180 J.", "v_f = √(2Kf/m) = √(360/10) = 6 m/s. Some energy transferred by the motor is dissipated by friction; the remainder increases kinetic energy."]
   },
+  "circular-orbit-energy": {
+    "title": "Is an orbit's total energy positive or negative?",
+    "scenario": "A satellite is in a circular orbit at radius 6.77 × 10⁶ m from Earth's centre. Use GM = 3.99 × 10¹⁴ m³/s². What is its total mechanical energy per kilogram, in MJ/kg?",
+    "given": "r = 6.77 × 10⁶ m; GM = 3.99 × 10¹⁴ m³/s²",
+    "target": "Specific total orbital energy", "unit": "MJ/kg",
+    "formula": "ε = K/m + U/m = v²/2 − GM/r = −GM/(2r)",
+    "hint": "For a circular orbit, v² = GM/r. Add kinetic energy per kilogram to gravitational potential energy per kilogram, whose zero is at infinity.",
+    "steps": ["With zero gravitational potential at infinity, U/m = −GM/r ≈ −5.90 × 10⁷ J/kg.", "For a circular orbit, K/m = v²/2 = GM/(2r) ≈ +2.95 × 10⁷ J/kg.", "The total is ε = K/m + U/m = −GM/(2r) ≈ −2.95 × 10⁷ J/kg.", "That is −29.5 MJ/kg. Negative total energy means the satellite is gravitationally bound in this Newtonian model; energy must be added to reach zero energy at infinity."]
+  },
+},
   "id": {
     "car-bend": {
       "title": "Melewati tikungan",
@@ -916,8 +936,26 @@ export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>>
         "t₀ = (2/3) × 13,97 miliar tahun ≈ 9,31 miliar tahun.",
         "Sebagian bintang lebih tua dari 9,3 miliar tahun: satu tanda bahwa model yang hanya berisi materi bukanlah alam semesta kita. Energi gelap mempercepat pengembangan dan membuat usianya lebih panjang."
       ]
-    }
+    },
+  "work-energy-speed": {
+    "title": "Ke mana energi kereta berpindah?",
+    "scenario": "Kereta bermassa 10 kg bergerak dengan kecepatan 2 m/s. Motor menariknya ke depan dengan gaya 50 N, sedangkan gesekan kinetik 10 N melawannya sepanjang 4 m. Berapa kecepatan akhirnya?",
+    "given": "m = 10 kg; vᵢ = 2 m/s; Fmotor = 50 N; fₖ = 10 N; d = 4 m",
+    "target": "Kecepatan akhir", "unit": "m/s",
+    "formula": "Wresultan = (Fmotor − fₖ)d; Kakhir = Kawal + Wresultan; v_akhir = √(2Kakhir/m)",
+    "hint": "Hitung usaha bertanda dari setiap gaya. Gesekan melakukan usaha negatif; tambahkan usaha resultan pada energi kinetik awal.",
+    "steps": ["Energi kinetik awal Kawal = ½mvᵢ² = 20 J.", "Motor melakukan usaha +200 J; gesekan melakukan −40 J. Usaha resultan +160 J.", "Teorema usaha–energi memberi Kakhir = Kawal + Wresultan = 180 J.", "v_akhir = √(2Kakhir/m) = 6 m/s. Sebagian energi dari motor terdisipasi oleh gesekan; sisanya menambah energi kinetik."]
   },
+  "circular-orbit-energy": {
+    "title": "Apakah energi total orbit positif atau negatif?",
+    "scenario": "Satelit berada pada orbit lingkaran dengan jari-jari 6,77 × 10⁶ m dari pusat Bumi. Gunakan GM = 3,99 × 10¹⁴ m³/s². Berapa energi mekanik total per kilogram, dalam MJ/kg?",
+    "given": "r = 6,77 × 10⁶ m; GM = 3,99 × 10¹⁴ m³/s²",
+    "target": "Energi orbit total spesifik", "unit": "MJ/kg",
+    "formula": "ε = K/m + U/m = v²/2 − GM/r = −GM/(2r)",
+    "hint": "Untuk orbit lingkaran, v² = GM/r. Jumlahkan energi kinetik per kilogram dengan energi potensial gravitasi per kilogram yang bernilai nol di tak terhingga.",
+    "steps": ["Dengan energi potensial gravitasi nol di tak terhingga, U/m = −GM/r ≈ −5,90 × 10⁷ J/kg.", "Untuk orbit lingkaran, K/m = v²/2 = GM/(2r) ≈ +2,95 × 10⁷ J/kg.", "Energi total ε = K/m + U/m = −GM/(2r) ≈ −2,95 × 10⁷ J/kg.", "Hasilnya −29,5 MJ/kg. Energi total negatif berarti satelit terikat secara gravitasi dalam model Newton ini; energi harus ditambahkan agar mencapai energi nol di tak terhingga."]
+  },
+},
   "ja": {
     "car-bend": {
       "title": "カーブを曲がる",
@@ -1338,8 +1376,26 @@ export const PROBLEM_COPY: Record<Locale, Readonly<Record<string, ProblemCopy>>>
         "t₀ = (2/3) × 13.97 Gyr ≈ 9.31 Gyr。",
         "9.3 Gyrより古い恒星があることは、物質だけのモデルが私たちの宇宙ではない兆候の一つです。暗黒エネルギーは膨張を加速させ、年齢を長くします。"
       ]
-    }
-  }
+    },
+  "work-energy-speed": {
+    "title": "台車のエネルギーはどこへ移った？",
+    "scenario": "質量10 kgの台車が2 m/sで動いています。モーターは進行方向に50 N、動摩擦力は反対向きに10 Nを及ぼし、その状態で4 m進みます。最後の速さはいくらですか？",
+    "given": "m = 10 kg; vᵢ = 2 m/s; Fmotor = 50 N; fₖ = 10 N; d = 4 m",
+    "target": "最後の速さ", "unit": "m/s",
+    "formula": "合力の仕事 W = (Fmotor − fₖ)d; Kf = Ki + W; v_f = √(2Kf/m)",
+    "hint": "各力の仕事を符号付きで計算します。摩擦の仕事は負です。合計の仕事を最初の運動エネルギーに加えます。",
+    "steps": ["最初の運動エネルギーは Ki = ½mvᵢ² = 20 Jです。", "モーターの仕事は +200 J、摩擦の仕事は −40 Jです。合計の仕事は +160 Jです。", "仕事とエネルギーの定理より Kf = Ki + W = 180 Jです。", "v_f = √(2Kf/m) = 6 m/sです。モーターから移ったエネルギーの一部は摩擦で散逸し、残りが運動エネルギーを増やします。"]
+  },
+  "circular-orbit-energy": {
+    "title": "軌道の全エネルギーは正か負か？",
+    "scenario": "地球の中心から半径6.77 × 10⁶ mの円軌道を回る衛星を考えます。GM = 3.99 × 10¹⁴ m³/s²として、質量1 kgあたりの全力学的エネルギーをMJ/kgで求めてください。",
+    "given": "r = 6.77 × 10⁶ m; GM = 3.99 × 10¹⁴ m³/s²",
+    "target": "単位質量あたりの全軌道エネルギー", "unit": "MJ/kg",
+    "formula": "ε = K/m + U/m = v²/2 − GM/r = −GM/(2r)",
+    "hint": "円軌道ではv² = GM/rです。無限遠をゼロとする重力ポテンシャルエネルギーと、単位質量あたりの運動エネルギーを足します。",
+    "steps": ["無限遠で重力ポテンシャルをゼロとすると、U/m = −GM/r ≈ −5.90 × 10⁷ J/kgです。", "円軌道ではv² = GM/rなので、K/m = v²/2 = GM/(2r) ≈ +2.95 × 10⁷ J/kgです。", "全エネルギーは ε = K/m + U/m = −GM/(2r) ≈ −2.95 × 10⁷ J/kgです。", "したがって −29.5 MJ/kgです。全エネルギーが負なので、このニュートン力学モデルでは衛星は重力に束縛されています。無限遠でエネルギーをゼロにするにはエネルギーを加える必要があります。"]
+  },
+}
 }
 
 const LEVEL_ORDER: Record<Level, number> = { beginner: 0, intermediate: 1, advanced: 2 }
