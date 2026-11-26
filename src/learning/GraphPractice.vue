@@ -48,6 +48,18 @@ const table = computed(() => {
     ],
   }
 })
+const averageRate = computed(() => {
+  const graph = props.exercise.graph
+  if (graph.kind === 'motion') {
+    const points = graphVertices(graph.record)
+    const first = points[0]
+    const last = points[points.length - 1]
+    return first && last && last.t !== first.t ? (last.x - first.x) / (last.t - first.t) : 0
+  }
+  const firstX = graph.table[0] ?? 0
+  const lastX = graph.table[graph.table.length - 1] ?? firstX
+  return lastX !== firstX ? (graph.f(lastX) - graph.f(firstX)) / (lastX - firstX) : 0
+})
 const description = computed(() =>
   t('learning.graph.description').replace('{y}', props.exercise.yLabel ?? '').replace('{x}', props.exercise.xLabel ?? ''))
 </script>
@@ -83,6 +95,15 @@ const description = computed(() =>
         </tbody>
       </table>
     </div>
+    <aside class="interpretation-guide" :aria-label="t('learning.graph.interpretation')">
+      <h6>{{ t('learning.graph.interpretation') }}</h6>
+      <ul>
+        <li>{{ t('learning.graph.axesPrompt') }}</li>
+        <li>{{ exercise.graph.kind === 'motion' ? t('learning.graph.motionSlope') : t('learning.graph.ratePrompt') }}</li>
+        <li>{{ t('learning.graph.shapePrompt') }}</li>
+      </ul>
+      <p class="rate-reading"><strong>{{ t('learning.graph.averageRate') }}:</strong> {{ format(averageRate) }} ({{ exercise.yLabel ?? t('learning.graph.position') }}) / ({{ exercise.xLabel ?? t('learning.graph.time') }})</p>
+    </aside>
     <PracticeQuestion v-for="q in questions" :key="q.id" :question="q" :ui="ui" :seed="seed" :level-tag="levelTag(q)" />
   </section>
 </template>
@@ -90,6 +111,10 @@ const description = computed(() =>
 <style scoped>
 .graph-practice { display: grid; gap: 10px; min-width: 0; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); }
 h6 { margin: 0; font-size: 1rem; }
+.interpretation-guide { padding: 12px 14px; border-radius: var(--radius-sm); background: var(--surface); border: 1px solid var(--border); }
+.interpretation-guide h6 { margin-bottom: 6px; }
+.interpretation-guide ul { margin: 0; padding-left: 20px; color: var(--text-muted); font-size: .88rem; }
+.rate-reading { margin: 8px 0 0; font-size: .88rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .intro { margin: 2px 0 0; color: var(--text-muted); font-size: .9rem; }
 .value-table { max-width: 100%; overflow-x: auto; }
 table { border-collapse: collapse; font-size: .84rem; font-variant-numeric: tabular-nums; }

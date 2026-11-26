@@ -10,6 +10,8 @@ import { isExplored } from './session-progress'
 import PracticeQuestion from './PracticeQuestion.vue'
 import ProblemCard from './ProblemCard.vue'
 import GraphPractice from './GraphPractice.vue'
+import ExamPractice from './ExamPractice.vue'
+import { isProgressPersistenceEnabled, setProgressPersistenceEnabled } from './session-progress'
 
 const { locale, t } = useLocale()
 const level = useLevel()
@@ -19,6 +21,15 @@ const path = computed(() => getLearningPath(locale.value))
 const ui = computed(() => path.value.ui)
 // One shuffle seed per visit: options keep their order while the learner works.
 const seed = newSeed()
+const rememberProgress = ref(isProgressPersistenceEnabled())
+watch(rememberProgress, setProgressPersistenceEnabled)
+const totalSteps = computed(() => path.value.chapters.reduce((sum, item) => sum + item.steps.length, 0))
+const totalExplored = computed(() => path.value.chapters.reduce((sum, item) => sum + exploredCount(item.steps), 0))
+const examQuestions = computed(() => chapter.value.steps.filter((step) => isExplored(step.path)).flatMap((step) => [
+  ...visibleQuestions(step.questions),
+  ...step.graphs.flatMap((graph) => visibleQuestions(graph.questions)),
+  ...visibleSyntheses(step.syntheses).filter((item) => item.requires.every((required) => isExplored(required.path))).map((item) => item.question),
+]))
 
 // The chosen chapter is in the link (#/learning?module=4), so a teacher can share it.
 const chapterFromQuery = () => {
@@ -78,6 +89,17 @@ const listTitles = (items: readonly { title: string }[]) =>
         <p>{{ chapter.prerequisites }}</p>
       </div>
 
+      <section class="progress-dashboard card" :aria-label="t('learning.progress.title')">
+        <div class="progress-copy">
+          <strong>{{ t('learning.progress.title') }}</strong>
+          <span class="muted">{{ t('learning.progress.summary').replace('{done}', String(totalExplored)).replace('{total}', String(totalSteps)) }}</span>
+        </div>
+        <div class="progress-track" role="progressbar" :aria-valuenow="totalExplored" :aria-valuemin="0" :aria-valuemax="totalSteps" :aria-label="t('learning.progress.aria')">
+          <span :style="{ width: (totalSteps ? (totalExplored / totalSteps) * 100 : 0) + '%' }"></span>
+        </div>
+        <label class="remember-toggle"><input v-model="rememberProgress" type="checkbox" /> {{ t('learning.progress.remember') }}</label>
+        <p class="privacy-note">{{ rememberProgress ? t('learning.progress.localPrivacy') : t('learning.progress.sessionPrivacy') }}</p>
+      </section>
       <h3 class="steps-title">{{ ui.stepsLabel }}</h3>
       <p v-if="hasHigherLevelQuestions" class="muted small">{{ ui.moreAtHigherLevels }}</p>
       <ol class="steps">
@@ -125,11 +147,12 @@ const listTitles = (items: readonly { title: string }[]) =>
                 <p class="apply-intro">{{ t('learning.apply.intro') }}</p>
                 <ProblemCard v-for="p in visibleQuestions(step.problems)" :key="p.id" :problem="p" :level-tag="levelName(p.minLevel)" />
               </template>
+              <ExamPractice v-if="index === chapter.steps.length - 1" :questions="examQuestions" :seed="seed" />
             </template>
           </div>
         </li>
       </ol>
-      <p class="privacy-note">{{ ui.privacyNote }}</p>
+
     </section>
   </article>
 </template>
@@ -177,5 +200,12 @@ const listTitles = (items: readonly { title: string }[]) =>
 .synthesis-locked ul { display: grid; gap: 4px; margin: 6px 0 0; padding: 0; list-style: none; }
 .synthesis-locked li { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
 .privacy-note { margin: 0; color: var(--text-muted); font-size: .8rem; }
+.progress-dashboard { display: grid; gap: 10px; padding: 14px 16px; }
+.progress-copy { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; }
+.progress-copy span { font-size: .88rem; }
+.progress-track { height: 9px; overflow: hidden; border-radius: 999px; background: var(--surface-2); }
+.progress-track span { display: block; height: 100%; border-radius: inherit; background: var(--success); transition: width .2s ease; }
+.remember-toggle { display: flex; align-items: center; gap: 8px; width: fit-content; font-size: .9rem; font-weight: 600; cursor: pointer; }
+.remember-toggle input { width: 18px; height: 18px; accent-color: var(--accent); }
 @media (max-width: 560px) { .learning { gap: 20px; padding-top: 24px; } }
 </style>
