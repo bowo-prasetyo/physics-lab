@@ -2,7 +2,6 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentSupport } from '@/i18n/experiment-support'
-import ConceptBridge from '@/components/ConceptBridge.vue'
 
 const props = defineProps<{ experimentId: string; moduleNumber: number; focus: string; prompt: string; action: string; reflect: string }>()
 const { t, locale } = useLocale()
@@ -60,7 +59,6 @@ const progressAriaLabel = computed(() => t('app.support.progressLabel').replace(
       <div><h3>{{ t('app.support.try') }}</h3><p>{{ guidance.action }}</p></div>
       <div><h3>{{ t('app.support.after') }}</h3><p>{{ guidance.reflect }}</p></div>
     </div>
-    <ConceptBridge :experiment-id="experimentId" />
     <div class="progress-option">
       <label class="progress-toggle"><input v-model="enabled" type="checkbox"><span>{{ t('app.support.progressToggle') }}</span></label>
       <p class="privacy-note">{{ t('app.support.privacy') }}</p>

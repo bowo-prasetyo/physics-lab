@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
+import ConceptBridge from '@/components/ConceptBridge.vue'
 import InfoCallout from '@/components/InfoCallout.vue'
 import MathFormula from '@/components/MathFormula.vue'
 import PredictionCard from '@/components/PredictionCard.vue'
@@ -192,6 +193,7 @@ const deg = (value: number) => `${value.toFixed(1)}°`
       <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
         <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
+        <ConceptBridge experiment-id="geodesic-motion" :level="level" />
         <div class="meaning">
           <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
             <ul>

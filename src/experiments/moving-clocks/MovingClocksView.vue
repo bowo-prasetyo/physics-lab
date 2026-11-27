@@ -3,6 +3,7 @@ import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
+import ConceptBridge from '@/components/ConceptBridge.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import MathFormula from '@/components/MathFormula.vue'
@@ -230,6 +231,7 @@ const signed = (value: number, digits = 2) => {
       <summary>{{ experimentSectionLabel('meaningDisclosure', locale) }}</summary>
       <section aria-labelledby="meaning-title" class="card prose">
       <h2 id="meaning-title"><span class="step-no">4</span> {{ experimentSectionLabel('meaning', locale) }}</h2>
+      <ConceptBridge experiment-id="moving-clocks" :level="level" />
       <div class="meaning">
         <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
           <ul>
