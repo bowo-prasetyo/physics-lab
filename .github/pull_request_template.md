@@ -16,7 +16,11 @@
 
 ## Testing
 
+<!-- Tick a box only when you did it yourself; say what you saw. If you could not do something, leave it unticked and add "Not done: <reason>" on that line, e.g.
+- [ ] Checked in a browser — Not done: no browser in this environment
+A ticked box that says it was not done fails the PR checklist check. -->
+
 - [ ] `npm test`
 - [ ] `npm run audit:localization && npm run audit:localization:runtime`
 - [ ] `npm run build`
-- [ ] Checked in a browser (say what you looked at, and what you could not check)
+- [ ] Checked in a browser (say what you looked at)

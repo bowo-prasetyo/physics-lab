@@ -20,7 +20,7 @@ npm run build
 
 If you change `src/modules.ts`, regenerate the README catalogue with `npm run docs:catalogue`.
 
-Fill in the pull-request template (`.github/pull_request_template.md`): its product check is the roadmap's decision rules, answered before review. The *PR checklist* workflow fails while any box under "Testing" is unticked: tick each box once it is done, and say what you could not check.
+Fill in the pull-request template (`.github/pull_request_template.md`): its product check is the roadmap's decision rules, answered before review. The *PR checklist* workflow checks the "Testing" section: tick a box only when you did it yourself; if you could not, leave it unticked with `Not done: <reason>` on that line, so the product owner sees it before merging. A ticked box that says it was not done ("not run locally", "not checked") fails.
 
 ## Product rules
 

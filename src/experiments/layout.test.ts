@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { CONCEPT_BRIDGE_EXPERIMENTS } from '@/i18n/concept-bridges'
 
 /**
  * Every experiment page follows one layout, so learners always find the same
@@ -40,6 +41,21 @@ function wrappedInDisclosure(text: string, headingId: string): boolean {
   return open >= 0 && text.lastIndexOf('</details>', heading) < open
 }
 
+/** Components that explain results. They belong after the evidence, inside Meaning. */
+const EXPLANATIONS = ['LocalizedExperimentGuide', 'ConceptBridge']
+
+describe('explanations stay out of the investigation guide', () => {
+  it('ExperimentSupport, which renders above Predict, contains no explanation component', () => {
+    const support = readFileSync(join(root, '..', 'components', 'ExperimentSupport.vue'), 'utf8')
+    for (const component of EXPLANATIONS) expect(support, component).not.toContain(component)
+  })
+
+  it('places every concept bridge on exactly one experiment page', () => {
+    const rendered = pages.flatMap((page) => [...template(page).matchAll(/<ConceptBridge experiment-id="([^"]+)"/g)].map((m) => m[1]))
+    expect(rendered.sort()).toEqual([...CONCEPT_BRIDGE_EXPERIMENTS].sort())
+  })
+})
+
 describe('experiment page layout', () => {
   it('finds every experiment page', () => {
     expect(pages.length).toBeGreaterThanOrEqual(13)
@@ -77,9 +93,12 @@ describe('experiment page layout', () => {
         expect(text).not.toMatch(/<details class="lesson-disclosure"[^>]*\sopen/)
       })
 
-      it('shows translated background notes only inside Meaning', () => {
-        const guide = text.indexOf('<LocalizedExperimentGuide')
-        if (guide >= 0) expect(guide).toBeGreaterThan(text.indexOf('id="meaning-title"'))
+      it('shows explanations (background notes, concept bridges) only inside Meaning, never above Predict', () => {
+        const meaning = text.indexOf('id="meaning-title"')
+        for (const component of EXPLANATIONS) {
+          const at = text.indexOf(`<${component}`)
+          if (at >= 0) expect(at, `${component} must sit inside Meaning`).toBeGreaterThan(meaning)
+        }
       })
 
       it('lets a teacher share the setup as a link', () => {
