@@ -97,6 +97,7 @@ export function deceleration(c: Cosmology, a: number): number {
  * present. Bisection avoids assuming radiation is negligible.
  */
 export function accelerationOnset(c: Cosmology): number | null {
+  validateCosmology(c)
   if (c.omegaL <= 0 || (c.omegaR <= 0 && c.omegaM <= 0)) return null
 
   const numerator = (a: number) =>

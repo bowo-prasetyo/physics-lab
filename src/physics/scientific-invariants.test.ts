@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   COSMOLOGIES,
+  accelerationOnset,
   cmbTemperature,
   deceleration,
   expansionFactor,
@@ -27,6 +28,7 @@ describe('scientific-domain validation', () => {
     expect(() => expansionFactor(invalid, 1)).toThrow(RangeError)
     expect(() => deceleration(negativeDensity, 1)).toThrow(RangeError)
     expect(() => solveExpansion(invalid)).toThrow(RangeError)
+    expect(() => accelerationOnset(negativeDensity)).toThrow(RangeError)
   })
 
   it('rejects invalid distance and future-time inputs', () => {
