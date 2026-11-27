@@ -36,9 +36,8 @@ describe('P1 graph interpretation exercises', () => {
       expect(html).toContain(titles[locale])
       expect(html).toContain('class="value-table"')
       expect(html).toContain('class="interpretation-guide"')
-      expect(html).toContain('Check answer')
-      if (locale === 'id') expect(html).toContain('Periksa jawaban')
-      if (locale === 'ja') expect(html).toContain('回答を確認')
+      const checkLabel: Record<Locale, string> = { en: 'Check answer', id: 'Periksa jawaban', ja: '回答を確認' }
+      expect(html).toContain(checkLabel[locale])
     }
   })
 })
