@@ -71,8 +71,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 4,
     title: 'Special relativity',
     role: 'Near the speed of light, measurements of time and length depend on the observer, and space and time combine into spacetime.',
-    coverage: ['Galilean and Lorentz transformations', 'Time dilation and proper time', 'Length contraction and proper length', 'Relativity of simultaneity', 'Spacetime diagrams and invariant interval', 'Comparison of equivalent relativistic descriptions', 'One-dimensional relativistic velocity addition', 'Relativistic momentum and its high-speed growth'],
-    plannedTopics: ['More explicit links between inertial-frame measurements and experimental evidence'],
+    coverage: ['Galilean and Lorentz transformations', 'Time dilation and proper time', 'Length contraction and proper length', 'Relativity of simultaneity', 'Spacetime diagrams and invariant interval', 'Comparison of equivalent relativistic descriptions'],
+    plannedTopics: ['Velocity addition and relativistic momentum', 'More explicit links between inertial-frame measurements and experimental evidence'],
     experiments: [
       { title: 'Different clocks, different elapsed times', summary: 'A spaceship passes the Earth. Compare their clocks on a spacetime diagram, from either point of view.', path: '/relativity/moving-clocks' },
       { title: 'Space and time versus spacetime', summary: 'Two perspectives: compare Galilean, space + time (Lorentz) and spacetime predictions with what experiments find.', path: '/relativity/two-perspectives' },
@@ -83,8 +83,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 5,
     title: 'General relativity',
     role: 'Gravity as the geometry of spacetime: clocks at different heights run at different rates, and free fall follows the straightest possible paths.',
-    coverage: ['Gravitational time dilation in the Schwarzschild exterior', 'GPS gravitational and kinematic clock corrections', 'Static spherical geometry and proper radial distance', 'Light signals and clock rates near a Schwarzschild horizon', 'Timelike geodesics and free-fall orbits in Schwarzschild spacetime', 'Periapsis precession and the Newtonian limit', 'Local equivalence principle and free-fall laboratories'],
-    plannedTopics: ['Einstein field equations and the role of stress-energy', 'Beyond the static, spherical Schwarzschild setting'],
+    coverage: ['Gravitational time dilation in the Schwarzschild exterior', 'GPS gravitational and kinematic clock corrections', 'Static spherical geometry and proper radial distance', 'Light signals and clock rates near a Schwarzschild horizon', 'Timelike geodesics and free-fall orbits in Schwarzschild spacetime', 'Periapsis precession and the Newtonian limit'],
+    plannedTopics: ['Einstein field equations and the role of stress-energy', 'A careful bridge from the equivalence principle to curved spacetime', 'Beyond the static, spherical Schwarzschild setting'],
     experiments: [
       { title: 'Gravity and clock rates', summary: 'Two clocks at different heights, from the Earth to a black hole, and why GPS needs relativity.', path: '/gravity/clock-rates' },
       { title: 'Geodesic Motion Lab', summary: 'Compare Newtonian orbits with free-fall paths through Schwarzschild spacetime; investigate periapsis precession.', path: '/gravity/geodesic-motion' },
@@ -94,8 +94,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 6,
     title: 'Cosmology',
     role: 'Space and time on the largest scale: how the universe’s own expansion evolves, and where our models stop being reliable.',
-    coverage: ['Scale factor in homogeneous and isotropic FLRW models', 'Redshift and Hubble expansion', 'Matter-, radiation- and dark-energy-dominated model histories', 'Accelerating and decelerating expansion', 'Low-redshift Hubble diagram and observational evidence', 'Limits of classical evolution as the scale factor approaches zero'],
-    plannedTopics: ['Cosmic distance measures and horizons', 'A deeper treatment of the early universe and inflation', 'The status and limits of extrapolating classical cosmology toward the initial singularity'],
+    coverage: ['Scale factor in homogeneous and isotropic FLRW models', 'Redshift and Hubble expansion', 'Matter-, radiation- and dark-energy-dominated model histories', 'Accelerating and decelerating expansion', 'Limits of classical evolution as the scale factor approaches zero'],
+    plannedTopics: ['Observational evidence and parameter inference in modern cosmology', 'Cosmic distance measures and horizons', 'A deeper treatment of the early universe and inflation', 'The status and limits of extrapolating classical cosmology toward the initial singularity'],
     experiments: [
       { title: 'Evolving space', summary: 'Run a model universe forwards and backwards: Hubble’s law, redshift, dark energy and where the model breaks down.', path: '/cosmology/evolving-space' },
     ],

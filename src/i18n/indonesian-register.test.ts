@@ -12,7 +12,7 @@ import { PROBLEM_COPY } from '@/learning/problem-bank'
  */
 const INFORMAL = /\bkamu\b|\b[a-z]+mu\b/gi
 /** Ordinary words that happen to end in -mu. */
-const ALLOWED = new Set(['ilmu', 'temu', 'bertemu', 'tamu', 'jamu', 'ramu', 'jumpa'])
+const ALLOWED = new Set(['ilmu', 'semu', 'temu', 'bertemu', 'tamu', 'jamu', 'ramu', 'jumpa'])
 
 function strings(value: unknown): string[] {
   if (typeof value === 'string') return [value]

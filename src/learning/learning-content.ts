@@ -1,9 +1,19 @@
 import type { Locale } from '@/i18n/locales'
 import type { Level } from '@/levels'
 import { getLocalizedModules } from '@/i18n/home-catalog'
-import { accelerationFromNetForce, exactState, smallAnglePeriod, type RunRecord, type TrackBounds } from '@/physics'
+import {
+  SPEED_OF_LIGHT,
+  accelerationFromNetForce,
+  apparentWeightPerMass,
+  exactState,
+  hubbleVelocity,
+  relativisticMomentum,
+  relativisticVelocityAddition,
+  smallAnglePeriod,
+  type RunRecord,
+  type TrackBounds,
+} from '@/physics'
 import { problemsFor, type PhysicsProblem } from './problem-bank'
-import { P1_GRAPHS, P1_GRAPH_COPY, P1_PRACTICE_BANK, P1_PRACTICE_COPY } from './p1-practice'
 
 /**
  * The learning path: one route through space, time and motion.
@@ -189,9 +199,9 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Understand inertial reference frames and that a clock measures time along its own path."
     },
     "/relativity/two-perspectives": {
-      "focus": "Compare measurements across moving frames",
-      "idea": "Test frame-dependent simultaneity, add collinear velocities, and see why momentum grows steeply near the speed of light.",
-      "prerequisite": "Review how positions and times transform between observers; distant clocks require synchronisation. Know that relativistic velocity addition and momentum refine the Newtonian rules at high speeds."
+      "focus": "Simultaneity depends on the reference frame",
+      "idea": "Compare which events are simultaneous for observers in relative motion.",
+      "prerequisite": "Review how positions and times transform between observers; distant clocks require synchronisation."
     },
     "/relativity/length-contraction": {
       "focus": "Measure a moving object consistently",
@@ -199,8 +209,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "A length measurement requires simultaneous endpoint positions in the measuring frame."
     },
     "/gravity/geodesic-motion": {
-      "focus": "Free fall reveals the local equivalence principle",
-      "idea": "Compare Newtonian orbits with curved-spacetime paths, then test why a small freely falling laboratory is locally weightless.",
+      "focus": "Gravity changes the geometry of motion",
+      "idea": "Compare Newtonian orbits with free-fall paths in a curved-spacetime model.",
       "prerequisite": "Start with Circular motion and orbits in Module 3: this lab compares curved-spacetime paths with the Newtonian ellipses you launched there. Know that a model is not the system it represents."
     },
     "/gravity/clock-rates": {
@@ -209,8 +219,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Treat clock rates as ratios, and recall that moving clocks run slow (“Different clocks”)."
     },
     "/cosmology/evolving-space": {
-      "focus": "Connect expansion models to observations",
-      "idea": "Run model universes forwards and backwards, then connect redshift and recession speed to a nearby-galaxy Hubble diagram.",
+      "focus": "Space itself can evolve",
+      "idea": "Run model universes forwards and backwards, and relate the scale factor to redshift and the Hubble rate.",
       "prerequisite": "Understand that distances in a model can change because space expands, not only because objects move through it."
     }
   },
@@ -261,9 +271,9 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Pahami kerangka acuan inersial dan bahwa jam mengukur waktu sepanjang lintasannya sendiri."
     },
     "/relativity/two-perspectives": {
-      "focus": "Bandingkan pengukuran antar-kerangka yang bergerak",
-      "idea": "Uji keserentakan yang bergantung pada kerangka, jumlahkan kecepatan segaris secara relativistik, dan amati mengapa momentum meningkat tajam saat mendekati kecepatan cahaya.",
-      "prerequisite": "Pelajari kembali transformasi posisi dan waktu antar-pengamat; jam berjauhan memerlukan sinkronisasi. Pahami bahwa penjumlahan kecepatan dan momentum relativistik menyempurnakan aturan Newton pada kelajuan tinggi."
+      "focus": "Keserentakan bergantung pada kerangka acuan",
+      "idea": "Bandingkan peristiwa mana yang serentak bagi pengamat yang bergerak relatif.",
+      "prerequisite": "Pelajari kembali transformasi posisi dan waktu antar-pengamat; jam berjauhan memerlukan sinkronisasi."
     },
     "/relativity/length-contraction": {
       "focus": "Ukur benda bergerak secara konsisten",
@@ -271,8 +281,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Pengukuran panjang memerlukan posisi kedua ujung yang serentak dalam kerangka pengukur."
     },
     "/gravity/geodesic-motion": {
-      "focus": "Jatuh bebas memperlihatkan prinsip kesetaraan lokal",
-      "idea": "Bandingkan orbit Newton dengan lintasan ruang-waktu melengkung, lalu uji mengapa laboratorium kecil yang jatuh bebas terasa tanpa berat secara lokal.",
+      "focus": "Gravitasi mengubah geometri gerak",
+      "idea": "Bandingkan orbit Newton dengan lintasan jatuh bebas dalam model ruang-waktu melengkung.",
       "prerequisite": "Mulailah dengan Gerak melingkar dan orbit di Modul 3: laboratorium ini membandingkan lintasan dalam ruang-waktu melengkung dengan elips Newton yang Anda luncurkan di sana. Pahami bahwa model bukanlah sistem yang diwakilinya."
     },
     "/gravity/clock-rates": {
@@ -281,8 +291,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Pahami laju jam sebagai rasio, dan ingat bahwa jam yang bergerak berjalan lambat (eksperimen “Jam berbeda”)."
     },
     "/cosmology/evolving-space": {
-      "focus": "Hubungkan model ekspansi dengan pengamatan",
-      "idea": "Jalankan model alam semesta maju dan mundur, lalu hubungkan pergeseran merah dan kecepatan menjauh dengan diagram Hubble galaksi dekat.",
+      "focus": "Ruang itu sendiri dapat berevolusi",
+      "idea": "Jalankan model alam semesta maju dan mundur, lalu hubungkan faktor skala dengan pergeseran merah dan laju Hubble.",
       "prerequisite": "Pahami bahwa jarak dalam model dapat berubah karena ruang mengembang, bukan hanya karena benda bergerak melewatinya."
     }
   },
@@ -333,9 +343,9 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "慣性系と、時計が自身の経路に沿って時間を測ることを理解しましょう。"
     },
     "/relativity/two-perspectives": {
-      "focus": "動く基準系の測定を比べる",
-      "idea": "基準系によって異なる同時性を調べ、同一直線上の速度を合成し、光速に近づくと運動量が急増する理由を確かめます。",
-      "prerequisite": "観測者間の位置と時間の変換を復習しましょう。離れた時計には同期の手順が必要です。高速では相対論的速度合成と運動量がニュートン力学の規則を修正することを理解しておきます。"
+      "focus": "同時性は基準系に依存する",
+      "idea": "相対運動する観測者にとって、どの事象が同時かを比較します。",
+      "prerequisite": "観測者間の位置と時間の変換を復習しましょう。離れた時計には同期の手順が必要です。"
     },
     "/relativity/length-contraction": {
       "focus": "運動する物体を一貫して測る",
@@ -343,8 +353,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "長さの測定には、測定する基準系で両端の位置を同時に記録する必要があります。"
     },
     "/gravity/geodesic-motion": {
-      "focus": "自由落下から局所的な等価原理を考える",
-      "idea": "ニュートン力学の軌道と曲がった時空の経路を比較し、小さな自由落下実験室で局所的に無重量となる理由を確かめます。", 
+      "focus": "重力は運動の幾何を変える",
+      "idea": "ニュートン力学の軌道と、曲がった時空モデルでの自由落下経路を比較します。",
       "prerequisite": "まずモジュール3の「円運動と軌道」に取り組みましょう。この実験室では、そこで打ち上げたニュートン力学の楕円と、曲がった時空での経路を比べます。モデルと、それが表す物理系とは別物であることも理解しておきましょう。"
     },
     "/gravity/clock-rates": {
@@ -353,8 +363,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "時計の進み方を比として扱えるようにし、動く時計が遅れること（「異なる時計」の実験）を思い出しましょう。"
     },
     "/cosmology/evolving-space": {
-      "focus": "膨張モデルを観測と結び付ける",
-      "idea": "モデル宇宙を未来と過去へ進め、赤方偏移や後退速度を近傍銀河のハッブル図と結び付けます。", 
+      "focus": "空間そのものが変化しうる",
+      "idea": "モデル宇宙を未来と過去へ進め、スケール因子を赤方偏移やハッブル率と結び付けます。",
       "prerequisite": "モデルの中の距離は、物体が空間を移動するからだけでなく、空間が膨張するからも変わりうることを理解しておきましょう。"
     }
   }
@@ -438,7 +448,6 @@ export const GRAPH_CART_MASS = 2
 
 /** Graphs that graph questions refer to, by id. */
 export const GRAPHS: Readonly<Record<string, PracticeGraph>> = {
-  ...P1_GRAPHS,
   // Forwards at +2 m/s, still for 2 s while the clock runs, back to the start at −2 m/s.
   'walk-stop-return': piecewiseRun(0, [[2, 2], [0, 2], [-2, 2]], { min: 0, max: 6 }),
   // Newton's second law for a 2 kg cart: a straight line through the origin with slope 1/m.
@@ -447,6 +456,14 @@ export const GRAPHS: Readonly<Record<string, PracticeGraph>> = {
   'projectile-height': { kind: 'function', x: { max: 2, step: 0.5 }, y: { max: 6, step: 1 }, f: (t) => Math.max(0, exactState(GRAPH_PROJECTILE, t).y), table: [0, 0.5, 1, 1.5, 2] },
   // Small-angle period on the Earth: T = 2π√(L/g), through the origin and curving over.
   'pendulum-length': { kind: 'function', x: { max: 2, step: 0.5 }, y: { max: 3, step: 0.5 }, f: (length) => smallAnglePeriod(length, 9.81), table: [0, 0.5, 1, 1.5, 2] },
+  // Speed measured from the Earth of an object moving at βc inside a frame that itself moves at 0.5c: (u + v)/(1 + uv/c²).
+  'velocity-addition': { kind: 'function', x: { max: 0.9, step: 0.1 }, y: { max: 1, step: 0.2 }, f: (beta) => relativisticVelocityAddition(0.5 * SPEED_OF_LIGHT, beta * SPEED_OF_LIGHT) / SPEED_OF_LIGHT, table: [0, 0.2, 0.4, 0.7, 0.9] },
+  // Relativistic momentum p = γmv in units of mc, against speed as a fraction of c.
+  'relativistic-momentum': { kind: 'function', x: { max: 0.9, step: 0.1 }, y: { max: 2.1, step: 0.3 }, f: (beta) => relativisticMomentum(1, beta * SPEED_OF_LIGHT) / SPEED_OF_LIGHT, table: [0, 0.2, 0.4, 0.8, 0.9] },
+  // Scale reading per kilogram, g − a, in a lift accelerating downwards in a uniform field (a local approximation).
+  'equivalence-lift': { kind: 'function', x: { max: 9.8, step: 2.45 }, y: { max: 9.8, step: 2.45 }, f: (a) => apparentWeightPerMass(9.8, a), table: [0, 2.45, 4.9, 7.35] },
+  // An idealised low-redshift Hubble law, v = H₀d with H₀ = 70 km/s/Mpc: a model line, not measured data.
+  'hubble-diagram': { kind: 'function', x: { max: 100, step: 20 }, y: { max: 7000, step: 1000 }, f: (distance) => hubbleVelocity(70, distance), table: [0, 25, 50, 75, 100] },
 }
 
 export interface GraphCopy {
@@ -458,19 +475,31 @@ export interface GraphCopy {
 }
 
 export const GRAPH_COPY: Record<Locale, Readonly<Record<string, GraphCopy>>> = {
-  en: { ...P1_GRAPH_COPY.en,
+  en: {
+    'velocity-addition': { title: "Read a relativistic velocity-addition graph", intro: "A spaceship moves at 0.5c relative to the Earth. Inside it, an object moves forwards at a second speed. The curve shows the object’s speed as measured from the Earth.", xLabel: "Speed in the ship (fraction of c)", yLabel: "Speed measured from the Earth (fraction of c)" },
+    'relativistic-momentum': { title: "Read a relativistic momentum graph", intro: "The momentum of a particle, in units of mc, plotted against its speed as a fraction of the speed of light.", xLabel: "Speed (fraction of c)", yLabel: "Momentum (units of mc)" },
+    'equivalence-lift': { title: "Read an accelerating-lift graph", intro: "A passenger stands on a scale in a lift that accelerates downwards, near the Earth’s surface (g = 9.8 m/s²). The graph shows the scale reading per kilogram of the passenger.", xLabel: "Downward acceleration of the lift (m/s²)", yLabel: "Scale reading per kg (m/s²)" },
+    'hubble-diagram': { title: "Read an idealised Hubble-law graph", intro: "The Hubble law for nearby galaxies, v = H₀d, drawn as a model line. Measured galaxies scatter around a line like this; the graph shows the model, not the data.", xLabel: "Distance (Mpc)", yLabel: "Recession speed (km/s)" },
     'walk-stop-return': { title: 'Read a position–time graph', intro: 'One run of an object on the track. The questions below are all about this graph; its slope is the velocity.' },
     'force-acceleration': { title: 'Read an acceleration–force graph', intro: 'The model behind the experiment: one cart of fixed mass, pushed with different net forces.', xLabel: 'Net force (N)', yLabel: 'Acceleration (m/s²)' },
     'projectile-height': { title: 'Read a height–time graph', intro: 'The height of an ideal projectile from launch to landing, with no air resistance.', xLabel: 'Time (s)', yLabel: 'Height (m)' },
     'pendulum-length': { title: 'Read a period–length graph', intro: 'The small-swing period of pendulums of different lengths on the Earth.', xLabel: 'Length (m)', yLabel: 'Period (s)' },
   },
-  id: { ...P1_GRAPH_COPY.id,
+  id: {
+    'velocity-addition': { title: "Membaca grafik penjumlahan kecepatan relativistik", intro: "Sebuah pesawat antariksa bergerak 0,5c relatif terhadap Bumi. Di dalamnya, sebuah benda bergerak maju dengan kelajuan kedua. Kurva menunjukkan kelajuan benda itu yang diukur dari Bumi.", xLabel: "Kelajuan di dalam pesawat (fraksi c)", yLabel: "Kelajuan diukur dari Bumi (fraksi c)" },
+    'relativistic-momentum': { title: "Membaca grafik momentum relativistik", intro: "Momentum sebuah partikel, dalam satuan mc, terhadap kelajuannya sebagai fraksi kecepatan cahaya.", xLabel: "Kelajuan (fraksi c)", yLabel: "Momentum (satuan mc)" },
+    'equivalence-lift': { title: "Membaca grafik lift yang dipercepat", intro: "Seorang penumpang berdiri di atas timbangan dalam lift yang dipercepat ke bawah, dekat permukaan Bumi (g = 9,8 m/s²). Grafik menunjukkan bacaan timbangan per kilogram massa penumpang.", xLabel: "Percepatan lift ke bawah (m/s²)", yLabel: "Bacaan timbangan per kg (m/s²)" },
+    'hubble-diagram': { title: "Membaca grafik hukum Hubble yang diidealkan", intro: "Hukum Hubble untuk galaksi dekat, v = H₀d, digambar sebagai garis model. Galaksi yang diukur tersebar di sekitar garis seperti ini; grafik ini menunjukkan model, bukan data.", xLabel: "Jarak (Mpc)", yLabel: "Kecepatan menjauh (km/s)" },
     'walk-stop-return': { title: 'Membaca grafik posisi–waktu', intro: 'Satu percobaan sebuah benda di lintasan. Semua pertanyaan di bawah ini tentang grafik ini; kemiringannya adalah kecepatan.' },
     'force-acceleration': { title: 'Membaca grafik percepatan–gaya', intro: 'Model di balik eksperimen: satu kereta bermassa tetap, didorong dengan gaya resultan yang berbeda-beda.', xLabel: 'Gaya resultan (N)', yLabel: 'Percepatan (m/s²)' },
     'projectile-height': { title: 'Membaca grafik ketinggian–waktu', intro: 'Ketinggian proyektil ideal dari peluncuran hingga mendarat, tanpa hambatan udara.', xLabel: 'Waktu (s)', yLabel: 'Ketinggian (m)' },
     'pendulum-length': { title: 'Membaca grafik periode–panjang', intro: 'Periode ayunan kecil pendulum dengan panjang berbeda-beda di Bumi.', xLabel: 'Panjang (m)', yLabel: 'Periode (s)' },
   },
-  ja: { ...P1_GRAPH_COPY.ja,
+  ja: {
+    'velocity-addition': { title: "相対論的速度合成のグラフを読む", intro: "宇宙船が地球に対して0.5cで動いています。船内で物体が前向きに別の速さで動きます。曲線は、その物体の地球から測った速さを示します。", xLabel: "船内での速さ（cの割合）", yLabel: "地球から測った速さ（cの割合）" },
+    'relativistic-momentum': { title: "相対論的運動量のグラフを読む", intro: "粒子の運動量（mc単位）を、光速に対する速さの割合に対して示したグラフです。", xLabel: "速さ（cの割合）", yLabel: "運動量（mc単位）" },
+    'equivalence-lift': { title: "加速するエレベーターのグラフを読む", intro: "地表付近（g = 9.8 m/s²）で下向きに加速するエレベーターの中で、乗客が体重計に乗っています。グラフは乗客1 kgあたりの体重計の値を示します。", xLabel: "エレベーターの下向き加速度 (m/s²)", yLabel: "1 kgあたりの体重計の値 (m/s²)" },
+    'hubble-diagram': { title: "理想化したハッブル則のグラフを読む", intro: "近傍銀河のハッブル則 v = H₀d をモデルの直線として描いたものです。実際に測定された銀河はこのような直線の周りにばらつきます。このグラフはデータではなくモデルを示します。", xLabel: "距離 (Mpc)", yLabel: "後退速度 (km/s)" },
     'walk-stop-return': { title: '位置–時間グラフを読み取る', intro: 'レール上の物体の1回の試行です。下の質問はすべてこのグラフについてです。グラフの傾きが速度を表します。' },
     'force-acceleration': { title: '加速度–力グラフを読み取る', intro: '実験の背後にあるモデルです。質量が一定の台車を、さまざまな合力で押します。', xLabel: '合力 (N)', yLabel: '加速度 (m/s²)' },
     'projectile-height': { title: '高さ–時間グラフを読み取る', intro: '空気抵抗のない理想的な投射物の、打ち上げから着地までの高さです。', xLabel: '時間 (s)', yLabel: '高さ (m)' },
@@ -480,7 +509,89 @@ export const GRAPH_COPY: Record<Locale, Readonly<Record<string, GraphCopy>>> = {
 
 /** The practice bank: structure (experiment, level, option ids, answer) is shared by every language. */
 export const PRACTICE_BANK: readonly PracticeSource[] = [
-  ...P1_PRACTICE_BANK,
+  {
+    "id": "velocity-addition-reading",
+    "experiment": "/relativity/two-perspectives",
+    "graph": "velocity-addition",
+    "minLevel": "intermediate",
+    "options": [
+      "point-eight",
+      "one",
+      "point-nine-nine"
+    ],
+    "answer": "point-eight"
+  },
+  {
+    "id": "relativistic-momentum-meaning",
+    "experiment": "/relativity/two-perspectives",
+    "graph": "relativistic-momentum",
+    "minLevel": "intermediate",
+    "options": [
+      "rises-faster",
+      "stays-linear",
+      "levels-off"
+    ],
+    "answer": "rises-faster"
+  },
+  {
+    "id": "relativistic-momentum-reading",
+    "experiment": "/relativity/two-perspectives",
+    "graph": "relativistic-momentum",
+    "minLevel": "advanced",
+    "options": [
+      "point-seven-five",
+      "point-six",
+      "one-point-two-five"
+    ],
+    "answer": "point-seven-five"
+  },
+  {
+    "id": "equivalence-principle",
+    "experiment": "/gravity/geodesic-motion",
+    "minLevel": "intermediate",
+    "options": [
+      "same-local-physics",
+      "gravity-off",
+      "too-far"
+    ],
+    "answer": "same-local-physics"
+  },
+  {
+    "id": "equivalence-lift-reading",
+    "experiment": "/gravity/geodesic-motion",
+    "graph": "equivalence-lift",
+    "minLevel": "advanced",
+    "options": [
+      "g",
+      "never",
+      "twice-g"
+    ],
+    "answer": "g"
+  },
+  {
+    "id": "hubble-slope-reading",
+    "experiment": "/cosmology/evolving-space",
+    "graph": "hubble-diagram",
+    "minLevel": "intermediate",
+    "options": [
+      "h0",
+      "age",
+      "acceleration"
+    ],
+    "answer": "h0"
+  },
+  {
+    "id": "hubble-distance-reading",
+    "experiment": "/cosmology/evolving-space",
+    "graph": "hubble-diagram",
+    "minLevel": "advanced",
+    "options": [
+      "eighty",
+      "eight",
+      "multiplied"
+    ],
+    "answer": "eighty"
+  },
   {
     "id": "walk",
     "experiment": "/space/displacement-3d",
@@ -923,7 +1034,76 @@ export const PRACTICE_BANK: readonly PracticeSource[] = [
 
 export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>>> = {
   "en": {
-    ...P1_PRACTICE_COPY.en,
+    "velocity-addition-reading": {
+      "prompt": "The object moves forwards at 0.5c inside the ship, which itself moves at 0.5c. What speed does the Earth measure for the object?",
+      "options": {
+        "point-eight": "0.80c",
+        "one": "1.00c: the two speeds add",
+        "point-nine-nine": "0.99c: combined speeds always end up just below c"
+      },
+      "hint": "Find 0.5 on the horizontal axis and read the curve. Do not add the speeds as ordinary numbers.",
+      "explanation": "The relativistic result is (0.5 + 0.5)/(1 + 0.5 × 0.5) = 0.8c. Adding the speeds gives 1.00c, which no measurement finds; and the combination is not always close to c: at low speeds it is almost the ordinary sum."
+    },
+    "relativistic-momentum-meaning": {
+      "prompt": "According to the graph, what happens to a particle’s momentum as its speed approaches c?",
+      "options": {
+        "rises-faster": "It rises more and more steeply",
+        "stays-linear": "It stays proportional to speed, as p = mv says",
+        "levels-off": "It levels off at a maximum, just as speed is limited by c"
+      },
+      "hint": "Compare the slope of the curve at low speeds with its slope near the right-hand edge.",
+      "explanation": "p = γmv, and γ grows without limit as v approaches c, so momentum rises ever more steeply. At low speeds γ ≈ 1 and p ≈ mv, which is why Newtonian momentum works in everyday collisions. Speed is limited; momentum is not."
+    },
+    "relativistic-momentum-reading": {
+      "prompt": "A particle moves at 0.6c. What momentum does the graph give, in units of mc?",
+      "options": {
+        "point-seven-five": "0.75 mc",
+        "point-six": "0.60 mc",
+        "one-point-two-five": "1.25 mc"
+      },
+      "hint": "Find 0.6 on the horizontal axis; 0.6 lies between two table entries, so read the curve.",
+      "explanation": "At 0.6c, γ = 1/√(1 − 0.36) = 1.25, so p = γmv = 1.25 × 0.6 mc = 0.75 mc. 0.60 mc is the Newtonian value mv; 1.25 is γ alone."
+    },
+    "equivalence-principle": {
+      "prompt": "An astronaut in orbit and a passenger in a freely falling lift both float. Why can a small, freely falling laboratory give the same results as one far from any gravity?",
+      "options": {
+        "same-local-physics": "Everything in it falls with the same acceleration, so, locally, the effects of gravity disappear from the measurements",
+        "gravity-off": "Gravity stops acting on things while they are falling",
+        "too-far": "Gravity is too weak where they are to matter"
+      },
+      "hint": "Think about what the walls, the passenger and a dropped pen are all doing at once.",
+      "explanation": "Gravity still acts: in orbit it is about 90% as strong as at the Earth’s surface, and it is what keeps the orbit curved. Because everything in the laboratory falls together, nothing inside can detect it: that is the equivalence principle. It is local; over larger regions, differences in gravity (tides) remain."
+    },
+    "equivalence-lift-reading": {
+      "prompt": "At what downward acceleration of the lift does the scale read zero?",
+      "options": {
+        "g": "9.8 m/s², when the lift falls freely",
+        "never": "Never: the passenger’s weight does not change, so the scale keeps reading 9.8",
+        "twice-g": "19.6 m/s²: the lift must fall faster than gravity"
+      },
+      "hint": "Follow the line down to where it meets the horizontal axis.",
+      "explanation": "The scale reads the support force, m(g − a). When the lift falls freely, a = g, the scale and passenger fall together, and the reading is zero, although gravity has not changed. This apparent weightlessness is what the equivalence principle builds on."
+    },
+    "hubble-slope-reading": {
+      "prompt": "What does the slope of this recession-speed against distance graph represent?",
+      "options": {
+        "h0": "The Hubble constant H₀, about 70 km/s per Mpc",
+        "age": "The age of the universe",
+        "acceleration": "How quickly the expansion is speeding up"
+      },
+      "hint": "A slope is the change in the vertical quantity divided by the change in the horizontal quantity. What are its units?",
+      "explanation": "The slope is H₀ = v/d, in km/s per Mpc. Its inverse, 1/H₀, has units of time and gives a rough age estimate, which is why the two are easily confused. A straight line means speed proportional to distance; whether the expansion speeds up shows only in how H changes over time."
+    },
+    "hubble-distance-reading": {
+      "prompt": "A nearby galaxy recedes at 5,600 km/s. What distance does the Hubble law in the graph give?",
+      "options": {
+        "eighty": "80 Mpc",
+        "eight": "8 Mpc",
+        "multiplied": "392,000 Mpc"
+      },
+      "hint": "Go across from 5,600 km/s to the line, then down to the distance axis; check with d = v/H₀.",
+      "explanation": "d = v/H₀ = 5,600/70 = 80 Mpc. Multiplying instead of dividing gives 392,000. The linear law is a good approximation only for nearby galaxies; real distances come from measurements, with uncertainties, and farther away need the full expansion model."
+    },
     "walk": {
       "prompt": "A student walks 3 m east, then 3 m west back to the starting point. What is the student’s displacement?",
       "options": {
@@ -1308,7 +1488,76 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
     }
   },
   "id": {
-    ...P1_PRACTICE_COPY.id,
+    "velocity-addition-reading": {
+      "prompt": "Benda bergerak maju 0,5c di dalam pesawat, yang juga bergerak 0,5c. Berapa kelajuan benda yang diukur dari Bumi?",
+      "options": {
+        "point-eight": "0,80c",
+        "one": "1,00c: kedua kelajuan dijumlahkan",
+        "point-nine-nine": "0,99c: gabungan kelajuan selalu tepat di bawah c"
+      },
+      "hint": "Temukan 0,5 pada sumbu mendatar dan baca kurvanya. Jangan menjumlahkan kelajuan seperti bilangan biasa.",
+      "explanation": "Hasil relativistiknya (0,5 + 0,5)/(1 + 0,5 × 0,5) = 0,8c. Menjumlahkan kelajuan menghasilkan 1,00c, yang tidak pernah terukur; dan gabungannya tidak selalu dekat c: pada kelajuan rendah hasilnya hampir sama dengan jumlah biasa."
+    },
+    "relativistic-momentum-meaning": {
+      "prompt": "Menurut grafik, apa yang terjadi pada momentum partikel ketika kelajuannya mendekati c?",
+      "options": {
+        "rises-faster": "Momentum naik semakin tajam",
+        "stays-linear": "Momentum tetap sebanding dengan kelajuan, seperti p = mv",
+        "levels-off": "Momentum mendatar pada suatu nilai maksimum, seperti kelajuan dibatasi oleh c"
+      },
+      "hint": "Bandingkan kemiringan kurva pada kelajuan rendah dengan kemiringannya di dekat tepi kanan.",
+      "explanation": "p = γmv, dan γ membesar tanpa batas ketika v mendekati c, sehingga momentum naik semakin tajam. Pada kelajuan rendah γ ≈ 1 dan p ≈ mv; itulah sebabnya momentum Newton berlaku pada tumbukan sehari-hari. Kelajuan dibatasi; momentum tidak."
+    },
+    "relativistic-momentum-reading": {
+      "prompt": "Sebuah partikel bergerak 0,6c. Berapa momentum yang ditunjukkan grafik, dalam satuan mc?",
+      "options": {
+        "point-seven-five": "0,75 mc",
+        "point-six": "0,60 mc",
+        "one-point-two-five": "1,25 mc"
+      },
+      "hint": "Temukan 0,6 pada sumbu mendatar; 0,6 terletak di antara dua entri tabel, jadi bacalah kurvanya.",
+      "explanation": "Pada 0,6c, γ = 1/√(1 − 0,36) = 1,25, sehingga p = γmv = 1,25 × 0,6 mc = 0,75 mc. 0,60 mc adalah nilai Newton mv; 1,25 hanyalah γ."
+    },
+    "equivalence-principle": {
+      "prompt": "Astronaut di orbit dan penumpang dalam lift yang jatuh bebas sama-sama melayang. Mengapa laboratorium kecil yang jatuh bebas dapat memberikan hasil yang sama dengan laboratorium yang jauh dari gravitasi?",
+      "options": {
+        "same-local-physics": "Semua benda di dalamnya jatuh dengan percepatan yang sama, sehingga secara lokal pengaruh gravitasi hilang dari pengukuran",
+        "gravity-off": "Gravitasi berhenti bekerja pada benda selama benda itu jatuh",
+        "too-far": "Gravitasi di tempat itu terlalu lemah untuk berpengaruh"
+      },
+      "hint": "Pikirkan apa yang sedang dilakukan dinding, penumpang, dan pena yang dijatuhkan pada saat yang sama.",
+      "explanation": "Gravitasi tetap bekerja: di orbit kekuatannya sekitar 90% dari di permukaan Bumi, dan gravitasilah yang membuat orbit melengkung. Karena semua benda di laboratorium jatuh bersama, tidak ada yang di dalamnya dapat mendeteksinya: itulah prinsip kesetaraan. Prinsip ini lokal; pada wilayah yang lebih luas, perbedaan gravitasi (pasang surut) tetap ada."
+    },
+    "equivalence-lift-reading": {
+      "prompt": "Pada percepatan lift ke bawah berapa timbangan menunjukkan nol?",
+      "options": {
+        "g": "9,8 m/s², ketika lift jatuh bebas",
+        "never": "Tidak pernah: berat penumpang tidak berubah, jadi timbangan tetap menunjukkan 9,8",
+        "twice-g": "19,6 m/s²: lift harus jatuh lebih cepat daripada gravitasi"
+      },
+      "hint": "Ikuti garis ke bawah sampai memotong sumbu mendatar.",
+      "explanation": "Timbangan membaca gaya penopang, m(g − a). Ketika lift jatuh bebas, a = g, timbangan dan penumpang jatuh bersama, dan bacaannya nol, padahal gravitasi tidak berubah. Keadaan tanpa berat semu inilah dasar prinsip kesetaraan."
+    },
+    "hubble-slope-reading": {
+      "prompt": "Apa yang diwakili oleh kemiringan grafik kecepatan menjauh terhadap jarak ini?",
+      "options": {
+        "h0": "Konstanta Hubble H₀, sekitar 70 km/s per Mpc",
+        "age": "Usia alam semesta",
+        "acceleration": "Seberapa cepat pengembangan alam semesta makin cepat"
+      },
+      "hint": "Kemiringan adalah perubahan besaran vertikal dibagi perubahan besaran mendatar. Apa satuannya?",
+      "explanation": "Kemiringannya adalah H₀ = v/d, dalam km/s per Mpc. Kebalikannya, 1/H₀, bersatuan waktu dan memberi perkiraan kasar usia alam semesta; itulah sebabnya keduanya mudah tertukar. Garis lurus berarti kecepatan sebanding dengan jarak; apakah pengembangan makin cepat hanya terlihat dari perubahan H terhadap waktu."
+    },
+    "hubble-distance-reading": {
+      "prompt": "Sebuah galaksi dekat menjauh dengan kecepatan 5.600 km/s. Berapa jarak yang diberikan hukum Hubble pada grafik?",
+      "options": {
+        "eighty": "80 Mpc",
+        "eight": "8 Mpc",
+        "multiplied": "392.000 Mpc"
+      },
+      "hint": "Dari 5.600 km/s, bergerak mendatar ke garis, lalu turun ke sumbu jarak; periksa dengan d = v/H₀.",
+      "explanation": "d = v/H₀ = 5.600/70 = 80 Mpc. Mengalikan alih-alih membagi menghasilkan 392.000. Hukum linear ini hanya pendekatan yang baik untuk galaksi dekat; jarak sebenarnya berasal dari pengukuran yang memiliki ketidakpastian, dan galaksi yang lebih jauh memerlukan model pengembangan yang lengkap."
+    },
     "walk": {
       "prompt": "Seorang siswa berjalan 3 m ke timur, lalu 3 m ke barat hingga kembali ke titik awal. Berapa perpindahannya?",
       "options": {
@@ -1693,7 +1942,76 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
     }
   },
   "ja": {
-    ...P1_PRACTICE_COPY.ja,
+    "velocity-addition-reading": {
+      "prompt": "物体は船内で前向きに0.5cで動き、船自体も0.5cで動いています。地球から測った物体の速さはいくらですか？",
+      "options": {
+        "point-eight": "0.80c",
+        "one": "1.00c：2つの速さを足す",
+        "point-nine-nine": "0.99c：合成した速さはいつもcのすぐ下になる"
+      },
+      "hint": "横軸の0.5を見つけて曲線を読みます。速さを普通の数のように足さないでください。",
+      "explanation": "相対論的な結果は (0.5 + 0.5)/(1 + 0.5 × 0.5) = 0.8c です。速さを足すと1.00cになりますが、そのような測定結果は得られません。また、合成した速さがいつもcに近いわけではなく、低速ではほぼ普通の和になります。"
+    },
+    "relativistic-momentum-meaning": {
+      "prompt": "グラフによると、粒子の速さがcに近づくと運動量はどうなりますか？",
+      "options": {
+        "rises-faster": "ますます急に増える",
+        "stays-linear": "p = mv のとおり、速さに比例したままである",
+        "levels-off": "速さがcで制限されるのと同じように、最大値で頭打ちになる"
+      },
+      "hint": "低速での曲線の傾きと、右端付近での傾きを比べてください。",
+      "explanation": "p = γmv であり、vがcに近づくとγは限りなく大きくなるので、運動量はますます急に増えます。低速ではγ ≈ 1でp ≈ mvとなるため、日常の衝突ではニュートンの運動量で十分です。速さには上限がありますが、運動量にはありません。"
+    },
+    "relativistic-momentum-reading": {
+      "prompt": "粒子が0.6cで動いています。グラフが示す運動量はmc単位でいくらですか？",
+      "options": {
+        "point-seven-five": "0.75 mc",
+        "point-six": "0.60 mc",
+        "one-point-two-five": "1.25 mc"
+      },
+      "hint": "横軸の0.6を見つけます。0.6は表の2つの値の間にあるので、曲線を読み取ってください。",
+      "explanation": "0.6cではγ = 1/√(1 − 0.36) = 1.25 なので、p = γmv = 1.25 × 0.6 mc = 0.75 mc です。0.60 mc はニュートン力学の値mv、1.25はγだけの値です。"
+    },
+    "equivalence-principle": {
+      "prompt": "軌道上の宇宙飛行士も、自由落下するエレベーターの乗客も浮かびます。小さな自由落下実験室が、重力から遠く離れた実験室と同じ結果を示しうるのはなぜですか？",
+      "options": {
+        "same-local-physics": "中のすべての物体が同じ加速度で落下するので、局所的には重力の効果が測定から消えるから",
+        "gravity-off": "落下している間は物体に重力がはたらかなくなるから",
+        "too-far": "その場所では重力が弱すぎて影響しないから"
+      },
+      "hint": "壁、乗客、手を離したペンが、同時にそれぞれ何をしているか考えてください。",
+      "explanation": "重力ははたらき続けています。軌道上でも地表の約90%の強さがあり、軌道を曲げているのは重力です。実験室の中のものがすべて一緒に落下するので、中からは重力を検出できません。これが等価原理です。この原理は局所的であり、広い領域では重力の違い（潮汐）が残ります。"
+    },
+    "equivalence-lift-reading": {
+      "prompt": "エレベーターの下向き加速度がいくらのとき、体重計の値はゼロになりますか？",
+      "options": {
+        "g": "9.8 m/s²、エレベーターが自由落下するとき",
+        "never": "ゼロにはならない：乗客の重さは変わらないので9.8を示し続ける",
+        "twice-g": "19.6 m/s²：重力より速く落下しなければならない"
+      },
+      "hint": "直線をたどって横軸と交わる点を探してください。",
+      "explanation": "体重計は支える力 m(g − a) を示します。エレベーターが自由落下するとa = gとなり、体重計と乗客が一緒に落下して値はゼロになります。重力が変わったわけではありません。この見かけの無重量状態が等価原理の出発点です。"
+    },
+    "hubble-slope-reading": {
+      "prompt": "この後退速度と距離のグラフの傾きは何を表していますか？",
+      "options": {
+        "h0": "ハッブル定数H₀（約70 km/s/Mpc）",
+        "age": "宇宙の年齢",
+        "acceleration": "膨張がどれだけ速く加速しているか"
+      },
+      "hint": "傾きは縦の量の変化を横の量の変化で割ったものです。その単位は何でしょうか？",
+      "explanation": "傾きは H₀ = v/d で、単位はkm/s/Mpcです。その逆数1/H₀は時間の単位をもち、宇宙の年齢のおおまかな見積もりになるため、両者は混同されがちです。直線は速さが距離に比例することを意味します。膨張が加速しているかどうかは、Hが時間とともにどう変わるかにしか現れません。"
+    },
+    "hubble-distance-reading": {
+      "prompt": "近傍銀河が5,600 km/sで遠ざかっています。グラフのハッブル則によると距離はいくらですか？",
+      "options": {
+        "eighty": "80 Mpc",
+        "eight": "8 Mpc",
+        "multiplied": "392,000 Mpc"
+      },
+      "hint": "5,600 km/sから横に直線まで進み、距離軸へ下ります。d = v/H₀ で確かめましょう。",
+      "explanation": "d = v/H₀ = 5,600/70 = 80 Mpc です。割る代わりに掛けると392,000になります。この直線的な法則は近傍銀河にだけよく当てはまる近似です。実際の距離は不確かさを伴う測定から得られ、遠方では膨張の完全なモデルが必要です。"
+    },
     "walk": {
       "prompt": "生徒が東へ3 m歩き、その後西へ3 m戻って出発点に着きました。変位はいくらですか？",
       "options": {
