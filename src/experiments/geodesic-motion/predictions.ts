@@ -25,6 +25,11 @@ export function observedCircularOrbit(runs: readonly OrbitRun[]): boolean {
   return runs.some((r) => isCircularStart(r) && !r.captured)
 }
 
+/** Any run: the readouts then compare the accelerometers of the orbiting and the hovering spacecraft. */
+export function observedAccelerometers(runs: readonly OrbitRun[]): boolean {
+  return runs.length > 0
+}
+
 /** Two measured orbits whose starting radii differ by at least 3 r_s. */
 export function observedDistanceTrend(runs: readonly OrbitRun[]): boolean {
   return runs.some((a) => measured(a) && runs.some((b) => measured(b) && Math.abs(a.radius - b.radius) >= 3))
@@ -73,6 +78,22 @@ export const PREDICTIONS: readonly Prediction<OrbitRun>[] = [
       'Circular orbits still exist in Schwarzschild spacetime: with exactly the right angular momentum and no radial motion, the radius never changes, so there is no periapsis to move. Precession only shows up when the orbit is not perfectly circular. Below 3 rₛ even circular orbits become unstable, and the smallest push sends the spacecraft in.',
     observed: observedCircularOrbit,
     hint: (runs) => (runs.length > 0 && !observedCircularOrbit(runs) ? 'Set the angular momentum to exactly 1.000 and the radial velocity to exactly 0.' : null),
+  },
+  {
+    id: 'accelerometer',
+    minLevel: 'beginner',
+    question:
+      'Two spacecraft each carry an accelerometer, the sensor a phone uses to tell which way is down. One orbits the black hole with its engines off. The other hovers at the same distance, firing its engines to stay in place. What do the two accelerometers read?',
+    task: 'Run any orbit, then compare the two accelerometer readings under the orbit.',
+    options: [
+      { id: 'orbit-zero', label: 'The orbiting one reads zero; the hovering one does not' },
+      { id: 'hover-zero', label: 'The hovering one reads zero, because it is not moving; the orbiting one does not' },
+      { id: 'same', label: 'Both read about the same, because gravity is equally strong at the same distance' },
+    ],
+    correct: 'orbit-zero',
+    explanation:
+      'An accelerometer cannot feel gravity itself: it measures the push of everything else, such as a floor, a table or an engine. The orbiting spacecraft and everything inside it fall together, so its accelerometer reads zero, although gravity there is enormous and the path curves round the black hole. The hovering spacecraft is pushed by its engines, and reads a little more than the Newtonian pull GM/r², by a factor 1/√(1 − rₛ/r) that grows without limit near the horizon. This is the equivalence principle: in a small laboratory, falling freely cannot be told apart from floating far from any mass, and hovering cannot be told apart from accelerating in empty space. It holds only locally: across a large spacecraft, differences in gravity (tides) still stretch it.',
+    observed: observedAccelerometers,
   },
   {
     id: 'distance',

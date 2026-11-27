@@ -202,7 +202,7 @@ After completing this module, learners should be able to:
 5. Explain what a gravitational time-dilation model predicts near a Schwarzschild horizon, while recognising the limits of the chosen coordinates and idealisations.
 6. Identify the difference between a demonstrated clock-rate effect and a broader claim about the nature of gravity or spacetime.
 
-**Current foundation:** Schwarzschild clock rates, light-signal comparisons, spatial ruler distance, horizon behaviour, GPS corrections, and timelike geodesics (free-fall orbits, measured periapsis precession and the Newtonian limit). The field equations and the equivalence-principle bridge to curved spacetime still need dedicated learning experiences.
+**Current foundation:** Schwarzschild clock rates, light-signal comparisons, spatial ruler distance, horizon behaviour, GPS corrections, timelike geodesics (free-fall orbits, measured periapsis precession and the Newtonian limit), and the equivalence principle (an orbiting spacecraft's accelerometer reads zero; a hovering one's does not). The field equations still need a dedicated learning experience.
 
 ### Module 6 — Cosmology
 

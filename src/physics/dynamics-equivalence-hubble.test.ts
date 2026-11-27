@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { apparentWeightPerMass } from './equivalence'
+import { apparentWeightPerMass, hoveringAccelerationFactor, hoveringProperAcceleration } from './equivalence'
+import { G, SOLAR_MASS, schwarzschildRadius, staticClockRate } from './gravity'
 import { hubbleDistance, hubbleVelocity } from './observationalCosmology'
 import { relativisticMomentum, relativisticVelocityAddition } from './relativisticDynamics'
 import { SPEED_OF_LIGHT } from './relativity'
@@ -48,5 +49,32 @@ describe('observational Hubble-law helpers', () => {
   it('rejects invalid Hubble parameters and distances', () => {
     expect(() => hubbleVelocity(0, 10)).toThrow(RangeError)
     expect(() => hubbleDistance(70, -1)).toThrow(RangeError)
+  })
+})
+
+describe('hovering versus free fall near a Schwarzschild mass', () => {
+  const mass = 10 * SOLAR_MASS
+  const rs = schwarzschildRadius(mass)
+
+  it('equals c² times the gradient of the static clock rate', () => {
+    for (const k of [1.5, 3.2, 8, 12, 100]) {
+      const r = k * rs
+      const h = r * 1e-6
+      const gradient = (staticClockRate(mass, r + h) - staticClockRate(mass, r - h)) / (2 * h)
+      expect(hoveringProperAcceleration(mass, r) / (SPEED_OF_LIGHT ** 2 * gradient)).toBeCloseTo(1, 6)
+    }
+  })
+
+  it('tends to the Newtonian pull far away and grows without limit at the horizon', () => {
+    expect(hoveringAccelerationFactor(1e6)).toBeCloseTo(1, 5)
+    expect(hoveringAccelerationFactor(8)).toBeCloseTo(1 / Math.sqrt(7 / 8), 12)
+    expect(hoveringAccelerationFactor(1.0001)).toBeGreaterThan(99)
+    const r = 8 * rs
+    expect(hoveringProperAcceleration(mass, r) / ((G * mass) / r ** 2)).toBeCloseTo(hoveringAccelerationFactor(8), 12)
+  })
+
+  it('refuses to hover at or inside the horizon', () => {
+    expect(() => hoveringAccelerationFactor(1)).toThrow(RangeError)
+    expect(() => hoveringProperAcceleration(mass, rs)).toThrow(RangeError)
   })
 })

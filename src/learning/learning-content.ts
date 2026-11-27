@@ -210,7 +210,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     },
     "/gravity/geodesic-motion": {
       "focus": "Gravity changes the geometry of motion",
-      "idea": "Compare Newtonian orbits with free-fall paths in a curved-spacetime model.",
+      "idea": "Compare Newtonian orbits with free-fall paths in a curved-spacetime model, and test why the orbiting spacecraft feels no gravity while a hovering one does.",
       "prerequisite": "Start with Circular motion and orbits in Module 3: this lab compares curved-spacetime paths with the Newtonian ellipses you launched there. Know that a model is not the system it represents."
     },
     "/gravity/clock-rates": {
@@ -282,7 +282,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     },
     "/gravity/geodesic-motion": {
       "focus": "Gravitasi mengubah geometri gerak",
-      "idea": "Bandingkan orbit Newton dengan lintasan jatuh bebas dalam model ruang-waktu melengkung.",
+      "idea": "Bandingkan orbit Newton dengan lintasan jatuh bebas dalam model ruang-waktu melengkung, lalu uji mengapa wahana yang mengorbit tidak merasakan gravitasi sedangkan wahana yang melayang diam merasakannya.",
       "prerequisite": "Mulailah dengan Gerak melingkar dan orbit di Modul 3: laboratorium ini membandingkan lintasan dalam ruang-waktu melengkung dengan elips Newton yang Anda luncurkan di sana. Pahami bahwa model bukanlah sistem yang diwakilinya."
     },
     "/gravity/clock-rates": {
@@ -354,7 +354,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     },
     "/gravity/geodesic-motion": {
       "focus": "重力は運動の幾何を変える",
-      "idea": "ニュートン力学の軌道と、曲がった時空モデルでの自由落下経路を比較します。",
+      "idea": "ニュートン力学の軌道と、曲がった時空モデルでの自由落下経路を比較し、軌道を回る宇宙船は重力を感じないのに、静止して浮かぶ宇宙船は感じる理由を確かめます。",
       "prerequisite": "まずモジュール3の「円運動と軌道」に取り組みましょう。この実験室では、そこで打ち上げたニュートン力学の楕円と、曲がった時空での経路を比べます。モデルと、それが表す物理系とは別物であることも理解しておきましょう。"
     },
     "/gravity/clock-rates": {
