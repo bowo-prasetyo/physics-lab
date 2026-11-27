@@ -21,6 +21,10 @@ substitute for expert review or experimental validation.
    formula or practice question mentions it; the experiment must let learners
    make a prediction and observe evidence.
 
+## Input-domain safeguards
+
+The cosmology engine requires finite, positive scale factors and a finite, positive Hubble constant. Radiation, matter and cosmological-constant density parameters must be finite and non-negative; the derived curvature parameter may still be positive, zero or negative. Synthetic Hubble samples require a valid positive distance interval and finite noise parameters. A fit requires at least two galaxies with finite positive measured distances and finite observed speeds; negative observed speeds remain valid because nearby peculiar motion can overcome the Hubble recession component.
+
 ## Existing benchmark coverage
 
 The physics-engine tests include independent or limiting checks for:
