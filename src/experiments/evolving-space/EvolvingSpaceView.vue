@@ -22,11 +22,12 @@ import {
   GRID_COLUMNS,
   GRID_ROWS,
   GRID_SPACING,
+  HUBBLE_MAX,
   TARGET_RANGE,
   isModelId,
   useEvolvingSpace,
 } from './useEvolvingSpace'
-import { COSMOLOGIES } from '@/physics'
+import { COSMOLOGIES, HUBBLE_SAMPLE_SEED, fitHubbleConstant, illustrativeHubbleSample } from '@/physics'
 import { snapToRange, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
@@ -43,7 +44,7 @@ const num = (value: unknown) => (typeof value === 'string' && value.trim() !== '
 
 // A setup can be shared as a link, e.g. #/cosmology/evolving-space?level=advanced&model=our&t=13.8
 if (isLevel(route.query.level)) level.value = route.query.level
-const { model, cosmology, expansion, t, direction, running, home, target, readings, accelerationTime, record, run, stop, setTime, setHome } =
+const { model, cosmology, expansion, t, direction, running, home, target, readings, accelerationTime, record, run, stop, setTime, setHome, galaxiesObserved, observeGalaxies, clearGalaxies } =
   useEvolvingSpace({
     model: isModelId(route.query.model) ? route.query.model : 'our',
     t: num(route.query.t),
@@ -100,6 +101,18 @@ const milestones = computed(() => {
 const compare = computed(() => (model.value === 'our' ? null : expansionOf('our')))
 const accelerationMarker = computed(() => (advanced.value ? accelerationTime.value : null))
 const hubblePerGyr = computed(() => (readings.value.hubbleDistance === null ? null : 1 / readings.value.hubbleDistance))
+
+// Hubble diagram: an illustrative sample drawn from this model's H₀ with realistic scatter.
+const HUBBLE_AXES = { distance: 140, speed: 10000 } as const
+const hubbleSample = computed(() => illustrativeHubbleSample(HUBBLE_MAX, { h0: cosmology.value.h0, seed: HUBBLE_SAMPLE_SEED }))
+const hubblePoints = computed(() => hubbleSample.value.slice(0, galaxiesObserved.value))
+const hubbleFit = computed(() => (hubblePoints.value.length >= 2 ? fitHubbleConstant(hubblePoints.value) : null))
+const hx = (d: number) => 56 + (d / HUBBLE_AXES.distance) * 504
+const hy = (v: number) => 262 - (v / HUBBLE_AXES.speed) * 240
+const lineTo = (slope: number) => {
+  const d = Math.min(HUBBLE_AXES.distance, HUBBLE_AXES.speed / slope)
+  return { x2: hx(d), y2: hy(slope * d) }
+}
 
 const sig = (x: number, digits = 3) => formatNumber(Number(x.toPrecision(digits)), { maximumSignificantDigits: digits })
 const expansionWord = computed(() => {
@@ -214,6 +227,39 @@ const expansionWord = computed(() => {
           <p class="small muted">{{ tx(cosmology.name) }}: H₀ = {{ cosmology.h0 }} km/s/Mpc.</p>
         </div>
       </div>
+
+      <div class="card hubble-card">
+        <h3>{{ tx('Hubble diagram: nearby galaxies today') }}</h3>
+        <p class="muted small">{{ tx('Each point is one galaxy: its measured distance, and its recession speed worked out from its redshift. These galaxies are illustrative, generated from the model with realistic scatter, not a real catalogue.') }}</p>
+        <svg class="hubble-plot" viewBox="0 0 600 300" role="img" :aria-label="tx('Hubble diagram: nearby galaxies today')">
+          <g class="hubble-grid">
+            <line v-for="d in [20, 40, 60, 80, 100, 120, 140]" :key="'x' + d" :x1="hx(d)" :x2="hx(d)" :y1="hy(0)" :y2="hy(HUBBLE_AXES.speed)" />
+            <line v-for="v in [2000, 4000, 6000, 8000, 10000]" :key="'y' + v" :x1="hx(0)" :x2="hx(HUBBLE_AXES.distance)" :y1="hy(v)" :y2="hy(v)" />
+          </g>
+          <line class="hubble-axis" :x1="hx(0)" :y1="hy(0)" :x2="hx(HUBBLE_AXES.distance)" :y2="hy(0)" />
+          <line class="hubble-axis" :x1="hx(0)" :y1="hy(0)" :x2="hx(0)" :y2="hy(HUBBLE_AXES.speed)" />
+          <text v-for="d in [0, 40, 80, 120]" :key="'tx' + d" class="hubble-tick" :x="hx(d)" :y="hy(0) + 16" text-anchor="middle">{{ d }}</text>
+          <text v-for="v in [0, 4000, 8000]" :key="'ty' + v" class="hubble-tick" :x="hx(0) - 6" :y="hy(v) + 4" text-anchor="end">{{ formatNumber(v) }}</text>
+          <text class="hubble-label" :x="hx(HUBBLE_AXES.distance / 2)" y="296" text-anchor="middle">{{ tx('Distance (Mpc)') }}</text>
+          <text class="hubble-label" x="14" :y="hy(HUBBLE_AXES.speed / 2)" text-anchor="middle" :transform="`rotate(-90 14 ${hy(HUBBLE_AXES.speed / 2)})`">{{ tx('Recession speed (km/s)') }}</text>
+          <line v-if="advanced && hubbleFit" class="hubble-model" :x1="hx(0)" :y1="hy(0)" v-bind="lineTo(cosmology.h0)" />
+          <line v-if="hubbleFit" class="hubble-fit" :x1="hx(0)" :y1="hy(0)" v-bind="lineTo(hubbleFit.h0)" />
+          <circle v-for="(p, i) in hubblePoints" :key="i" class="hubble-point" :cx="hx(p.distance)" :cy="hy(p.speed)" r="4.5" />
+          <text v-if="!hubblePoints.length" class="hubble-tick" :x="hx(HUBBLE_AXES.distance / 2)" :y="hy(HUBBLE_AXES.speed / 2)" text-anchor="middle">{{ tx('Observe some galaxies to start the diagram.') }}</text>
+        </svg>
+        <div class="hubble-controls">
+          <button class="btn btn-primary" type="button" :disabled="galaxiesObserved >= HUBBLE_MAX" @click="observeGalaxies">{{ tx('Observe 8 more galaxies') }}</button>
+          <button class="btn" type="button" :disabled="galaxiesObserved === 0" @click="clearGalaxies">{{ tx('Start again') }}</button>
+        </div>
+        <dl class="readouts hubble-readouts">
+          <div><dt>{{ tx('Galaxies observed') }}</dt><dd class="num">{{ galaxiesObserved }} / {{ HUBBLE_MAX }}</dd></div>
+          <div>
+            <dt>{{ tx('H₀ from the best straight line') }}</dt>
+            <dd class="num">{{ hubbleFit === null ? '—' : intermediate ? `${formatNumber(hubbleFit.h0, { maximumFractionDigits: 1, minimumFractionDigits: 1 })} ± ${formatNumber(hubbleFit.standardError, { maximumFractionDigits: 1, minimumFractionDigits: 1 })} km/s/Mpc` : `${formatNumber(Math.round(hubbleFit.h0))} km/s/Mpc` }}</dd>
+          </div>
+          <div v-if="advanced"><dt>{{ tx('The model’s H₀ (dashed)') }}</dt><dd class="num">{{ cosmology.h0 }} km/s/Mpc</dd></div>
+        </dl>
+      </div>
     </section>
 
     <details class="lesson-disclosure">
@@ -271,6 +317,7 @@ const expansionWord = computed(() => {
 </template>
 
 <style scoped>
+
 .lab {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 330px;
@@ -441,4 +488,18 @@ input[type='range'] {
     grid-template-columns: 1fr;
   }
 }
+.hubble-card { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+.hubble-card h3 { margin: 0; }
+.hubble-plot { width: 100%; max-height: 340px; }
+.hubble-grid line { stroke: var(--border); stroke-width: 1; }
+.hubble-axis { stroke: var(--text-muted); stroke-width: 1.5; }
+.hubble-tick { fill: var(--text-muted); font-size: 12px; }
+.hubble-label { fill: var(--text); font-size: 13px; }
+.hubble-point { fill: var(--accent); fill-opacity: 0.8; stroke: var(--bg); stroke-width: 1; }
+.hubble-fit { stroke: var(--text); stroke-width: 2; }
+.hubble-model { stroke: var(--text-muted); stroke-width: 2; stroke-dasharray: 6 5; }
+.hubble-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.hubble-readouts { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+.hubble-readouts div { flex-direction: column; justify-content: flex-start; gap: 2px; padding: 8px 10px; border-radius: 8px; background: var(--surface-2); }
+.hubble-readouts dd { text-align: left; }
 </style>

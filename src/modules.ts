@@ -94,7 +94,7 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 6,
     title: 'Cosmology',
     role: 'Space and time on the largest scale: how the universe’s own expansion evolves, and where our models stop being reliable.',
-    coverage: ['Scale factor in homogeneous and isotropic FLRW models', 'Redshift and Hubble expansion', 'Matter-, radiation- and dark-energy-dominated model histories', 'Accelerating and decelerating expansion', 'Limits of classical evolution as the scale factor approaches zero'],
+    coverage: ['Scale factor in homogeneous and isotropic FLRW models', 'Redshift and Hubble expansion', 'Matter-, radiation- and dark-energy-dominated model histories', 'Accelerating and decelerating expansion', 'The Hubble diagram: estimating H₀ from scattered data', 'Limits of classical evolution as the scale factor approaches zero'],
     plannedTopics: ['Observational evidence and parameter inference in modern cosmology', 'Cosmic distance measures and horizons', 'A deeper treatment of the early universe and inflation', 'The status and limits of extrapolating classical cosmology toward the initial singularity'],
     experiments: [
       { title: 'Evolving space', summary: 'Run a model universe forwards and backwards: Hubble’s law, redshift, dark energy and where the model breaks down.', path: '/cosmology/evolving-space' },

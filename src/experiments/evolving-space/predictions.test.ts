@@ -12,6 +12,9 @@ import {
   observedBound,
   observedFasterThanLight,
   observedNoCentre,
+  observedHubbleDiagram,
+  observedEstimateSettles,
+  estimateHint,
 } from './predictions'
 import { CENTRE_GALAXY, GALAXIES, stageAt, type SpaceRecord, type SpaceRun, type SpaceSnapshot } from './useEvolvingSpace'
 
@@ -74,5 +77,19 @@ describe('model universe layout', () => {
     expect(stageAt(1 / 1100)).toBe('first-light')
     expect(stageAt(0.01)).toBe('dark-ages')
     expect(stageAt(1)).toBe('galaxies')
+  })
+})
+
+describe('Hubble diagram predictions', () => {
+  const withCounts = (hubbleCounts: number[]): SpaceRecord => ({ runs: [], snapshots: [], hubbleCounts })
+  it('the diagram question needs at least 16 galaxies', () => {
+    expect(observedHubbleDiagram(withCounts([8]))).toBe(false)
+    expect(observedHubbleDiagram(withCounts([8, 16]))).toBe(true)
+    expect(observedHubbleDiagram({ runs: [], snapshots: [] })).toBe(false)
+  })
+  it('the estimate question needs a fit with 8 galaxies and one with all 32', () => {
+    expect(observedEstimateSettles(withCounts([8, 16, 24, 32]))).toBe(true)
+    expect(observedEstimateSettles(withCounts([16, 24, 32]))).toBe(false)
+    expect(estimateHint(withCounts([32]))).toMatch(/Start again/)
   })
 })

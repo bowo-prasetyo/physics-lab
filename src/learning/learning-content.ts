@@ -220,7 +220,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     },
     "/cosmology/evolving-space": {
       "focus": "Space itself can evolve",
-      "idea": "Run model universes forwards and backwards, and relate the scale factor to redshift and the Hubble rate.",
+      "idea": "Run model universes forwards and backwards, relate the scale factor to redshift and the Hubble rate, and estimate H₀ from a Hubble diagram of nearby galaxies.",
       "prerequisite": "Understand that distances in a model can change because space expands, not only because objects move through it."
     }
   },
@@ -292,7 +292,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     },
     "/cosmology/evolving-space": {
       "focus": "Ruang itu sendiri dapat berevolusi",
-      "idea": "Jalankan model alam semesta maju dan mundur, lalu hubungkan faktor skala dengan pergeseran merah dan laju Hubble.",
+      "idea": "Jalankan model alam semesta maju dan mundur, hubungkan faktor skala dengan pergeseran merah dan laju Hubble, lalu perkirakan H₀ dari diagram Hubble galaksi dekat.",
       "prerequisite": "Pahami bahwa jarak dalam model dapat berubah karena ruang mengembang, bukan hanya karena benda bergerak melewatinya."
     }
   },
@@ -364,7 +364,7 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
     },
     "/cosmology/evolving-space": {
       "focus": "空間そのものが変化しうる",
-      "idea": "モデル宇宙を未来と過去へ進め、スケール因子を赤方偏移やハッブル率と結び付けます。",
+      "idea": "モデル宇宙を未来と過去へ進め、スケール因子を赤方偏移やハッブル率と結び付け、近傍銀河のハッブル図から H₀ を推定します。",
       "prerequisite": "モデルの中の距離は、物体が空間を移動するからだけでなく、空間が膨張するからも変わりうることを理解しておきましょう。"
     }
   }
