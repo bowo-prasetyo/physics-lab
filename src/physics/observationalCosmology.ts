@@ -57,6 +57,12 @@ export function illustrativeHubbleSample(count: number, options: HubbleSampleOpt
   const { h0, seed = 1929, peculiarSpeed = 300, distanceError = 0.1, minDistance = 10, maxDistance = 120 } = options
   if (!(Number.isInteger(count) && count >= 0)) throw new RangeError('count must be a non-negative integer')
   if (!(Number.isFinite(h0) && h0 > 0)) throw new RangeError('H₀ must be finite and positive')
+  if (!(Number.isInteger(seed) && Number.isFinite(seed))) throw new RangeError('seed must be a finite integer')
+  if (!(Number.isFinite(peculiarSpeed) && peculiarSpeed >= 0)) throw new RangeError('peculiar speed must be finite and non-negative')
+  if (!(Number.isFinite(distanceError) && distanceError >= 0 && distanceError < 1)) throw new RangeError('distance error must be finite and between 0 and 1')
+  if (!(Number.isFinite(minDistance) && minDistance > 0 && Number.isFinite(maxDistance) && maxDistance > minDistance)) {
+    throw new RangeError('distances must be finite, positive, and increasing')
+  }
   const random = seeded(seed)
   const gaussian = () => Math.sqrt(-2 * Math.log(1 - random())) * Math.cos(2 * Math.PI * random())
   return Array.from({ length: count }, () => {
@@ -70,12 +76,22 @@ export function illustrativeHubbleSample(count: number, options: HubbleSampleOpt
 /**
  * Least-squares fit of v = H₀ d through the origin: Ĥ₀ = Σ v d / Σ d², with
  * standard error √(s² / Σ d²), where s² is the residual variance (n − 1 degrees
- * of freedom). Needs at least two galaxies. Errors in the measured distances
- * bias the slope low by about their fractional variance (1 % for 10 % errors),
- * small compared with the uncertainty of a sample of a few dozen galaxies.
+ * of freedom). This is the ordinary least-squares standard error: it treats the
+ * supplied distances as fixed and the speed residuals as independent with a
+ * common variance. It does not include distance-measurement uncertainty or
+ * peculiar-velocity modelling. Needs at least two finite points with positive
+ * distances. Distance errors can bias the slope (an errors-in-variables effect).
  */
 export function fitHubbleConstant(points: readonly HubblePoint[]): { readonly h0: number; readonly standardError: number } {
   if (points.length < 2) throw new RangeError('a fit needs at least two galaxies')
+  for (const [index, point] of points.entries()) {
+    if (!(Number.isFinite(point.distance) && point.distance > 0)) {
+      throw new RangeError(`galaxy ${index + 1} distance must be finite and positive`)
+    }
+    if (!Number.isFinite(point.speed)) {
+      throw new RangeError(`galaxy ${index + 1} speed must be finite`)
+    }
+  }
   const sdd = points.reduce((sum, p) => sum + p.distance * p.distance, 0)
   const h0 = points.reduce((sum, p) => sum + p.speed * p.distance, 0) / sdd
   const residual = points.reduce((sum, p) => sum + (p.speed - h0 * p.distance) ** 2, 0) / (points.length - 1)

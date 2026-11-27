@@ -40,13 +40,28 @@ export const COSMOLOGIES: readonly Cosmology[] = [
   { id: 'lambda', name: 'Dark energy only (de Sitter)', h0: H0_PLANCK, omegaR: 0, omegaM: 0, omegaL: 1 },
 ]
 
+/** Reject invalid model parameters before they can silently propagate NaN or complex values. */
+function validateCosmology(c: Cosmology): void {
+  if (!(Number.isFinite(c.h0) && c.h0 > 0)) throw new RangeError('H₀ must be finite and positive')
+  for (const [name, value] of [['Ωᵣ', c.omegaR], ['Ωₘ', c.omegaM], ['ΩΛ', c.omegaL]] as const) {
+    if (!(Number.isFinite(value) && value >= 0)) throw new RangeError(`${name} must be finite and non-negative`)
+  }
+}
+
+function validateScaleFactor(a: number): void {
+  if (!(Number.isFinite(a) && a > 0)) throw new RangeError('scale factor must be finite and positive')
+}
+
 /** H₀ in 1/Gyr. */
 export function hubbleRateToday(c: Cosmology): number {
+  validateCosmology(c)
   return c.h0 * KM_S_MPC_PER_GYR
 }
 
 /** E(a) = H(a)/H₀ from the Friedmann equation. */
 export function expansionFactor(c: Cosmology, a: number): number {
+  validateCosmology(c)
+  validateScaleFactor(a)
   const omegaK = 1 - c.omegaR - c.omegaM - c.omegaL
   return Math.sqrt(c.omegaR / a ** 4 + c.omegaM / a ** 3 + omegaK / a ** 2 + c.omegaL)
 }
@@ -66,6 +81,8 @@ export function toKmSMpc(ratePerGyr: number): number {
  * negative: it is speeding up.
  */
 export function deceleration(c: Cosmology, a: number): number {
+  validateCosmology(c)
+  validateScaleFactor(a)
   const e2 = expansionFactor(c, a) ** 2
   return (c.omegaR / a ** 4 + c.omegaM / (2 * a ** 3) - c.omegaL) / e2
 }
@@ -80,6 +97,7 @@ export function deceleration(c: Cosmology, a: number): number {
  * present. Bisection avoids assuming radiation is negligible.
  */
 export function accelerationOnset(c: Cosmology): number | null {
+  validateCosmology(c)
   if (c.omegaL <= 0 || (c.omegaR <= 0 && c.omegaM <= 0)) return null
 
   const numerator = (a: number) =>
@@ -105,11 +123,13 @@ export function accelerationOnset(c: Cosmology): number | null {
 
 /** Cosmological redshift of light emitted when the scale factor was a and received today. */
 export function redshift(a: number): number {
+  validateScaleFactor(a)
   return 1 / a - 1
 }
 
 /** Background radiation temperature when the scale factor was a (K). */
 export function cmbTemperature(a: number): number {
+  validateScaleFactor(a)
   return CMB_TEMPERATURE_TODAY / a
 }
 
@@ -118,6 +138,8 @@ export function cmbTemperature(a: number): number {
  * at the moment the scale factor is a: v = H d = H(a) · a · d₀.
  */
 export function recessionSpeed(c: Cosmology, a: number, d0: number): number {
+  validateScaleFactor(a)
+  if (!(Number.isFinite(d0) && d0 >= 0)) throw new RangeError('comoving distance must be finite and non-negative')
   return hubbleRate(c, a) * a * d0
 }
 
@@ -147,6 +169,8 @@ export interface Expansion {
  * so the trapezoid rule on 8 000 steps is accurate to better than 10⁻⁶.
  */
 export function solveExpansion(c: Cosmology, futureGyr = 30): Expansion {
+  validateCosmology(c)
+  if (!(Number.isFinite(futureGyr) && futureGyr >= 0)) throw new RangeError('future duration must be finite and non-negative')
   const xMin = Math.log(A_MIN)
   const xMax = Math.log(A_MAX)
   const dx = (xMax - xMin) / STEPS
