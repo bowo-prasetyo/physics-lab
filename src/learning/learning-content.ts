@@ -3,6 +3,7 @@ import type { Level } from '@/levels'
 import { getLocalizedModules } from '@/i18n/home-catalog'
 import { accelerationFromNetForce, exactState, smallAnglePeriod, type RunRecord, type TrackBounds } from '@/physics'
 import { problemsFor, type PhysicsProblem } from './problem-bank'
+import { P1_GRAPHS, P1_GRAPH_COPY, P1_PRACTICE_BANK, P1_PRACTICE_COPY } from './p1-practice'
 
 /**
  * The learning path: one route through space, time and motion.
@@ -437,6 +438,7 @@ export const GRAPH_CART_MASS = 2
 
 /** Graphs that graph questions refer to, by id. */
 export const GRAPHS: Readonly<Record<string, PracticeGraph>> = {
+  ...P1_GRAPHS,
   // Forwards at +2 m/s, still for 2 s while the clock runs, back to the start at −2 m/s.
   'walk-stop-return': piecewiseRun(0, [[2, 2], [0, 2], [-2, 2]], { min: 0, max: 6 }),
   // Newton's second law for a 2 kg cart: a straight line through the origin with slope 1/m.
@@ -456,19 +458,19 @@ export interface GraphCopy {
 }
 
 export const GRAPH_COPY: Record<Locale, Readonly<Record<string, GraphCopy>>> = {
-  en: {
+  en: { ...P1_GRAPH_COPY.en,
     'walk-stop-return': { title: 'Read a position–time graph', intro: 'One run of an object on the track. The questions below are all about this graph; its slope is the velocity.' },
     'force-acceleration': { title: 'Read an acceleration–force graph', intro: 'The model behind the experiment: one cart of fixed mass, pushed with different net forces.', xLabel: 'Net force (N)', yLabel: 'Acceleration (m/s²)' },
     'projectile-height': { title: 'Read a height–time graph', intro: 'The height of an ideal projectile from launch to landing, with no air resistance.', xLabel: 'Time (s)', yLabel: 'Height (m)' },
     'pendulum-length': { title: 'Read a period–length graph', intro: 'The small-swing period of pendulums of different lengths on the Earth.', xLabel: 'Length (m)', yLabel: 'Period (s)' },
   },
-  id: {
+  id: { ...P1_GRAPH_COPY.id,
     'walk-stop-return': { title: 'Membaca grafik posisi–waktu', intro: 'Satu percobaan sebuah benda di lintasan. Semua pertanyaan di bawah ini tentang grafik ini; kemiringannya adalah kecepatan.' },
     'force-acceleration': { title: 'Membaca grafik percepatan–gaya', intro: 'Model di balik eksperimen: satu kereta bermassa tetap, didorong dengan gaya resultan yang berbeda-beda.', xLabel: 'Gaya resultan (N)', yLabel: 'Percepatan (m/s²)' },
     'projectile-height': { title: 'Membaca grafik ketinggian–waktu', intro: 'Ketinggian proyektil ideal dari peluncuran hingga mendarat, tanpa hambatan udara.', xLabel: 'Waktu (s)', yLabel: 'Ketinggian (m)' },
     'pendulum-length': { title: 'Membaca grafik periode–panjang', intro: 'Periode ayunan kecil pendulum dengan panjang berbeda-beda di Bumi.', xLabel: 'Panjang (m)', yLabel: 'Periode (s)' },
   },
-  ja: {
+  ja: { ...P1_GRAPH_COPY.ja,
     'walk-stop-return': { title: '位置–時間グラフを読み取る', intro: 'レール上の物体の1回の試行です。下の質問はすべてこのグラフについてです。グラフの傾きが速度を表します。' },
     'force-acceleration': { title: '加速度–力グラフを読み取る', intro: '実験の背後にあるモデルです。質量が一定の台車を、さまざまな合力で押します。', xLabel: '合力 (N)', yLabel: '加速度 (m/s²)' },
     'projectile-height': { title: '高さ–時間グラフを読み取る', intro: '空気抵抗のない理想的な投射物の、打ち上げから着地までの高さです。', xLabel: '時間 (s)', yLabel: '高さ (m)' },
@@ -478,6 +480,7 @@ export const GRAPH_COPY: Record<Locale, Readonly<Record<string, GraphCopy>>> = {
 
 /** The practice bank: structure (experiment, level, option ids, answer) is shared by every language. */
 export const PRACTICE_BANK: readonly PracticeSource[] = [
+  ...P1_PRACTICE_BANK,
   {
     "id": "walk",
     "experiment": "/space/displacement-3d",
@@ -920,6 +923,7 @@ export const PRACTICE_BANK: readonly PracticeSource[] = [
 
 export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>>> = {
   "en": {
+    ...P1_PRACTICE_COPY.en,
     "walk": {
       "prompt": "A student walks 3 m east, then 3 m west back to the starting point. What is the student’s displacement?",
       "options": {
@@ -1304,6 +1308,7 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
     }
   },
   "id": {
+    ...P1_PRACTICE_COPY.id,
     "walk": {
       "prompt": "Seorang siswa berjalan 3 m ke timur, lalu 3 m ke barat hingga kembali ke titik awal. Berapa perpindahannya?",
       "options": {
@@ -1688,6 +1693,7 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
     }
   },
   "ja": {
+    ...P1_PRACTICE_COPY.ja,
     "walk": {
       "prompt": "生徒が東へ3 m歩き、その後西へ3 m戻って出発点に着きました。変位はいくらですか？",
       "options": {
