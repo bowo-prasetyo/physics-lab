@@ -20,3 +20,16 @@ export function relativisticMomentum(mass: number, velocity: number, c = SPEED_O
   const beta = velocity / c
   return (mass * velocity) / Math.sqrt(1 - beta * beta)
 }
+
+/**
+ * A body moving at βc hits an identical body at rest and they stick together.
+ * Conserving relativistic momentum γmv and energy γmc² gives the merged body's
+ * speed γβ/(γ + 1) (units of c) and its mass √(2(γ + 1)) m, more than 2m,
+ * because kinetic energy becomes rest energy. At low speed: β/2 and 2m, as
+ * in the Newtonian perfectly inelastic collision.
+ */
+export function stickyCollisionWithIdenticalAtRest(beta: number): { readonly speed: number; readonly massRatio: number } {
+  if (!(Number.isFinite(beta) && Math.abs(beta) < 1)) throw new RangeError('|β| must be below 1')
+  const g = 1 / Math.sqrt(1 - beta * beta)
+  return { speed: (g * beta) / (g + 1), massRatio: Math.sqrt(2 * (g + 1)) }
+}

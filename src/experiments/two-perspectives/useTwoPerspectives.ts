@@ -7,7 +7,7 @@ import { computed, ref, watch } from 'vue'
 import { DESCRIPTIONS, predict, type Description, type Scenario } from '@/physics'
 
 export const BETA_RANGE = { min: 0, max: 0.99, step: 0.01 } as const
-export const SCENARIOS: readonly Scenario[] = ['light', 'flashes', 'clock']
+export const SCENARIOS: readonly Scenario[] = ['light', 'probe', 'flashes', 'clock', 'momentum']
 
 /** A measurement the student made: which scenario, at which speed. */
 export interface Observation {
@@ -25,7 +25,7 @@ export function measuredValue(scenario: Scenario, beta: number): number {
 }
 
 export function isScenario(value: unknown): value is Scenario {
-  return value === 'light' || value === 'flashes' || value === 'clock'
+  return value === 'light' || value === 'flashes' || value === 'clock' || value === 'probe' || value === 'momentum'
 }
 
 export function useTwoPerspectives(initial: { scenario: Scenario; beta: number }) {

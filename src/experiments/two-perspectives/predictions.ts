@@ -47,11 +47,44 @@ export function flashesHint(runs: readonly Observation[]): string | null {
   return null
 }
 
+/** The three situations the equivalence question compares. */
+const CORE_SCENARIOS = ['light', 'flashes', 'clock'] as const
+
 const scenariosMeasuredFast = (runs: readonly Observation[]) =>
   new Set(runs.filter((o) => o.beta >= HIGH_SPEED).map((o) => o.scenario))
 
 export function observedAllScenarios(runs: readonly Observation[]): boolean {
-  return scenariosMeasuredFast(runs).size === 3
+  const done = scenariosMeasuredFast(runs)
+  return CORE_SCENARIOS.every((s) => done.has(s))
+}
+
+/** The ship speed for the probe question; the slider moves in steps of 0.01. */
+export const PROBE_SHIP_SPEED = 0.8
+
+export function observedFastProbe(runs: readonly Observation[]): boolean {
+  return measuredIn(runs, 'probe').some((o) => o.beta >= PROBE_SHIP_SPEED - 1e-9)
+}
+
+export function fastProbeHint(runs: readonly Observation[]): string | null {
+  if (observedFastProbe(runs)) return null
+  if (measuredIn(runs, 'probe').length > 0) return 'Set the ship speed to 0.80c or more and make the measurement again.'
+  if (runs.length > 0) return 'Choose the “Probe” situation, then make the measurement.'
+  return null
+}
+
+/** Momentum measured at a moderate speed and at one at least twice as high. */
+export function observedMomentumGrowth(runs: readonly Observation[]): boolean {
+  const momentum = measuredIn(runs, 'momentum')
+  return momentum.some((o) => o.beta > 0 && o.beta <= 0.45 + 1e-9) && momentum.some((o) => o.beta >= 0.9 - 1e-9)
+}
+
+export function momentumGrowthHint(runs: readonly Observation[]): string | null {
+  if (observedMomentumGrowth(runs)) return null
+  const momentum = measuredIn(runs, 'momentum')
+  if (momentum.some((o) => o.beta >= 0.9 - 1e-9)) return 'Now measure the momentum at 0.45c or below (but above 0).'
+  if (momentum.length > 0) return 'Now measure the momentum at 0.90c or above.'
+  if (runs.length > 0) return 'Choose the “Momentum” situation, then measure at 0.45c and at 0.90c.'
+  return null
 }
 
 export function allScenariosHint(runs: readonly Observation[]): string | null {
@@ -81,6 +114,22 @@ export const PREDICTIONS: readonly Prediction<Observation>[] = [
       'combine as (u + v)/(1 + uv/c²); in spacetime, light’s worldline has zero interval, and every observer agrees on that.',
     observed: observedFastHeadlight,
     hint: fastHeadlightHint,
+  },
+  {
+    id: 'probe',
+    minLevel: 'beginner',
+    question: 'A spaceship moving at 0.80c launches a probe forward at 0.50c relative to the ship. How fast does someone on the Earth measure the probe to be moving?',
+    task: 'Choose “Probe”, set the ship speed to 0.80c or more, and press “Make the measurement”.',
+    options: [
+      { id: 'sum', label: '1.30c: the two speeds add' },
+      { id: 'capped', label: 'Exactly 1.00c: the sum would pass c, so it is held at c' },
+      { id: 'between', label: 'About 0.93c: faster than the ship, but slower than light' },
+    ],
+    correct: 'between',
+    explanation:
+      'Velocities do not simply add. Measured from the Earth, w = (u + v)/(1 + uv/c²) = (0.5 + 0.8)/(1 + 0.4) ≈ 0.93c: faster than the ship, slower than light. No combination of speeds below c ever gives c, so nothing needs to “hold” the probe at c. In spacetime language, rapidities add: artanh w = artanh u + artanh v. At everyday speeds uv/c² is tiny and the ordinary sum is an excellent approximation. The headlight is the limiting case u = c, which gives exactly c.',
+    observed: observedFastProbe,
+    hint: fastProbeHint,
   },
   {
     id: 'everyday',
@@ -123,11 +172,27 @@ export const PREDICTIONS: readonly Prediction<Observation>[] = [
     hint: flashesHint,
   },
   {
+    id: 'momentum',
+    minLevel: 'intermediate',
+    question: 'The ship’s speed doubles, from 0.45c to 0.90c. Its momentum, measured from the Earth…',
+    task: 'Choose “Momentum” and make the measurement at 0.45c or below, and at 0.90c or above.',
+    options: [
+      { id: 'doubles', label: 'Doubles, as p = mv says' },
+      { id: 'more', label: 'More than doubles' },
+      { id: 'less', label: 'Less than doubles, because the speed is limited by c' },
+    ],
+    correct: 'more',
+    explanation:
+      'Momentum is p = γmv. Doubling the speed from 0.45c to 0.90c multiplies it about four times, from 0.50 mc to 2.06 mc, because γ grows from 1.12 to 2.29. As v approaches c, γ grows without limit, so momentum does too, although the speed can never reach c: pushing a particle harder in an accelerator adds momentum and energy, but hardly any speed. At low speeds γ ≈ 1 and p ≈ mv, the momentum conserved in everyday collisions; γmv is the quantity conserved at every speed.',
+    observed: observedMomentumGrowth,
+    hint: momentumGrowthHint,
+  },
+  {
     id: 'equivalence',
     minLevel: 'advanced',
     question:
       'Is there any measurement for which the “space + time, Lorentz-related” description and the “spacetime” description predict different results?',
-    task: `Make the measurement in all three scenarios at ${HIGH_SPEED.toFixed(2)}c or more, and compare those two columns.`,
+    task: `Make the measurement in the “Headlight”, “Two flashes” and “Moving clock” situations at ${HIGH_SPEED.toFixed(2)}c or more, and compare those two columns.`,
     options: [
       { id: 'fast', label: 'Yes, at speeds close to c' },
       { id: 'simultaneity', label: 'Yes, for simultaneity, which only spacetime can describe' },

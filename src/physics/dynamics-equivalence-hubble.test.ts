@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { apparentWeightPerMass, hoveringAccelerationFactor, hoveringProperAcceleration } from './equivalence'
 import { G, SOLAR_MASS, schwarzschildRadius, staticClockRate } from './gravity'
 import { hubbleDistance, hubbleVelocity } from './observationalCosmology'
-import { relativisticMomentum, relativisticVelocityAddition } from './relativisticDynamics'
+import { relativisticMomentum, relativisticVelocityAddition, stickyCollisionWithIdenticalAtRest } from './relativisticDynamics'
 import { SPEED_OF_LIGHT } from './relativity'
 
 describe('special-relativistic dynamics', () => {
@@ -76,5 +76,20 @@ describe('hovering versus free fall near a Schwarzschild mass', () => {
   it('refuses to hover at or inside the horizon', () => {
     expect(() => hoveringAccelerationFactor(1)).toThrow(RangeError)
     expect(() => hoveringProperAcceleration(mass, rs)).toThrow(RangeError)
+  })
+})
+
+describe('relativistic sticky collision', () => {
+  it('conserves γmv and energy, and reduces to the Newtonian result at low speed', () => {
+    const { speed, massRatio } = stickyCollisionWithIdenticalAtRest(0.8)
+    expect(speed).toBeCloseTo(0.5, 12)
+    expect(massRatio).toBeCloseTo(Math.sqrt(16 / 3), 12)
+    // Momentum: γmv before equals γ_f M v_f after (units of mc).
+    const before = relativisticMomentum(1, 0.8 * SPEED_OF_LIGHT) / SPEED_OF_LIGHT
+    const after = relativisticMomentum(massRatio, speed * SPEED_OF_LIGHT) / SPEED_OF_LIGHT
+    expect(after).toBeCloseTo(before, 12)
+    const slow = stickyCollisionWithIdenticalAtRest(1e-4)
+    expect(slow.speed / 5e-5).toBeCloseTo(1, 6)
+    expect(slow.massRatio).toBeCloseTo(2, 6)
   })
 })

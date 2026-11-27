@@ -86,6 +86,8 @@ const EVIDENCE: Readonly<Record<string, Evidence>> = {
   'Relativity of simultaneity': [['/relativity/two-perspectives', 'simultaneity'], ['/relativity/length-contraction', 'simultaneity']],
   'Spacetime diagrams and invariant interval': [['/relativity/moving-clocks', 'reciprocal'], ['/relativity/moving-clocks', 'invariant']],
   'Comparison of equivalent relativistic descriptions': [['/relativity/two-perspectives', 'equivalence']],
+  'Relativistic velocity addition': [['/relativity/two-perspectives', 'probe'], ['/relativity/two-perspectives', 'headlight']],
+  'Relativistic momentum, p = γmv': [['/relativity/two-perspectives', 'momentum']],
   // Module 5
   'Gravitational time dilation in the Schwarzschild exterior': [['/gravity/clock-rates', 'mountain']],
   'GPS gravitational and kinematic clock corrections': [['/gravity/clock-rates', 'gps'], ['/gravity/clock-rates', 'uncorrected']],

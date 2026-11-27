@@ -18,6 +18,9 @@ const gammaDisplay = computed(() => '\\gamma = ' + f(gamma(props.beta)))
 const velocityAddition = computed(
   () => `w = \\frac{c + v}{1 + c\\,v/c^2} = \\frac{1 + ${f(props.beta, 2)}}{1 + ${f(props.beta, 2)}}\\,c = c`,
 )
+const momentumDisplay = computed(
+  () => `p = m\\,\\frac{dx}{d\\tau} = \\gamma m v = ${f(gamma(props.beta))} \\times ${f(props.beta, 2)}\\,mc = ${f(gamma(props.beta) * props.beta)}\\,mc`,
+)
 const rapidityDisplay = computed(() => '\\varphi = \\operatorname{artanh}(' + f(props.beta, 2) + ') = ' + f(phi.value, 4))
 const metricCheck = computed(
   () =>
@@ -82,6 +85,10 @@ const metricCheck = computed(
       <MathFormula display tex="w = \frac{u + v}{1 + u v / c^2}." />
       <p>{{ tx('For light (') }}<MathFormula tex="u = c" />{{ tx(') at your current ship speed:') }}</p>
       <MathFormula display :tex="velocityAddition" />
+
+      <h3>{{ tx('Momentum uses the moving body’s own time') }}</h3>
+      <p>{{ tx('Momentum divides the distance moved by the time on the moving body’s own clock, which runs slow by γ. So') }}</p>
+      <MathFormula display :tex="momentumDisplay" />
 
       <h3>{{ tx('Simultaneity') }}</h3>
       <MathFormula display tex="\Delta t' = \gamma\left(\Delta t - \frac{v\,\Delta x}{c^2}\right)" />

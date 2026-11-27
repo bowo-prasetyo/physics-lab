@@ -3,7 +3,7 @@
  * the language of its own description, with the student's current speed.
  */
 
-import { FLASH_HALF_SEPARATION, CLOCK_EARTH_TIME, gamma, predict, rapidity, type Description, type Scenario } from '@/physics'
+import { FLASH_HALF_SEPARATION, CLOCK_EARTH_TIME, PROBE_SPEED, gamma, predict, rapidity, type Description, type Scenario } from '@/physics'
 
 export interface ScenarioInfo {
   readonly id: Scenario
@@ -58,6 +58,32 @@ export const SCENARIO_INFO: Record<Scenario, ScenarioInfo> = {
     evidence:
       'Moving clocks run slow by γ. Muons circulating at γ ≈ 29.3 in a storage ring at CERN (1977) lived 29.3 times longer than at rest, ' +
       'agreeing with relativity to about 0.1%. Atomic clocks flown on airliners and GPS satellites confirm it too.',
+  },
+  probe: {
+    id: 'probe',
+    tab: 'Probe',
+    setup: `A spaceship moving at speed v launches a probe forward, at ${PROBE_SPEED}c relative to the ship.`,
+    quantity: 'Speed of the probe, measured from the Earth',
+    axis: 'probe speed seen from Earth (c)',
+    unit: 'c',
+    digits: 3,
+    evidence:
+      'Speeds below c never add up to c or more. Fizeau (1851) measured light in flowing water: it was dragged along by only a fraction ' +
+      'of the water’s speed, c/n + v(1 − 1/n²), which is what relativistic addition gives to first order in v. In particle accelerators, particles produced ' +
+      'by fast-moving particles are never measured travelling faster than c.',
+  },
+  momentum: {
+    id: 'momentum',
+    tab: 'Momentum',
+    setup: 'A spaceship of mass m passes the Earth at speed v.',
+    quantity: 'The ship’s momentum, measured from the Earth',
+    axis: 'momentum (units of mc)',
+    unit: 'mc',
+    digits: 3,
+    evidence:
+      'Momentum is p = γmv. Bucherer (1908) bent fast electrons from radium in electric and magnetic fields and found this, not mv. ' +
+      'Particle accelerators are built on it: the LHC’s magnets bend protons moving at 0.999999991c whose momentum is about 7 000 times mc; ' +
+      'with p = mv it would be less than mc.',
   },
 }
 
@@ -127,6 +153,30 @@ export function derivation(scenario: Scenario, description: Description, beta: n
       `\\begin{aligned} \\Delta x^\\mu &= (0, ${2 * L}) \\\\ s^2 &= -${(2 * L) ** 2} \\ \\text{(spacelike)} \\\\ ` +
       `c\\,\\Delta t' &= -${2 * L} \\sinh\\varphi \\\\ \\varphi &= ${f(rapidity(beta), 4)} \\\\ ` +
       `\\text{lead} &= ${f(value, 3)}\\ \\text{s} \\end{aligned}`
+    )
+  }
+
+  if (scenario === 'probe') {
+    const u = f(PROBE_SPEED, 2)
+    if (description === 'galilean') return `\\begin{aligned} w &= u + v \\\\ &= ${u} + ${b} = ${f(value, 3)}\\,c \\end{aligned}`
+    if (description === 'lorentz')
+      return `\\begin{aligned} w &= \\frac{u + v}{1 + u\\,v/c^2} \\\\ &= \\frac{${u} + ${b}}{1 + ${u} \\times ${b}} = ${f(value, 3)}\\,c \\end{aligned}`
+    return (
+      `\\begin{aligned} \\varphi_w &= \\varphi_u + \\varphi_v \\\\ &= ${f(rapidity(PROBE_SPEED), 4)} + ${f(rapidity(beta), 4)} \\\\ ` +
+      `w &= \\tanh \\varphi_w = ${f(value, 3)}\\,c \\end{aligned}`
+    )
+  }
+
+  if (scenario === 'momentum') {
+    if (description === 'galilean') return `\\begin{aligned} p &= m\\,\\frac{\\Delta x}{\\Delta t} = m v \\\\ &= ${f(value, 3)}\\ mc \\end{aligned}`
+    if (description === 'lorentz')
+      return (
+        `\\begin{aligned} \\Delta\\tau &= \\gamma\\,(\\Delta t - v\\,\\Delta x/c^2) \\\\ &= ${g}\\,(1 - ${b} \\times ${b}) = ${f(1 / gamma(beta), 4)} \\\\ ` +
+        `p &= m\\,\\frac{\\Delta x}{\\Delta\\tau} = \\frac{${b}}{${f(1 / gamma(beta), 4)}} = ${f(value, 3)}\\ mc \\end{aligned}`
+      )
+    return (
+      `\\begin{aligned} p^\\mu &= m\\,(\\cosh\\varphi, \\sinh\\varphi) \\\\ \\varphi &= ${f(rapidity(beta), 4)} \\\\ ` +
+      `p &= m \\sinh\\varphi = ${f(value, 3)}\\ mc \\end{aligned}`
     )
   }
 

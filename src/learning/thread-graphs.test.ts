@@ -57,3 +57,14 @@ describe('graph questions are read from the curve, not looked up', () => {
     if (g.kind === 'function') expect(g.table).not.toContain(x)
   })
 })
+
+describe('the relativistic synthesis question', () => {
+  it('matches the engine: 0.50c and about 2.31m at 0.80c', async () => {
+    const { PRACTICE_COPY } = await import('./learning-content')
+    const { stickyCollisionWithIdenticalAtRest } = await import('@/physics')
+    const { speed, massRatio } = stickyCollisionWithIdenticalAtRest(0.8)
+    const copy = PRACTICE_COPY.en['synth-relativistic-collision']!
+    expect(copy.options['half-plus']).toContain(`${speed.toFixed(2)}c`)
+    expect(copy.explanation).toContain(`${massRatio.toFixed(2)}m`)
+  })
+})
