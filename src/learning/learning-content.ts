@@ -189,9 +189,9 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Understand inertial reference frames and that a clock measures time along its own path."
     },
     "/relativity/two-perspectives": {
-      "focus": "Simultaneity depends on the reference frame",
-      "idea": "Compare which events are simultaneous for observers in relative motion.",
-      "prerequisite": "Review how positions and times transform between observers; distant clocks require synchronisation."
+      "focus": "Compare measurements across moving frames",
+      "idea": "Test frame-dependent simultaneity, add collinear velocities, and see why momentum grows steeply near the speed of light.",
+      "prerequisite": "Review how positions and times transform between observers; distant clocks require synchronisation. Know that relativistic velocity addition and momentum refine the Newtonian rules at high speeds."
     },
     "/relativity/length-contraction": {
       "focus": "Measure a moving object consistently",
@@ -199,8 +199,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "A length measurement requires simultaneous endpoint positions in the measuring frame."
     },
     "/gravity/geodesic-motion": {
-      "focus": "Gravity changes the geometry of motion",
-      "idea": "Compare Newtonian orbits with free-fall paths in a curved-spacetime model.",
+      "focus": "Free fall reveals the local equivalence principle",
+      "idea": "Compare Newtonian orbits with curved-spacetime paths, then test why a small freely falling laboratory is locally weightless.",
       "prerequisite": "Start with Circular motion and orbits in Module 3: this lab compares curved-spacetime paths with the Newtonian ellipses you launched there. Know that a model is not the system it represents."
     },
     "/gravity/clock-rates": {
@@ -209,8 +209,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Treat clock rates as ratios, and recall that moving clocks run slow (“Different clocks”)."
     },
     "/cosmology/evolving-space": {
-      "focus": "Space itself can evolve",
-      "idea": "Run model universes forwards and backwards, and relate the scale factor to redshift and the Hubble rate.",
+      "focus": "Connect expansion models to observations",
+      "idea": "Run model universes forwards and backwards, then connect redshift and recession speed to a nearby-galaxy Hubble diagram.",
       "prerequisite": "Understand that distances in a model can change because space expands, not only because objects move through it."
     }
   },
@@ -261,9 +261,9 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Pahami kerangka acuan inersial dan bahwa jam mengukur waktu sepanjang lintasannya sendiri."
     },
     "/relativity/two-perspectives": {
-      "focus": "Keserentakan bergantung pada kerangka acuan",
-      "idea": "Bandingkan peristiwa mana yang serentak bagi pengamat yang bergerak relatif.",
-      "prerequisite": "Pelajari kembali transformasi posisi dan waktu antar-pengamat; jam berjauhan memerlukan sinkronisasi."
+      "focus": "Bandingkan pengukuran antar-kerangka yang bergerak",
+      "idea": "Uji keserentakan yang bergantung pada kerangka, jumlahkan kecepatan segaris secara relativistik, dan amati mengapa momentum meningkat tajam saat mendekati kecepatan cahaya.",
+      "prerequisite": "Pelajari kembali transformasi posisi dan waktu antar-pengamat; jam berjauhan memerlukan sinkronisasi. Pahami bahwa penjumlahan kecepatan dan momentum relativistik menyempurnakan aturan Newton pada kelajuan tinggi."
     },
     "/relativity/length-contraction": {
       "focus": "Ukur benda bergerak secara konsisten",
@@ -271,8 +271,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Pengukuran panjang memerlukan posisi kedua ujung yang serentak dalam kerangka pengukur."
     },
     "/gravity/geodesic-motion": {
-      "focus": "Gravitasi mengubah geometri gerak",
-      "idea": "Bandingkan orbit Newton dengan lintasan jatuh bebas dalam model ruang-waktu melengkung.",
+      "focus": "Jatuh bebas memperlihatkan prinsip kesetaraan lokal",
+      "idea": "Bandingkan orbit Newton dengan lintasan ruang-waktu melengkung, lalu uji mengapa laboratorium kecil yang jatuh bebas terasa tanpa berat secara lokal.",
       "prerequisite": "Mulailah dengan Gerak melingkar dan orbit di Modul 3: laboratorium ini membandingkan lintasan dalam ruang-waktu melengkung dengan elips Newton yang Anda luncurkan di sana. Pahami bahwa model bukanlah sistem yang diwakilinya."
     },
     "/gravity/clock-rates": {
@@ -281,8 +281,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Pahami laju jam sebagai rasio, dan ingat bahwa jam yang bergerak berjalan lambat (eksperimen “Jam berbeda”)."
     },
     "/cosmology/evolving-space": {
-      "focus": "Ruang itu sendiri dapat berevolusi",
-      "idea": "Jalankan model alam semesta maju dan mundur, lalu hubungkan faktor skala dengan pergeseran merah dan laju Hubble.",
+      "focus": "Hubungkan model ekspansi dengan pengamatan",
+      "idea": "Jalankan model alam semesta maju dan mundur, lalu hubungkan pergeseran merah dan kecepatan menjauh dengan diagram Hubble galaksi dekat.",
       "prerequisite": "Pahami bahwa jarak dalam model dapat berubah karena ruang mengembang, bukan hanya karena benda bergerak melewatinya."
     }
   },
@@ -333,9 +333,9 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "慣性系と、時計が自身の経路に沿って時間を測ることを理解しましょう。"
     },
     "/relativity/two-perspectives": {
-      "focus": "同時性は基準系に依存する",
-      "idea": "相対運動する観測者にとって、どの事象が同時かを比較します。",
-      "prerequisite": "観測者間の位置と時間の変換を復習しましょう。離れた時計には同期の手順が必要です。"
+      "focus": "動く基準系の測定を比べる",
+      "idea": "基準系によって異なる同時性を調べ、同一直線上の速度を合成し、光速に近づくと運動量が急増する理由を確かめます。",
+      "prerequisite": "観測者間の位置と時間の変換を復習しましょう。離れた時計には同期の手順が必要です。高速では相対論的速度合成と運動量がニュートン力学の規則を修正することを理解しておきます。"
     },
     "/relativity/length-contraction": {
       "focus": "運動する物体を一貫して測る",
@@ -343,8 +343,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "長さの測定には、測定する基準系で両端の位置を同時に記録する必要があります。"
     },
     "/gravity/geodesic-motion": {
-      "focus": "重力は運動の幾何を変える",
-      "idea": "ニュートン力学の軌道と、曲がった時空モデルでの自由落下経路を比較します。",
+      "focus": "自由落下から局所的な等価原理を考える",
+      "idea": "ニュートン力学の軌道と曲がった時空の経路を比較し、小さな自由落下実験室で局所的に無重量となる理由を確かめます。", 
       "prerequisite": "まずモジュール3の「円運動と軌道」に取り組みましょう。この実験室では、そこで打ち上げたニュートン力学の楕円と、曲がった時空での経路を比べます。モデルと、それが表す物理系とは別物であることも理解しておきましょう。"
     },
     "/gravity/clock-rates": {
@@ -353,8 +353,8 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "時計の進み方を比として扱えるようにし、動く時計が遅れること（「異なる時計」の実験）を思い出しましょう。"
     },
     "/cosmology/evolving-space": {
-      "focus": "空間そのものが変化しうる",
-      "idea": "モデル宇宙を未来と過去へ進め、スケール因子を赤方偏移やハッブル率と結び付けます。",
+      "focus": "膨張モデルを観測と結び付ける",
+      "idea": "モデル宇宙を未来と過去へ進め、赤方偏移や後退速度を近傍銀河のハッブル図と結び付けます。", 
       "prerequisite": "モデルの中の距離は、物体が空間を移動するからだけでなく、空間が膨張するからも変わりうることを理解しておきましょう。"
     }
   }
