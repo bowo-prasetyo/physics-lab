@@ -12,6 +12,8 @@
  * advantage here; RK4's high accuracy does.
  */
 
+import { EARTH_SURFACE_GRAVITY } from './gravity'
+
 export interface LaunchParams {
   /** Launch speed (m/s). */
   readonly speed: number
@@ -43,7 +45,7 @@ export interface Planet {
 }
 
 export const PLANETS: readonly Planet[] = [
-  { id: 'earth', name: 'Earth', g: 9.81, airDensity: 1.225 },
+  { id: 'earth', name: 'Earth', g: EARTH_SURFACE_GRAVITY, airDensity: 1.225 },
   { id: 'moon', name: 'Moon', g: 1.62, airDensity: 0 },
   { id: 'mars', name: 'Mars', g: 3.71, airDensity: 0.02 },
   // Jupiter has no solid surface; values are for its cloud tops, where the pressure is about 1 bar.

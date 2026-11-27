@@ -14,6 +14,7 @@ import { localizePredictions } from '@/i18n/experiment-content'
 import { experimentSectionLabel, getExperimentModuleEyebrow } from '@/i18n/experiment-metadata'
 import { atLeast, isLevel } from '@/levels'
 import { calculateForceLab, type ForceLabResult, type ForceLabScenario } from '@/physics/forceLab'
+import { workOnForceLabBlock } from '@/physics/energy'
 import { localizeForceLabText } from './copy'
 import { PREDICTIONS, type ForceTrial } from './predictions'
 
@@ -83,6 +84,8 @@ const setupKey = computed(() => [scenario.value, mass.value, appliedForce.value,
 const lastRunKey = ref<string | null>(null)
 const shown = computed<ForceLabResult | null>(() => (lastRunKey.value === setupKey.value ? result.value : null))
 const trials = ref<ForceTrial[]>([])
+// Work done by each force during the trial; net work equals the kinetic energy gained from rest.
+const work = computed(() => (shown.value ? workOnForceLabBlock(shown.value, mass.value) : null))
 
 function runTrial() {
   const r = result.value
@@ -98,6 +101,8 @@ function runTrial() {
     normalForce: r.normalForce,
     netForce: r.netForce,
     acceleration: r.acceleration,
+    displacement: r.displacement,
+    frictionWork: workOnForceLabBlock(r, mass.value).friction,
   }]
   lastRunKey.value = setupKey.value
 }
@@ -219,6 +224,18 @@ const surfaceLabel = (s: ForceLabScenario) => tx(s === 'horizontal' ? 'Horizonta
               <div><span>{{ tx('Displacement after') }} {{ duration }} s</span><strong>{{ fmt(shown.displacement) }} m</strong></div>
             </div>
             <p class="small muted">{{ tx('Positive values point up the slope or to the right. Negative values point down the slope or to the left.') }}</p>
+            <div v-if="work" class="energy" aria-live="polite">
+              <h3>{{ tx('Work and energy in this trial') }}</h3>
+              <div class="readout-grid">
+                <div><span>{{ tx('Work by the push') }}</span><strong>{{ fmt(work.applied, 1) }} J</strong></div>
+                <div><span>{{ tx('Work by friction') }}</span><strong>{{ fmt(work.friction, 1) }} J</strong></div>
+                <div v-if="scenario === 'incline'"><span>{{ tx('Work by gravity') }}</span><strong>{{ fmt(work.gravity, 1) }} J</strong></div>
+                <div><span>{{ tx('Work by the normal force') }}</span><strong>{{ fmt(work.normal, 1) }} J</strong></div>
+                <div><span>{{ tx('Net work') }}</span><strong>{{ fmt(work.net, 1) }} J</strong></div>
+                <div><span>{{ tx('Kinetic energy gained, ½mv²') }}</span><strong>{{ fmt(work.finalKineticEnergy, 1) }} J</strong></div>
+              </div>
+              <p class="small muted">{{ tx('Work is the force along the motion times the distance moved. A force against the motion does negative work. The net work always equals the kinetic energy gained.') }}</p>
+            </div>
           </template>
           <p v-else class="pending">{{ tx('Run this trial to see every force on the block, the friction regime and the acceleration.') }}</p>
 
@@ -269,6 +286,8 @@ const surfaceLabel = (s: ForceLabScenario) => tx(s === 'horizontal' ? 'Horizonta
         <h2 id="maths-title"><span class="step-no">3</span> {{ experimentSectionLabel('mathematics', locale) }}</h2>
         <p>{{ tx('Beginner: balanced forces cancel. Static friction can take any value needed for rest, up to its maximum. If the tendency to slide exceeds that maximum, kinetic friction acts while the block slides.') }}</p>
         <MathFormula tex="F_{net} = ma, \qquad f_s \le f_{s,\max}" :display="true" />
+        <p>{{ tx('Work and energy: each force does work equal to its component along the motion times the distance moved. Their sum, the net work, is the kinetic energy the block gains.') }}</p>
+        <MathFormula tex="W = F_{\parallel}\,d, \qquad W_{net} = \Delta K = \tfrac12 m v^2" :display="true" />
         <p v-if="atLeast(level, 'intermediate')">{{ tx('Intermediate: resolve each force into components parallel and perpendicular to the surface, then compare the tangential tendency with the maximum static friction.') }}</p>
         <MathFormula v-if="atLeast(level, 'intermediate')" tex="f_s\leq\mu_s N,\qquad f_{s,\max}=\mu_s N" :display="true" />
         <MathFormula v-if="atLeast(level, 'intermediate')" tex="\begin{gathered} f_k=\mu_k N \\ \sum F_x=F_{app}-mg\sin\theta+F_{fr,x}=ma_x \end{gathered}" :display="true" />
@@ -326,6 +345,8 @@ const surfaceLabel = (s: ForceLabScenario) => tx(s === 'horizontal' ? 'Horizonta
 </template>
 
 <style scoped>
+.energy { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+.energy h3 { margin: 0 0 8px; font-size: 1rem; }
 .lab { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
 .lab-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .lab-side { display: grid; align-content: start; gap: 14px; }

@@ -13,7 +13,7 @@ import { atLeast, isLevel } from '@/levels'
 import { localizePredictions } from '@/i18n/experiment-content'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import {
-  EARTH_GM, EARTH_RADIUS, centripetalAcceleration, escapeSpeed, gravitationalAcceleration, launchOrbit,
+  EARTH_GM, EARTH_RADIUS, centripetalAcceleration, escapeSpeed, gravitationalAcceleration, launchOrbit, orbitEnergyAt,
   type OrbitOutcome, type OrbitResult,
 } from '@/physics'
 import { localizeCircularOrbitsText } from './copy'
@@ -89,6 +89,15 @@ const earthRadii = (metres: number) => `${(metres / EARTH_RADIUS).toFixed(2)} R�
 const hours = (seconds: number | null | undefined) => (seconds == null ? '—' : `${(seconds / 3600).toFixed(2)} h`)
 const needed = computed(() => (shown.value ? centripetalAcceleration(shown.value.orbit.speed, shown.value.radius * EARTH_RADIUS) : 0))
 const gravity = computed(() => (shown.value ? gravitationalAcceleration(EARTH_GM, shown.value.radius * EARTH_RADIUS) : 0))
+// Energy per kilogram at the closest and (for bound orbits) farthest points: the total is the same at both.
+const energyPoints = computed(() => {
+  const s = shown.value
+  if (!s || s.orbit.outcome === 'crash') return null
+  const closest = orbitEnergyAt(EARTH_GM, s.orbit.minRadius, s.orbit.energy)
+  const farthest = Number.isFinite(s.orbit.maxRadius) ? orbitEnergyAt(EARTH_GM, s.orbit.maxRadius, s.orbit.energy) : null
+  return { closest, farthest }
+})
+const mj = (joulesPerKg: number) => (joulesPerKg / 1e6).toFixed(2)
 </script>
 
 <template>
@@ -157,11 +166,21 @@ const gravity = computed(() => (shown.value ? gravitationalAcceleration(EARTH_GM
             </template>
             <template v-if="advanced">
               <div><span>{{ tx('Escape speed here') }}</span><strong>{{ km(escapeSpeed(EARTH_GM, shown.radius * EARTH_RADIUS)) }}</strong></div>
-              <div><span>{{ tx('Energy per kilogram, v²/2 − GM/r') }}</span><strong>{{ (shown.orbit.energy / 1e6).toFixed(2) }} MJ/kg</strong></div>
               <div><span>{{ tx('Eccentricity') }}</span><strong>{{ shown.orbit.eccentricity.toFixed(3) }}</strong></div>
             </template>
           </div>
-          <p v-else class="pending">{{ tx('Launch the satellite to see its path, the accelerations and the period.') }}</p>
+          <div v-if="shown && intermediate && energyPoints" class="energy-table">
+            <table>
+              <caption>{{ tx('Energy per kilogram (MJ/kg), with zero potential energy far away') }}</caption>
+              <thead><tr><th scope="col"></th><th scope="col">{{ tx('Closest point') }}</th><th v-if="energyPoints.farthest" scope="col">{{ tx('Farthest point') }}</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">{{ tx('Kinetic, v²/2') }}</th><td>{{ mj(energyPoints.closest.kinetic) }}</td><td v-if="energyPoints.farthest">{{ mj(energyPoints.farthest.kinetic) }}</td></tr>
+                <tr><th scope="row">{{ tx('Potential, −GM/r') }}</th><td>{{ mj(energyPoints.closest.potential) }}</td><td v-if="energyPoints.farthest">{{ mj(energyPoints.farthest.potential) }}</td></tr>
+                <tr class="total"><th scope="row">{{ tx('Total') }}</th><td>{{ mj(energyPoints.closest.total) }}</td><td v-if="energyPoints.farthest">{{ mj(energyPoints.farthest.total) }}</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p v-if="!shown" class="pending">{{ tx('Launch the satellite to see its path, the accelerations and the period.') }}</p>
           <p class="small muted">{{ tx('Arrows show directions at the launch point; they are not to scale. The Earth and the orbit are drawn to scale.') }}</p>
         </div>
         <aside class="card controls">
@@ -270,6 +289,12 @@ const gravity = computed(() => (shown.value ? gravitationalAcceleration(EARTH_GM
 .readouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 14px 0; }
 .readouts div { padding: 10px; border-radius: 8px; background: var(--surface-2); }
 .readouts .wide { grid-column: 1 / -1; }
+.energy-table { margin: 0 0 14px; overflow-x: auto; }
+.energy-table table { font-size: .88rem; }
+.energy-table caption { margin-bottom: 4px; color: var(--text-muted); text-align: left; font-size: .8rem; }
+.energy-table th, .energy-table td { padding: 4px 10px; border-bottom: 1px solid var(--border); text-align: right; }
+.energy-table th[scope=row] { text-align: left; color: var(--text-muted); font-weight: 600; }
+.energy-table .total td, .energy-table .total th { font-weight: 700; color: var(--text); }
 .readouts span, .readouts strong { display: block; }
 .readouts span { color: var(--text-muted); font-size: .78rem; }
 .readouts strong { margin-top: 4px; font-variant-numeric: tabular-nums; }

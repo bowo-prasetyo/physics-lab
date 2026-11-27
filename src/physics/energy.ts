@@ -1,7 +1,15 @@
 /**
  * Work and mechanical energy for Newtonian mechanics (SI units).
  * Work is signed; potential energy is defined relative to an explicit zero.
+ *
+ * The Force Lab uses workOnForceLabBlock to show the work done by each force
+ * and the block's kinetic energy; Circular motion and orbits uses
+ * orbitEnergyAt (in circularOrbits.ts) for kinetic and potential energy along
+ * an orbit.
  */
+import type { ForceLabResult } from './forceLab'
+import { EARTH_SURFACE_GRAVITY } from './gravity'
+
 function finite(name: string, value: number): void {
   if (!Number.isFinite(value)) throw new RangeError(`${name} must be finite`)
 }
@@ -16,19 +24,10 @@ export function workByConstantForce(force: number, displacement: number, angleDe
   return force * displacement * Math.cos(angleDeg * Math.PI / 180)
 }
 /** Near a planet's surface, with height measured from the chosen zero level. */
-export function gravitationalPotentialEnergy(mass: number, height: number, g = 9.81): number {
+export function gravitationalPotentialEnergy(mass: number, height: number, g = EARTH_SURFACE_GRAVITY): number {
   finite('mass', mass); finite('height', height); finite('g', g)
   if (mass <= 0 || g < 0) throw new RangeError('Mass must be positive and g cannot be negative')
   return mass * g * height
-}
-/** Newtonian gravitational potential energy, zero at infinite separation. */
-export function universalGravitationalPotentialEnergy(mass: number, centralMass: number, radius: number, gravitationalConstant = 6.6743e-11): number {
-  for (const [name, value] of Object.entries({ mass, centralMass, radius, gravitationalConstant })) finite(name, value)
-  if (mass <= 0 || centralMass <= 0 || radius <= 0 || gravitationalConstant <= 0) throw new RangeError('Masses, radius and G must be positive')
-  return -gravitationalConstant * centralMass * mass / radius
-}
-export function mechanicalEnergy(mass: number, speed: number, height: number, g = 9.81): number {
-  return kineticEnergy(mass, speed) + gravitationalPotentialEnergy(mass, height, g)
 }
 export interface WorkEnergyResult {
   readonly initialKineticEnergy: number
@@ -47,9 +46,34 @@ export function applyWorkEnergyTheorem(mass: number, initialSpeed: number, works
   const finalKineticEnergy = Math.max(0, rawFinal)
   return { initialKineticEnergy, netWork, finalKineticEnergy, finalSpeed: Math.sqrt(2 * finalKineticEnergy / mass) }
 }
-/** Specific total energy of a circular Newtonian orbit: ε = −GM/(2r), in J/kg. */
-export function circularOrbitSpecificEnergy(centralMass: number, radius: number, gravitationalConstant = 6.6743e-11): number {
-  for (const [name, value] of Object.entries({ centralMass, radius, gravitationalConstant })) finite(name, value)
-  if (centralMass <= 0 || radius <= 0 || gravitationalConstant <= 0) throw new RangeError('Mass, radius and G must be positive')
-  return -(gravitationalConstant * centralMass) / (2 * radius)
+
+/** The work done by each force on the Force Lab block during one trial (J). */
+export interface ForceLabWork {
+  readonly applied: number
+  readonly friction: number
+  /** Work by the weight's component along the slope: −(change in gravitational potential energy). */
+  readonly gravity: number
+  /** The normal force is perpendicular to the motion, so it does no work. */
+  readonly normal: number
+  readonly net: number
+  /** Kinetic energy at the end of the trial. The block starts from rest, so this is also the change. */
+  readonly finalKineticEnergy: number
+}
+
+/**
+ * Work by each force over the block's displacement in one Force Lab trial.
+ * The forces are constant and parallel to the surface, so each does work
+ * F·d along it, and the net work equals the final kinetic energy (from rest).
+ */
+export function workOnForceLabBlock(result: ForceLabResult, mass: number): ForceLabWork {
+  const along = (id: string) => result.forces.find((f) => f.id === id)?.x ?? 0
+  const d = result.displacement
+  const applied = along('applied') * d
+  const friction = along('friction') * d
+  const gravity = along('weight-parallel') * d
+  return {
+    applied, friction, gravity, normal: 0,
+    net: applied + friction + gravity,
+    finalKineticEnergy: kineticEnergy(mass, result.velocity),
+  }
 }

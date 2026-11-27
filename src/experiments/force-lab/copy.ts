@@ -1,6 +1,16 @@
 import type { Locale } from '@/i18n/locales'
 
 const copy: Record<string, readonly [string, string]> = {
+  "Work and energy in this trial": ["Usaha dan energi dalam percobaan ini", "この試行での仕事とエネルギー"],
+  "Work by the push": ["Usaha oleh dorongan", "押す力がした仕事"],
+  "Work by friction": ["Usaha oleh gesekan", "摩擦力がした仕事"],
+  "Work by gravity": ["Usaha oleh gravitasi", "重力がした仕事"],
+  "Work by the normal force": ["Usaha oleh gaya normal", "垂直抗力がした仕事"],
+  "Net work": ["Usaha total", "合計の仕事"],
+  "Kinetic energy gained, ½mv²": ["Energi kinetik yang diperoleh, ½mv²", "得た運動エネルギー ½mv²"],
+  "Work is the force along the motion times the distance moved. A force against the motion does negative work. The net work always equals the kinetic energy gained.": ["Usaha adalah gaya searah gerak dikalikan jarak yang ditempuh. Gaya yang berlawanan arah gerak melakukan usaha negatif. Usaha total selalu sama dengan energi kinetik yang diperoleh.", "仕事は、運動方向の力に移動距離を掛けたものです。運動と逆向きの力は負の仕事をします。合計の仕事は常に、得た運動エネルギーに等しくなります。"],
+  "Work and energy: each force does work equal to its component along the motion times the distance moved. Their sum, the net work, is the kinetic energy the block gains.": ["Usaha dan energi: setiap gaya melakukan usaha sebesar komponennya searah gerak dikalikan jarak yang ditempuh. Jumlahnya, yaitu usaha total, adalah energi kinetik yang diperoleh balok.", "仕事とエネルギー：それぞれの力は、運動方向の成分に移動距離を掛けた仕事をします。その和である合計の仕事が、ブロックの得る運動エネルギーです。"],
+  "The block stayed at rest, so no force did any work. Push harder than the maximum static friction.": ["Balok tetap diam, sehingga tidak ada gaya yang melakukan usaha. Dorong lebih kuat daripada gesekan statis maksimum.", "ブロックは静止したままなので、どの力も仕事をしていません。最大静止摩擦力より強く押しましょう。"],
   'Force Lab: free-body diagrams and multiple forces': ['Laboratorium Gaya: diagram benda bebas dan beberapa gaya', '力の実験室：自由物体図と複数の力'],
   'A push is only one part of the story. Draw every force on a block, find their vector sum, and predict how its motion changes.': ['Dorongan hanyalah sebagian dari cerita. Gambarkan setiap gaya pada balok, hitung jumlah vektornya, lalu prediksi perubahan geraknya.', '押す力だけがすべてではありません。ブロックに働くすべての力を図示し、ベクトル和を求め、運動の変化を予測しましょう。'],
   'Before running the model, predict the direction of the block’s acceleration along the surface.': ['Sebelum menjalankan model, prediksikan arah percepatan balok sepanjang permukaan.', 'モデルを実行する前に、面に沿ったブロックの加速度の向きを予測してください。'],

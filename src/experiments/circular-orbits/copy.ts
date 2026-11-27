@@ -2,6 +2,13 @@ import type { Locale } from '@/i18n/locales'
 
 /** Indonesian and Japanese text for the Circular motion and orbits page, keyed by the English. */
 const copy: Record<string, readonly [string, string]> = {
+  "Energy per kilogram (MJ/kg), with zero potential energy far away": ["Energi per kilogram (MJ/kg), dengan energi potensial nol di tempat yang sangat jauh", "1 kgあたりのエネルギー（MJ/kg）。無限遠で位置エネルギーをゼロとする"],
+  "Closest point": ["Titik terdekat", "最も近い点"],
+  "Farthest point": ["Titik terjauh", "最も遠い点"],
+  "Kinetic, v²/2": ["Kinetik, v²/2", "運動エネルギー v²/2"],
+  "Potential, −GM/r": ["Potensial, −GM/r", "位置エネルギー −GM/r"],
+  "Total": ["Jumlah", "合計"],
+  "Launch an orbit that is neither a circle nor an escape, for example 1.2 × circular speed.": ["Luncurkan orbit yang bukan lingkaran dan tidak lepas, misalnya 1,2 × kelajuan orbit lingkaran.", "円でも脱出でもない軌道を打ち上げましょう。たとえば 1.2 × 円軌道の速さです。"],
   'Circular motion and orbits: Newton’s cannonball': ['Gerak melingkar dan orbit: meriam Newton', '円運動と軌道：ニュートンの大砲'],
   'Launch a satellite sideways from above the Earth. Too slow and it falls back; fast enough and it keeps falling round the planet. Find the speed for a circle, and see what gravity has to do to keep it there.': ['Luncurkan satelit ke samping dari atas Bumi. Terlalu lambat, satelit jatuh kembali; cukup cepat, satelit terus jatuh mengitari planet. Temukan kelajuan untuk orbit lingkaran, dan lihat apa yang harus dilakukan gravitasi agar satelit tetap di sana.', '地球の上空から人工衛星を横向きに打ち出します。遅すぎると落ちてきますが、十分に速ければ地球の周りを落ち続けます。円軌道になる速さを見つけ、衛星をそこにとどめるために重力が何をしなければならないかを確かめましょう。'],
   'Commit to an answer first. Each explanation unlocks only after you have made the launch that tests it.': ['Tentukan jawaban terlebih dahulu. Setiap penjelasan baru terbuka setelah Anda melakukan peluncuran yang mengujinya.', 'まず答えを決めましょう。各説明は、それを確かめる打ち上げを行った後にだけ表示されます。'],
@@ -23,7 +30,6 @@ const copy: Record<string, readonly [string, string]> = {
   'Closest distance': ['Jarak terdekat', '最も近い距離'],
   'Farthest distance': ['Jarak terjauh', '最も遠い距離'],
   'Escape speed here': ['Kelajuan lepas di sini', 'ここでの脱出速度'],
-  'Energy per kilogram, v²/2 − GM/r': ['Energi per kilogram, v²/2 − GM/r', '1 kgあたりのエネルギー v²/2 − GM/r'],
   'Eccentricity': ['Eksentrisitas', '離心率'],
   'Launch the satellite to see its path, the accelerations and the period.': ['Luncurkan satelit untuk melihat lintasannya, percepatannya, dan periodenya.', '衛星を打ち上げると、経路、加速度、周期が表示されます。'],
   'Arrows show directions at the launch point; they are not to scale. The Earth and the orbit are drawn to scale.': ['Panah menunjukkan arah di titik peluncuran; panjangnya tidak berskala. Bumi dan orbit digambar sesuai skala.', '矢印は打ち上げ地点での向きを示し、長さは縮尺どおりではありません。地球と軌道は縮尺どおりに描かれています。'],

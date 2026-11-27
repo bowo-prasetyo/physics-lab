@@ -4,9 +4,9 @@ import { IMPLEMENTED_EXPERIMENTS, MODULES } from '@/modules'
 import { router } from '@/router'
 import { SUPPORTED_LOCALES } from '@/i18n/locales'
 import {
-  applyWorkEnergyTheorem, calculateForceLab, calculateLengthContraction, calculateMomentumCollision, circularOrbitSpecificEnergy, exactPeriod, exactRange, gamma,
+  applyWorkEnergyTheorem, calculateForceLab, calculateLengthContraction, calculateMomentumCollision, exactPeriod, exactRange, gamma,
   gpsBreakdown, intervalSquared, KM_S_MPC_PER_GYR, lorentzBoost, schwarzschildRadius, smallAnglePeriod,
-  SOLAR_MASS, vec3, vectorInFrame, weakFieldShift, BODIES, SECONDS_PER_DAY, centripetalAcceleration, circularSpeed, EARTH_GM, workByConstantForce,
+  SOLAR_MASS, vec3, vectorInFrame, weakFieldShift, BODIES, SECONDS_PER_DAY, centripetalAcceleration, circularSpeed, EARTH_GM, EARTH_RADIUS, launchOrbit, workByConstantForce,
 } from '@/physics'
 import { PROBLEM_COPY, PROBLEM_SOURCES, RELATIVE_TOLERANCE, isNumericallyCorrect, problemsFor } from './problem-bank'
 import { getLearningPath } from './learning-content'
@@ -137,7 +137,7 @@ describe('answers agree with the physics engine', () => {
   it('Module 3: work and mechanical energy', () => {
     const cart = applyWorkEnergyTheorem(10, 2, [workByConstantForce(50, 4), workByConstantForce(10, 4, 180)])
     agrees('work-energy-speed', cart.finalSpeed)
-    agrees('circular-orbit-energy', circularOrbitSpecificEnergy(3.99e14 / 6.6743e-11, 6.77e6, 6.6743e-11) / 1e6)
+    agrees('circular-orbit-energy', launchOrbit({ gm: 3.99e14, planetRadius: EARTH_RADIUS, radius: 6.77e6, speedFactor: 1 }).energy / 1e6)
   })
 
   it('Module 4: special relativity', () => {

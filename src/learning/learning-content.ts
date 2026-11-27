@@ -893,6 +893,28 @@ export const PRACTICE_BANK: readonly PracticeSource[] = [
       "proper"
     ],
     "answer": "shorter"
+  },
+  {
+    "id": "energy-constant-speed",
+    "experiment": "/mechanics/force-lab",
+    "minLevel": "beginner",
+    "options": [
+      "zero",
+      "positive",
+      "negative"
+    ],
+    "answer": "zero"
+  },
+  {
+    "id": "energy-higher-orbit",
+    "experiment": "/mechanics/circular-orbits",
+    "minLevel": "intermediate",
+    "options": [
+      "slower-more",
+      "faster-more",
+      "slower-less"
+    ],
+    "answer": "slower-more"
   }
 ]
 
@@ -1259,6 +1281,26 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "Which object is moving in the crew’s frame? Who has to record both of its ends at the same time?",
       "explanation": "Motion is relative. In the ship’s frame the runway moves, so the crew, recording both ends of the runway at the same time in their frame, measure it as contracted: 100 m/γ. Each frame measures the other’s objects as shorter, and both are right, because they disagree about which events are simultaneous."
+    },
+    "energy-constant-speed": {
+      "prompt": "You drag a box 3 m across the floor at a steady speed. Your pull does positive work and friction does negative work. What is the net work done on the box?",
+      "options": {
+        "zero": "Zero: its speed, and so its kinetic energy, does not change",
+        "positive": "Positive: you are the one doing the work",
+        "negative": "Negative: friction wins in the end"
+      },
+      "hint": "The net work equals the change in kinetic energy. Does the box’s kinetic energy change?",
+      "explanation": "The net work equals the change in kinetic energy, and at steady speed that change is zero. So your pull’s positive work and friction’s negative work are equal in size: everything you put in, friction turns into internal energy of the floor and the box. This is the Force Lab readout with zero acceleration."
+    },
+    "energy-higher-orbit": {
+      "prompt": "A satellite is moved from a low circular orbit to a higher circular orbit. Compared with before, its kinetic energy is… and its total energy is…",
+      "options": {
+        "slower-more": "lower (it moves more slowly); higher (less negative)",
+        "faster-more": "higher (it moves faster); higher",
+        "slower-less": "lower (it moves more slowly); lower (more negative)"
+      },
+      "hint": "For a circular orbit the kinetic energy per kilogram is GM/(2r) and the total is −GM/(2r).",
+      "explanation": "A higher circular orbit is slower, so the kinetic energy GM/(2r) falls. The potential energy −GM/r rises by twice as much, so the total −GM/(2r) rises: it becomes less negative. Raising an orbit therefore needs energy from a rocket, even though the satellite ends up moving more slowly."
     }
   },
   "id": {
@@ -1623,6 +1665,26 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "Benda mana yang bergerak dalam kerangka awak? Siapa yang harus mencatat kedua ujungnya pada saat yang sama?",
       "explanation": "Gerak itu relatif. Dalam kerangka pesawat landasanlah yang bergerak, sehingga awak, yang mencatat kedua ujung landasan pada saat yang sama dalam kerangka mereka, mengukurnya memendek: 100 m/γ. Setiap kerangka mengukur benda milik kerangka lain lebih pendek, dan keduanya benar, karena mereka berbeda pendapat tentang peristiwa mana yang serentak."
+    },
+    "energy-constant-speed": {
+      "prompt": "Anda menarik sebuah kotak sejauh 3 m di lantai dengan kelajuan tetap. Tarikan Anda melakukan usaha positif dan gesekan melakukan usaha negatif. Berapa usaha total pada kotak?",
+      "options": {
+        "zero": "Nol: kelajuannya, dan juga energi kinetiknya, tidak berubah",
+        "positive": "Positif: Andalah yang melakukan usaha",
+        "negative": "Negatif: pada akhirnya gesekan yang menang"
+      },
+      "hint": "Usaha total sama dengan perubahan energi kinetik. Apakah energi kinetik kotak berubah?",
+      "explanation": "Usaha total sama dengan perubahan energi kinetik, dan pada kelajuan tetap perubahan itu nol. Jadi usaha positif tarikan Anda dan usaha negatif gesekan sama besar: semua yang Anda berikan diubah gesekan menjadi energi dalam lantai dan kotak. Inilah tampilan Laboratorium Gaya dengan percepatan nol."
+    },
+    "energy-higher-orbit": {
+      "prompt": "Sebuah satelit dipindahkan dari orbit lingkaran rendah ke orbit lingkaran yang lebih tinggi. Dibandingkan sebelumnya, energi kinetiknya… dan energi totalnya…",
+      "options": {
+        "slower-more": "lebih rendah (bergerak lebih lambat); lebih tinggi (kurang negatif)",
+        "faster-more": "lebih tinggi (bergerak lebih cepat); lebih tinggi",
+        "slower-less": "lebih rendah (bergerak lebih lambat); lebih rendah (lebih negatif)"
+      },
+      "hint": "Untuk orbit lingkaran, energi kinetik per kilogram adalah GM/(2r) dan totalnya −GM/(2r).",
+      "explanation": "Orbit lingkaran yang lebih tinggi lebih lambat, sehingga energi kinetik GM/(2r) turun. Energi potensial −GM/r naik dua kali lebih banyak, sehingga totalnya −GM/(2r) naik: menjadi kurang negatif. Karena itu menaikkan orbit memerlukan energi dari roket, meskipun satelit akhirnya bergerak lebih lambat."
     }
   },
   "ja": {
@@ -1987,6 +2049,26 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "乗組員の座標系で動いているのはどちらですか。両端を同時に記録しなければならないのは誰ですか。",
       "explanation": "運動は相対的です。宇宙船の座標系では滑走路が動いているので、自分たちの座標系で滑走路の両端を同時に記録する乗組員は、それを縮んだ長さ 100 m/γ と測定します。どちらの座標系も相手の物体を短く測定し、どちらも正しいのです。どの事象が同時かについて意見が異なるからです。"
+    },
+    "energy-constant-speed": {
+      "prompt": "箱を一定の速さで床の上を3 m引きずります。あなたの引く力は正の仕事をし、摩擦力は負の仕事をします。箱にされた合計の仕事はいくらですか。",
+      "options": {
+        "zero": "ゼロ。速さ、つまり運動エネルギーが変わらないから",
+        "positive": "正。仕事をしているのはあなただから",
+        "negative": "負。最後は摩擦が勝つから"
+      },
+      "hint": "合計の仕事は運動エネルギーの変化に等しくなります。箱の運動エネルギーは変わりますか。",
+      "explanation": "合計の仕事は運動エネルギーの変化に等しく、一定の速さならその変化はゼロです。つまり、引く力の正の仕事と摩擦力の負の仕事は同じ大きさです。あなたが与えたエネルギーはすべて、摩擦によって床と箱の内部エネルギーに変わります。これは加速度がゼロのときの力の実験室の表示です。"
+    },
+    "energy-higher-orbit": {
+      "prompt": "衛星を低い円軌道からより高い円軌道に移します。以前と比べて、運動エネルギーは…、全エネルギーは…",
+      "options": {
+        "slower-more": "小さくなる（遅くなる）／大きくなる（負の度合いが小さくなる）",
+        "faster-more": "大きくなる（速くなる）／大きくなる",
+        "slower-less": "小さくなる（遅くなる）／小さくなる（より負になる）"
+      },
+      "hint": "円軌道では、1 kgあたりの運動エネルギーは GM/(2r)、全エネルギーは −GM/(2r) です。",
+      "explanation": "高い円軌道ほど遅いので、運動エネルギー GM/(2r) は小さくなります。位置エネルギー −GM/r はその2倍増えるので、全エネルギー −GM/(2r) は大きくなり、負の度合いが小さくなります。そのため、衛星は最終的に遅くなるにもかかわらず、軌道を上げるにはロケットからのエネルギーが必要です。"
     }
   }
 }

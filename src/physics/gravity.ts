@@ -15,6 +15,8 @@ import { SPEED_OF_LIGHT } from './relativity'
 
 /** Newtonian constant of gravitation (m³ kg⁻¹ s⁻²), CODATA 2018. */
 export const G = 6.6743e-11
+/** Gravitational acceleration at the Earth's surface used throughout Physica's near-surface models (m/s²). */
+export const EARTH_SURFACE_GRAVITY = 9.81
 export const SECONDS_PER_DAY = 86_400
 export const SOLAR_MASS = 1.98847e30
 

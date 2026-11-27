@@ -164,3 +164,25 @@ function surfacePoint(theta: number, r: number, planetRadius: number, previous: 
   }
   return { x: planetRadius * Math.cos(hi), y: planetRadius * Math.sin(hi) }
 }
+
+/** Kinetic and potential energy per kilogram at one point of an orbit (J/kg). */
+export interface OrbitEnergy {
+  readonly kinetic: number
+  /** Zero at infinite separation, so always negative. */
+  readonly potential: number
+  readonly total: number
+}
+
+/**
+ * Energy per kilogram at distance r on an orbit of specific energy ε: the
+ * potential is −GM/r and the kinetic is the rest, ε + GM/r. The total stays ε
+ * all the way round (Newtonian gravity conserves mechanical energy), while
+ * kinetic and potential trade off: fastest where closest.
+ */
+export function orbitEnergyAt(gm: number, radius: number, specificEnergy: number): OrbitEnergy {
+  if (!(radius > 0)) throw new RangeError('radius must be positive')
+  const potential = -gm / radius
+  const kinetic = specificEnergy - potential
+  if (kinetic < -1e-9 * Math.abs(potential)) throw new RangeError('this orbit does not reach that radius')
+  return { kinetic: Math.max(0, kinetic), potential, total: specificEnergy }
+}

@@ -11,6 +11,8 @@
  * surface. It does not model the transient during breakaway or changing speed
  * dependent friction.
  */
+import { EARTH_SURFACE_GRAVITY } from './gravity'
+
 export type ForceLabScenario = 'horizontal' | 'incline'
 export type ForceLabFrictionRegime = 'static' | 'kinetic'
 
@@ -58,7 +60,7 @@ export function calculateForceLab(input: ForceLabInput): ForceLabResult {
   finite(input.kineticFrictionCoefficient, 'Kinetic friction coefficient')
   finite(input.inclineAngle, 'Incline angle')
   finite(input.duration, 'Duration')
-  const gravity = input.gravity ?? 9.81
+  const gravity = input.gravity ?? EARTH_SURFACE_GRAVITY
   finite(gravity, 'Gravitational acceleration')
 
   if (input.mass <= 0) throw new RangeError('Mass must be greater than zero.')

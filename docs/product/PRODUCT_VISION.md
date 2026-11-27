@@ -178,7 +178,7 @@ After completing this module, learners should be able to:
 11. Apply the work–energy theorem to determine changes in kinetic energy, and distinguish energy transfer from energy conservation.
 12. Calculate kinetic and gravitational potential energy in near-surface and Newtonian orbital settings, stating the chosen zero of potential energy.
 
-**Current foundation:** Newtonian force, momentum and circular-orbit models establish the everyday reference for the later modules. The learning path now introduces signed work, the work–energy theorem, mechanical-energy conservation, and the energy of a bound circular orbit through Force Lab and Circular motion and orbits. These are focused applications, not a complete survey of energy methods.
+**Current foundation:** Newton's second law (constant net force and mass, one dimension); free-body diagrams with multiple forces, static and kinetic friction and inclined planes (Force Lab); one-dimensional momentum, impulse and elastic/inelastic collisions; projectile motion with Galilean observers and optional quadratic air resistance; uniform circular motion and Newtonian orbits with Kepler's third law, the Newtonian reference for Module 5's geodesics. Work and energy are explored in the experiments: Force Lab shows the work done by each force and the kinetic energy gained in every trial (net work equals ΔK), with a prediction on friction's negative work; Circular motion and orbits shows kinetic and potential energy per kilogram at an orbit's closest and farthest points, with a prediction that the total stays the same. These are focused applications, not a complete survey of energy methods.
 
 ### Module 4 — Special relativity
 
