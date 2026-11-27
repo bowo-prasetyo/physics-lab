@@ -28,6 +28,11 @@ export function observedKepler(runs: readonly LaunchRun[]): boolean {
   return runs.some((a) => circular(a) && runs.some((b) => circular(b) && b.radius >= 1.5 * a.radius))
 }
 
+/** An elliptical orbit, whose closest and farthest points show kinetic and potential energy trading off. */
+export function observedEnergyTrade(runs: readonly LaunchRun[]): boolean {
+  return runs.some((r) => r.outcome === 'ellipse')
+}
+
 /** An escape, and a bound orbit launched at least 1.2 times circular speed, to bracket the threshold. */
 export function observedEscape(runs: readonly LaunchRun[]): boolean {
   return runs.some((r) => r.outcome === 'escape') && runs.some((r) => r.outcome === 'ellipse' && r.speedFactor >= 1.2)
@@ -89,6 +94,22 @@ export const PREDICTIONS: readonly Prediction<LaunchRun>[] = [
       'The path is twice as long, and the circular speed √(GM/r) is lower by √2, so the period T = 2πr/v grows by 2 × √2 ≈ 2.8. In general T² ∝ r³: Kepler’s third law, which Kepler found from planetary data and Newton explained with gravity and circular motion.',
     observed: observedKepler,
     hint: (runs) => (observedCircle(runs) && !observedKepler(runs) ? 'Keep 1.00 × circular speed and change the radius by a factor of at least 1.5.' : null),
+  },
+  {
+    id: 'energy',
+    minLevel: 'intermediate',
+    question: 'On an elliptical orbit the satellite is fastest at its closest point and slowest at its farthest. What happens to its total energy, kinetic plus potential, between those two points?',
+    task: 'Launch an elliptical orbit (for example 1.2 × circular speed) and compare the energy per kilogram at the closest and farthest points.',
+    options: [
+      { id: 'same', label: 'It stays the same: kinetic energy turns into potential energy and back' },
+      { id: 'closest', label: 'It is largest at the closest point, where the satellite moves fastest' },
+      { id: 'farthest', label: 'It is largest at the farthest point, where the satellite is highest' },
+    ],
+    correct: 'same',
+    explanation:
+      'Gravity is the only force on the satellite, and gravity does not waste energy: climbing away, the satellite slows and its kinetic energy becomes potential energy; falling back, it speeds up again. The total stays exactly the same all the way round. With zero potential energy at infinity the total is negative, which is what it means for the satellite to be bound; at zero or above it escapes.',
+    observed: observedEnergyTrade,
+    hint: (runs) => (runs.length > 0 && !observedEnergyTrade(runs) ? 'Launch an orbit that is neither a circle nor an escape, for example 1.2 × circular speed.' : null),
   },
   {
     id: 'escape',

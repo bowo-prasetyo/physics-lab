@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { LEVELS } from '@/levels'
 import type { Prediction } from '@/experiments/prediction'
 import { calculateForceLab, type ForceLabInput } from '@/physics/forceLab'
-import { calculateLengthContraction, calculateMomentumCollision } from '@/physics'
+import { calculateLengthContraction, calculateMomentumCollision, workOnForceLabBlock } from '@/physics'
 import * as force from './force-lab/predictions'
 import * as length from './length-contraction/predictions'
 import * as momentum from './momentum-collisions/predictions'
@@ -19,7 +19,7 @@ function checkBank<Run>(bank: readonly Prediction<Run>[]) {
 function trial(over: Partial<ForceLabInput>): force.ForceTrial {
   const input: ForceLabInput = { scenario: 'horizontal', mass: 5, appliedForce: 30, staticFrictionCoefficient: 0.4, kineticFrictionCoefficient: 0.2, inclineAngle: 0, duration: 2, ...over }
   const r = calculateForceLab(input)
-  return { ...input, frictionRegime: r.frictionRegime, frictionForce: r.frictionForce, normalForce: r.normalForce, netForce: r.netForce, acceleration: r.acceleration }
+  return { ...input, frictionRegime: r.frictionRegime, frictionForce: r.frictionForce, normalForce: r.normalForce, netForce: r.netForce, acceleration: r.acceleration, displacement: r.displacement, frictionWork: workOnForceLabBlock(r, input.mass).friction }
 }
 
 describe('Force Lab predictions', () => {
@@ -31,6 +31,16 @@ describe('Force Lab predictions', () => {
     expect(held.frictionForce).toBeCloseTo(10, 10)
     expect(force.observedHeldAtRest([held])).toBe(true)
     expect(force.observedHeldAtRest([trial({})])).toBe(false)
+  })
+
+  it('friction work is observed only when the block actually slides on the level floor', () => {
+    expect(force.observedFrictionWork([trial({ appliedForce: 10 })])).toBe(false) // held at rest: no work
+    const sliding = trial({})
+    expect(sliding.frictionWork).toBeLessThan(0)
+    expect(force.observedFrictionWork([sliding])).toBe(true)
+    expect(force.observedFrictionWork([trial({ scenario: 'incline', inclineAngle: 30, appliedForce: 0, staticFrictionCoefficient: 0.2, kineticFrictionCoefficient: 0.1 })])).toBe(false)
+    const card = force.PREDICTIONS.find((p) => p.id === 'friction-work')!
+    expect(card.hint!([trial({ appliedForce: 10 })])).toContain('stayed at rest')
   })
 
   it('breakaway needs a held and a sliding trial on the same block and surface', () => {

@@ -20,7 +20,7 @@ npm run build
 
 If you change `src/modules.ts`, regenerate the README catalogue with `npm run docs:catalogue`.
 
-Fill in the pull-request template (`.github/pull_request_template.md`): its product check is the roadmap's decision rules, answered before review.
+Fill in the pull-request template (`.github/pull_request_template.md`): its product check is the roadmap's decision rules, answered before review. The *PR checklist* workflow fails while any box under "Testing" is unticked: tick each box once it is done, and say what you could not check.
 
 ## Product rules
 
@@ -29,6 +29,7 @@ Fill in the pull-request template (`.github/pull_request_template.md`): its prod
 - **One page layout.** Every experiment page has the same sections in the same order; `src/experiments/layout.test.ts` checks it. Copy an existing page such as `src/experiments/circular-orbits/`.
 - **One learning path.** `/learning` follows the catalogue. Never add a second structure, a block outside the steps, or a separate practice area.
 - **Levels add, never hide.** Beginner, Intermediate and Advanced are mathematical depth. A higher level adds questions and problems; no topic is hidden at a lower one.
+- **Honest coverage.** A topic counts as covered only when an experiment lets learners predict and see evidence for it; practice alone is not coverage. `src/coverage-evidence.test.ts` ties claims to the predictions that back them.
 - **Claim nothing unmeasured.** Docs describe what exists and what it is designed to do, never that it improves learning. Practice is not assessment.
 
 ## Where things live

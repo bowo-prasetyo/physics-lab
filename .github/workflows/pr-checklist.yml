@@ -1,0 +1,22 @@
+name: PR checklist
+
+# The pull-request template's "Testing" checklist is only useful if it is done
+# before merging. This check fails while any box under "## Testing" is
+# unticked, and re-runs when the description is edited.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  testing-checklist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Every box under "Testing" is ticked
+        env:
+          # Passed as data, never interpolated into the script.
+          BODY: ${{ github.event.pull_request.body }}
+        run: bash scripts/check-pr-checklist.sh

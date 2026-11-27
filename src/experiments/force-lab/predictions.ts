@@ -15,6 +15,10 @@ export interface ForceTrial {
   readonly normalForce: number
   readonly netForce: number
   readonly acceleration: number
+  /** Displacement along the surface during the trial (m). */
+  readonly displacement: number
+  /** Work done by friction on the block during the trial (J). */
+  readonly frictionWork: number
 }
 
 const close = (a: number, b: number, tolerance = 1e-9) => Math.abs(a - b) <= tolerance
@@ -50,6 +54,11 @@ export function observedMassIndependence(trials: readonly ForceTrial[]): boolean
     a !== b && a.scenario === 'incline' && sameSurface(a, b) &&
     close(a.appliedForce, 0) && close(b.appliedForce, 0) && !close(a.mass, b.mass),
   ))
+}
+
+/** The block slid along the level surface, so friction did work on it. */
+export function observedFrictionWork(trials: readonly ForceTrial[]): boolean {
+  return trials.some((t) => t.scenario === 'horizontal' && t.frictionRegime === 'kinetic' && Math.abs(t.displacement) > 0.01)
 }
 
 export const PREDICTIONS: readonly Prediction<ForceTrial>[] = [
@@ -96,6 +105,27 @@ export const PREDICTIONS: readonly Prediction<ForceTrial>[] = [
       if (trials.some((t) => t.frictionRegime === 'kinetic')) return 'Now lower only the push until static friction holds the block, and run again.'
       return null
     },
+  },
+  {
+    id: 'friction-work',
+    minLevel: 'beginner',
+    question: 'The block slides along the level floor while kinetic friction acts on it. What work does friction do on the block?',
+    task: 'On the horizontal surface, push hard enough for the block to slide, run the trial, and read the work done by each force.',
+    options: [
+      { id: 'negative', label: 'Negative work: friction points against the motion, so it takes kinetic energy away' },
+      { id: 'positive', label: 'Positive work: friction is a force, and forces do positive work' },
+      { id: 'zero', label: 'No work: friction does not make the block move' },
+    ],
+    correct: 'negative',
+    explanation:
+      'Work is the force along the motion times the distance moved. Friction points backwards while the block moves forwards, so its work is negative: it takes kinetic energy away and turns it into internal energy of the surfaces. The push does positive work, and the normal force, at right angles to the motion, does none. Add up the work of every force and you get exactly the kinetic energy the block gains: W_net = ΔK.',
+    observed: observedFrictionWork,
+    hint: (trials) =>
+      observedFrictionWork(trials)
+        ? null
+        : trials.some((t) => t.scenario === 'horizontal' && t.frictionRegime === 'static')
+          ? 'The block stayed at rest, so no force did any work. Push harder than the maximum static friction.'
+          : null,
   },
   {
     id: 'incline-normal',
