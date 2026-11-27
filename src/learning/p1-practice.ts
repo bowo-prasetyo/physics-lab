@@ -20,7 +20,7 @@ export const P1_GRAPHS: Readonly<Record<string, PracticeGraph>> = {
   },
   // A downward-accelerating lift: the scale reads zero in free fall.
   'equivalence-lift': {
-    kind: 'function', x: { max: 9.8, step: 2 }, y: { max: 10, step: 2 },
+    kind: 'function', x: { max: 9.8, step: 2.45 }, y: { max: 9.8, step: 2.45 },
     f: (a) => apparentWeightPerMass(9.8, a),
     table: [0, 2.45, 4.9, 7.35, 9.8],
   },
