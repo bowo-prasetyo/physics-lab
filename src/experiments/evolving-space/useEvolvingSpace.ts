@@ -99,7 +99,13 @@ export interface SpaceSnapshot {
 export interface SpaceRecord {
   readonly runs: readonly SpaceRun[]
   readonly snapshots: readonly SpaceSnapshot[]
+  /** How many galaxies were in the Hubble diagram after each observation. */
+  readonly hubbleCounts?: readonly number[]
 }
+
+/** Galaxies added to the Hubble diagram by one observation, and the most it holds. */
+export const HUBBLE_BATCH = 8
+export const HUBBLE_MAX = 32
 
 export const TARGET_RANGE = { min: 0.5, max: 40, step: 0.5 } as const
 
@@ -116,6 +122,9 @@ export function useEvolvingSpace(initial: { model: ModelId; t?: number; target: 
   const target = ref(initial.target)
   const runs = ref<SpaceRun[]>([])
   const snapshots = ref<SpaceSnapshot[]>([])
+  /** Galaxies observed so far for the Hubble diagram, and the count after each observation. */
+  const galaxiesObserved = ref(0)
+  const hubbleCounts = ref<number[]>([])
   let runStart = t.value
 
   const snapshot = () => {
@@ -148,6 +157,15 @@ export function useEvolvingSpace(initial: { model: ModelId; t?: number; target: 
     stop()
     t.value = clampT(value)
     snapshot()
+  }
+
+  function observeGalaxies() {
+    galaxiesObserved.value = Math.min(HUBBLE_MAX, galaxiesObserved.value + HUBBLE_BATCH)
+    hubbleCounts.value = [...hubbleCounts.value, galaxiesObserved.value]
+  }
+
+  function clearGalaxies() {
+    galaxiesObserved.value = 0
   }
 
   function setHome(id: number) {
@@ -186,7 +204,7 @@ export function useEvolvingSpace(initial: { model: ModelId; t?: number; target: 
     return onset === null ? null : expansion.value.timeAt(onset)
   })
 
-  const record = computed<SpaceRecord>(() => ({ runs: runs.value, snapshots: snapshots.value }))
+  const record = computed<SpaceRecord>(() => ({ runs: runs.value, snapshots: snapshots.value, hubbleCounts: hubbleCounts.value }))
 
   return {
     model,
@@ -204,5 +222,8 @@ export function useEvolvingSpace(initial: { model: ModelId; t?: number; target: 
     stop,
     setTime,
     setHome,
+    galaxiesObserved,
+    observeGalaxies,
+    clearGalaxies,
   }
 }

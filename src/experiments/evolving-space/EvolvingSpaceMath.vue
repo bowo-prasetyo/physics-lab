@@ -95,6 +95,11 @@ const hubbleTime = computed(() => 1 / hubbleRateToday(props.cosmology))
         {{ tx('Here') }} <MathFormula tex="v = H d" /> {{ tx('is the rate of change of proper distance on constant-cosmic-time slices (the recession rate), not a local measurement of a galaxy moving past a nearby observer. Beyond the') }} <strong>{{ tx('Hubble distance') }}</strong> <MathFormula tex="c/H" />, {{ tx('this rate can exceed') }} <MathFormula tex="c" />. {{ tx('That does not violate relativity: no nearby observer measures a passing galaxy or light signal moving through their local space faster than light.') }}
       </p>
 
+      <h3>{{ tx('Estimating H₀ from a Hubble diagram') }}</h3>
+      <p>{{ tx('The best straight line through the origin minimises the squared differences between measured and predicted speeds. Its slope and uncertainty are') }}</p>
+      <MathFormula display tex="\hat H_0 = \frac{\sum_i v_i\,d_i}{\sum_i d_i^2}, \qquad \sigma_{\hat H_0} = \sqrt{\frac{\sum_i (v_i - \hat H_0 d_i)^2}{(N - 1)\sum_i d_i^2}}" />
+      <p>{{ tx('With N galaxies of similar scatter the uncertainty falls roughly as 1/√N. Errors in the measured distances also bias the slope slightly low, by about their fractional variance.') }}</p>
+
       <h3>{{ tx('The Friedmann equation') }}</h3>
       <p>{{ tx('General relativity relates the expansion rate to what the universe contains:') }}</p>
       <MathFormula display tex="H^2 = H_0^2\left(\Omega_r\,a^{-4} + \Omega_m\,a^{-3} + \Omega_k\,a^{-2} + \Omega_\Lambda\right)" />
@@ -116,6 +121,11 @@ const hubbleTime = computed(() => 1 / hubbleRateToday(props.cosmology))
       <p>
         {{ tx('In the ADM 3 + 1 language of “Space and time versus spacetime” and “Gravity and clock rates”: the lapse is') }} <MathFormula tex="N = 1" />, {{ tx('the shift is zero, and the spatial metric is') }} <MathFormula tex="g_{ij} = a(t)^2\,\gamma_{ij}^{(k)}" />. {{ tx('Clocks of all comoving galaxies tick at the same rate; the spatial geometry may be flat, positively curved, or negatively curved.') }}
       </p>
+
+      <h3>{{ tx('Estimating H₀ from a Hubble diagram') }}</h3>
+      <p>{{ tx('The best straight line through the origin minimises the squared differences between measured and predicted speeds. Its slope and uncertainty are') }}</p>
+      <MathFormula display tex="\hat H_0 = \frac{\sum_i v_i\,d_i}{\sum_i d_i^2}, \qquad \sigma_{\hat H_0} = \sqrt{\frac{\sum_i (v_i - \hat H_0 d_i)^2}{(N - 1)\sum_i d_i^2}}" />
+      <p>{{ tx('With N galaxies of similar scatter the uncertainty falls roughly as 1/√N. Errors in the measured distances also bias the slope slightly low, by about their fractional variance.') }}</p>
 
       <h3>{{ tx('The age of the universe') }}</h3>
       <MathFormula display tex="t_0 = \int_0^1 \frac{da}{a\,H(a)}" />

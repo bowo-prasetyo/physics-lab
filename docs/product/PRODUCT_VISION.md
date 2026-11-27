@@ -214,7 +214,7 @@ After completing this module, learners should be able to:
 5. Explain how the contents of a model universe affect whether expansion accelerates or decelerates.
 6. Identify where a classical cosmological model ceases to provide a reliable description, and avoid treating a mathematical boundary as a complete physical account of the earliest universe.
 
-**Current foundation:** numerical FLRW/Friedmann evolution, scale factor, redshift, Hubble quantities, model comparisons, acceleration, and stated limits as the scale factor approaches zero. The experiment is an educational model, not a complete treatment of observational cosmology or the quantum-gravity regime.
+**Current foundation:** numerical FLRW/Friedmann evolution, scale factor, redshift, Hubble quantities, model comparisons, acceleration, stated limits as the scale factor approaches zero, and a Hubble diagram of illustrative nearby galaxies from which learners estimate H₀ and its uncertainty. The experiment is an educational model, not a complete treatment of observational cosmology or the quantum-gravity regime.
 
 ## Related product documents
 

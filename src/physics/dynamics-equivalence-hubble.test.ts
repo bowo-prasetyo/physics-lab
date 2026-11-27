@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { apparentWeightPerMass, hoveringAccelerationFactor, hoveringProperAcceleration } from './equivalence'
 import { G, SOLAR_MASS, schwarzschildRadius, staticClockRate } from './gravity'
-import { hubbleDistance, hubbleVelocity } from './observationalCosmology'
+import { HUBBLE_SAMPLE_SEED, fitHubbleConstant, hubbleDistance, hubbleVelocity, illustrativeHubbleSample } from './observationalCosmology'
 import { relativisticMomentum, relativisticVelocityAddition, stickyCollisionWithIdenticalAtRest } from './relativisticDynamics'
 import { SPEED_OF_LIGHT } from './relativity'
 
@@ -91,5 +91,48 @@ describe('relativistic sticky collision', () => {
     const slow = stickyCollisionWithIdenticalAtRest(1e-4)
     expect(slow.speed / 5e-5).toBeCloseTo(1, 6)
     expect(slow.massRatio).toBeCloseTo(2, 6)
+  })
+})
+
+describe('an illustrative Hubble diagram', () => {
+  const h0 = 67.66
+
+  it('a sample without scatter lies exactly on v = H₀d, and the fit recovers H₀ with no uncertainty', () => {
+    const sample = illustrativeHubbleSample(10, { h0, peculiarSpeed: 0, distanceError: 0 })
+    for (const p of sample) expect(p.speed).toBeCloseTo(hubbleVelocity(h0, p.distance), 9)
+    const fit = fitHubbleConstant(sample)
+    expect(fit.h0).toBeCloseTo(h0, 9)
+    expect(fit.standardError).toBeCloseTo(0, 9)
+  })
+
+  it('is reproducible, and a longer sample extends a shorter one', () => {
+    const a = illustrativeHubbleSample(32, { h0, seed: HUBBLE_SAMPLE_SEED })
+    const b = illustrativeHubbleSample(8, { h0, seed: HUBBLE_SAMPLE_SEED })
+    expect(a.slice(0, 8)).toEqual(b)
+  })
+
+  it('a large sample recovers H₀, apart from the small bias distance errors cause, and the uncertainty shrinks roughly as 1/√N', () => {
+    const big = fitHubbleConstant(illustrativeHubbleSample(4000, { h0, seed: 7 }))
+    // 10 % distance errors bias a least-squares slope low by about σ² = 1 %.
+    expect(big.h0 / h0).toBeGreaterThan(0.97)
+    expect(big.h0 / h0).toBeLessThan(1.005)
+    const exact = fitHubbleConstant(illustrativeHubbleSample(4000, { h0, seed: 7, distanceError: 0 }))
+    expect(Math.abs(exact.h0 - h0)).toBeLessThan(3 * exact.standardError)
+    const small = fitHubbleConstant(illustrativeHubbleSample(40, { h0, seed: 7 }))
+    expect(small.standardError / big.standardError).toBeGreaterThan(5)
+    expect(small.standardError / big.standardError).toBeLessThan(20)
+  })
+
+  it('the lab’s sample: 8 galaxies mislead, 32 settle close to the model value', () => {
+    const sample = illustrativeHubbleSample(32, { h0, seed: HUBBLE_SAMPLE_SEED })
+    const f8 = fitHubbleConstant(sample.slice(0, 8))
+    const f32 = fitHubbleConstant(sample)
+    expect(Math.abs(f8.h0 - h0)).toBeGreaterThan(4)
+    expect(Math.abs(f32.h0 - h0)).toBeLessThan(1.5)
+    expect(f32.standardError).toBeLessThan(0.6 * f8.standardError)
+  })
+
+  it('needs at least two galaxies to fit', () => {
+    expect(() => fitHubbleConstant([{ distance: 10, speed: 700 }])).toThrow(RangeError)
   })
 })

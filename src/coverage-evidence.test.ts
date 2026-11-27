@@ -100,6 +100,7 @@ const EVIDENCE: Readonly<Record<string, Evidence>> = {
   'Redshift and Hubble expansion': [['/cosmology/evolving-space', 'faster']],
   'Matter-, radiation- and dark-energy-dominated model histories': [['/cosmology/evolving-space', 'age']],
   'Accelerating and decelerating expansion': [['/cosmology/evolving-space', 'acceleration']],
+  'The Hubble diagram: estimating H₀ from scattered data': [['/cosmology/evolving-space', 'hubble-diagram'], ['/cosmology/evolving-space', 'estimate']],
 }
 
 /**

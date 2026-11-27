@@ -23,7 +23,33 @@ const span = (r: { tStart: number; tEnd: number }) => Math.abs(r.tEnd - r.tStart
 const merged = (records: readonly SpaceRecord[]): SpaceRecord => ({
   runs: records.flatMap((r) => r.runs),
   snapshots: records.flatMap((r) => r.snapshots),
+  hubbleCounts: records.flatMap((r) => r.hubbleCounts ?? []),
 })
+
+/** Looked at a Hubble diagram of at least 16 galaxies. */
+export function observedHubbleDiagram(record: SpaceRecord): boolean {
+  return (record.hubbleCounts ?? []).some((n) => n >= 16)
+}
+
+export function hubbleDiagramHint(record: SpaceRecord): string | null {
+  if (observedHubbleDiagram(record)) return null
+  if ((record.hubbleCounts ?? []).length > 0) return 'Observe more galaxies: at least 16.'
+  return null
+}
+
+/** Fitted H₀ with 8 galaxies or fewer, and with all 32. */
+export function observedEstimateSettles(record: SpaceRecord): boolean {
+  const counts = record.hubbleCounts ?? []
+  return counts.some((n) => n <= 8) && counts.some((n) => n >= 32)
+}
+
+export function estimateHint(record: SpaceRecord): string | null {
+  if (observedEstimateSettles(record)) return null
+  const counts = record.hubbleCounts ?? []
+  if (counts.some((n) => n >= 32)) return 'Press “Start again”, observe 8 galaxies and read the estimate, then observe all 32 again.'
+  if (counts.length > 0) return 'Keep observing until the diagram holds all 32 galaxies, then compare the estimates.'
+  return null
+}
 
 /** Ran the model for at least 2 Gyr after making another galaxy "home". */
 export function observedNoCentre(record: SpaceRecord): boolean {
@@ -122,6 +148,23 @@ export const PREDICTIONS: readonly Prediction<SpaceRecord>[] = [
     observed: (r) => observedBound(merged(r)),
   },
   {
+    id: 'hubble-diagram',
+    minLevel: 'beginner',
+    question: 'Astronomers measure the distance and the redshift of many nearby galaxies, and plot each galaxy’s recession speed against its distance. What do the points look like?',
+    task: 'Under “Hubble diagram”, observe at least 16 nearby galaxies and look at the pattern.',
+    options: [
+      { id: 'scatter-line', label: 'They scatter around a straight line through the origin' },
+      { id: 'exact-line', label: 'They lie exactly on a straight line' },
+      { id: 'no-pattern', label: 'No clear pattern: galaxies move in all sorts of ways' },
+      { id: 'level-off', label: 'A curve that levels off, because farther galaxies cannot recede any faster' },
+    ],
+    correct: 'scatter-line',
+    explanation:
+      'On average, speed grows in proportion to distance, v ≈ H₀d, the pattern that uniform expansion gives every observer. The points scatter because each galaxy also moves through space, pulled by its neighbours (a few hundred km/s), and because distances are hard to measure (here about 10 %). The trend only stands out with many galaxies: Hubble’s 1929 diagram had 24, and scattered far more. These galaxies are illustrative, generated from the model with realistic scatter, not a real catalogue.',
+    observed: (r) => observedHubbleDiagram(merged(r)),
+    hint: (r) => hubbleDiagramHint(merged(r)),
+  },
+  {
     id: 'faster',
     minLevel: 'intermediate',
     question: 'Nothing can travel through space faster than light. Can a distant galaxy recede from us faster than light?',
@@ -140,6 +183,22 @@ export const PREDICTIONS: readonly Prediction<SpaceRecord>[] = [
       'rate exceeds c, using light they emitted long ago.',
     observed: (r) => observedFasterThanLight(merged(r)),
     hint: (r) => fasterThanLightHint(merged(r)),
+  },
+  {
+    id: 'estimate',
+    minLevel: 'intermediate',
+    question: 'You estimate H₀ from the slope of the best straight line through your galaxies. As you add more galaxies, your estimate…',
+    task: 'Read the estimate with 8 galaxies, then keep observing until all 32 are in the diagram, and compare the estimates and their uncertainties.',
+    options: [
+      { id: 'settles', label: 'Settles closer to the model’s value, with a smaller uncertainty' },
+      { id: 'exact', label: 'Is right from the start: any two galaxies fix the line' },
+      { id: 'grows', label: 'Keeps rising, because farther galaxies recede faster' },
+    ],
+    correct: 'settles',
+    explanation:
+      'Each galaxy’s scatter pulls the line a little; with more galaxies the pulls average out, and the uncertainty shrinks roughly as 1/√N: four times as many galaxies, half the uncertainty. Here 8 galaxies give about 73.5 ± 2.4 km/s/Mpc, more than two uncertainties from the model’s 67.7, and 32 give about 68.4 ± 1.2. Farther galaxies are faster, but in proportion, so the slope does not grow. Real measurements use thousands of galaxies and still disagree: about 67 km/s/Mpc from the early universe and about 73 from nearby supernovae, an unresolved “Hubble tension”.',
+    observed: (r) => observedEstimateSettles(merged(r)),
+    hint: (r) => estimateHint(merged(r)),
   },
   {
     id: 'age',
