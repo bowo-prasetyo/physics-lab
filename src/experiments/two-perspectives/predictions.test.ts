@@ -10,6 +10,9 @@ import {
   observedEverydayClock,
   observedFastHeadlight,
   observedFlashes,
+  observedFastProbe,
+  observedMomentumGrowth,
+  momentumGrowthHint,
 } from './predictions'
 import { derivation, SCENARIO_INFO } from './content'
 import { measuredValue, type Observation } from './useTwoPerspectives'
@@ -52,6 +55,25 @@ describe('prediction observation tests', () => {
     expect(allScenariosHint([obs('light', 0.6)])).toMatch(/Two flashes.*Moving clock/)
   })
 
+  it('equivalence still counts only the three original situations', () => {
+    expect(observedAllScenarios([obs('light', 0.6), obs('probe', 0.6), obs('momentum', 0.6)])).toBe(false)
+  })
+
+  it('the probe needs a measurement at 0.80c or more', () => {
+    expect(observedFastProbe([obs('probe', 0.8)])).toBe(true)
+    expect(observedFastProbe([obs('probe', 0.79)])).toBe(false)
+    expect(observedFastProbe([obs('light', 0.9)])).toBe(false)
+    expect(measuredValue('probe', 0.8)).toBeCloseTo(0.929, 3)
+  })
+
+  it('momentum growth needs one measurement at 0.45c or below and one at 0.90c or above', () => {
+    expect(observedMomentumGrowth([obs('momentum', 0.45), obs('momentum', 0.9)])).toBe(true)
+    expect(observedMomentumGrowth([obs('momentum', 0.9)])).toBe(false)
+    expect(observedMomentumGrowth([obs('momentum', 0), obs('momentum', 0.95)])).toBe(false)
+    expect(momentumGrowthHint([obs('momentum', 0.9)])).toMatch(/0\.45c/)
+    expect(measuredValue('momentum', 0.9) / measuredValue('momentum', 0.45)).toBeGreaterThan(4)
+  })
+
   it('every level adds at least one prediction, ids are unique, answers exist', () => {
     for (const level of LEVELS) expect(PREDICTIONS.some((p) => p.minLevel === level.id)).toBe(true)
     expect(new Set(PREDICTIONS.map((p) => p.id)).size).toBe(PREDICTIONS.length)
@@ -61,7 +83,7 @@ describe('prediction observation tests', () => {
 
 describe('derivations', () => {
   it('end with the same number the description predicts', () => {
-    for (const scenario of ['light', 'flashes', 'clock'] as const) {
+    for (const scenario of ['light', 'flashes', 'clock', 'probe', 'momentum'] as const) {
       for (const d of DESCRIPTIONS) {
         const tex = derivation(scenario, d, 0.6)
         const digits = SCENARIO_INFO[scenario].digits

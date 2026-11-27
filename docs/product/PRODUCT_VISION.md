@@ -190,7 +190,7 @@ After completing this module, learners should be able to:
 5. Use the invariant spacetime interval to distinguish observer-dependent coordinate descriptions from invariant relationships.
 6. Compare Galilean, Lorentzian space-and-time, and spacetime descriptions, and identify which predictions agree with experiment.
 
-**Current foundation:** moving-clock comparisons, reference-frame changes, simultaneity, interval invariance, comparison of alternative descriptions, and a dedicated length-contraction measurement lab (proper length, endpoint simultaneity and its ship-frame timing). Velocity addition and relativistic momentum still need dedicated lessons.
+**Current foundation:** moving-clock comparisons, reference-frame changes, simultaneity, interval invariance, comparison of alternative descriptions, a dedicated length-contraction measurement lab (proper length, endpoint simultaneity and its ship-frame timing), and relativistic velocity addition and momentum, each predicted by all three descriptions and checked against a measurement.
 
 ### Module 5 — General relativity
 

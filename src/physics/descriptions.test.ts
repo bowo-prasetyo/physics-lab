@@ -11,7 +11,7 @@ import {
   type Scenario,
 } from './index'
 
-const SCENARIOS: Scenario[] = ['light', 'flashes', 'clock']
+const SCENARIOS: Scenario[] = ['light', 'flashes', 'clock', 'probe', 'momentum']
 const SPEEDS = [0, 0.01, 0.1, 0.3, 0.5, 0.6, 0.8, 0.9, 0.99]
 
 describe('boost as a hyperbolic rotation', () => {
@@ -80,7 +80,24 @@ describe('the descriptions compared', () => {
     for (const scenario of SCENARIOS) {
       const correct = predict(scenario, 'lorentz', 0.8)
       const relativeError = Math.abs(predict(scenario, 'galilean', 0.8) - correct) / Math.abs(correct)
-      expect(relativeError).toBeGreaterThan(0.5) // light 80 %, clock 67 %, flashes 100 %
+      expect(relativeError).toBeGreaterThan(0.35) // light 80 %, clock 67 %, flashes 100 %, probe 40 %, momentum 40 %
     }
+  })
+
+  it('the probe: velocities combine as (u + v)/(1 + uv), never reaching c', () => {
+    expect(predict('probe', 'lorentz', 0.8)).toBeCloseTo(1.3 / 1.4, 12)
+    expect(predict('probe', 'galilean', 0.8)).toBeCloseTo(1.3, 12)
+    for (const beta of [0, 0.5, 0.9, 0.99]) {
+      const w = predict('probe', 'spacetime', beta)
+      expect(w).toBeLessThan(1)
+      expect(w).toBeCloseTo(Math.tanh(Math.atanh(0.5) + Math.atanh(beta)), 12)
+    }
+  })
+
+  it('momentum: p = γmv, which more than quadruples when the speed doubles from 0.45c to 0.90c', () => {
+    for (const beta of [0.1, 0.45, 0.9]) expect(predict('momentum', 'lorentz', beta)).toBeCloseTo(gamma(beta) * beta, 12)
+    const ratio = predict('momentum', 'lorentz', 0.9) / predict('momentum', 'lorentz', 0.45)
+    expect(ratio).toBeGreaterThan(4)
+    expect(predict('momentum', 'galilean', 0.9) / predict('momentum', 'galilean', 0.45)).toBeCloseTo(2, 12)
   })
 })

@@ -71,8 +71,8 @@ export const MODULES: readonly ModuleEntry[] = [
     number: 4,
     title: 'Special relativity',
     role: 'Near the speed of light, measurements of time and length depend on the observer, and space and time combine into spacetime.',
-    coverage: ['Galilean and Lorentz transformations', 'Time dilation and proper time', 'Length contraction and proper length', 'Relativity of simultaneity', 'Spacetime diagrams and invariant interval', 'Comparison of equivalent relativistic descriptions'],
-    plannedTopics: ['Velocity addition and relativistic momentum', 'More explicit links between inertial-frame measurements and experimental evidence'],
+    coverage: ['Galilean and Lorentz transformations', 'Time dilation and proper time', 'Length contraction and proper length', 'Relativity of simultaneity', 'Spacetime diagrams and invariant interval', 'Comparison of equivalent relativistic descriptions', 'Relativistic velocity addition', 'Relativistic momentum, p = γmv'],
+    plannedTopics: ['More explicit links between inertial-frame measurements and experimental evidence'],
     experiments: [
       { title: 'Different clocks, different elapsed times', summary: 'A spaceship passes the Earth. Compare their clocks on a spacetime diagram, from either point of view.', path: '/relativity/moving-clocks' },
       { title: 'Space and time versus spacetime', summary: 'Two perspectives: compare Galilean, space + time (Lorentz) and spacetime predictions with what experiments find.', path: '/relativity/two-perspectives' },

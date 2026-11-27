@@ -17,7 +17,7 @@ import { galileanBoost, relativeVelocity, type Event1D } from './frames'
 import { boostByRapidity, intervalSquared, lorentzBoost, rapidity, velocityInFrame } from './spacetime'
 
 export type Description = 'galilean' | 'lorentz' | 'spacetime'
-export type Scenario = 'light' | 'flashes' | 'clock'
+export type Scenario = 'light' | 'flashes' | 'clock' | 'probe' | 'momentum'
 
 export const DESCRIPTIONS: readonly Description[] = ['galilean', 'lorentz', 'spacetime']
 
@@ -25,6 +25,8 @@ export const DESCRIPTIONS: readonly Description[] = ['galilean', 'lorentz', 'spa
 export const FLASH_HALF_SEPARATION = 5
 /** The ship clock is read when the Earth clock shows this time (s), Earth frame. */
 export const CLOCK_EARTH_TIME = 10
+/** The probe's launch speed relative to the ship (units of c). */
+export const PROBE_SPEED = 0.5
 
 /**
  * Light scenario. A ship moving at β relative to the Earth switches on its
@@ -97,6 +99,48 @@ export function shipClockReading(description: Description, beta: number): number
   }
 }
 
+/**
+ * Probe scenario. A ship moving at β relative to the Earth launches a probe
+ * forward at PROBE_SPEED relative to the ship. Prediction: the probe's speed
+ * measured from the Earth (in units of c). The headlight is the case u = c.
+ */
+export function probeSpeedSeenFromEarth(description: Description, beta: number): number {
+  switch (description) {
+    case 'galilean':
+      // Velocities add.
+      return relativeVelocity(PROBE_SPEED, -beta)
+    case 'lorentz':
+      // Relativistic velocity transformation from the ship frame.
+      return velocityInFrame(PROBE_SPEED, -beta)
+    case 'spacetime': {
+      // Boost the probe's 4-velocity (cosh φ, sinh φ) to the Earth frame: rapidities add.
+      const phi = rapidity(PROBE_SPEED)
+      const u = boostByRapidity({ t: Math.cosh(phi), x: Math.sinh(phi) }, rapidity(-beta))
+      return u.x / u.t
+    }
+  }
+}
+
+/**
+ * Momentum scenario. A ship of mass m passes the Earth at β. Prediction: its
+ * momentum measured from the Earth, in units of mc.
+ */
+export function shipMomentum(description: Description, beta: number): number {
+  switch (description) {
+    case 'galilean':
+      // p = m Δx/Δt, with one absolute time for everyone.
+      return beta
+    case 'lorentz': {
+      // p = m Δx/Δτ: the ship's own time between two events on its worldline, from the Lorentz transformation.
+      const event: Event1D = { t: 1, x: beta }
+      return event.x / lorentzBoost(event, beta).t
+    }
+    case 'spacetime':
+      // The space component of the 4-momentum m(cosh φ, sinh φ).
+      return Math.sinh(rapidity(beta))
+  }
+}
+
 /** The measurable quantity of a scenario, as predicted by a description. */
 export function predict(scenario: Scenario, description: Description, beta: number): number {
   switch (scenario) {
@@ -106,5 +150,9 @@ export function predict(scenario: Scenario, description: Description, beta: numb
       return frontFlashLead(description, beta)
     case 'clock':
       return shipClockReading(description, beta)
+    case 'probe':
+      return probeSpeedSeenFromEarth(description, beta)
+    case 'momentum':
+      return shipMomentum(description, beta)
   }
 }

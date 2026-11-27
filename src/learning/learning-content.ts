@@ -199,9 +199,9 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Understand inertial reference frames and that a clock measures time along its own path."
     },
     "/relativity/two-perspectives": {
-      "focus": "Simultaneity depends on the reference frame",
-      "idea": "Compare which events are simultaneous for observers in relative motion.",
-      "prerequisite": "Review how positions and times transform between observers; distant clocks require synchronisation."
+      "focus": "Compare measurements across moving frames",
+      "idea": "Test frame-dependent simultaneity, add collinear velocities, and see why momentum grows steeply near the speed of light.",
+      "prerequisite": "Review how positions and times transform between observers; distant clocks require synchronisation. Know that relativistic velocity addition and momentum refine the Newtonian rules at high speeds."
     },
     "/relativity/length-contraction": {
       "focus": "Measure a moving object consistently",
@@ -271,9 +271,9 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "Pahami kerangka acuan inersial dan bahwa jam mengukur waktu sepanjang lintasannya sendiri."
     },
     "/relativity/two-perspectives": {
-      "focus": "Keserentakan bergantung pada kerangka acuan",
-      "idea": "Bandingkan peristiwa mana yang serentak bagi pengamat yang bergerak relatif.",
-      "prerequisite": "Pelajari kembali transformasi posisi dan waktu antar-pengamat; jam berjauhan memerlukan sinkronisasi."
+      "focus": "Bandingkan pengukuran antar-kerangka yang bergerak",
+      "idea": "Uji keserentakan yang bergantung pada kerangka, jumlahkan kecepatan segaris secara relativistik, dan amati mengapa momentum meningkat tajam saat mendekati kecepatan cahaya.",
+      "prerequisite": "Pelajari kembali transformasi posisi dan waktu antar-pengamat; jam berjauhan memerlukan sinkronisasi. Pahami bahwa penjumlahan kecepatan dan momentum relativistik menyempurnakan aturan Newton pada kelajuan tinggi."
     },
     "/relativity/length-contraction": {
       "focus": "Ukur benda bergerak secara konsisten",
@@ -343,9 +343,9 @@ export const STEP_COPY: Record<Locale, Readonly<Record<string, StepCopy>>> = {
       "prerequisite": "慣性系と、時計が自身の経路に沿って時間を測ることを理解しましょう。"
     },
     "/relativity/two-perspectives": {
-      "focus": "同時性は基準系に依存する",
-      "idea": "相対運動する観測者にとって、どの事象が同時かを比較します。",
-      "prerequisite": "観測者間の位置と時間の変換を復習しましょう。離れた時計には同期の手順が必要です。"
+      "focus": "動く基準系の測定を比べる",
+      "idea": "基準系によって異なる同時性を調べ、同一直線上の速度を合成し、光速に近づくと運動量が急増する理由を確かめます。",
+      "prerequisite": "観測者間の位置と時間の変換を復習しましょう。離れた時計には同期の手順が必要です。高速では相対論的速度合成と運動量がニュートン力学の規則を修正することを理解しておきます。"
     },
     "/relativity/length-contraction": {
       "focus": "運動する物体を一貫して測る",
@@ -945,6 +945,20 @@ export const PRACTICE_BANK: readonly PracticeSource[] = [
     "answer": "four"
   },
   {
+    "id": "synth-relativistic-collision",
+    "experiment": "/relativity/two-perspectives",
+    "requires": [
+      "/mechanics/momentum-collisions"
+    ],
+    "minLevel": "advanced",
+    "options": [
+      "half",
+      "half-plus",
+      "unchanged"
+    ],
+    "answer": "half-plus"
+  },
+  {
     "id": "synth-force-projectile",
     "experiment": "/mechanics/projectile",
     "requires": [
@@ -1426,6 +1440,16 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       "hint": "Resolve the forces into horizontal and vertical components. Which component does the new force change?",
       "explanation": "The new force is horizontal, so it changes only the horizontal acceleration: the horizontal velocity now changes steadily. The vertical force is still just gravity, so the vertical motion, and with it the flight time, is unchanged. Force sets the acceleration, not the direction of motion, so the path curves; with both forces constant it is still a parabola, just a different one."
     },
+    "synth-relativistic-collision": {
+      "prompt": "As with the carts, a body hits an identical body at rest and they stick together. This time it arrives at 0.80c. Momentum is conserved, but it is γmv. How fast does the merged body move?",
+      "options": {
+        "half": "0.40c, half the speed, as for two carts",
+        "half-plus": "0.50c: more than half, because the merged body is heavier than 2m",
+        "unchanged": "0.80c: at that speed the collision hardly matters"
+      },
+      "hint": "Before: p = γmv with γ = 5/3, and total energy γmc² + mc². The merged body moves at v = pc²/E.",
+      "explanation": "Before the collision p = (5/3)(0.8) mc = 4/3 mc and E = (5/3 + 1) mc² = 8/3 mc². The merged body moves at pc²/E = 0.50c, not 0.40c. Its mass is √(E² − p²c²)/c² ≈ 2.31m, more than 2m: the kinetic energy lost in the sticky collision has become rest energy. At low speeds γ ≈ 1 and the answer returns to half the speed, the result for the carts."
+    },
     "synth-impulse-carts": {
       "prompt": "Two carts start at rest. The same impulse is delivered to each, but cart B has twice the mass of cart A. Which statement is correct?",
       "options": {
@@ -1880,6 +1904,16 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       "hint": "Uraikan gaya menjadi komponen horizontal dan vertikal. Komponen mana yang diubah oleh gaya baru?",
       "explanation": "Gaya baru itu horizontal, jadi hanya mengubah percepatan horizontal: kecepatan horizontal kini berubah secara teratur. Gaya vertikal tetap hanya gravitasi, sehingga gerak vertikal, dan juga waktu terbangnya, tidak berubah. Gaya menentukan percepatan, bukan arah gerak, sehingga lintasannya melengkung; dengan kedua gaya tetap, lintasannya tetap parabola, hanya parabola yang berbeda."
     },
+    "synth-relativistic-collision": {
+      "prompt": "Seperti pada kereta, sebuah benda menumbuk benda identik yang diam dan keduanya menempel. Kali ini benda itu datang dengan kelajuan 0,80c. Momentum tetap kekal, tetapi besarnya γmv. Seberapa cepat benda gabungan bergerak?",
+      "options": {
+        "half": "0,40c, setengah kelajuan, seperti pada dua kereta",
+        "half-plus": "0,50c: lebih dari setengah, karena benda gabungan lebih berat daripada 2m",
+        "unchanged": "0,80c: pada kelajuan itu tumbukan hampir tidak berpengaruh"
+      },
+      "hint": "Sebelum tumbukan: p = γmv dengan γ = 5/3, dan energi total γmc² + mc². Benda gabungan bergerak dengan v = pc²/E.",
+      "explanation": "Sebelum tumbukan p = (5/3)(0,8) mc = 4/3 mc dan E = (5/3 + 1) mc² = 8/3 mc². Benda gabungan bergerak dengan pc²/E = 0,50c, bukan 0,40c. Massanya √(E² − p²c²)/c² ≈ 2,31m, lebih dari 2m: energi kinetik yang hilang dalam tumbukan menempel telah menjadi energi diam. Pada kelajuan rendah γ ≈ 1 dan jawabannya kembali menjadi setengah kelajuan, seperti hasil untuk kereta."
+    },
     "synth-impulse-carts": {
       "prompt": "Dua kereta mula-mula diam. Impuls yang sama diberikan kepada masing-masing kereta, tetapi massa kereta B dua kali massa kereta A. Pernyataan mana yang benar?",
       "options": {
@@ -2333,6 +2367,16 @@ export const PRACTICE_COPY: Record<Locale, Readonly<Record<string, PracticeCopy>
       },
       "hint": "力を水平成分と鉛直成分に分けましょう。新しい力はどちらの成分を変えますか。",
       "explanation": "新しい力は水平なので、変わるのは水平方向の加速度だけです。水平方向の速度は一定の割合で変わるようになります。鉛直方向の力は重力だけのままなので、鉛直方向の運動、つまり飛行時間も変わりません。力が決めるのは加速度であって運動の向きではないので、経路は曲がります。両方の力が一定なら経路はやはり放物線ですが、別の放物線になります。"
+    },
+    "synth-relativistic-collision": {
+      "prompt": "台車のときと同じように、物体が静止している同じ物体に衝突し、くっつきます。今度は0.80cで衝突します。運動量は保存されますが、それは γmv です。合体した物体の速さはいくらですか。",
+      "options": {
+        "half": "0.40c：台車2台のときと同じく、速さは半分",
+        "half-plus": "0.50c：合体した物体が2mより重いので、半分より大きい",
+        "unchanged": "0.80c：その速さでは衝突はほとんど影響しない"
+      },
+      "hint": "衝突前：γ = 5/3 として p = γmv、全エネルギーは γmc² + mc² です。合体した物体の速さは v = pc²/E です。",
+      "explanation": "衝突前は p = (5/3)(0.8) mc = 4/3 mc、E = (5/3 + 1) mc² = 8/3 mc² です。合体した物体の速さは pc²/E = 0.50c で、0.40c ではありません。その質量は √(E² − p²c²)/c² ≈ 2.31m で 2m より大きく、くっつく衝突で失われた運動エネルギーが静止エネルギーになったのです。低速では γ ≈ 1 となり、答えは台車のときと同じ半分の速さに戻ります。"
     },
     "synth-impulse-carts": {
       "prompt": "2台の台車は静止しています。それぞれに同じ力積を与えますが、台車Bの質量は台車Aの2倍です。正しい説明はどれですか。",

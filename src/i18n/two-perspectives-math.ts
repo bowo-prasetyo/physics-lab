@@ -34,6 +34,8 @@ const translations: Record<string, readonly [string, string]> = {
     'berbeda: untuk peristiwa yang berjauhan, nilainya dapat besar bahkan pada kecepatan sedang. Inilah relativitas keserentakan, yang sepenuhnya diabaikan dalam fisika Galilea.',
     'は性質が異なります。遠く離れた事象では、速度がそれほど大きくなくてもこの項は大きくなり得ます。これは同時性の相対性を表し、ガリレイ物理学では完全に無視されています。',
   ],
+  'Momentum uses the moving body’s own time': ['Momentum memakai waktu milik benda yang bergerak', '運動量は動く物体自身の時間を使う'],
+  'Momentum divides the distance moved by the time on the moving body’s own clock, which runs slow by γ. So': ['Momentum membagi jarak tempuh dengan waktu pada jam milik benda yang bergerak, yang berjalan lebih lambat sebesar γ. Jadi', '運動量は、進んだ距離を動く物体自身の時計の時間で割ったものです。その時計は γ 倍遅れて進みます。したがって'],
   'Why speeds do not simply add': ['Mengapa kecepatan tidak sekadar dijumlahkan', '速度は単純に加算できない理由'],
   'Differentiating the Lorentz transformation gives the velocity rule': ['Dengan mendiferensialkan transformasi Lorentz, kita memperoleh aturan penjumlahan kecepatan', 'ローレンツ変換を微分すると、速度の変換則が得られます。'],
   'For light (': ['Untuk cahaya (', '光（'],
