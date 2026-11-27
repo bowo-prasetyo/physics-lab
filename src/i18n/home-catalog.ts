@@ -30,7 +30,7 @@ const copy: Record<Exclude<Locale, 'en'>, CatalogueCopy> = {
       2: { title: 'Memahami waktu', role: 'Cara waktu diukur: setiap jam adalah proses fisika yang berulang, dan ketepatannya bergantung pada fisika di baliknya.', plannedTopics: ['Mekanisme jam fisik lainnya dan perbandingannya', 'Pembahasan lebih luas tentang pengukuran waktu dan ketidakpastian'] },
       3: { title: 'Memahami gerak', role: 'Bagaimana gerak dalam ruang berubah terhadap waktu, dan mengapa: gaya, momentum, dan kerangka acuan. Gambaran Newton inilah yang kelak direvisi oleh relativitas.', plannedTopics: [] },
       4: { title: 'Relativitas khusus', role: 'Mendekati kecepatan cahaya, pengukuran waktu dan panjang bergantung pada pengamat, dan ruang serta waktu menyatu menjadi ruang-waktu.', plannedTopics: ['Penjumlahan kecepatan dan momentum relativistik', 'Hubungan yang lebih jelas antara pengukuran kerangka inersial dan bukti eksperimen'] },
-      5: { title: 'Relativitas umum', role: 'Gravitasi sebagai geometri ruang-waktu: jam pada ketinggian berbeda berjalan dengan laju berbeda, dan jatuh bebas mengikuti lintasan yang paling lurus.', plannedTopics: ['Persamaan medan Einstein dan peran energi-momentum', 'Penghubung yang cermat dari prinsip ekuivalensi menuju ruang-waktu melengkung', 'Di luar kondisi Schwarzschild yang statis dan simetris bola'] },
+      5: { title: 'Relativitas umum', role: 'Gravitasi sebagai geometri ruang-waktu: jam pada ketinggian berbeda berjalan dengan laju berbeda, dan jatuh bebas mengikuti lintasan yang paling lurus.', plannedTopics: ['Persamaan medan Einstein dan peran energi-momentum', 'Di luar kondisi Schwarzschild yang statis dan simetris bola'] },
       6: { title: 'Kosmologi', role: 'Ruang dan waktu pada skala terbesar: bagaimana pengembangan alam semesta berevolusi, dan di mana model kita tidak lagi dapat diandalkan.', plannedTopics: ['Bukti observasi dan inferensi parameter dalam kosmologi modern', 'Ukuran jarak kosmik dan horizon', 'Pembahasan lebih mendalam tentang alam semesta awal dan inflasi', 'Status dan batas ekstrapolasi kosmologi klasik menuju singularitas awal'] },
     },
     experiments: {
@@ -56,7 +56,7 @@ const copy: Record<Exclude<Locale, 'en'>, CatalogueCopy> = {
       2: { title: '時間を理解する', role: '時間はどう測るのか：どの時計も繰り返す物理過程であり、その精度は背後にある物理で決まります。', plannedTopics: ['他の物理時計の仕組みと比較', '時間測定と不確かさのより広い考察'] },
       3: { title: '運動を理解する', role: '空間内の運動が時間とともにどう変わり、それはなぜか：力、運動量、基準系。このニュートン的な描像を、のちに相対性理論が修正します。', plannedTopics: [] },
       4: { title: '特殊相対性理論', role: '光速に近づくと、時間と長さの測定は観測者によって変わり、空間と時間は時空へと結び付きます。', plannedTopics: ['速度の合成と相対論的運動量', '慣性系での測定と実験的証拠の明確な関連付け'] },
-      5: { title: '一般相対性理論', role: '時空の幾何としての重力：高さの異なる時計は異なる速さで進み、自由落下は最もまっすぐな経路をたどります。', plannedTopics: ['アインシュタイン方程式とエネルギー運動量の役割', '等価原理から曲がった時空への慎重な橋渡し', '静的・球対称なシュワルツシルト時空を超えて'] },
+      5: { title: '一般相対性理論', role: '時空の幾何としての重力：高さの異なる時計は異なる速さで進み、自由落下は最もまっすぐな経路をたどります。', plannedTopics: ['アインシュタイン方程式とエネルギー運動量の役割', '静的・球対称なシュワルツシルト時空を超えて'] },
       6: { title: '宇宙論', role: '最大のスケールでの空間と時間：宇宙そのものの膨張がどう進むのか、そしてモデルがどこで信頼できなくなるのか。', plannedTopics: ['現代宇宙論における観測的証拠とパラメーター推定', '宇宙距離の尺度と地平線', '初期宇宙とインフレーションの詳しい考察', '初期特異点に向けた古典宇宙論の外挿の位置付けと限界'] },
     },
     experiments: {

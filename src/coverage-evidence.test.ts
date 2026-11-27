@@ -92,6 +92,7 @@ const EVIDENCE: Readonly<Record<string, Evidence>> = {
   'Light signals and clock rates near a Schwarzschild horizon': [['/gravity/clock-rates', 'horizon'], ['/gravity/clock-rates', 'agree']],
   'Timelike geodesics and free-fall orbits in Schwarzschild spacetime': [['/gravity/geodesic-motion', 'perturbed'], ['/gravity/geodesic-motion', 'circular']],
   'Periapsis precession and the Newtonian limit': [['/gravity/geodesic-motion', 'distance'], ['/gravity/geodesic-motion', 'mercury']],
+  'The equivalence principle: free fall cancels gravity locally': [['/gravity/geodesic-motion', 'accelerometer']],
   // Module 6
   'Scale factor in homogeneous and isotropic FLRW models': [['/cosmology/evolving-space', 'centre'], ['/cosmology/evolving-space', 'bound']],
   'Redshift and Hubble expansion': [['/cosmology/evolving-space', 'faster']],

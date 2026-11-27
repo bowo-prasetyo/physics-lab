@@ -11,6 +11,7 @@ import { useLevel } from '@/composables/useLevel'
 import { useQuerySync, snapToRange } from '@/composables/useQuerySync'
 import { useLocale } from '@/composables/useLocale'
 import { atLeast, isLevel } from '@/levels'
+import { hoveringAccelerationFactor } from '@/physics'
 import { localizePredictions } from '@/i18n/experiment-content'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import { calculateGeodesic, integrationFor, nearCircularShift, newtonianReference, periapsisShiftPerOrbit, type GeodesicRun } from './geodesic'
@@ -75,6 +76,8 @@ const relativisticPath = computed(() => (shown.value ? pathFor(shown.value.relat
 const newtonianPath = computed(() => (shown.value ? pathFor(shown.value.newtonian.points) : ''))
 const minRadius = computed(() => (shown.value ? Math.min(...shown.value.relativistic.points.map(p => p.radius)) : 0))
 const deg = (value: number) => `${value.toFixed(1)}°`
+/** An accelerometer reads every push except gravity: zero in free fall, the engines' push when hovering. */
+const hoveringReading = computed(() => `${hoveringAccelerationFactor(radius.value).toFixed(2)} × GM/r²`)
 </script>
 
 <template>
@@ -132,6 +135,8 @@ const deg = (value: number) => `${value.toFixed(1)}°`
           <div v-if="shown" class="readouts" aria-live="polite">
             <div><span>{{ tx('Closest approach') }}</span><strong>{{ minRadius.toFixed(2) }} rₛ</strong></div>
             <div><span>{{ tx('Periapsis passages') }}</span><strong>{{ shown.relativistic.periapses }}</strong></div>
+            <div class="accelerometer"><span>{{ tx('Accelerometer, orbiting spacecraft (engines off)') }}</span><strong>0</strong></div>
+            <div class="accelerometer"><span>{{ tx('Accelerometer, spacecraft hovering at the starting radius (engines on)') }}</span><strong>{{ hoveringReading }}</strong></div>
             <div v-if="shown.relativistic.captured" class="wide"><span>{{ tx('Outcome') }}</span><strong>{{ tx('Captured: the spacecraft crossed the horizon.') }}</strong></div>
             <div v-if="intermediate && !shown.relativistic.captured"><span>{{ tx('Periapsis shift per orbit') }}</span><strong>{{ shown.shift === null ? '—' : deg(shown.shift) }}</strong></div>
             <div v-if="advanced && !shown.relativistic.captured"><span>{{ tx('Near-circular estimate') }}</span><strong>{{ radius > 3 ? deg(nearCircularShift(radius)) : '—' }}</strong></div>
@@ -180,6 +185,9 @@ const deg = (value: number) => `${value.toFixed(1)}°`
           <MathFormula display tex="L_{\rm circ}=\frac{r}{\sqrt{2r-3}}" />
           <p>{{ tx('For nearly circular orbits, the periapsis advances per orbit by') }}</p>
           <MathFormula display tex="\Delta\phi \approx 2\pi\left(\frac{1}{\sqrt{1-3r_s/r}}-1\right)" />
+          <h3>{{ tx('Falling versus hovering') }}</h3>
+          <p>{{ tx('An accelerometer measures every push except gravity. On a freely falling spacecraft it reads zero. A spacecraft hovering at fixed r must be pushed by its engines; its accelerometer reads') }}</p>
+          <MathFormula display tex="a_{\rm hover}=\frac{GM}{r^2\sqrt{1-r_s/r}}" />
         </template>
         <template v-if="advanced">
           <h3>{{ tx('Newtonian limit') }}</h3>
@@ -198,6 +206,7 @@ const deg = (value: number) => `${value.toFixed(1)}°`
           <InfoCallout kind="physics" :title="experimentSectionLabel('establishedPhysics', locale)">
             <ul>
               <li>{{ tx('The Newtonian limit is recovered far from the mass, where the relativistic correction becomes small.') }}</li>
+              <li>{{ tx('All bodies fall with the same acceleration, whatever they are made of: the MICROSCOPE satellite confirmed this to about one part in 10¹⁵. That is why a freely falling laboratory can cancel gravity locally, the equivalence principle on which general relativity is built.') }}</li>
               <li>{{ tx('Mercury’s periapsis advances by 43 arcseconds per century more than Newtonian gravity predicts; general relativity accounts for it. Much larger shifts are measured in binary pulsars, and stars orbiting the black hole at the centre of our galaxy show the same effect.') }}</li>
             </ul>
           </InfoCallout>
@@ -248,6 +257,7 @@ const deg = (value: number) => `${value.toFixed(1)}°`
 .readouts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:14px 0; }
 .readouts div { padding:10px; border-radius:8px; background:var(--surface-2); }
 .readouts .wide { grid-column:1/-1; }
+.readouts .accelerometer { border-left:3px solid var(--accent); }
 .readouts span,.readouts strong { display:block; }
 .readouts span { color:var(--text-muted); font-size:.78rem; }
 .readouts strong { margin-top:4px; font-variant-numeric:tabular-nums; }
