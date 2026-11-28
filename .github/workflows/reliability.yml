@@ -1,0 +1,57 @@
+name: Reliability gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Scientific, educational and localization checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Unit, model and educational evidence tests
+        run: npm test
+      - name: Static localization audit
+        run: npm run audit:localization
+      - name: Rendered localization and accessible-copy audit
+        run: npm run audit:localization:runtime
+      - name: Typecheck and production build
+        run: npm run build
+
+  browser:
+    name: Browser and responsive accessibility smoke tests
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install isolated browser test tooling
+        run: npm install --no-save --package-lock=false playwright@1.58.2
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run build
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/physica-preview.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/physica-preview.log
+          exit 1
+      - name: Check desktop, mobile, keyboard and accessible names in three engines
+        run: node scripts/browser-smoke.mjs
