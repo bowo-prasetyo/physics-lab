@@ -2,7 +2,7 @@
 
 Interactive experiments about space, time and motion, from where things are and how clocks keep time to relativity, curved spacetime and the expanding universe. For high-school and undergraduate learners, and the teachers who work with them.
 
-**Product direction:** [vision, principles, audiences and learning outcomes](docs/product/PRODUCT_VISION.md) · [curriculum coverage and roadmap](docs/product/CURRICULUM_ROADMAP.md) · [learning effectiveness](docs/product/LEARNING_EFFECTIVENESS.md) · [assessment pilot plan](docs/product/ASSESSMENT_PILOT_PLAN.md)
+**Product direction:** [vision, principles, audiences and learning outcomes](docs/product/PRODUCT_VISION.md) · [curriculum coverage and roadmap](docs/product/CURRICULUM_ROADMAP.md) · [learning effectiveness](docs/product/LEARNING_EFFECTIVENESS.md) · [assessment pilot plan](docs/product/ASSESSMENT_PILOT_PLAN.md) · [outcome map](docs/product/OUTCOME_MAP.md) · [changelog](CHANGELOG.md)
 
 ## One thread: space, time and motion
 

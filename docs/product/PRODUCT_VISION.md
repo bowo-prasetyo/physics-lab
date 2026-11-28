@@ -36,8 +36,8 @@ Consequences for product decisions:
 - **One learning path, built from the catalogue.** The learning path (`/learning`) walks the thread chapter by chapter: its chapters are the modules and its steps are the experiments, in catalogue order. It adds only what the catalogue does not have: why each step matters, what to know first, and practice. It never introduces a second structure, numbering or set of titles. It is the product's front door: the home page has one call to action, *Start the learning path*, and the catalogue below it is for browsing.
 - **Practice follows the method.** A step's practice unlocks only after the learner has tested a prediction in that experiment, and it asks learners to transfer the idea to a new situation rather than recall it. Practice has four types, in this order:
   - *Concept questions* (multiple choice). Every experiment has at least one at Beginner. Harder ones are fewer: every module has at least one at Intermediate or Advanced.
-  - *Graph questions* (multiple choice, answered by reading a graph). A step can attach a graph, followed by questions whose answers must be read from it. The graph is either a position–time run, drawn with the experiments' own graph component, or a model curve such as a(F), y(t) or T(L) computed by the physics engine, on scales that start at zero with readable values. A graph never shows anything the model would not produce. Graph questions are ordinary practice questions with a graph, so they share the concept questions' shuffled options, hints, explanations and levels, and any step can have them by adding data, not code. Today *Space versus time*, *Force Lab*, the *Projectile launcher* and *Pendulum clocks* have one each.
-  - *Synthesis questions* (multiple choice, combining two experiments). A question can require other experiments as well as its own. It sits on the step of the later experiment, names the others from the catalogue, appears once that step is explored and unlocks when the others have been explored too. Combining two models is never a first step, so these are always Intermediate or Advanced. Today there are three: Force Lab with the Projectile launcher; Force, mass and acceleration with Momentum and collisions; and Different clocks with Gravity and clock rates.
+  - *Graph questions* (multiple choice, answered by reading a graph). A step can attach a graph, followed by questions whose answers must be read from it. The graph is either a position–time run, drawn with the experiments' own graph component, or a model curve such as a(F), y(t) or T(L) computed by the physics engine, on scales that start at zero with readable values. A graph never shows anything the model would not produce. Graph questions are ordinary practice questions with a graph, so they share the concept questions' shuffled options, hints, explanations and levels, and any step can have them by adding data, not code.
+  - *Synthesis questions* (multiple choice, combining two experiments). A question can require other experiments as well as its own. It sits on the step of the later experiment, names the others from the catalogue, appears once that step is explored and unlocks when the others have been explored too. Combining two models is never a first step, so these are always Intermediate or Advanced.
   - *Apply it* (numerical problems with hints and worked solutions). Every experiment has a Beginner problem, and every module has at least one Intermediate and one Advanced problem. Answers within 2% count as correct, so learners are not penalised for sensible rounding. A wrong answer gets feedback on the likely slip (a reversed sign, a power of ten with the factor and the unit named, rounding, or the model), using the same number parser and tolerance as the marking.
 
   **Practice budget.** Counting all types together, every step has at least 2 items at Beginner and between 3 and 7 at Advanced. The minimum means no step is left thin; the maximum stops a few steps growing far beyond the rest. New practice goes first to steps near the minimum, and any larger rebalancing waits for evidence from the assessment pilot. Wrong options must be real misconceptions, not fillers: when no credible fourth option exists, a question has three.
@@ -138,7 +138,7 @@ The three mathematical levels describe the depth of treatment, not a strict age,
 
 ## Learning outcomes by module
 
-The outcomes below describe what a learner should be able to do after completing the relevant module's learning path. They are curriculum-level targets, not a claim that every outcome is already fully covered by the current experiment catalogue. The scope notes identify where current experiments provide a foundation but further lessons are needed.
+The outcomes below describe what a learner should be able to do after completing the relevant module's learning path. They are curriculum-level targets, not a claim that every outcome is already fully covered by the current experiment catalogue; the [outcome map](OUTCOME_MAP.md) records each one's status. The scope notes identify where current experiments provide a foundation but further lessons are needed.
 
 ### Module 1 — Understanding space
 
@@ -220,6 +220,7 @@ After completing this module, learners should be able to:
 
 - [Curriculum coverage and prioritized roadmap](CURRICULUM_ROADMAP.md) maps outcomes to current experiments and future work.
 - [Learning effectiveness metrics](LEARNING_EFFECTIVENESS.md) defines how to evaluate understanding, transfer, and retention.
+- [Outcome map](OUTCOME_MAP.md) links each outcome below to the experiment predictions that test it and the pilot items that assess it.
 
 ## How to use these outcomes
 
@@ -228,4 +229,5 @@ After completing this module, learners should be able to:
 - Label outcomes as **covered**, **partially covered**, or **planned** as the curriculum evolves.
 - Do not mark an outcome as covered merely because a topic name appears in a module description.
 - Evaluate learning through explanations, transfer to a new case, and the ability to justify a prediction—not interaction counts or a correct guess alone.
+- Keep counts of what exists out of this document: how many questions, graphs or experiments there are lives in the code (`src/modules.ts`, the practice data) and changes too often to repeat here. The [outcome map](OUTCOME_MAP.md) records which outcomes are covered now, and the [changelog](../../CHANGELOG.md) records what was built.
 - Keep this document focused on stable product direction. Detailed lesson plans, assessment rubrics, and release sequencing belong in separate documents when they become necessary.
