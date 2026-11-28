@@ -262,7 +262,7 @@ describe('graph evidence integrity', () => {
     for (const question of graphQuestions) {
       expect(GRAPHS[question.graph!], question.id).toBeDefined()
       expect(IMPLEMENTED_EXPERIMENTS.some((experiment) => experiment.path === question.experiment), question.id).toBe(true)
-      expect(question.options.some((option) => option.id === question.answer), question.id).toBe(true)
+      expect(question.options, question.id).toContain(question.answer)
     }
   })
 })
