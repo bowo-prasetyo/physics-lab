@@ -69,6 +69,8 @@ const logo = `${import.meta.env.BASE_URL}physica-logo.svg`
 
 .header-tools {
   display: flex;
+  min-width: 0;
+  max-width: 100%;
   align-items: center;
   flex-wrap: wrap;
   justify-content: flex-end;
