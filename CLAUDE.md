@@ -56,6 +56,7 @@ Fill in the pull-request template (`.github/pull_request_template.md`): its prod
 ## Translation
 
 - Never write `locale === 'en' ? … : …` or `{ en: …, id: …, ja: … }` in a component. `src/conventions.test.ts` fails on new ones.
+- **Numbers come in three kinds.** Text a learner reads follows the language: `fixed()`, `significant()` or `formatNumber()` from `@/i18n/formatters`. Link parameters are data: `queryNumber()` from `@/composables/useQuerySync`, never a display formatter (8848, not 8,848). TeX keeps English digits: `texNumber()`. `src/experiments/number-output.test.ts` checks share links and maths in every language.
 - Accessible labels (`aria-label`, `title`, `alt`) must be fully translated. Build them from translated parts or message templates, never by joining translations with English words such as "against" or "versus". The runtime audit fails on these.
 
 ## Changing these rules

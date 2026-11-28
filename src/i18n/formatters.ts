@@ -62,3 +62,15 @@ export function localizeNumerals(text: string): string {
 export function coordinates(...values: string[]): string {
   return `(${values.join(separators().decimal === ',' ? '; ' : ', ')})`
 }
+
+/**
+ * A number for TeX: English digits whatever the language, because maths
+ * notation is shared and a comma in TeX is punctuation (it would render as
+ * "2, 006" and clash with commas that separate arguments). Very large or small
+ * values use × 10ⁿ.
+ */
+export function texNumber(value: number, digits = 3): string {
+  const text = String(Number(value.toPrecision(digits)))
+  const exponent = text.match(/^(-?[\d.]+)e([+-]\d+)$/)
+  return exponent ? `${exponent[1]} \\times 10^{${Number(exponent[2])}}` : text
+}

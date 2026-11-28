@@ -6,7 +6,7 @@ import { expansionFactor, hubbleRateToday, type Cosmology, type Expansion } from
 import type { Level } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeEvolvingSpaceMathText } from '@/i18n/evolving-space-math'
-import { significant } from '@/i18n/formatters'
+import { texNumber } from '@/i18n/formatters'
 
 const { locale } = useLocale()
 const tx = (value: string) => localizeEvolvingSpaceMathText(value, locale.value)
@@ -20,7 +20,7 @@ const props = defineProps<{
   target: number
 }>()
 
-const f = (x: number, digits = 3) => significant(x, digits, { useGrouping: false })
+const f = (x: number, digits = 3) => texNumber(x, digits)
 
 const distanceExample = computed(() => {
   const d = props.a * props.target

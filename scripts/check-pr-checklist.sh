@@ -6,6 +6,7 @@
 #   - [ ] item — Not done: reason  honestly not done: passes, shown as a warning
 #   - [ ] item                     fails: tick it once done, or say why not
 #   - [x] item (not run locally)   fails: a ticked box must mean it was done
+#   a standard line deleted        fails: the template's four lines stay, ticked or explained
 set -euo pipefail
 # HTML comments (the template's instructions and examples) are not part of the checklist.
 section=$(printf '%s\n' "${BODY:-}" | tr -d '\r' | perl -0pe 's/<!--.*?-->//gs' | awk '/^## Testing[[:space:]]*$/{found=1; next} /^## /{found=0} found')
@@ -19,6 +20,13 @@ if [ -z "$boxes" ]; then
   exit 1
 fi
 status=0
+# The template's four standard lines must stay: a step may be explained as not done, never dropped.
+for required in 'npm test' 'audit:localization' 'npm run build' 'browser'; do
+  if ! printf '%s\n' "$boxes" | grep -qiF -- "$required"; then
+    echo "::error::The Testing checklist is missing its '$required' line. Keep it: tick it, or leave it unticked with 'Not done: <reason>'."
+    status=1
+  fi
+done
 # A ticked box that says, in the same line, that the work did not happen.
 contradiction='not (run|checked|tested|verified|done|executed)|unavailable|pending|skipped|will run|to be (run|checked)'
 ticked_but_not_done=$(printf '%s\n' "$boxes" | grep -E '^[[:space:]]*[-*] \[[xX]\]' | grep -iE "$contradiction" || true)

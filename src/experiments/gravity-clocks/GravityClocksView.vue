@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fixed, localizeNumerals, significant } from '@/i18n/formatters'
+import { fixed, localizeNumerals } from '@/i18n/formatters'
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
@@ -27,7 +27,7 @@ import {
 } from './useGravityClocks'
 import { formatAltitude, formatDuration, formatLength, formatNumber, formatSlowdown } from './format'
 import { BODIES, SECONDS_PER_DAY } from '@/physics'
-import { useQuerySync } from '@/composables/useQuerySync'
+import { queryNumber, useQuerySync } from '@/composables/useQuerySync'
 import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
@@ -56,12 +56,11 @@ const experiment = useGravityClocks({
 const { mode, bodyId, body, altitudeA, altitudeB, correction, status, t, deficitA, deficitB, rateBvsA, elapsed, signals, radialDistance, gps, gpsSpeed, gpsState, allRuns, start, pause, reset } =
   experiment
 
-const short = (h: number) => significant(h, 6)
 useQuerySync({
   sources: [mode, bodyId, altitudeA, altitudeB, correction, level],
   write: () => {
     const query: Record<string, string> = { level: level.value, mode: mode.value }
-    if (mode.value === 'clocks') Object.assign(query, { body: bodyId.value, a: short(altitudeA.value), b: short(altitudeB.value) })
+    if (mode.value === 'clocks') Object.assign(query, { body: bodyId.value, a: queryNumber(altitudeA.value), b: queryNumber(altitudeB.value) })
     else query.fix = correction.value ? '1' : '0'
     return query
   },
