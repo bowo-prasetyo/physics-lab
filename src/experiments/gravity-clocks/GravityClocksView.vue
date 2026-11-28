@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fixed, localizeNumerals } from '@/i18n/formatters'
+import { fixed, localizeNumerals, significant } from '@/i18n/formatters'
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
@@ -56,7 +56,7 @@ const experiment = useGravityClocks({
 const { mode, bodyId, body, altitudeA, altitudeB, correction, status, t, deficitA, deficitB, rateBvsA, elapsed, signals, radialDistance, gps, gpsSpeed, gpsState, allRuns, start, pause, reset } =
   experiment
 
-const short = (h: number) => String(Number(h.toPrecision(6)))
+const short = (h: number) => significant(h, 6)
 useQuerySync({
   sources: [mode, bodyId, altitudeA, altitudeB, correction, level],
   write: () => {

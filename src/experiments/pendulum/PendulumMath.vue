@@ -6,13 +6,14 @@ import { agm } from '@/physics'
 import type { Level } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentMathText } from '@/i18n/experiment-math'
+import { significant } from '@/i18n/formatters'
 
 const { locale } = useLocale()
 const tx = (value: string) => localizeExperimentMathText(value, locale.value)
 
 const props = defineProps<{ level: Level; length: number; g: number; amplitudeDeg: number; smallAngle: number; exact: number }>()
 
-const f = (x: number, digits = 3) => String(Number(x.toPrecision(digits)))
+const f = (x: number, digits = 3) => significant(x, digits, { useGrouping: false })
 const theta0 = computed(() => (props.amplitudeDeg * Math.PI) / 180)
 
 const periodExample = computed(

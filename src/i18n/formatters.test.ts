@@ -38,6 +38,7 @@ describe('numbers a learner reads', () => {
     setLocale('id')
     expect(significant(0.000123456, 3)).toBe('0,000123')
     expect(significant(12345.6, 4)).toBe('12.350')
+    expect(significant(12345.6, 4, { useGrouping: false })).toBe('12350')
     setLocale('ja')
     expect(significant(12345.6, 4)).toBe('12,350')
   })

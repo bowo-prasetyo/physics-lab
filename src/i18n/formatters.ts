@@ -31,8 +31,8 @@ export function fixed(value: number, digits: number): string {
 }
 
 /** Format a measured value to a consistent number of significant figures. */
-export function significant(value: number, digits: number): string {
-  return formatNumber(value, { maximumSignificantDigits: digits })
+export function significant(value: number, digits: number, options: Intl.NumberFormatOptions = {}): string {
+  return formatNumber(value, { maximumSignificantDigits: digits, ...options })
 }
 
 /** Round a numeric axis tick without converting it to display text. */
