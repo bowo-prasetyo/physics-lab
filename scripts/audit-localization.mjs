@@ -107,7 +107,7 @@ export async function runAudit({ root = ROOT, outputDir = OUTPUT_DIR } = {}) {
 
   if (numericViolations.length) {
     const details = numericViolations.map(item => item.file + ':L' + item.line).join(', ')
-    throw new Error('Unlocalized numeric precision output found: ' + details + '. Use significant() or fixed() from @/i18n/formatters.')
+    throw new Error('Unlocalized numeric precision output found: ' + details + '. Numbers come in three kinds: text a learner reads uses significant() or fixed() from @/i18n/formatters; link parameters use queryNumber() from @/composables/useQuerySync; TeX uses texNumber() from @/i18n/formatters.')
   }
 
   const unique = [...new Map(candidates.map(item => [

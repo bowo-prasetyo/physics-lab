@@ -14,6 +14,16 @@ export function snapToRange(value: unknown, range: { min: number; max: number; s
 }
 
 /**
+ * A number for a link parameter: plain digits with a '.' decimal point and no
+ * grouping, whatever the learner's language, so `Number()` and `snapToRange`
+ * read it back exactly. Never use the display formatters in `@/i18n/formatters`
+ * for URLs: they write 8,848 or 8.848 for 8848.
+ */
+export function queryNumber(value: number, significantDigits = 6): string {
+  return String(Number(value.toPrecision(significantDigits)))
+}
+
+/**
  * Keep an experiment's setup in the URL so a teacher can share it.
  *
  * - `write` builds the query from the current state; it runs (debounced)
