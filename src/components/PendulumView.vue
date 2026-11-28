@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
@@ -54,7 +55,7 @@ const description = computed(
       <line :x1="PIVOT.x" :y1="PIVOT.y" :x2="bob.x" :y2="bob.y" class="rod" />
       <circle :cx="PIVOT.x" :cy="PIVOT.y" r="4" class="pivot" />
       <circle :cx="bob.x" :cy="bob.y" :r="bobR" class="bob" />
-      <text :x="PIVOT.x + 70" :y="PIVOT.y + 4" class="label num">{{ degrees.toFixed(0) }}°</text>
+      <text :x="PIVOT.x + 70" :y="PIVOT.y + 4" class="label num">{{ fixed(degrees, 0) }}°</text>
 
       <!-- Scale: 1 m -->
       <g class="scale">

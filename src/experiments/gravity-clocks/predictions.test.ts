@@ -99,3 +99,21 @@ describe('formatting', () => {
     expect(formatSlowdown(6.96e-10)).toBe('6.96 × 10⁻¹⁰')
   })
 })
+
+describe('the ruler-distance prediction', () => {
+  it('needs black-hole clocks near the horizon and far apart, run once; the explanation’s numbers match the engine', async () => {
+    const { observedRulerDistance, rulerDistanceHint } = await import('./predictions')
+    const { properRadialDistance } = await import('@/physics')
+    const mass = bodyById('black-hole').mass
+    const rs = schwarzschildRadius(mass)
+    const ok = run({ body: 'black-hole', altitudeA: 0.01 * rs, altitudeB: 9 * rs, tEnd: 0.1 })
+    expect(observedRulerDistance([ok])).toBe(true)
+    expect(observedRulerDistance([{ ...ok, tEnd: 0 }])).toBe(false)
+    expect(observedRulerDistance([{ ...ok, altitudeB: 2 * rs }])).toBe(false)
+    expect(rulerDistanceHint([{ ...ok, altitudeB: 2 * rs }])).toMatch(/10 r_s/)
+    const proper = properRadialDistance(mass, 1.01 * rs, 10 * rs)
+    expect(Math.round(proper / 1000)).toBe(328)
+    expect(Math.round((8.99 * rs) / 1000)).toBe(266)
+    expect(Math.round(100 * (proper / (8.99 * rs) - 1))).toBe(24)
+  })
+})

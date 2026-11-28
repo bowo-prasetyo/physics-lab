@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed, formatNumber } from '@/i18n/formatters'
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
@@ -51,15 +52,15 @@ const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, lo
 const info = computed(() => SCENARIO_INFO[scenario.value])
 const showWorkingOpen = computed(() => atLeast(level.value, 'intermediate'))
 
-const format = (value: number) => `${value.toFixed(info.value.digits)} ${info.value.unit}`
+const format = (value: number) => `${fixed(value, info.value.digits)} ${info.value.unit}`
 
 /** How a description's prediction compares with the measurement. */
 function verdict(d: Description): { ok: boolean; text: string } {
   const diff = predictions.value[d] - measurement.value
   if (Math.abs(diff) < 1e-9) return { ok: true, text: tx('Matches the measurement') }
   const pct = Math.abs((100 * diff) / measurement.value)
-  const percent = measurement.value !== 0 ? ` (${pct >= 10 ? pct.toFixed(0) : pct.toPrecision(2)}%)` : ''
-  return { ok: false, text: tx(`Off by ${Math.abs(diff).toFixed(info.value.digits)} ${info.value.unit}${percent}`) }
+  const percent = measurement.value !== 0 ? ` (${pct >= 10 ? fixed(pct, 0) : formatNumber(pct, { maximumSignificantDigits: 2 })}%)` : ''
+  return { ok: false, text: tx(`Off by ${fixed(Math.abs(diff), info.value.digits)} ${info.value.unit}${percent}`) }
 }
 
 const SAMPLES = Array.from({ length: 100 }, (_, i) => i / 100)

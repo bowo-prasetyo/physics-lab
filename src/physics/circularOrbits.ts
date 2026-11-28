@@ -25,7 +25,9 @@
 import { G } from './gravity'
 
 /** The planet used by the experiment: the Earth. */
+/** Earth's GM (m³/s²): 3.986004418 × 10¹⁴ ± 8 × 10⁵ (WGS 84; IERS Conventions 2010). */
 export const EARTH_GM = 3.986004418e14
+/** Earth's mean radius (m): 6371.0 km (IUGG). */
 export const EARTH_RADIUS = 6.371e6
 
 /** Acceleration needed to move in a circle of radius r at speed v: v²/r (m/s²). */

@@ -37,7 +37,7 @@ Fill in the pull-request template (`.github/pull_request_template.md`): its prod
 | Thing | Single source | Notes |
 |---|---|---|
 | Modules and experiments | `src/modules.ts` | Home page, translations, learning path, teacher guide and README are checked against it |
-| Physics | `src/physics/` | Framework-free TypeScript, no imports from outside (`architecture.test.ts`). Prefer exact solutions; validate numerical methods against them |
+| Physics | `src/physics/` | Framework-free TypeScript, no imports from outside (`architecture.test.ts`). Prefer exact solutions; validate numerical methods against them. When changing a model, follow the change checklist in [the scientific validation policy](docs/product/SCIENTIFIC_VALIDATION.md), including a source for every empirical value |
 | Concept, graph and synthesis questions | `PRACTICE_BANK` and `PRACTICE_COPY` in `src/learning/learning-content.ts` | Rendered only by `PracticeQuestion.vue`, which shuffles options. Never create a second store for questions |
 | Graphs for graph questions | `GRAPHS` in `learning-content.ts` | A position–time run, or a function graph whose `f` calls `src/physics`. Drawn by `PositionTimeGraph.vue` or `FunctionGraph.vue`; never hand-draw a curve |
 | Numerical problems | `src/learning/problem-bank.ts` | Answers are checked against the engine in `problem-bank.test.ts`; marking and feedback share `parseNumericAnswer` and `RELATIVE_TOLERANCE` |

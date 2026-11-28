@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatNumber } from '@/i18n/formatters'
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
@@ -49,7 +50,7 @@ const displacement = computed(() => displacementFromRest(force.value, mass.value
 const predictions = computed(() => localizePredictions('newtonian', PREDICTIONS, locale.value).filter((p) => atLeast(level.value, p.minLevel)))
 const observed = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, p.observed(runs.value)])))
 const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => [p.id, localizeExperimentText(p.hint?.(runs.value) ?? null, locale.value)])))
-const fmt = (n: number) => Number(n.toFixed(3)).toString()
+const fmt = (n: number) => formatNumber(Number(n.toFixed(3)) + 0)
 
 // The readouts show the model's answer, so they appear only once the current setup has been run.
 const setupKey = computed(() => `${force.value}|${mass.value}|${time.value}`)

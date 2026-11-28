@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed, useId } from 'vue'
 import { galileanBoost, graphVertices, type RunRecord } from '@/physics'
 import { useLocale } from '@/composables/useLocale'
@@ -110,9 +111,9 @@ const description = computed(() => {
       <summary>{{ localizeExperimentText('Read the position–time values as a table', locale) }}</summary>
       <div class="table-scroll"><table><thead><tr><th scope="col">{{ localizeExperimentText('Run / observer', locale) }}</th><th scope="col">{{ localizeExperimentText('Time', locale) }}</th><th scope="col">{{ localizeExperimentText('Position', locale) }}</th></tr></thead>
         <tbody>
-          <tr><th scope="row">{{ localizeExperimentText('Current run', locale) }}</th><td>{{ currentEnd.t.toFixed(2) }} s</td><td>{{ currentEnd.x.toFixed(2) }} m</td></tr>
-          <tr v-if="observerEnd"><th scope="row">{{ localizeExperimentText('Moving observer', locale) }}</th><td>{{ observerEnd.t.toFixed(2) }} s</td><td>{{ observerEnd.x.toFixed(2) }} m</td></tr>
-          <tr v-for="(record, index) in history" :key="index"><th scope="row">{{ localizeExperimentText('Earlier run', locale) }} {{ index + 1 }} ({{ localizeExperimentText(describeRun(record), locale) }})</th><td>{{ graphVertices(record).at(-1)?.t.toFixed(2) }} s</td><td>{{ graphVertices(record).at(-1)?.x.toFixed(2) }} m</td></tr>
+          <tr><th scope="row">{{ localizeExperimentText('Current run', locale) }}</th><td>{{ fixed(currentEnd.t, 2) }} s</td><td>{{ fixed(currentEnd.x, 2) }} m</td></tr>
+          <tr v-if="observerEnd"><th scope="row">{{ localizeExperimentText('Moving observer', locale) }}</th><td>{{ fixed(observerEnd.t, 2) }} s</td><td>{{ fixed(observerEnd.x, 2) }} m</td></tr>
+          <tr v-for="(record, index) in history" :key="index"><th scope="row">{{ localizeExperimentText('Earlier run', locale) }} {{ index + 1 }} ({{ localizeExperimentText(describeRun(record), locale) }})</th><td>{{ fixed(graphVertices(record).at(-1)?.t ?? 0, 2) }} s</td><td>{{ fixed(graphVertices(record).at(-1)?.x ?? 0, 2) }} m</td></tr>
         </tbody></table></div>
     </details>
     <figcaption class="legend">

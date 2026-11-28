@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
@@ -75,9 +76,9 @@ const pathFor = (points: { x: number; y: number }[]) => points.map((p, i) => (i 
 const relativisticPath = computed(() => (shown.value ? pathFor(shown.value.relativistic.points) : ''))
 const newtonianPath = computed(() => (shown.value ? pathFor(shown.value.newtonian.points) : ''))
 const minRadius = computed(() => (shown.value ? Math.min(...shown.value.relativistic.points.map(p => p.radius)) : 0))
-const deg = (value: number) => `${value.toFixed(1)}°`
+const deg = (value: number) => `${fixed(value, 1)}°`
 /** An accelerometer reads every push except gravity: zero in free fall, the engines' push when hovering. */
-const hoveringReading = computed(() => `${hoveringAccelerationFactor(radius.value).toFixed(2)} × GM/r²`)
+const hoveringReading = computed(() => `${fixed(hoveringAccelerationFactor(radius.value), 2)} × GM/r²`)
 </script>
 
 <template>
@@ -133,7 +134,7 @@ const hoveringReading = computed(() => `${hoveringAccelerationFactor(radius.valu
             <span><i class="legend-horizon"></i>{{ tx('Schwarzschild radius') }}</span>
           </div>
           <div v-if="shown" class="readouts" aria-live="polite">
-            <div><span>{{ tx('Closest approach') }}</span><strong>{{ minRadius.toFixed(2) }} rₛ</strong></div>
+            <div><span>{{ tx('Closest approach') }}</span><strong>{{ fixed(minRadius, 2) }} rₛ</strong></div>
             <div><span>{{ tx('Periapsis passages') }}</span><strong>{{ shown.relativistic.periapses }}</strong></div>
             <div class="accelerometer"><span>{{ tx('Accelerometer, orbiting spacecraft (engines off)') }}</span><strong>0</strong></div>
             <div class="accelerometer"><span>{{ tx('Accelerometer, spacecraft hovering at the starting radius (engines on)') }}</span><strong>{{ hoveringReading }}</strong></div>
@@ -145,11 +146,11 @@ const hoveringReading = computed(() => `${hoveringAccelerationFactor(radius.valu
           <p class="small muted">{{ tx('The trajectory is not a force diagram. It is the path followed by a freely falling test particle through the chosen spacetime geometry.') }}</p>
         </div>
         <aside class="card controls">
-          <label class="control-label" for="geodesic-radius"><span>{{ tx('Initial orbital radius') }}</span><strong>{{ radius.toFixed(1) }} rₛ</strong></label>
+          <label class="control-label" for="geodesic-radius"><span>{{ tx('Initial orbital radius') }}</span><strong>{{ fixed(radius, 1) }} rₛ</strong></label>
           <input id="geodesic-radius" v-model.number="radius" type="range" v-bind="RADIUS" />
-          <label class="control-label" for="geodesic-angular"><span>{{ tx('Angular momentum') }}</span><strong>{{ angular.toFixed(3) }} {{ tx('× L circular') }}</strong></label>
+          <label class="control-label" for="geodesic-angular"><span>{{ tx('Angular momentum') }}</span><strong>{{ fixed(angular, 3) }} {{ tx('× L circular') }}</strong></label>
           <input id="geodesic-angular" v-model.number="angular" type="range" v-bind="ANGULAR" />
-          <label class="control-label" for="geodesic-radial"><span>{{ tx('Initial radial velocity') }}</span><strong>dr/dτ = {{ radial.toFixed(3) }}</strong></label>
+          <label class="control-label" for="geodesic-radial"><span>{{ tx('Initial radial velocity') }}</span><strong>dr/dτ = {{ fixed(radial, 3) }}</strong></label>
           <input id="geodesic-radial" v-model.number="radial" type="range" v-bind="RADIAL" />
           <button class="btn btn-primary" type="button" @click="runExperiment">{{ tx('Run the experiment') }}</button>
           <p class="small muted">{{ tx('Schwarzschild radii') }}: rₛ = 2GM/c²</p>
@@ -162,7 +163,7 @@ const hoveringReading = computed(() => `${hoveringAccelerationFactor(radius.valu
             <thead><tr><th>#</th><th>{{ tx('Initial orbital radius') }}</th><th>{{ tx('Angular momentum') }}</th><th>{{ tx('Initial radial velocity') }}</th><th>{{ tx('Periapsis shift per orbit') }}</th></tr></thead>
             <tbody>
               <tr v-for="(run, i) in runs" :key="i">
-                <td>{{ i + 1 }}</td><td>{{ run.radius.toFixed(1) }} rₛ</td><td>{{ run.angular.toFixed(3) }}</td><td>{{ run.radialVelocity.toFixed(3) }}</td>
+                <td>{{ i + 1 }}</td><td>{{ fixed(run.radius, 1) }} rₛ</td><td>{{ fixed(run.angular, 3) }}</td><td>{{ fixed(run.radialVelocity, 3) }}</td>
                 <td>{{ run.captured ? tx('Captured') : run.shiftPerOrbit === null ? '—' : deg(run.shiftPerOrbit) }}</td>
               </tr>
             </tbody>

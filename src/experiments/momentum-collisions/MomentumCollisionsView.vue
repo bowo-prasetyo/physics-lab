@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatNumber } from '@/i18n/formatters'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
@@ -64,7 +65,7 @@ const runDisabledReason = computed(() => {
   if (isRunning.value) return 'The collision animation is running. Wait until it finishes.'
   return ''
 })
-const fmt = (value: number, digits = 2) => Number(value.toFixed(digits)).toString()
+const fmt = (value: number, digits = 2) => formatNumber(Number(value.toFixed(digits)) + 0)
 const lossPct = computed(() => result.value.kineticEnergyBefore > 0 ? 100 * result.value.kineticEnergyLost / result.value.kineticEnergyBefore : 0)
 const separation = computed(() => Math.min(34, result.value.relativeSpeedAfter * 2.5))
 const cart1Position = computed(() => phase.value === 'idle' ? 15 : phase.value === 'complete' ? 50 - separation.value / 2 : 44)

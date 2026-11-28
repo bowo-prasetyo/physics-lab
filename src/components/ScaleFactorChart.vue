@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed, useId } from 'vue'
 import type { Expansion } from '@/physics'
 import { niceCeil } from './chartScale'
@@ -87,10 +88,10 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
     <details class="chart-data">
       <summary>{{ localizeExperimentText('Read the current model values', locale) }}</summary>
       <table><tbody>
-        <tr><th scope="row">{{ localizeExperimentText('Selected time', locale) }}</th><td>{{ t.toFixed(3) }} {{ localizeExperimentText('billion years', locale) }}</td></tr>
+        <tr><th scope="row">{{ localizeExperimentText('Selected time', locale) }}</th><td>{{ fixed(t, 3) }} {{ localizeExperimentText('billion years', locale) }}</td></tr>
         <tr><th scope="row">{{ localizeExperimentText('Scale factor at selected time', locale) }}</th><td>{{ expansion.scaleFactorAt(t).toPrecision(5) }}</td></tr>
         <tr><th scope="row">{{ localizeExperimentText('Scale factor today', locale) }}</th><td>1</td></tr>
-        <tr v-if="accelerationTime !== null"><th scope="row">{{ localizeExperimentText('Acceleration begins', locale) }}</th><td>{{ accelerationTime.toFixed(3) }} {{ localizeExperimentText('billion years', locale) }}</td></tr>
+        <tr v-if="accelerationTime !== null"><th scope="row">{{ localizeExperimentText('Acceleration begins', locale) }}</th><td>{{ fixed(accelerationTime, 3) }} {{ localizeExperimentText('billion years', locale) }}</td></tr>
       </tbody></table>
     </details>
     <figcaption class="legend">

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { localizeNumerals } from '@/i18n/formatters'
 import { computed } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { localizeGravityClocksMathText, localizeGravityClockComparison } from '@/i18n/gravity-clocks-math'
@@ -154,7 +155,7 @@ const perDay = (x: number) => formatDuration(x * SECONDS_PER_DAY)
       <p>{{ tx('Rulers laid out radially between the two clocks measure') }}</p>
       <MathFormula display tex="\ell = \int_{r_1}^{r_2} \frac{dr}{\sqrt{1 - r_s/r}} \;>\; r_2 - r_1." />
       <p>
-        {{ tx('For your clocks:') }} <MathFormula tex="r_2 - r_1" /> = {{ formatLength(radialDistance.coordinate) }}, {{ tx('but the rulers measure') }} {{ formatLength(radialDistance.proper) }}: {{ tx('an extra') }} {{ formatLength(radialDistance.extra) }}.
+        {{ tx('For your clocks:') }} <MathFormula tex="r_2 - r_1" /> = {{ localizeNumerals(formatLength(radialDistance.coordinate)) }}, {{ tx('but the rulers measure') }} {{ localizeNumerals(formatLength(radialDistance.proper)) }}: {{ tx('an extra') }} {{ formatLength(radialDistance.extra) }}.
       </p>
 
       <h3>{{ tx('Why the observers agree') }}</h3>

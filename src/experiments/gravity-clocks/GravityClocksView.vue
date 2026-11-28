@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed, localizeNumerals } from '@/i18n/formatters'
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
@@ -97,7 +98,7 @@ const bodyPresets = computed(() => presets(body.value))
 const range = computed(() => altitudeRange(body.value))
 
 const days = computed(() => t.value)
-const daysText = computed(() => `${days.value.toFixed(1)} ${locale.value === 'id' ? 'hari' : locale.value === 'ja' ? '日' : 'days'}`)
+const daysText = computed(() => `${fixed(days.value, 1)} ${locale.value === 'id' ? 'hari' : locale.value === 'ja' ? '日' : 'days'}`)
 const bFaster = computed(() => rateBvsA.value >= 0)
 
 const primaryLabel = computed(() => {
@@ -183,11 +184,11 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
         <div class="lab-side card">
           <div class="clocks">
             <div class="clock-card far"><span class="clock-name">{{ tx('Far away') }}</span><span class="clock-value num">{{ daysText }}</span></div>
-            <div class="clock-card a"><span class="clock-name">{{ tx('Clock A') }}</span><span class="clock-value num">{{ (elapsed.a / SECONDS_PER_DAY).toFixed(1) }} {{ tx('days') }}</span></div>
-            <div class="clock-card b"><span class="clock-name">{{ tx('Clock B') }}</span><span class="clock-value num">{{ (elapsed.b / SECONDS_PER_DAY).toFixed(1) }} {{ tx('days') }}</span></div>
+            <div class="clock-card a"><span class="clock-name">{{ tx('Clock A') }}</span><span class="clock-value num">{{ fixed((elapsed.a / SECONDS_PER_DAY), 1) }} {{ tx('days') }}</span></div>
+            <div class="clock-card b"><span class="clock-name">{{ tx('Clock B') }}</span><span class="clock-value num">{{ fixed((elapsed.b / SECONDS_PER_DAY), 1) }} {{ tx('days') }}</span></div>
           </div>
           <p class="ahead" :class="bFaster ? 'b-ahead' : 'a-ahead'">
-            {{ tx('Clock {clock} is ahead by').replace('{clock}', bFaster ? 'B' : 'A') }} <strong class="num">{{ formatDuration(Math.abs(elapsed.bAhead)) }}</strong>
+            {{ tx('Clock {clock} is ahead by').replace('{clock}', bFaster ? 'B' : 'A') }} <strong class="num">{{ localizeNumerals(formatDuration(Math.abs(elapsed.bAhead))) }}</strong>
           </p>
           <p class="status muted">{{ tx('Time-lapse: 1 day per second, up to') }} {{ RUN_DAYS }} {{ tx('days') }}</p>
           <div class="buttons">
@@ -226,16 +227,17 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           </div>
 
           <dl class="readouts">
-            <div><dt>{{ tx('Clock A slowed by') }}</dt><dd class="num">{{ formatSlowdown(deficitA) }}</dd></div>
-            <div><dt>{{ tx('Clock B slowed by') }}</dt><dd class="num">{{ formatSlowdown(deficitB) }}</dd></div>
+            <div><dt>{{ tx('Clock A slowed by') }}</dt><dd class="num">{{ localizeNumerals(formatSlowdown(deficitA)) }}</dd></div>
+            <div><dt>{{ tx('Clock B slowed by') }}</dt><dd class="num">{{ localizeNumerals(formatSlowdown(deficitB)) }}</dd></div>
             <div>
               <dt>{{ tx('B gains on A, per day on clock A') }}</dt>
-              <dd class="num">{{ signed(rateBvsA * SECONDS_PER_DAY) }}</dd>
+              <dd class="num">{{ localizeNumerals(signed(rateBvsA * SECONDS_PER_DAY)) }}</dd>
             </div>
             <template v-if="advanced">
-              <div class="signal"><dt>{{ tx('Ticks from A, received at B') }}</dt><dd class="num">{{ signals.upward >= 0 ? '+' : '' }}{{ formatNumber(signals.upward) }}</dd></div>
-              <div class="signal"><dt>{{ tx('Ticks from B, received at A') }}</dt><dd class="num">{{ signals.downward >= 0 ? '+' : '' }}{{ formatNumber(signals.downward) }}</dd></div>
-              <div><dt>{{ tx('Ruler distance A to B') }}</dt><dd class="num">{{ formatLength(radialDistance.proper) }}</dd></div>
+              <div class="signal"><dt>{{ tx('Ticks from A, received at B') }}</dt><dd class="num">{{ signals.upward >= 0 ? '+' : '' }}{{ localizeNumerals(formatNumber(signals.upward)) }}</dd></div>
+              <div class="signal"><dt>{{ tx('Ticks from B, received at A') }}</dt><dd class="num">{{ signals.downward >= 0 ? '+' : '' }}{{ localizeNumerals(formatNumber(signals.downward)) }}</dd></div>
+              <div><dt>{{ tx('Difference in r, B − A') }}</dt><dd class="num">{{ localizeNumerals(formatLength(radialDistance.coordinate)) }}</dd></div>
+              <div><dt>{{ tx('Ruler distance A to B') }}</dt><dd class="num">{{ localizeNumerals(formatLength(radialDistance.proper)) }}</dd></div>
             </template>
           </dl>
           <p v-if="advanced" class="small muted">
@@ -249,7 +251,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
         <div class="lab-main card">
           <h3 class="chart-title">{{ tx('A GPS satellite clock compared with a ground clock') }}</h3>
           <p class="muted small">
-            {{ tx('Orbit about 20 200 km above the surface, at') }} {{ (gpsSpeed / 1000).toFixed(2) }} km/s.
+            {{ tx('Orbit about 20 200 km above the surface, at') }} {{ fixed((gpsSpeed / 1000), 2) }} km/s.
           </p>
           <div class="bars" role="list">
             <div v-for="bar in gpsBars" :key="bar.id" class="bar-row" role="listitem">
@@ -257,7 +259,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
               <span class="bar-track">
                 <span class="bar" :class="[bar.id, bar.value >= 0 ? 'pos' : 'neg']" :style="{ width: `${bar.width}%` }" />
               </span>
-              <span class="bar-value num">{{ signed(bar.perDay) }} {{ tx('per day') }}</span>
+              <span class="bar-value num">{{ localizeNumerals(signed(bar.perDay)) }} {{ tx('per day') }}</span>
             </div>
           </div>
           <InfoCallout v-if="intermediate" kind="note" :title="tx('How GPS deals with it')">
@@ -271,7 +273,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           <div class="clocks two">
             <div class="clock-card far"><span class="clock-name">{{ tx('Ground clock') }}</span><span class="clock-value num">{{ daysText }}</span></div>
             <div class="clock-card b">
-              <span class="clock-name">{{ tx('Satellite gained') }}</span><span class="clock-value num">{{ formatDuration(gpsState.offset) }}</span>
+              <span class="clock-name">{{ tx('Satellite gained') }}</span><span class="clock-value num">{{ localizeNumerals(formatDuration(gpsState.offset)) }}</span>
             </div>
           </div>
           <div class="buttons">
@@ -284,7 +286,7 @@ const signed = (seconds: number) => `${seconds >= 0 ? '+' : '−'}${formatDurati
           </label>
           <div class="error" :class="{ bad: !correction }">
             <span class="clock-name">{{ tx('Position error') }}</span>
-            <span class="clock-value num">{{ correction ? '0 m' : formatLength(gpsState.positionError) }}</span>
+            <span class="clock-value num">{{ correction ? '0 m' : localizeNumerals(formatLength(gpsState.positionError)) }}</span>
             <span class="small">{{ correction ? tx('The correction keeps the satellite clock in step.') : tx('Growing by about 11.5 km every day.') }}</span>
           </div>
         </div>

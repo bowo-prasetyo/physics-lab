@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
@@ -144,7 +145,7 @@ useQuerySync({
         <div class="lab-side card">
           <div class="clock" role="timer" :aria-label="localizeExperimentText('Experiment clock', locale)">
             <span class="clock-label">{{ tx('Clock') }}</span>
-            <span class="clock-value num">{{ snapshot.t.toFixed(2) }}<small> s</small></span>
+            <span class="clock-value num">{{ fixed(snapshot.t, 2) }}<small> s</small></span>
             <span class="clock-status muted">{{ tx(status === 'finished' ? 'Run complete' : status === 'running' ? 'Running' : status === 'paused' ? 'Paused' : 'Ready') }}</span>
           </div>
 
@@ -185,7 +186,7 @@ useQuerySync({
             <div><dt>{{ tx('Position') }} <MathFormula tex="x" /></dt><dd class="num">{{ signed(snapshot.x) }} m</dd></div>
             <div><dt>{{ tx('Velocity') }} <MathFormula tex="v" /></dt><dd class="num">{{ signed(snapshot.v, 1) }} m/s</dd></div>
             <div><dt>{{ tx('Displacement') }} <MathFormula tex="\Delta x" /></dt><dd class="num">{{ signed(snapshot.displacement) }} m</dd></div>
-            <div><dt>{{ tx('Distance travelled') }} <MathFormula tex="s" /></dt><dd class="num">{{ snapshot.distance.toFixed(2) }} m</dd></div>
+            <div><dt>{{ tx('Distance travelled') }} <MathFormula tex="s" /></dt><dd class="num">{{ fixed(snapshot.distance, 2) }} m</dd></div>
             <template v-if="observerVelocity !== null">
               <div class="observer-readout"><dt>{{ tx('Observer measures') }} <MathFormula tex="x'" /></dt><dd class="num">{{ signed(snapshot.x - u * snapshot.t) }} m</dd></div>
               <div class="observer-readout"><dt>{{ tx('Observer measures') }} <MathFormula tex="v'" /></dt><dd class="num">{{ signed(snapshot.v - u, 1) }} m/s</dd></div>

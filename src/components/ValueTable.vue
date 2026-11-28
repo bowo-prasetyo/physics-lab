@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
@@ -31,7 +32,7 @@ const rows = computed(() => {
       <tbody>
         <tr>
           <th scope="row">x (m)</th>
-          <td v-for="row in rows" :key="row.t" class="num">{{ row.x.toFixed(1) }}</td>
+          <td v-for="row in rows" :key="row.t" class="num">{{ fixed(row.x, 1) }}</td>
         </tr>
       </tbody>
     </table>

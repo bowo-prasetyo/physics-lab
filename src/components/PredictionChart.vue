@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed, useId } from 'vue'
 import { niceCeil } from './chartScale'
 import { useLocale } from '@/composables/useLocale'
@@ -65,7 +66,7 @@ const description = computed(
         <line v-for="x in xTicks" :key="`gx${x}`" :x1="sx(x)" :x2="sx(x)" :y1="M.top" :y2="M.top + plotH" />
         <line v-for="y in yTicks" :key="`gy${y}`" :x1="M.left" :x2="M.left + plotW" :y1="sy(y)" :y2="sy(y)" />
       </g>
-      <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 18" class="tick">{{ x === 1 ? '1c' : x.toFixed(1) }}</text>
+      <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 18" class="tick">{{ x === 1 ? '1c' : fixed(x, 1) }}</text>
       <text v-for="y in yTicks" :key="`ly${y}`" :x="M.left - 8" :y="sy(y) + 4" class="tick y">{{ fmt(y) }}</text>
       <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ localizeExperimentText(xLabel, locale) }}</text>
       <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText(yLabel, locale) }}</text>
@@ -79,8 +80,8 @@ const description = computed(
     <details class="chart-data">
       <summary>{{ localizeExperimentText('View the plotted values as a table', locale) }}</summary>
       <div class="chart-scroll"><table><thead><tr><th scope="col">{{ localizeExperimentText('Model', locale) }}</th><th scope="col">{{ localizeExperimentText(xLabel, locale) }}</th><th scope="col">{{ localizeExperimentText(yLabel, locale) }}</th></tr></thead>
-        <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ localizeExperimentText(item.label, locale) }}</th><td>{{ point.x.toFixed(3) }}</td><td>{{ point.y.toFixed(3) }}</td></tr></template>
-          <tr v-if="measured !== null"><th scope="row">{{ localizeExperimentText('Measured', locale) }}</th><td>{{ marker.toFixed(3) }}</td><td>{{ measured.toFixed(3) }}</td></tr></tbody></table></div>
+        <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ localizeExperimentText(item.label, locale) }}</th><td>{{ fixed(point.x, 3) }}</td><td>{{ fixed(point.y, 3) }}</td></tr></template>
+          <tr v-if="measured !== null"><th scope="row">{{ localizeExperimentText('Measured', locale) }}</th><td>{{ fixed(marker, 3) }}</td><td>{{ fixed(measured, 3) }}</td></tr></tbody></table></div>
     </details>
     <figcaption class="legend">
       <span v-for="line in lines" :key="line.id"><i :class="['swatch', line.kind, { dashed: line.dashed }]" /> {{ localizeExperimentText(line.label, locale) }}</span>
