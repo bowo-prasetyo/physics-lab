@@ -28,7 +28,7 @@ for (const [name, engine] of engines) {
           const labelledBy = el.getAttribute('aria-labelledby')
           const referenced = labelledBy ? labelledBy.split(/\s+/).map((id) => document.getElementById(id)?.textContent ?? '').join(' ') : ''
           const label = el.getAttribute('aria-label') || referenced || el.getAttribute('title') ||
-            el.textContent || el.querySelector('img[alt]')?.getAttribute('alt') ||
+            el.textContent || el.closest('label')?.textContent || el.querySelector('img[alt]')?.getAttribute('alt') ||
             (el.id ? document.querySelector(`label[for="${CSS.escape(el.id)}"]`)?.textContent : '')
           return label?.trim() ? [] : [`${el.tagName.toLowerCase()}${el.id ? `#${el.id}` : ''}`]
         }),
