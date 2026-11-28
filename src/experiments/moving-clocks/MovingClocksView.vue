@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { coordinates, fixed } from '@/i18n/formatters'
 import LocalizedExperimentGuide from '@/components/LocalizedExperimentGuide.vue'
 import { getExperimentModuleEyebrow, experimentSectionLabel } from '@/i18n/experiment-metadata'
 import ShareExperiment from '@/components/ShareExperiment.vue'
@@ -119,8 +120,8 @@ const statusText = computed(() =>
 )
 
 const signed = (value: number, digits = 2) => {
-  const text = Math.abs(value).toFixed(digits)
-  return (value < 0 && Number(text) !== 0 ? '−' : '') + text
+  const rounded = Number(Math.abs(value).toFixed(digits))
+  return (value < 0 && rounded !== 0 ? '−' : '') + fixed(rounded, digits)
 }
 </script>
 
@@ -173,12 +174,12 @@ const signed = (value: number, digits = 2) => {
           <div class="clocks">
             <div class="clock-card earth">
               <span class="clock-name">{{ tx('Earth clock') }}</span>
-              <span class="clock-value num">{{ view.earth.tau.toFixed(2) }}<small> s</small></span>
+              <span class="clock-value num">{{ fixed(view.earth.tau, 2) }}<small> s</small></span>
               <span class="clock-note">{{ tx(frame === 'earth' ? 'at rest in this frame' : 'moving in this frame') }}</span>
             </div>
             <div class="clock-card ship">
               <span class="clock-name">{{ tx('Ship clock') }}</span>
-              <span class="clock-value num">{{ view.ship.tau.toFixed(2) }}<small> s</small></span>
+              <span class="clock-value num">{{ fixed(view.ship.tau, 2) }}<small> s</small></span>
               <span class="clock-note">{{ tx(frame === 'ship' ? 'at rest in this frame' : 'moving in this frame') }}</span>
             </div>
           </div>
@@ -202,16 +203,16 @@ const signed = (value: number, digits = 2) => {
           />
 
           <dl class="readouts">
-            <div><dt>{{ tx('Lorentz factor') }} <MathFormula tex="\gamma" /></dt><dd class="num">{{ lorentz.toFixed(3) }}</dd></div>
-            <div><dt>{{ tx('Moving clock ÷ resting clock') }}</dt><dd class="num">{{ (1 / lorentz).toFixed(3) }}</dd></div>
+            <div><dt>{{ tx('Lorentz factor') }} <MathFormula tex="\gamma" /></dt><dd class="num">{{ fixed(lorentz, 3) }}</dd></div>
+            <div><dt>{{ tx('Moving clock ÷ resting clock') }}</dt><dd class="num">{{ fixed((1 / lorentz), 3) }}</dd></div>
             <div v-if="simultaneity" class="other-now">
               <dt>{{ simultaneityLabel }}</dt>
-              <dd class="num">{{ view.otherNowMeetsHomeAt.toFixed(2) }} s</dd>
+              <dd class="num">{{ fixed(view.otherNowMeetsHomeAt, 2) }} s</dd>
             </div>
             <template v-if="advanced">
-              <div><dt>{{ tx('Ship event') }} <MathFormula tex="(t, x)" /></dt><dd class="num">({{ view.ship.t.toFixed(2) }}, {{ signed(view.ship.x) }})</dd></div>
-              <div><dt>{{ tx('Interval') }} <MathFormula tex="s^2 = t^2 - x^2" /></dt><dd class="num">{{ shipInterval.toFixed(2) }} s²</dd></div>
-              <div><dt>{{ tx('Ship clock squared') }} <MathFormula tex="\tau^2" /></dt><dd class="num">{{ (view.ship.tau ** 2).toFixed(2) }} s²</dd></div>
+              <div><dt>{{ tx('Ship event') }} <MathFormula tex="(t, x)" /></dt><dd class="num">{{ coordinates(fixed(view.ship.t, 2), signed(view.ship.x)) }}</dd></div>
+              <div><dt>{{ tx('Interval') }} <MathFormula tex="s^2 = t^2 - x^2" /></dt><dd class="num">{{ fixed(shipInterval, 2) }} s²</dd></div>
+              <div><dt>{{ tx('Ship clock squared') }} <MathFormula tex="\tau^2" /></dt><dd class="num">{{ fixed((view.ship.tau ** 2), 2) }} s²</dd></div>
             </template>
           </dl>
           <p class="units muted">{{ tx('Units: c = 1, so distances are in light-seconds (ls).') }}</p>

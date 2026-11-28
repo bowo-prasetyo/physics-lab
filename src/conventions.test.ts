@@ -35,6 +35,15 @@ describe('learning-path practice', () => {
 })
 
 describe('translation', () => {
+  it('formats numbers a learner reads in the active language: no toFixed inside template text', () => {
+    // fixed() and formatNumber() in i18n/formatters follow the language (0.93, 0,93); toFixed always writes 0.93.
+    // Attribute bindings such as SVG coordinates are not text, so only {{ }} interpolations are checked.
+    const offenders = files(SRC, '.vue')
+      .filter((path) => [...template(read(path)).matchAll(/\{\{([\s\S]*?)\}\}/g)].some((m) => /\.toFixed\(/.test(m[1] ?? '')))
+      .map(rel)
+    expect(offenders).toEqual([])
+  })
+
   /** Inline language checks and per-language objects in components bypass messages.ts and its key-parity tests. */
   const INLINE_LANGUAGE = /locale(\.value)?\s*===\s*'(en|id|ja)'|\{\s*en:\s*['{]/
 

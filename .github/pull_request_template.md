@@ -11,6 +11,7 @@
 - **On the thread:** how does it strengthen space, time and motion, rather than add a new topic?
 - **Predict, then evidence:** what does the learner predict, vary, observe and explain? Does anything reveal an answer before the evidence (including learning aids)?
 - **Practice:** does it add practice? Which steps, and are they still within the budget (2+ at Beginner, 3–7 at Advanced)? Is any of it scored? (It must not be.)
+- **Physics:** does it change a model in `src/physics/`? If so, which items of the change checklist in `docs/product/SCIENTIFIC_VALIDATION.md` did you cover (input domains, a limit or benchmark, invariants, sources for empirical values)?
 - **Privacy:** does it store or send anything about a learner? (Sending: never. Storing: only the ratified opt-in, device-local progress.)
 - **House rules:** does it change `CLAUDE.md`, the vision or a rule? If so, quote the product owner's sign-off here, or split that change into its own pull request.
 

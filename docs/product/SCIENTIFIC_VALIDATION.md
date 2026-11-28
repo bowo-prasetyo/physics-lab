@@ -77,6 +77,40 @@ data. Real-data inference remains outside the current experiment's scope.
   empirical inputs, approximations, synthetic data and numerical estimates in
   learner-facing explanations.
 
+## Sources of empirical values
+
+Values that come from measurement, with their source and uncertainty. The same note sits next to each constant in the code.
+
+| Value | Used | Source and uncertainty |
+|---|---|---|
+| Speed of light | 299 792 458 m/s | Exact by definition of the metre (SI, 1983) |
+| Gravitational constant G | 6.6743 × 10⁻¹¹ m³ kg⁻¹ s⁻² | CODATA 2018: 6.67430(15) × 10⁻¹¹ |
+| Solar mass | 1.98847 × 10³⁰ kg | IAU 2015 nominal GM☉ with CODATA 2018 G; ± 0.00007 × 10³⁰ |
+| Earth mass | 5.9722 × 10²⁴ kg | IAU 2009 system of astronomical constants; ± 0.0006 × 10²⁴ |
+| Earth GM | 3.986004418 × 10¹⁴ m³/s² | WGS 84 / IERS Conventions 2010; ± 8 × 10⁵ |
+| Earth mean radius | 6371 km | IUGG mean radius (6371.0088 km) |
+| Surface gravity in near-surface models | 9.81 m/s² | A rounded teaching value; standard gravity is 9.80665 m/s² exactly, and local g varies by about 0.5 % |
+| Sun radius | 6.957 × 10⁸ m | IAU 2015 Resolution B3 nominal value |
+| Sirius B | 1.018 M☉, 0.0084 R☉ | Bond et al. 2017, ApJ 840, 70; mass ± 0.011 M☉ |
+| GPS orbital radius | 26 560 km | GPS interface specification IS-GPS-200 (semi-major axis) |
+| Hubble constant (model) | 67.66 km/s/Mpc | Planck 2018 VI, TT,TE,EE+lowE+lensing+BAO; ± 0.42 |
+| Matter density Ωₘ (model) | 0.3111 | Planck 2018 VI, same combination; ± 0.0056 |
+| Radiation density Ωᵣ (model) | 9.2 × 10⁻⁵ | Derived from T_CMB with three massless neutrino species (about 9 × 10⁻⁵ for h = 0.6766) |
+| CMB temperature today | 2.7255 K | Fixsen 2009, ApJ 707, 916; ± 0.0006 K |
+
+Values quoted in learner-facing evidence and explanations:
+
+| Claim | Source |
+|---|---|
+| Light from sources at 0.99975c travels at c, to about 1 part in 10⁴ | Alväger et al. 1964, Physics Letters 12, 260 (CERN) |
+| Muons at γ ≈ 29.3 live 29.3 times longer, to about 0.1 % | Bailey et al. 1977, Nature 268, 301 (CERN muon storage ring) |
+| Light in flowing water is dragged by v(1 − 1/n²) | Fizeau 1851; the relativistic velocity addition to first order in v |
+| Fast electrons follow p = γmv, not mv | Bucherer 1908 |
+| LHC protons: about 7 000 mc at 0.999999991c | 6.8 TeV per proton (LHC Run 3, from 2022) and m_pc² = 0.938 GeV give γ ≈ 7 250 |
+| All bodies fall alike to about one part in 10¹⁵ | MICROSCOPE final results, Touboul et al. 2022, PRL 129, 121102 |
+| Hubble’s 1929 diagram had 24 galaxies | Hubble 1929, PNAS 15, 168 |
+| H₀ from nearby supernovae is about 73 km/s/Mpc | Riess et al. 2022, ApJL 934, L7: 73.04 ± 1.04 |
+
 ## Change checklist
 
 When changing a physics model, add or update tests for:

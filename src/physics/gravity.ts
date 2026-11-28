@@ -18,6 +18,7 @@ export const G = 6.6743e-11
 /** Gravitational acceleration at the Earth's surface used throughout Physica's near-surface models (m/s²). */
 export const EARTH_SURFACE_GRAVITY = 9.81
 export const SECONDS_PER_DAY = 86_400
+/** Solar mass (kg): (1.98847 ± 0.00007) × 10³⁰, from the IAU 2015 nominal GM☉ and CODATA 2018 G. */
 export const SOLAR_MASS = 1.98847e30
 
 const C2 = SPEED_OF_LIGHT * SPEED_OF_LIGHT
@@ -33,6 +34,10 @@ export interface Body {
   readonly hasSurface: boolean
 }
 
+/**
+ * Earth: mass (5.9722 ± 0.0006) × 10²⁴ kg (IAU 2009 system of astronomical constants), mean radius 6371 km (IUGG).
+ * Sun: nominal radius 6.957 × 10⁸ m (IAU 2015 Resolution B3). Sirius B: 1.018 solar masses, 0.0084 solar radii (Bond et al. 2017, ApJ 840, 70). A typical 1.4-solar-mass, 12 km neutron star; an illustrative black hole.
+ */
 export const BODIES: readonly Body[] = [
   { id: 'earth', name: 'Earth', mass: 5.9722e24, radius: 6.371e6, hasSurface: true },
   { id: 'sun', name: 'Sun', mass: SOLAR_MASS, radius: 6.957e8, hasSurface: true },
@@ -134,6 +139,7 @@ export interface GpsBreakdown {
 }
 
 /** Typical GPS orbit radius (m): about 20 200 km above the surface. */
+/** GPS orbital radius (m): semi-major axis of about 26 560 km (GPS interface specification IS-GPS-200). */
 export const GPS_ORBIT_RADIUS = 2.656e7
 
 /**

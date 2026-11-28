@@ -65,6 +65,21 @@ export function observedSignals(runs: readonly GravityRun[]): boolean {
   return clockRuns(runs).some((r) => r.altitudeA !== r.altitudeB && longEnough(r))
 }
 
+/** Black-hole clocks, one within 0.1 r_s of the horizon and 5 r_s or more apart in r, run once (the ruler readout shows at Advanced). */
+export function observedRulerDistance(runs: readonly GravityRun[]): boolean {
+  const rs = schwarzschildRadius(bodyById('black-hole').mass)
+  return clockRuns(runs).some(
+    (r) => r.body === 'black-hole' && Math.min(r.altitudeA, r.altitudeB) <= 0.1 * rs && Math.abs(r.altitudeB - r.altitudeA) >= 5 * rs && r.tEnd > 0,
+  )
+}
+
+export function rulerDistanceHint(runs: readonly GravityRun[]): string | null {
+  if (observedRulerDistance(runs)) return null
+  if (clockRuns(runs).some((r) => r.body === 'black-hole' && r.tEnd > 0)) return 'Put clock A at 0.01 r_s and clock B at 10 r_s (use the buttons), then run the clocks.'
+  if (runs.some((r) => r.tEnd > 0)) return 'Choose the black hole, put clock A at 0.01 r_s and clock B at 10 r_s, and run the clocks.'
+  return null
+}
+
 export const PREDICTIONS: readonly Prediction<GravityRun>[] = [
   {
     id: 'mountain',
@@ -159,5 +174,22 @@ export const PREDICTIONS: readonly Prediction<GravityRun>[] = [
       'factors, so the upper observer sees the lower clock run slow and the lower observer sees the upper clock run fast. Unlike two ' +
       'clocks in uniform relative motion, the situation is not symmetric: one clock really is deeper in the gravitational well.',
     observed: observedSignals,
+  },
+  {
+    id: 'ruler',
+    minLevel: 'advanced',
+    question:
+      'Near a 10-solar-mass black hole, clock A hangs at r = 1.01 rₛ and clock B at r = 10 rₛ, so r_B − r_A = 8.99 rₛ ≈ 266 km. Rulers laid end to end from A to B measure…',
+    task: 'Choose the black hole, put clock A at 0.01 r_s and clock B at 10 r_s, run the clocks, and compare “Ruler distance A to B” with “Difference in r, B − A”.',
+    options: [
+      { id: 'longer', label: 'More than 266 km' },
+      { id: 'equal', label: 'Exactly 266 km: the difference in r is the distance' },
+      { id: 'shorter', label: 'Less than 266 km: strong gravity squeezes the rulers' },
+    ],
+    correct: 'longer',
+    explanation:
+      'The rulers measure about 328 km, 24 % more. In Schwarzschild spacetime r is defined by the area of a sphere, 4πr², not by distances measured inwards: near the mass each step dr corresponds to a ruler length dr/√(1 − rₛ/r), so there is more room between two spheres than their radii suggest. Space itself is curved, and the effect grows towards the horizon. Far from the mass the two agree, as in Newtonian gravity.',
+    observed: observedRulerDistance,
+    hint: rulerDistanceHint,
   },
 ]

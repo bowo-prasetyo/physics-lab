@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed, onMounted, ref, useId } from 'vue'
 import { properTimeTicks, simultaneousTimeAt, type Event1D } from '@/physics'
 import { useLocale } from '@/composables/useLocale'
@@ -155,7 +156,7 @@ const description = computed(() => {
 
         <!-- This frame's "now" -->
         <line :x1="M.left" :x2="M.left + plotW" :y1="sy(t)" :y2="sy(t)" class="now" />
-        <text :x="M.left + 6" :y="sy(t) - 6 < M.top + 14 ? sy(t) + 16 : sy(t) - 6" class="now-label">{{ localizeExperimentText('Now in', locale) }} {{ localizeExperimentText(frameName, locale) }}: t = {{ t.toFixed(2) }} s</text>
+        <text :x="M.left + 6" :y="sy(t) - 6 < M.top + 14 ? sy(t) + 16 : sy(t) - 6" class="now-label">{{ localizeExperimentText('Now in', locale) }} {{ localizeExperimentText(frameName, locale) }}: t = {{ fixed(t, 2) }} s</text>
 
         <!-- Worldlines with a tick at every second of proper time -->
         <g v-for="line in lines" :key="line.id" :class="['worldline', line.kind]">
@@ -183,7 +184,7 @@ const description = computed(() => {
       <summary>{{ localizeExperimentText('Read the current spacetime measurements as a table', locale) }}</summary>
       <div class="table-scroll">
         <table><thead><tr><th scope="col">{{ localizeExperimentText('Observer', locale) }}</th><th scope="col">{{ localizeExperimentText('Velocity', locale) }}</th><th scope="col">{{ localizeExperimentText('Current event (t, x)', locale) }}</th><th scope="col">{{ localizeExperimentText('Proper time elapsed', locale) }}</th></tr></thead>
-          <tbody><tr v-for="line in lines" :key="line.id"><th scope="row">{{ localizeExperimentText(line.label, locale) }}</th><td>{{ line.velocity.toFixed(2) }}c</td><td>({{ line.now.t.toFixed(2) }} s, {{ line.now.x.toFixed(2) }} {{ localizeExperimentText('light-seconds', locale) }})</td><td>{{ line.tauNow.toFixed(2) }} s</td></tr></tbody>
+          <tbody><tr v-for="line in lines" :key="line.id"><th scope="row">{{ localizeExperimentText(line.label, locale) }}</th><td>{{ fixed(line.velocity, 2) }}c</td><td>({{ fixed(line.now.t, 2) }} s, {{ fixed(line.now.x, 2) }} {{ localizeExperimentText('light-seconds', locale) }})</td><td>{{ fixed(line.tauNow, 2) }} s</td></tr></tbody>
         </table>
       </div>
       <p class="muted small">{{ localizeExperimentText('The diagram’s horizontal and vertical axes are position and coordinate time in the selected frame. Proper time is what each moving clock accumulates along its own worldline.', locale) }}</p>

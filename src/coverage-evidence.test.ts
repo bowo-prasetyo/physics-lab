@@ -91,6 +91,7 @@ const EVIDENCE: Readonly<Record<string, Evidence>> = {
   // Module 5
   'Gravitational time dilation in the Schwarzschild exterior': [['/gravity/clock-rates', 'mountain']],
   'GPS gravitational and kinematic clock corrections': [['/gravity/clock-rates', 'gps'], ['/gravity/clock-rates', 'uncorrected']],
+  'Static spherical geometry and proper radial distance': [['/gravity/clock-rates', 'ruler']],
   'Light signals and clock rates near a Schwarzschild horizon': [['/gravity/clock-rates', 'horizon'], ['/gravity/clock-rates', 'agree']],
   'Timelike geodesics and free-fall orbits in Schwarzschild spacetime': [['/gravity/geodesic-motion', 'perturbed'], ['/gravity/geodesic-motion', 'circular']],
   'Periapsis precession and the Newtonian limit': [['/gravity/geodesic-motion', 'distance'], ['/gravity/geodesic-motion', 'mercury']],
@@ -99,25 +100,16 @@ const EVIDENCE: Readonly<Record<string, Evidence>> = {
   'Scale factor in homogeneous and isotropic FLRW models': [['/cosmology/evolving-space', 'centre'], ['/cosmology/evolving-space', 'bound']],
   'Redshift and Hubble expansion': [['/cosmology/evolving-space', 'faster']],
   'Matter-, radiation- and dark-energy-dominated model histories': [['/cosmology/evolving-space', 'age']],
+  'Limits of classical evolution as the scale factor approaches zero': [['/cosmology/evolving-space', 'breakdown']],
   'Accelerating and decelerating expansion': [['/cosmology/evolving-space', 'acceleration']],
   'The Hubble diagram: estimating H₀ from scattered data': [['/cosmology/evolving-space', 'hubble-diagram'], ['/cosmology/evolving-space', 'estimate']],
 }
-
-/**
- * Older claims that an experiment shows in its readouts but tests with no
- * prediction. They predate this check. The list may only shrink: give the
- * topic a prediction (and move it to EVIDENCE) or move it to plannedTopics.
- */
-const SHOWN_WITHOUT_PREDICTION: readonly string[] = [
-  'Static spherical geometry and proper radial distance',
-  'Limits of classical evolution as the scale factor approaches zero',
-]
 
 describe('coverage claims are backed by experiments', () => {
   const claims = MODULES.flatMap((m) => m.coverage.map((topic) => ({ module: m.number, topic })))
 
   it('every covered topic names the predictions where learners test it', () => {
-    const unbacked = claims.filter(({ topic }) => !(topic in EVIDENCE) && !SHOWN_WITHOUT_PREDICTION.includes(topic))
+    const unbacked = claims.filter(({ topic }) => !(topic in EVIDENCE))
     expect(unbacked, 'Covered without an experiment prediction: give it one, or list it under plannedTopics').toEqual([])
   })
 
@@ -131,11 +123,9 @@ describe('coverage claims are backed by experiments', () => {
     }
   })
 
-  it('has no stale entries, and the pre-existing exceptions only shrink', () => {
+  it('has no stale entries', () => {
     const topics = new Set(claims.map((c) => c.topic))
     expect(Object.keys(EVIDENCE).filter((t) => !topics.has(t))).toEqual([])
-    expect(SHOWN_WITHOUT_PREDICTION.filter((t) => !topics.has(t) || t in EVIDENCE)).toEqual([])
-    expect(SHOWN_WITHOUT_PREDICTION.length).toBeLessThanOrEqual(2)
   })
 
   it('every implemented experiment has a prediction bank here', () => {

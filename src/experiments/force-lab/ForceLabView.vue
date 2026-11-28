@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatNumber } from '@/i18n/formatters'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
@@ -121,7 +122,7 @@ const hints = computed(() => Object.fromEntries(PREDICTIONS.map((p) => {
 
 const fmt = (value: number, digits = 2) => {
   const v = Number(value.toFixed(digits))
-  return String(Object.is(v, -0) ? 0 : v)
+  return formatNumber(Object.is(v, -0) ? 0 : v)
 }
 // Before a run only the push is drawn; the model's forces appear once it has run.
 const drawnForces = computed(() => (shown.value ? shown.value.forces : result.value.forces.filter((force) => force.id === 'applied')))

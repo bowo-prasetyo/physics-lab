@@ -14,7 +14,7 @@
 
 /** 1 km/s/Mpc expressed in 1/Gyr. */
 export const KM_S_MPC_PER_GYR = (3.15576e16 /* s per Gyr */ / 3.0856775814913673e19) /* km per Mpc */
-/** Temperature of the cosmic microwave background today (K). */
+/** Temperature of the cosmic microwave background today (K): 2.7255 ± 0.0006 K (Fixsen 2009, ApJ 707, 916). */
 export const CMB_TEMPERATURE_TODAY = 2.7255
 
 export interface Cosmology {
@@ -28,7 +28,9 @@ export interface Cosmology {
   readonly omegaL: number
 }
 
+// Planck 2018 results VI, TT,TE,EE+lowE+lensing+BAO (A&A 641, A6, 2020, Table 2): H₀ = 67.66 ± 0.42 km/s/Mpc, Ωₘ = 0.3111 ± 0.0056.
 const H0_PLANCK = 67.66
+// Radiation (photons and three massless neutrino species) derived from T_CMB: Ωᵣh² ≈ 4.2 × 10⁻⁵, about 9 × 10⁻⁵ for h = 0.6766.
 const OMEGA_R_PLANCK = 9.2e-5
 const OMEGA_M_PLANCK = 0.3111
 

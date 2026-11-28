@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 /**
  * A 3D view of a journey through space (Three.js), with z pointing up as in
  * physics. It draws the axes, a floor grid, the path, the displacement arrow,
@@ -345,7 +346,7 @@ onBeforeUnmount(() => {
         <div><dt>{{ localizeExperimentText('Starting point (x, y, z)', locale) }}</dt><dd>{{ formatPoint(startPoint()) }} m</dd></div>
         <div><dt>{{ localizeExperimentText('Current point (x, y, z)', locale) }}</dt><dd>{{ formatPoint(endPoint()) }} m</dd></div>
         <div><dt>{{ localizeExperimentText('Displacement (Δx, Δy, Δz)', locale) }}</dt><dd>{{ formatPoint(displacement()) }} m</dd></div>
-        <div><dt>{{ locale === 'id' ? 'Jarak antara titik awal dan titik saat ini' : locale === 'ja' ? '始点と現在位置の距離' : 'Distance between start and current point' }}</dt><dd>{{ Math.hypot(displacement().x, displacement().y, displacement().z).toFixed(2) }} m</dd></div>
+        <div><dt>{{ locale === 'id' ? 'Jarak antara titik awal dan titik saat ini' : locale === 'ja' ? '始点と現在位置の距離' : 'Distance between start and current point' }}</dt><dd>{{ fixed(Math.hypot(displacement().x, displacement().y, displacement().z), 2) }} m</dd></div>
         <div><dt>{{ localizeExperimentText('Path points recorded', locale) }}</dt><dd>{{ points.length }}</dd></div>
       </dl>
       <p class="muted small">{{ localizeExperimentText('Coordinates use the standard axes: x east, y north, z up. The displacement is the straight-line change from the starting point, not the total path length.', locale) }}</p>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed, reactive, ref } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { getPilotExperiments, addParticipantResult, cohortToCsv, createEmptyCohort, newParticipantSeed, orderOptions, scoreQuestions, type AssessmentPhase, type PilotExperiment } from './pilot'
@@ -203,8 +204,8 @@ function exportCsv(): void {
         <div class="summary-grid">
           <div><strong>{{ totals.immediateCount }}</strong><span>{{ text.participants }}</span></div>
           <div><strong>{{ totals.delayedCount }}</strong><span>{{ text.delayedParticipants }}</span></div>
-          <div><strong>{{ totals.immediateCount ? (totals.preTotal / totals.immediateCount).toFixed(2) + ' / 2' : '—' }}</strong><span>{{ text.preAverage }}</span></div>
-          <div><strong>{{ totals.immediateCount ? (totals.postTotal / totals.immediateCount).toFixed(2) + ' / 2' : '—' }}</strong><span>{{ text.postAverage }}</span></div>
+          <div><strong>{{ totals.immediateCount ? fixed(totals.preTotal / totals.immediateCount, 2) + ' / 2' : '—' }}</strong><span>{{ text.preAverage }}</span></div>
+          <div><strong>{{ totals.immediateCount ? fixed(totals.postTotal / totals.immediateCount, 2) + ' / 2' : '—' }}</strong><span>{{ text.postAverage }}</span></div>
           <div><strong>{{ totals.immediateCount ? Math.round(totals.transferTotal / totals.immediateCount * 100) + '%' : '—' }}</strong><span>{{ text.transferRate }}</span></div>
         </div>
         <h3>{{ text.rubricDistribution }}</h3>

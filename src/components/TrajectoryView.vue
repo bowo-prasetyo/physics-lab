@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed, useId } from 'vue'
 import { stateAtTime, type ProjectileState } from '@/physics'
 import { useLocale } from '@/composables/useLocale'
@@ -164,12 +165,12 @@ const description = computed(() => {
       <summary>{{ localizeExperimentText('Read the current projectile measurements as a table', locale) }}</summary>
       <table><thead><tr><th scope="col">{{ localizeExperimentText('Object', locale) }}</th><th scope="col">{{ localizeExperimentText('Horizontal position', locale) }}</th><th scope="col">{{ localizeExperimentText('Height', locale) }}</th><th scope="col">{{ localizeExperimentText('Horizontal velocity', locale) }}</th><th scope="col">{{ localizeExperimentText('Vertical velocity', locale) }}</th></tr></thead>
         <tbody>
-          <tr v-if="ball"><th scope="row">{{ localizeExperimentText('Launched ball', locale) }}</th><td>{{ view(ball).x.toFixed(2) }} m</td><td>{{ ball.y.toFixed(2) }} m</td><td>{{ (ball.vx - u).toFixed(2) }} m/s</td><td>{{ ball.vy.toFixed(2) }} m/s</td></tr>
-          <tr v-if="droppedBall"><th scope="row">{{ localizeExperimentText('Dropped ball', locale) }}</th><td>{{ view(droppedBall).x.toFixed(2) }} m</td><td>{{ droppedBall.y.toFixed(2) }} m</td><td>{{ (droppedBall.vx - u).toFixed(2) }} m/s</td><td>{{ droppedBall.vy.toFixed(2) }} m/s</td></tr>
-          <tr v-if="!ball && !droppedBall"><th scope="row">{{ localizeExperimentText('Before launch', locale) }}</th><td>0.00 m</td><td>{{ height.toFixed(2) }} m</td><td>{{ localizeExperimentText('Not moving', locale) }}</td><td>{{ localizeExperimentText('Not moving', locale) }}</td></tr>
+          <tr v-if="ball"><th scope="row">{{ localizeExperimentText('Launched ball', locale) }}</th><td>{{ fixed(view(ball).x, 2) }} m</td><td>{{ fixed(ball.y, 2) }} m</td><td>{{ fixed((ball.vx - u), 2) }} m/s</td><td>{{ fixed(ball.vy, 2) }} m/s</td></tr>
+          <tr v-if="droppedBall"><th scope="row">{{ localizeExperimentText('Dropped ball', locale) }}</th><td>{{ fixed(view(droppedBall).x, 2) }} m</td><td>{{ fixed(droppedBall.y, 2) }} m</td><td>{{ fixed((droppedBall.vx - u), 2) }} m/s</td><td>{{ fixed(droppedBall.vy, 2) }} m/s</td></tr>
+          <tr v-if="!ball && !droppedBall"><th scope="row">{{ localizeExperimentText('Before launch', locale) }}</th><td>0.00 m</td><td>{{ fixed(height, 2) }} m</td><td>{{ localizeExperimentText('Not moving', locale) }}</td><td>{{ localizeExperimentText('Not moving', locale) }}</td></tr>
         </tbody>
       </table>
-      <p class="muted small">{{ localizeExperimentText('Positions and velocities are measured in', locale) }} {{ localizeExperimentText(frameVelocity === 0 ? 'the ground frame' : 'the moving observer’s frame', locale) }} at t = {{ t.toFixed(2) }} s.</p>
+      <p class="muted small">{{ localizeExperimentText('Positions and velocities are measured in', locale) }} {{ localizeExperimentText(frameVelocity === 0 ? 'the ground frame' : 'the moving observer’s frame', locale) }} at t = {{ fixed(t, 2) }} s.</p>
     </details>
   </figure>
 </template>

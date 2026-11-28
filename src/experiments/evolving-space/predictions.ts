@@ -2,7 +2,7 @@
 
 import type { Prediction } from '@/experiments/prediction'
 import { accelerationOnset, recessionSpeed, solveExpansion } from '@/physics'
-import { CENTRE_GALAXY, cosmologyById, type ModelId, type SpaceRecord } from './useEvolvingSpace'
+import { A_BREAKDOWN, CENTRE_GALAXY, cosmologyById, type ModelId, type SpaceRecord } from './useEvolvingSpace'
 
 // Each model's solution never changes, so solve it once.
 const solved = new Map<ModelId, ReturnType<typeof solveExpansion>>()
@@ -105,6 +105,17 @@ export function accelerationHint(record: SpaceRecord): string | null {
   if (observedAccelerationOnset(record)) return null
   if (record.runs.some((r) => r.model === 'our')) return 'Run our universe through the middle of its history (from about 4 to 12 billion years) and watch “Expansion is…”.'
   if (record.runs.length > 0) return 'Choose “Our universe” and run it from early times to today.'
+  return null
+}
+
+/** Looked at a model with a Big Bang at a scale factor below the point where its readouts stop (a < 10⁻⁶). */
+export function observedBreakdown(record: SpaceRecord): boolean {
+  return record.snapshots.some((s) => expansionOf(s.model).hasBigBang && expansionOf(s.model).scaleFactorAt(s.t) < A_BREAKDOWN)
+}
+
+export function breakdownHint(record: SpaceRecord): string | null {
+  if (observedBreakdown(record)) return null
+  if (record.snapshots.length > 0) return 'Press “Big Bang” (or run a universe all the way back) and read the readouts.'
   return null
 }
 
@@ -239,5 +250,21 @@ export const PREDICTIONS: readonly Prediction<SpaceRecord>[] = [
       'Nobel Prize in Physics.',
     observed: (r) => observedAccelerationOnset(merged(r)),
     hint: (r) => accelerationHint(merged(r)),
+  },
+  {
+    id: 'breakdown',
+    minLevel: 'advanced',
+    question: 'Run a universe backwards towards the Big Bang, where the scale factor a approaches 0. What does the model tell you about that moment?',
+    task: 'Press “Big Bang” (or run a universe all the way back) and read the readouts.',
+    options: [
+      { id: 'breaks', label: 'Nothing reliable: the model stops being trustworthy before a reaches 0' },
+      { id: 'point', label: 'That all the matter started at a single point in empty space' },
+      { id: 'before', label: 'What came before it: a contracting universe that bounced' },
+    ],
+    correct: 'breaks',
+    explanation:
+      'As a approaches 0 the model’s density and temperature grow without limit, and its readouts stop: here at a = 10⁻⁶, earlier than the model formally ends. Classical general relativity predicts its own failure there; quantum effects of gravity should matter long before a = 0. The Big Bang in the model is not an explosion from a point into empty space: the model describes all of space being denser everywhere at once, and it says nothing about what, if anything, came before. Bounces and other beginnings are proposals, not results of this model.',
+    observed: (r) => observedBreakdown(merged(r)),
+    hint: (r) => breakdownHint(merged(r)),
   },
 ]

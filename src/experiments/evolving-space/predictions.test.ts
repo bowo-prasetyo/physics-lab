@@ -93,3 +93,12 @@ describe('Hubble diagram predictions', () => {
     expect(estimateHint(withCounts([32]))).toMatch(/Start again/)
   })
 })
+
+describe('the breakdown prediction', () => {
+  it('needs a look at a Big Bang model below a = 10⁻⁶; a model without a Big Bang does not count', async () => {
+    const { observedBreakdown } = await import('./predictions')
+    expect(observedBreakdown(record([], [{ model: 'our', t: 0 }]))).toBe(true)
+    expect(observedBreakdown(record([], [{ model: 'our', t: 13.8 }]))).toBe(false)
+    expect(observedBreakdown(record([], [{ model: 'lambda', t: -20 }]))).toBe(false)
+  })
+})

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { fixed } from '@/i18n/formatters'
 import { computed, ref, useId } from 'vue'
 import { useRoute } from 'vue-router'
 import ExperimentSupport from '@/components/ExperimentSupport.vue'
@@ -85,9 +86,9 @@ const OUTCOME_TEXT: Record<OrbitOutcome, string> = {
   escape: 'Escapes: it never comes back',
   crash: 'Crashes: the path meets the Earth’s surface',
 }
-const km = (metres: number) => `${(metres / 1000).toFixed(2)} km/s`
-const earthRadii = (metres: number) => `${(metres / EARTH_RADIUS).toFixed(2)} R⊕`
-const hours = (seconds: number | null | undefined) => (seconds == null ? '—' : `${(seconds / 3600).toFixed(2)} h`)
+const km = (metres: number) => `${fixed(metres / 1000, 2)} km/s`
+const earthRadii = (metres: number) => `${fixed(metres / EARTH_RADIUS, 2)} R⊕`
+const hours = (seconds: number | null | undefined) => (seconds == null ? '—' : `${fixed(seconds / 3600, 2)} h`)
 const needed = computed(() => (shown.value ? centripetalAcceleration(shown.value.orbit.speed, shown.value.radius * EARTH_RADIUS) : 0))
 const gravity = computed(() => (shown.value ? gravitationalAcceleration(EARTH_GM, shown.value.radius * EARTH_RADIUS) : 0))
 // Energy per kilogram at the closest and (for bound orbits) farthest points: the total is the same at both.
@@ -98,7 +99,7 @@ const energyPoints = computed(() => {
   const farthest = Number.isFinite(s.orbit.maxRadius) ? orbitEnergyAt(EARTH_GM, s.orbit.maxRadius, s.orbit.energy) : null
   return { closest, farthest }
 })
-const mj = (joulesPerKg: number) => (joulesPerKg / 1e6).toFixed(2)
+const mj = (joulesPerKg: number) => fixed(joulesPerKg / 1e6, 2)
 </script>
 
 <template>
@@ -156,8 +157,8 @@ const mj = (joulesPerKg: number) => (joulesPerKg / 1e6).toFixed(2)
           </div>
           <div v-if="shown" class="readouts" aria-live="polite">
             <div class="wide"><span>{{ tx('Outcome') }}</span><strong>{{ tx(OUTCOME_TEXT[shown.orbit.outcome]) }}</strong></div>
-            <div><span>{{ tx('Acceleration a circle needs, v²/r') }}</span><strong>{{ needed.toFixed(2) }} m/s²</strong></div>
-            <div><span>{{ tx('Gravity’s acceleration here, GM/r²') }}</span><strong>{{ gravity.toFixed(2) }} m/s²</strong></div>
+            <div><span>{{ tx('Acceleration a circle needs, v²/r') }}</span><strong>{{ fixed(needed, 2) }} m/s²</strong></div>
+            <div><span>{{ tx('Gravity’s acceleration here, GM/r²') }}</span><strong>{{ fixed(gravity, 2) }} m/s²</strong></div>
             <div><span>{{ tx('Launch speed') }}</span><strong>{{ km(shown.orbit.speed) }}</strong></div>
             <div><span>{{ tx('Period') }}</span><strong>{{ hours(shown.orbit.period) }}</strong></div>
             <template v-if="intermediate">
@@ -167,7 +168,7 @@ const mj = (joulesPerKg: number) => (joulesPerKg / 1e6).toFixed(2)
             </template>
             <template v-if="advanced">
               <div><span>{{ tx('Escape speed here') }}</span><strong>{{ km(escapeSpeed(EARTH_GM, shown.radius * EARTH_RADIUS)) }}</strong></div>
-              <div><span>{{ tx('Eccentricity') }}</span><strong>{{ shown.orbit.eccentricity.toFixed(3) }}</strong></div>
+              <div><span>{{ tx('Eccentricity') }}</span><strong>{{ fixed(shown.orbit.eccentricity, 3) }}</strong></div>
             </template>
           </div>
           <div v-if="shown && intermediate && energyPoints" class="energy-table">
@@ -185,9 +186,9 @@ const mj = (joulesPerKg: number) => (joulesPerKg / 1e6).toFixed(2)
           <p class="small muted">{{ tx('Arrows show directions at the launch point; they are not to scale. The Earth and the orbit are drawn to scale.') }}</p>
         </div>
         <aside class="card controls">
-          <label class="control-label" :for="`${id}-radius`"><span>{{ tx('Launch distance from the Earth’s centre') }}</span><strong>{{ radius.toFixed(1) }} R⊕</strong></label>
+          <label class="control-label" :for="`${id}-radius`"><span>{{ tx('Launch distance from the Earth’s centre') }}</span><strong>{{ fixed(radius, 1) }} R⊕</strong></label>
           <input :id="`${id}-radius`" v-model.number="radius" type="range" v-bind="RADIUS" />
-          <label class="control-label" :for="`${id}-speed`"><span>{{ tx('Launch speed') }}</span><strong>{{ speedFactor.toFixed(2) }} {{ tx('× circular speed') }}</strong></label>
+          <label class="control-label" :for="`${id}-speed`"><span>{{ tx('Launch speed') }}</span><strong>{{ fixed(speedFactor, 2) }} {{ tx('× circular speed') }}</strong></label>
           <input :id="`${id}-speed`" v-model.number="speedFactor" type="range" v-bind="SPEED" />
           <button class="btn btn-primary" type="button" @click="launch">{{ tx('Launch') }}</button>
           <p class="small muted">{{ tx('R⊕ is the Earth’s radius, 6371 km. The launch is always horizontal: at right angles to the line to the Earth’s centre.') }}</p>
@@ -200,7 +201,7 @@ const mj = (joulesPerKg: number) => (joulesPerKg / 1e6).toFixed(2)
             <thead><tr><th>#</th><th>{{ tx('Launch distance from the Earth’s centre') }}</th><th>{{ tx('Launch speed') }}</th><th>{{ tx('Outcome') }}</th><th>{{ tx('Period') }}</th></tr></thead>
             <tbody>
               <tr v-for="(run, i) in runs" :key="i">
-                <td>{{ i + 1 }}</td><td>{{ run.radius.toFixed(1) }} R⊕</td><td>{{ run.speedFactor.toFixed(2) }} {{ tx('× circular speed') }}</td>
+                <td>{{ i + 1 }}</td><td>{{ fixed(run.radius, 1) }} R⊕</td><td>{{ fixed(run.speedFactor, 2) }} {{ tx('× circular speed') }}</td>
                 <td>{{ tx(OUTCOME_TEXT[run.outcome]) }}</td><td>{{ hours(run.period) }}</td>
               </tr>
             </tbody>
