@@ -2,7 +2,7 @@
 
 ## Why this plan exists
 
-Physica has fourteen experiments and no evidence yet about whether any of them improves understanding. The roadmap currently builds first and measures later (see its "Now" section); this plan is kept ready so that the first cohort can run as soon as a teacher can host a session, and in any case before Physica starts a new thread. This plan describes how to run the first cohorts with the in-app pilot (`/assessment-pilot`) and how to turn the results into decisions.
+Physica has no evidence yet about whether any of its experiments improves understanding. The roadmap currently builds first and measures later (see its "Now" section); this plan is kept ready so that the first cohort can run as soon as a teacher can host a session, and in any case before Physica starts a new thread. This plan describes how to run the first cohorts with the in-app pilot (`/assessment-pilot`) and how to turn the results into decisions.
 
 It is a small, descriptive pilot. It can show whether learners' answers and explanations improve after an experiment, and where they get stuck. It cannot show that Physica *causes* the improvement: there is no control group, and the delayed check is not matched to individuals. See [Learning effectiveness metrics](LEARNING_EFFECTIVENESS.md) for the measurement framework and privacy principles.
 
