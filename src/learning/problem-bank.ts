@@ -1422,7 +1422,7 @@ export function parseNumericAnswer(raw: string): number | null {
   const text = raw.trim().replace(/[\s\u2009\u202f]/g, '').replace(',', '.').replace(/[\u2212\u2013\u2014\u2010]/g, '-')
   // Accept ordinary decimal and scientific notation, not JavaScript-only
   // numeric syntaxes such as hexadecimal, binary or Infinity.
-  if (!/^[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?$/.test(text)) return null
+  if (!/^[+-]?(?:\d+(?:\\.\d*)?|\\.\d+)(?:[eE][+-]?\d+)?$/.test(text)) return null
   const value = Number(text)
   return Number.isFinite(value) ? value : null
 }
