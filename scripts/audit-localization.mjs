@@ -75,13 +75,24 @@ async function collectVueFiles(directory) {
   return files.sort()
 }
 
+/** Find precision formatting inside Vue components that bypasses locale-aware display helpers. */
+export function findUnlocalizedPrecisionOutput(source, file = '<source>') {
+  return [...source.matchAll(/\.toPrecision\s*\(/g)].map((match) => ({
+    file,
+    line: source.slice(0, match.index).split('\n').length,
+    expression: match[0],
+  }))
+}
+
 export async function runAudit({ root = ROOT, outputDir = OUTPUT_DIR } = {}) {
   const files = await collectVueFiles(resolve(root, 'src'))
   const candidates = []
+  const numericViolations = []
 
   for (const absolutePath of files) {
     const source = await readFile(absolutePath, 'utf8')
     const file = relative(root, absolutePath).split('\\').join('/')
+    numericViolations.push(...findUnlocalizedPrecisionOutput(source, file))
     const { descriptor, errors } = parseSfc(source, { filename: file })
     if (errors.length) {
       throw new Error(`Could not parse ${file}: ${errors.map(error => error.message).join('; ')}`)
@@ -92,6 +103,11 @@ export async function runAudit({ root = ROOT, outputDir = OUTPUT_DIR } = {}) {
       file,
       descriptor.template.loc.start.line - 1,
     ))
+  }
+
+  if (numericViolations.length) {
+    const details = numericViolations.map(item => item.file + ':L' + item.line).join(', ')
+    throw new Error('Unlocalized numeric precision output found: ' + details + '. Use significant() or fixed() from @/i18n/formatters.')
   }
 
   const unique = [...new Map(candidates.map(item => [

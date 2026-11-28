@@ -6,13 +6,14 @@ import { exactFlightTime, exactRange, terminalSpeed, type LaunchParams, type Pla
 import type { Level } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentMathText } from '@/i18n/experiment-math'
+import { significant } from '@/i18n/formatters'
 
 const { locale } = useLocale()
 const tx = (value: string) => localizeExperimentMathText(value, locale.value)
 
 const props = defineProps<{ level: Level; params: LaunchParams; planet: Planet; dragApplies: boolean; bestAngle: number | null }>()
 
-const f = (x: number, digits = 3) => String(Number(x.toPrecision(digits)))
+const f = (x: number, digits = 3) => significant(x, digits, { useGrouping: false })
 const theta = computed(() => (props.params.angleDeg * Math.PI) / 180)
 const vx = computed(() => props.params.speed * Math.cos(theta.value))
 const vy = computed(() => props.params.speed * Math.sin(theta.value))

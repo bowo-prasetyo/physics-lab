@@ -20,7 +20,7 @@ import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
-import { formatNumber } from '@/i18n/formatters'
+import { formatNumber, significant } from '@/i18n/formatters'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
@@ -124,10 +124,7 @@ const energy = computed(() => {
 })
 const bestAngle = computed(() => (advanced.value ? optimalAngle({ speed: speed.value, height: height.value, g: params.value.g, k: params.value.k }, 0.01) : null))
 
-const fmt = (x: number, digits = 3) => {
-  const v = Number(x.toPrecision(digits))
-  return (v < 0 ? '−' : '') + Math.abs(v).toLocaleString('en-US', { maximumSignificantDigits: digits })
-}
+const fmt = (x: number, digits = 3) => significant(x, digits)
 const dropDifference = computed(() => {
   if (!end.value || !dropped.value || status.value !== 'landed') return null
   const d = end.value.t - (dropped.value.at(-1) as ProjectileState).t

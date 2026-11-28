@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue'
+import { significant } from '@/i18n/formatters'
 import { staticClockDeficit, type Body } from '@/physics'
 import { niceCeil } from './chartScale'
 import { formatLength } from '@/experiments/gravity-clocks/format'
@@ -59,7 +60,7 @@ const xTicks = computed(() => {
   return ticks
 })
 const yTicks = computed(() => [0, 0.25, 0.5, 0.75, 1].map((f) => f * yMax.value))
-const fmtY = (v: number) => String(Number(v.toPrecision(3)))
+const fmtY = (v: number) => significant(v, 3)
 
 const markers = computed(() =>
   [
@@ -113,8 +114,8 @@ const description = computed(() => {
     <details class="chart-data">
       <summary>{{ localizeExperimentText('Read the clock comparisons as a table', locale) }}</summary>
       <table><thead><tr><th scope="col">{{ localizeExperimentText('Clock', locale) }}</th><th scope="col">{{ localizeExperimentText('Altitude', locale) }}</th><th scope="col">{{ localizeExperimentText('Clock-rate deficit', locale) }}</th></tr></thead>
-        <tbody><tr><th scope="row">A</th><td>{{ formatLength(altitudeA) }}</td><td>{{ (deficitAt(altitudeA) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr>
-          <tr><th scope="row">B</th><td>{{ formatLength(altitudeB) }}</td><td>{{ (deficitAt(altitudeB) * unit.scale).toPrecision(5) }} {{ unit.name }}</td></tr></tbody>
+        <tbody><tr><th scope="row">A</th><td>{{ formatLength(altitudeA) }}</td><td>{{ significant(deficitAt(altitudeA) * unit.scale, 5) }} {{ unit.name }}</td></tr>
+          <tr><th scope="row">B</th><td>{{ formatLength(altitudeB) }}</td><td>{{ significant(deficitAt(altitudeB) * unit.scale, 5) }} {{ unit.name }}</td></tr></tbody>
       </table>
       <p class="muted small">{{ localizeExperimentText('A positive deficit means the clock runs slower than a clock infinitely far from this body, under the static Schwarzschild model.', locale) }}</p>
     </details>

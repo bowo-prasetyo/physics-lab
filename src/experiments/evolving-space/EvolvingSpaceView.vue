@@ -33,7 +33,7 @@ import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
-import { formatNumber } from '@/i18n/formatters'
+import { formatNumber, significant } from '@/i18n/formatters'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
@@ -114,7 +114,7 @@ const lineTo = (slope: number) => {
   return { x2: hx(d), y2: hy(slope * d) }
 }
 
-const sig = (x: number, digits = 3) => formatNumber(Number(x.toPrecision(digits)), { maximumSignificantDigits: digits })
+const sig = (x: number, digits = 3) => significant(x, digits)
 const expansionWord = computed(() => {
   const q = readings.value.q
   if (q === null) return '—'

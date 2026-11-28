@@ -1,7 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { extractTemplateCandidates, isReviewableCopy } from '../../scripts/audit-localization.mjs'
+import { extractTemplateCandidates, findUnlocalizedPrecisionOutput, isReviewableCopy } from '../../scripts/audit-localization.mjs'
 
 describe('localization source audit', () => {
+  it('detects precision-based numeric output that bypasses locale-aware formatters', () => {
+    expect(findUnlocalizedPrecisionOutput('<span>{{ value.toPrecision(4) }}</span>\nconst path = point.toPrecision(3)', 'src/components/Example.vue')).toEqual([
+      { file: 'src/components/Example.vue', line: 1, expression: '.toPrecision(' },
+      { file: 'src/components/Example.vue', line: 2, expression: '.toPrecision(' },
+    ])
+    expect(findUnlocalizedPrecisionOutput('const rounded = value.toPrecision(12)', 'src/math.ts')).toHaveLength(1)
+    expect(findUnlocalizedPrecisionOutput('<span>{{ significant(value, 4) }}</span>')).toEqual([])
+  })
+
   it('keeps likely user-facing Latin copy while ignoring symbols and numeric values', () => {
     expect(isReviewableCopy('Horizontal velocity')).toBe(true)
     expect(isReviewableCopy('aria-label')).toBe(true)

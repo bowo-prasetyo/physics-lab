@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { coordinates, fixed, formatNumber, getIntlLocale, localizeNumerals } from './formatters'
+import { coordinates, fixed, formatNumber, getIntlLocale, localizeNumerals, roundSignificant, significant } from './formatters'
 import { setLocale } from './index'
 
 afterEach(() => setLocale('en'))
@@ -31,6 +31,22 @@ describe('numbers a learner reads', () => {
     setLocale('id')
     expect(fixed(0.9286, 3)).toBe('0,929')
     expect(fixed(2, 2)).toBe('2,00')
+  })
+
+  it('significant() formats significant figures using the active locale', () => {
+    expect(significant(0.000123456, 3)).toBe('0.000123')
+    setLocale('id')
+    expect(significant(0.000123456, 3)).toBe('0,000123')
+    expect(significant(12345.6, 4)).toBe('12.350')
+    expect(significant(12345.6, 4, { useGrouping: false })).toBe('12350')
+    setLocale('ja')
+    expect(significant(12345.6, 4)).toBe('12,350')
+  })
+
+  it('roundSignificant() rounds axis values without changing their numeric type', () => {
+    expect(roundSignificant(1.234567, 4)).toBe(1.235)
+    expect(roundSignificant(0.000123456, 3)).toBe(0.000123)
+    expect(roundSignificant(0, 3)).toBe(0)
   })
 
   it('localizeNumerals() rewrites the numbers inside a formatted string, and nothing else', () => {

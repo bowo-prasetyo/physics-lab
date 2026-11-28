@@ -20,7 +20,7 @@ import { useLevel } from '@/composables/useLevel'
 import { atLeast, isLevel } from '@/levels'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
-import { formatNumber } from '@/i18n/formatters'
+import { formatNumber, significant } from '@/i18n/formatters'
 import { localizePredictions } from '@/i18n/experiment-content'
 
 const route = useRoute()
@@ -76,7 +76,7 @@ const graphTime = computed(() => Math.max(10, state.value.t))
 const phasePoints = computed(() => samples.value.slice(-400))
 const omegaMax = computed(() => Math.sqrt((2 * planet.value.g * (1 - Math.cos((amplitude.value * Math.PI) / 180))) / length.value))
 
-const fmt = (x: number, digits = 4) => String(Number(x.toPrecision(digits)))
+const fmt = (x: number, digits = 4) => significant(x, digits)
 function formatDrift(secondsPerDay: number): string {
   const abs = Math.abs(secondsPerDay)
   const word = tx(secondsPerDay < 0 ? 'loses' : 'gains')
