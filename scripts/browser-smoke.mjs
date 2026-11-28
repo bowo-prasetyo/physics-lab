@@ -26,7 +26,7 @@ for (const [name, engine] of engines) {
       const unnamed = await page.locator('a:visible, button:visible, input:visible, select:visible, textarea:visible, [role="button"]:visible, [role="link"]:visible').evaluateAll((elements) =>
         elements.flatMap((el) => {
           const labelledBy = el.getAttribute('aria-labelledby')
-          const referenced = labelledBy ? labelledBy.split(/\\s+/).map((id) => document.getElementById(id)?.textContent ?? '').join(' ') : ''
+          const referenced = labelledBy ? labelledBy.split(/\s+/).map((id) => document.getElementById(id)?.textContent ?? '').join(' ') : ''
           const label = el.getAttribute('aria-label') || referenced || el.getAttribute('title') ||
             el.textContent || el.querySelector('img[alt]')?.getAttribute('alt') ||
             (el.id ? document.querySelector(`label[for="${CSS.escape(el.id)}"]`)?.textContent : '')
@@ -43,7 +43,7 @@ for (const [name, engine] of engines) {
       assert.ok(focused, `${name} ${viewport.label}: keyboard focus reaches a visible control`)
       assert.deepEqual(pageErrors, [], `${name} ${viewport.label}: no uncaught page errors`)
       await page.close()
-      process.stdout.write(`PASS ${name} ${viewport.label}\\n`)
+      process.stdout.write(`PASS ${name} ${viewport.label}\n`)
     }
   } finally {
     await browser.close()
