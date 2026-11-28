@@ -58,7 +58,7 @@ const lastRunKey = ref<string | null>(null)
 const shown = computed(() => lastRunKey.value === setupKey.value)
 
 function runExperiment() {
-  runs.value = [...runs.value, { force: force.value, mass: mass.value, acceleration: acceleration.value }]
+  runs.value = [...runs.value, { force: force.value, mass: mass.value, acceleration: acceleration.value, time: time.value, displacement: displacement.value }]
   lastRunKey.value = setupKey.value
 }
 </script>
@@ -102,9 +102,9 @@ function runExperiment() {
           <p v-if="runs.length === 0" class="muted">{{ localizeExperimentText('Run at least two carefully chosen cases to reveal a relationship.', locale) }}</p>
           <div v-else class="table-scroll">
             <table>
-              <thead><tr><th>{{ tx('Trial') }}</th><th>{{ tx('Net force') }}</th><th>{{ tx('Mass') }}</th><th>{{ tx('Acceleration') }}</th></tr></thead>
+              <thead><tr><th>{{ tx('Trial') }}</th><th>{{ tx('Net force') }}</th><th>{{ tx('Mass') }}</th><th>{{ tx('Acceleration') }}</th><th>{{ tx('Elapsed time') }}</th><th>{{ tx('Displacement') }}</th></tr></thead>
               <tbody>
-                <tr v-for="(run, i) in runs" :key="i"><td>{{ i + 1 }}</td><td>{{ run.force }} N</td><td>{{ run.mass }} kg</td><td>{{ fmt(run.acceleration) }} m/s²</td></tr>
+                <tr v-for="(run, i) in runs" :key="i"><td>{{ i + 1 }}</td><td>{{ run.force }} N</td><td>{{ run.mass }} kg</td><td>{{ fmt(run.acceleration) }} m/s²</td><td>{{ run.time }} s</td><td>{{ fmt(run.displacement) }} m</td></tr>
               </tbody>
             </table>
           </div>

@@ -1,20 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { IMPLEMENTED_EXPERIMENTS, MODULES } from '@/modules'
-import type { Prediction } from '@/experiments/prediction'
-import { PREDICTIONS as spaceVsTime } from '@/experiments/space-vs-time/predictions'
-import { PREDICTIONS as displacement3d } from '@/experiments/displacement3d/predictions'
-import { PREDICTIONS as pendulum } from '@/experiments/pendulum/predictions'
-import { PREDICTIONS as newtonian } from '@/experiments/newtonian/predictions'
-import { PREDICTIONS as forceLab } from '@/experiments/force-lab/predictions'
-import { PREDICTIONS as momentumCollisions } from '@/experiments/momentum-collisions/predictions'
-import { PREDICTIONS as projectile } from '@/experiments/projectile/predictions'
-import { PREDICTIONS as circularOrbits } from '@/experiments/circular-orbits/predictions'
-import { PREDICTIONS as movingClocks } from '@/experiments/moving-clocks/predictions'
-import { PREDICTIONS as twoPerspectives } from '@/experiments/two-perspectives/predictions'
-import { PREDICTIONS as lengthContraction } from '@/experiments/length-contraction/predictions'
-import { PREDICTIONS as gravityClocks } from '@/experiments/gravity-clocks/predictions'
-import { PREDICTIONS as geodesicMotion } from '@/experiments/geodesic-motion/predictions'
-import { PREDICTIONS as evolvingSpace } from '@/experiments/evolving-space/predictions'
+import { PREDICTION_BANKS as BANKS } from '@/experiments/prediction-banks'
 
 /**
  * Honest coverage: a module lists a topic as covered only when an experiment
@@ -27,26 +13,6 @@ import { PREDICTIONS as evolvingSpace } from '@/experiments/evolving-space/predi
  * the work-and-energy topics (#92) and widened to every module after the
  * Module 4–6 additions (#96) claimed topics backed only by practice.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Bank = readonly Prediction<any>[]
-
-const BANKS: Readonly<Record<string, Bank>> = {
-  '/space/space-vs-time': spaceVsTime,
-  '/space/displacement-3d': displacement3d,
-  '/time/pendulum': pendulum,
-  '/mechanics/newtonian': newtonian,
-  '/mechanics/force-lab': forceLab,
-  '/mechanics/momentum-collisions': momentumCollisions,
-  '/mechanics/projectile': projectile,
-  '/mechanics/circular-orbits': circularOrbits,
-  '/relativity/moving-clocks': movingClocks,
-  '/relativity/two-perspectives': twoPerspectives,
-  '/relativity/length-contraction': lengthContraction,
-  '/gravity/clock-rates': gravityClocks,
-  '/gravity/geodesic-motion': geodesicMotion,
-  '/cosmology/evolving-space': evolvingSpace,
-}
-
 type Evidence = readonly (readonly [path: string, prediction: string])[]
 
 const EVIDENCE: Readonly<Record<string, Evidence>> = {
@@ -61,7 +27,7 @@ const EVIDENCE: Readonly<Record<string, Evidence>> = {
   'Pendulum dynamics and clock calibration': [['/time/pendulum', 'mass'], ['/time/pendulum', 'moon']],
   'Small-angle approximation and exact pendulum period': [['/time/pendulum', 'amplitude']],
   // Module 3
-  'Newton’s second law: net force, mass and acceleration': [['/mechanics/newtonian', 'mass'], ['/mechanics/newtonian', 'force']],
+  'Newton’s second law: net force, mass and acceleration': [['/mechanics/newtonian', 'mass'], ['/mechanics/newtonian', 'force'], ['/mechanics/newtonian', 'ratio']],
   'Free-body diagrams and multiple forces': [['/mechanics/force-lab', 'held'], ['/mechanics/force-lab', 'incline-normal']],
   'Static and kinetic friction, and force components on an inclined plane': [['/mechanics/force-lab', 'breakaway'], ['/mechanics/force-lab', 'incline-normal'], ['/mechanics/force-lab', 'mass-independence']],
   'Linear momentum and impulse': [['/mechanics/momentum-collisions', 'stick'], ['/mechanics/momentum-collisions', 'heavy-light']],
