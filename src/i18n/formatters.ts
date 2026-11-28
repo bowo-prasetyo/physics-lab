@@ -30,6 +30,18 @@ export function fixed(value: number, digits: number): string {
   return formatNumber(value, { minimumFractionDigits: digits, maximumFractionDigits: digits })
 }
 
+/** Format a measured value to a consistent number of significant figures. */
+export function significant(value: number, digits: number): string {
+  return formatNumber(value, { maximumSignificantDigits: digits })
+}
+
+/** Round a numeric axis tick without converting it to display text. */
+export function roundSignificant(value: number, digits: number): number {
+  if (value === 0 || !Number.isFinite(value)) return value
+  const factor = 10 ** (digits - 1 - Math.floor(Math.log10(Math.abs(value))))
+  return Math.round(value * factor) / factor
+}
+
 function separators(): { decimal: string; group: string } {
   const parts = new Intl.NumberFormat(getIntlLocale()).formatToParts(12345.6)
   return { decimal: parts.find((p) => p.type === 'decimal')?.value ?? '.', group: parts.find((p) => p.type === 'group')?.value ?? ',' }

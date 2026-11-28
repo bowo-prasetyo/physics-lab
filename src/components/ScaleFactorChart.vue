@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fixed } from '@/i18n/formatters'
+import { fixed, formatNumber, significant } from '@/i18n/formatters'
 import { computed, useId } from 'vue'
 import type { Expansion } from '@/physics'
 import { niceCeil } from './chartScale'
@@ -67,8 +67,8 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
         <line v-for="t in xTicks" :key="`gx${t}`" :x1="sx(t)" :x2="sx(t)" :y1="M.top" :y2="M.top + plotH" />
         <line v-for="a in yTicks" :key="`gy${a}`" :x1="M.left" :x2="M.left + plotW" :y1="sy(a)" :y2="sy(a)" />
       </g>
-      <text v-for="t in xTicks" :key="`lx${t}`" :x="sx(t)" :y="M.top + plotH + 18" class="tick">{{ t }}</text>
-      <text v-for="a in yTicks" :key="`ly${a}`" :x="M.left - 8" :y="sy(a) + 4" class="tick y">{{ Number(a.toPrecision(3)) }}</text>
+      <text v-for="t in xTicks" :key="`lx${t}`" :x="sx(t)" :y="M.top + plotH + 18" class="tick">{{ formatNumber(t, { maximumFractionDigits: 0 }) }}</text>
+      <text v-for="a in yTicks" :key="`ly${a}`" :x="M.left - 8" :y="sy(a) + 4" class="tick y">{{ significant(a, 3) }}</text>
       <text :x="M.left + plotW / 2" :y="H - 6" class="axis-title">{{ localizeExperimentText(xLabel, locale) }}</text>
       <text :x="14" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 14 ${M.top + plotH / 2})`">{{ localizeExperimentText('scale factor a', locale) }}</text>
 
@@ -89,7 +89,7 @@ const xLabel = computed(() => (props.expansion.hasBigBang ? 'time since the Big 
       <summary>{{ localizeExperimentText('Read the current model values', locale) }}</summary>
       <table><tbody>
         <tr><th scope="row">{{ localizeExperimentText('Selected time', locale) }}</th><td>{{ fixed(t, 3) }} {{ localizeExperimentText('billion years', locale) }}</td></tr>
-        <tr><th scope="row">{{ localizeExperimentText('Scale factor at selected time', locale) }}</th><td>{{ expansion.scaleFactorAt(t).toPrecision(5) }}</td></tr>
+        <tr><th scope="row">{{ localizeExperimentText('Scale factor at selected time', locale) }}</th><td>{{ significant(expansion.scaleFactorAt(t), 5) }}</td></tr>
         <tr><th scope="row">{{ localizeExperimentText('Scale factor today', locale) }}</th><td>1</td></tr>
         <tr v-if="accelerationTime !== null"><th scope="row">{{ localizeExperimentText('Acceleration begins', locale) }}</th><td>{{ fixed(accelerationTime, 3) }} {{ localizeExperimentText('billion years', locale) }}</td></tr>
       </tbody></table>

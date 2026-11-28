@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fixed } from '@/i18n/formatters'
+import { fixed, significant } from '@/i18n/formatters'
 import { computed, useId } from 'vue'
 import { niceCeil } from './chartScale'
 import { useLocale } from '@/composables/useLocale'
@@ -40,7 +40,7 @@ const sy = (y: number) => M.top + (1 - y / yMax.value) * plotH
 
 const xTicks = [0, 0.2, 0.4, 0.6, 0.8, 1]
 const yTicks = computed(() => [0, 0.25, 0.5, 0.75, 1].map((f) => f * yMax.value))
-const fmt = (v: number) => String(Number(v.toPrecision(3)))
+const fmt = (v: number) => significant(v, 3)
 
 const lines = computed(() =>
   props.series.map((s) => ({ ...s, path: s.points.map((p, i) => `${i ? 'L' : 'M'}${sx(p.x).toFixed(1)},${sy(p.y).toFixed(1)}`).join(' ') })),
@@ -49,7 +49,7 @@ const lines = computed(() =>
 const description = computed(
   () =>
     `Chart of ${props.yLabel} against ${props.xLabel}, one line per description. ` +
-    props.series.map((s) => `${localizeExperimentText(s.label, locale.value) ?? s.label}: ${s.points.at(-1)?.y.toFixed(2)} at the top speed`).join('; ') +
+    props.series.map((s) => `${localizeExperimentText(s.label, locale.value) ?? s.label}: ${s.points.at(-1)?.y === undefined ? '' : fixed(s.points.at(-1)!.y, 2)} at the top speed`).join('; ') +
     '.',
 )
 </script>

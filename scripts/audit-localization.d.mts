@@ -7,5 +7,6 @@ export interface LocalizationCandidate {
   text: string
 }
 
+export function findUnlocalizedPrecisionOutput(source: string, file?: string): Array<{ file: string; line: number; expression: string }>
 export function isReviewableCopy(value: string): boolean
 export function extractTemplateCandidates(template: string, file: string, lineOffset?: number): LocalizationCandidate[]

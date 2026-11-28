@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fixed } from '@/i18n/formatters'
+import { fixed, formatNumber } from '@/i18n/formatters'
 import { computed } from 'vue'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
@@ -26,7 +26,7 @@ const rows = computed(() => {
       <thead>
         <tr>
           <th scope="row">t (s)</th>
-          <td v-for="row in rows" :key="row.t" class="num">{{ row.t }}</td>
+          <td v-for="row in rows" :key="row.t" class="num">{{ formatNumber(row.t, { maximumFractionDigits: 0 }) }}</td>
         </tr>
       </thead>
       <tbody>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { formatNumber, roundSignificant } from '@/i18n/formatters'
 import { useLocale } from '@/composables/useLocale'
 import { localizeExperimentText } from '@/i18n/experiment-ui'
 
@@ -49,12 +50,12 @@ const sy = (y: number) => M.top + ((yRange.value.hi - y) / (yRange.value.hi - yR
 const xTicks = computed(() => {
   const step = niceStep(xMax.value, 6)
   const ticks: number[] = []
-  for (let x = 0; x <= xMax.value + 1e-9; x += step) ticks.push(Number(x.toPrecision(6)))
+  for (let x = 0; x <= xMax.value + 1e-9; x += step) ticks.push(roundSignificant(x, 6))
   return ticks
 })
 const yTicks = computed(() => {
   const ticks: number[] = []
-  for (let y = yRange.value.lo; y <= yRange.value.hi + 1e-9; y += yRange.value.step) ticks.push(Number(y.toPrecision(6)))
+  for (let y = yRange.value.lo; y <= yRange.value.hi + 1e-9; y += yRange.value.step) ticks.push(roundSignificant(y, 6))
   return ticks
 })
 
@@ -71,8 +72,8 @@ const paths = computed(() =>
         <line v-for="y in yTicks" :key="`gy${y}`" :x1="M.left" :x2="M.left + plotW" :y1="sy(y)" :y2="sy(y)" />
       </g>
       <line :x1="M.left" :x2="M.left + plotW" :y1="sy(0)" :y2="sy(0)" class="zero" />
-      <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 16" class="tick">{{ x }}</text>
-      <text v-for="y in yTicks" :key="`ly${y}`" :x="M.left - 6" :y="sy(y) + 4" class="tick y">{{ y }}</text>
+      <text v-for="x in xTicks" :key="`lx${x}`" :x="sx(x)" :y="M.top + plotH + 16" class="tick">{{ formatNumber(x, { maximumFractionDigits: 3 }) }}</text>
+      <text v-for="y in yTicks" :key="`ly${y}`" :x="M.left - 6" :y="sy(y) + 4" class="tick y">{{ formatNumber(y, { maximumFractionDigits: 3 }) }}</text>
       <text :x="M.left + plotW / 2" :y="H - 4" class="axis-title">{{ localizeExperimentText(xLabel, locale) }}</text>
       <text :x="12" :y="M.top + plotH / 2" class="axis-title" :transform="`rotate(-90 12 ${M.top + plotH / 2})`">{{ localizeExperimentText(yLabel, locale) }}</text>
       <line v-if="marker !== null" :x1="sx(marker)" :x2="sx(marker)" :y1="M.top" :y2="M.top + plotH" class="marker" />
@@ -82,7 +83,7 @@ const paths = computed(() =>
       <summary>{{ localizeExperimentText('View the plotted values as a table', locale) }}</summary>
       <div class="chart-scroll">
         <table><thead><tr><th scope="col">{{ localizeExperimentText('Series', locale) }}</th><th scope="col">{{ localizeExperimentText('Time / x', locale) }}</th><th scope="col">{{ localizeExperimentText('Value / y', locale) }}</th></tr></thead>
-          <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ localizeExperimentText(item.label, locale) }}</th><td>{{ point.x }}</td><td>{{ point.y }}</td></tr></template></tbody>
+          <tbody><template v-for="item in series" :key="item.id"><tr v-for="(point, index) in item.points" :key="`${item.id}-${index}`"><th scope="row">{{ localizeExperimentText(item.label, locale) }}</th><td>{{ formatNumber(point.x, { maximumFractionDigits: 6 }) }}</td><td>{{ formatNumber(point.y, { maximumFractionDigits: 6 }) }}</td></tr></template></tbody>
         </table>
       </div>
     </details>
