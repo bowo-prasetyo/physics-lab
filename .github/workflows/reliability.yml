@@ -41,7 +41,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Install isolated browser test tooling
-        run: npm install --no-save --package-lock=false playwright@1.58.2
+        run: npm install --no-save playwright@1.58.2
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run build
       - name: Start production preview
