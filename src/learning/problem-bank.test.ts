@@ -8,7 +8,7 @@ import {
   gpsBreakdown, intervalSquared, KM_S_MPC_PER_GYR, lorentzBoost, schwarzschildRadius, smallAnglePeriod,
   SOLAR_MASS, vec3, vectorInFrame, weakFieldShift, BODIES, SECONDS_PER_DAY, centripetalAcceleration, circularSpeed, EARTH_GM, EARTH_RADIUS, launchOrbit, workByConstantForce,
 } from '@/physics'
-import { PROBLEM_COPY, PROBLEM_SOURCES, RELATIVE_TOLERANCE, isNumericallyCorrect, problemsFor } from './problem-bank'
+import { BOUNDARY_EPSILON, PROBLEM_COPY, PROBLEM_SOURCES, RELATIVE_TOLERANCE, isNumericallyCorrect, isWithinTolerance, problemsFor } from './problem-bank'
 import { getLearningPath } from './learning-content'
 
 const answer = (id: string): number => {
@@ -160,5 +160,30 @@ describe('answers agree with the physics engine', () => {
   it('Module 6: expansion', () => {
     agrees('hubble-time', 1 / (70 * KM_S_MPC_PER_GYR))
     agrees('matter-age', 2 / (3 * 70 * KM_S_MPC_PER_GYR))
+  })
+})
+
+
+describe('numeric input hardening', () => {
+  it('accepts decimal and scientific notation without accepting JavaScript numeric literals', () => {
+    expect(isNumericallyCorrect({ answer: 1200 }, '1.2e3')).toBe(true)
+    expect(isNumericallyCorrect({ answer: 0.5 }, '.5')).toBe(true)
+    expect(isNumericallyCorrect({ answer: 5 }, '5.')).toBe(true)
+    expect(isNumericallyCorrect({ answer: 1.67 }, '1,67')).toBe(true)
+    expect(isNumericallyCorrect({ answer: -2 }, '−2')).toBe(true)
+    for (const raw of ['0x10', '0b10', '0o10', 'Infinity', '-Infinity', 'NaN', '1,2,3', '.', '+', '1e']) {
+      expect(isNumericallyCorrect({ answer: 16 }, raw), raw).toBe(false)
+    }
+  })
+
+  it('rejects non-finite values and handles zero targets safely', () => {
+    for (const raw of ['1e999', '-1e999']) {
+      expect(isNumericallyCorrect({ answer: 1 }, raw), raw).toBe(false)
+    }
+    expect(isWithinTolerance(0, 0)).toBe(true)
+    expect(isWithinTolerance(0, BOUNDARY_EPSILON / 2)).toBe(true)
+    expect(isWithinTolerance(0, 1e-4)).toBe(false)
+    expect(isWithinTolerance(Number.NaN, 1)).toBe(false)
+    expect(isWithinTolerance(1, Number.POSITIVE_INFINITY)).toBe(false)
   })
 })

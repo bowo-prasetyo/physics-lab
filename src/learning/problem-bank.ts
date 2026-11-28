@@ -1420,7 +1420,9 @@ export function problemsFor(experiment: string, locale: Locale): PhysicsProblem[
  */
 export function parseNumericAnswer(raw: string): number | null {
   const text = raw.trim().replace(/[\s\u2009\u202f]/g, '').replace(',', '.').replace(/[\u2212\u2013\u2014\u2010]/g, '-')
-  if (text === '') return null
+  // Accept ordinary decimal and scientific notation, not JavaScript-only
+  // numeric syntaxes such as hexadecimal, binary or Infinity.
+  if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(text)) return null
   const value = Number(text)
   return Number.isFinite(value) ? value : null
 }
@@ -1430,6 +1432,10 @@ export const BOUNDARY_EPSILON = 1e-9
 
 /** True when `value` is within RELATIVE_TOLERANCE of `expected`. */
 export function isWithinTolerance(expected: number, value: number): boolean {
+  if (!Number.isFinite(expected) || !Number.isFinite(value)) return false
+  // A zero-valued target has no relative scale; use the documented absolute
+  // floating-point boundary instead of accepting every value as "within 0%".
+  if (expected === 0) return Math.abs(value) <= BOUNDARY_EPSILON
   return Math.abs(value - expected) <= (RELATIVE_TOLERANCE + BOUNDARY_EPSILON) * Math.abs(expected)
 }
 

@@ -231,3 +231,38 @@ describe('session progress', () => {
     expect(isExplored('/time/pendulum')).toBe(false)
   })
 })
+
+
+describe('graph evidence integrity', () => {
+  it('keeps every function graph finite, in-domain and within its labelled scale', () => {
+    for (const [id, graph] of Object.entries(GRAPHS)) {
+      if (graph.kind !== 'function') continue
+      expect(graph.x.max, id).toBeGreaterThan(0)
+      expect(graph.x.step, id).toBeGreaterThan(0)
+      expect(graph.y.max, id).toBeGreaterThan(0)
+      expect(graph.y.step, id).toBeGreaterThan(0)
+      for (const x of graph.table) {
+        expect(x, `${id}: table x`).toBeGreaterThanOrEqual(0)
+        expect(x, `${id}: table x`).toBeLessThanOrEqual(graph.x.max)
+        expect(Number.isFinite(graph.f(x)), `${id}: f(${x})`).toBe(true)
+      }
+      for (let sample = 0; sample <= 100; sample += 1) {
+        const x = graph.x.max * sample / 100
+        const y = graph.f(x)
+        expect(Number.isFinite(y), `${id}: f(${x})`).toBe(true)
+        expect(y, `${id}: f(${x}) below axis`).toBeGreaterThanOrEqual(-1e-9)
+        expect(y, `${id}: f(${x}) above axis`).toBeLessThanOrEqual(graph.y.max + 1e-9)
+      }
+    }
+  })
+
+  it('keeps every graph question attached to one graph-backed step', () => {
+    const graphQuestions = PRACTICE_BANK.filter((question) => 'graph' in question && question.graph)
+    expect(graphQuestions.length).toBeGreaterThan(0)
+    for (const question of graphQuestions) {
+      expect(GRAPHS[question.graph!], question.id).toBeDefined()
+      expect(IMPLEMENTED_EXPERIMENTS.some((experiment) => experiment.path === question.experiment), question.id).toBe(true)
+      expect(question.options, question.id).toContain(question.answer)
+    }
+  })
+})
